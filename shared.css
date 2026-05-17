@@ -1,5 +1,5 @@
 /* ================================================================
-   shared.css — GitHub Skills Tracker · shared styles
+   shared.css — Agent Skills Leaderboard · shared styles
 ================================================================ */
 
 /* ── CSS Variables (dark default) ─────────────────────────────── */
@@ -105,6 +105,28 @@ button, select, input { font: inherit; }
 }
 .nav-link:hover { background: var(--surface2); color: var(--text); }
 .nav-link.active { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+.nav-divider {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 6px;
+  align-self: center;
+  flex-shrink: 0;
+}
+.nav-friend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.nav-friend img {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 
 .nav-actions {
   display: flex;

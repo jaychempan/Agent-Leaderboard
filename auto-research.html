@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auto Research Leaderboard</title>
+  <title>Auto Research — Agent Skills Leaderboard</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="shared.css" />
 </head>
@@ -15,57 +15,21 @@
 <!-- ── Hero ── -->
 <div class="hero" id="hero"></div>
 
-<!-- ── Main ── -->
 <div class="container">
 
-  <!-- No data.js warning -->
+  <!-- No data warning -->
   <div id="noData" class="no-data" style="display:none">
-    ⚠️ 未找到 <code>auto_research_data.js</code>，请先运行：<br>
-    <code>python3 fetch_auto_research.py</code>（可选 <code>--token ghp_xxx</code>）<br>
-    然后刷新页面。或直接用 <code>python3 -m http.server 8080</code> 启动本地服务器。
+    ⚠️ <code>auto_research_data.js</code> not found. Run:
+    <code>python3 fetch_auto_research.py</code>
+    then serve with <code>python3 -m http.server 8080</code> and open
+    <a href="http://localhost:8080">localhost:8080</a>.
   </div>
 
   <!-- Category tabs -->
   <div class="tabs" id="tabs"></div>
 
-  <!-- Filter bar -->
-  <div class="filter-bar">
-    <input type="search" id="searchInput" placeholder="搜索 Research 工具…" oninput="onSearch()" />
-
-    <select id="langSelect" onchange="onLangChange()">
-      <option value="">所有语言</option>
-    </select>
-
-    <!-- Stars presets -->
-    <div class="preset-group stars-preset">
-      <button class="preset-btn active" data-val="0"    onclick="setStars(0)">全部</button>
-      <button class="preset-btn"        data-val="500"  onclick="setStars(500)">★500+</button>
-      <button class="preset-btn"        data-val="1000" onclick="setStars(1000)">★1k+</button>
-      <button class="preset-btn"        data-val="5000" onclick="setStars(5000)">★5k+</button>
-      <button class="preset-btn"        data-val="10000" onclick="setStars(10000)">★10k+</button>
-    </div>
-
-    <!-- Time presets -->
-    <div class="preset-group time-preset">
-      <button class="preset-btn active" data-val="0"   onclick="setTime(0)">全部时间</button>
-      <button class="preset-btn"        data-val="30"  onclick="setTime(30)">近 1 月</button>
-      <button class="preset-btn"        data-val="90"  onclick="setTime(90)">近 3 月</button>
-      <button class="preset-btn"        data-val="365" onclick="setTime(365)">近 1 年</button>
-    </div>
-
-    <!-- Page size -->
-    <select onchange="setPageSize(this.value)" style="min-width:56px">
-      <option value="24">24</option>
-      <option value="48">48</option>
-      <option value="96">96</option>
-    </select>
-
-    <!-- View toggle -->
-    <div class="view-toggle">
-      <button class="view-btn active" data-mode="grid" onclick="setView('grid')">⊞ 网格</button>
-      <button class="view-btn"        data-mode="list" onclick="setView('list')">≡ 列表</button>
-    </div>
-  </div>
+  <!-- Filter bar (rendered by shared.js via renderFilterBar) -->
+  <div id="filterBar"></div>
 
   <!-- Active filters -->
   <div class="active-filters hidden" id="activeFilters"></div>
@@ -85,9 +49,7 @@
 </div>
 
 <div class="footer">
-  数据由 <code>fetch_auto_research.py</code> 生成 · 来源
-  <a href="https://docs.github.com/en/rest/search" target="_blank">GitHub Search API</a>
-  · 每周更新
+  Data sourced from <a href="https://docs.github.com/en/rest/search" target="_blank">GitHub Search API</a> · Updated weekly
 </div>
 
 <script src="auto_research_data.js"></script>
@@ -97,12 +59,8 @@
     init({
       page:       'research',
       dataKey:    'AR_DATA',
-      noDataHint: '请先运行 python3 fetch_auto_research.py 生成数据',
+      noDataHint: 'Run python3 fetch_auto_research.py to generate data, then refresh.',
     });
-
-    const v = localStorage.getItem('st_view') || 'grid';
-    document.querySelectorAll('.view-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.mode === v));
   });
 </script>
 </body>
