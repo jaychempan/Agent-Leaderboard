@@ -6,8 +6,15 @@
   <title>Agent Skills Leaderboard</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="shared.css" />
+  <script>(function(){var t=localStorage.getItem('st_theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+
+<!-- ── Page loader ── -->
+<div id="pageLoader">
+  <div class="loader-ring"></div>
+  <span class="loader-label">Loading…</span>
+</div>
 
 <!-- ── Navbar ── -->
 <nav class="navbar" id="navbar"></nav>
@@ -45,11 +52,26 @@
   <!-- Pagination -->
   <div class="pagination" id="pagination"></div>
 
+  <!-- Visit counter -->
+  <div class="visit-badge" id="visitBadge">
+    <a href='https://www.counters-free.net/'>counters-free</a>
+    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=98df7b5e688e62c996e7d446f3a8b7d8fb4e89c5'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1554257/t/5"></script>
+  </div>
+
 </div>
 
 <div class="footer">
-  Data sourced from <a href="https://docs.github.com/en/rest/search" target="_blank">GitHub Search API</a> · Updated weekly
+  Data sourced from <a href="https://docs.github.com/en/rest/search" target="_blank">GitHub Search API</a> · Updated weekly ·
+  <a href="#" id="ghFooterLink" target="_blank" rel="noopener noreferrer">GitHub</a>
 </div>
+<script>
+  // Update GitHub footer link from shared.js constant once it loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('ghFooterLink');
+    if (el && typeof GITHUB_REPO !== 'undefined') el.href = GITHUB_REPO;
+  });
+</script>
 
 <script src="data.js"></script>
 <script src="shared.js"></script>

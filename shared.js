@@ -3,6 +3,9 @@
    Each page sets window.PAGE_CONFIG before loading this file.
 ================================================================ */
 
+/* ── Config ─────────────────────────────────────────────────────── */
+const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
+
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
@@ -187,7 +190,14 @@ function init(config) {
   applyFilters();
   applyThemeBtn();
   applyLangBtn();
-  loadVisitCount();
+  // visit counter widget injected directly in HTML
+
+  // dismiss page loader
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    loader.classList.add('fade-out');
+    setTimeout(() => loader.remove(), 380);
+  }
 }
 
 /* ── Theme ──────────────────────────────────────────────────────── */
@@ -270,6 +280,12 @@ function renderNav() {
         <span class="full">Citation Tracker</span>
       </a>
       <span class="nav-divider"></span>
+      <a class="nav-btn" href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer" title="GitHub">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        <span class="full">GitHub</span>
+      </a>
       <button class="nav-btn${app.favOnly ? ' active' : ''}" id="favBtn" onclick="toggleFavOnly()">
         ❤ ${t('nav_favorites')} <span class="fav-count${app.favorites.size > 0 ? ' visible' : ''}">${app.favorites.size}</span>
       </button>
@@ -307,7 +323,6 @@ function renderHero() {
       <span class="meta-pill"><strong>★${m.min_stars}+</strong> ${t('stat_min')}</span>
       <span class="meta-pill">${t('stat_updated')} <strong>${updated}</strong></span>
       <span class="meta-pill">${t('stat_top')} <strong>★${fmtNum(top)}</strong></span>
-      <span class="meta-pill visit-pill" style="display:none">👁 <strong id="visitCount">0</strong> ${t('stat_visits')}</span>
     </div>`;
 }
 
@@ -713,26 +728,3 @@ function renderFilterBar() {
   renderLangSelect();
 }
 
-/* ── Visit counter ──────────────────────────────────────────────── */
-async function loadVisitCount() {
-  const key = app.pageConfig.page === 'skills' ? 'skills' : 'research';
-  try {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 4000);
-    const res = await fetch(
-      `https://api.countapi.xyz/hit/agent-skills-leaderboard/${key}`,
-      { signal: ctrl.signal }
-    );
-    clearTimeout(tid);
-    if (!res.ok) return;
-    const { value } = await res.json();
-    const countEl = document.getElementById('visitCount');
-    const pill    = document.querySelector('.visit-pill');
-    if (countEl && pill) {
-      countEl.textContent = value.toLocaleString();
-      pill.style.display = '';
-    }
-  } catch {
-    // API unavailable — silently skip
-  }
-}
