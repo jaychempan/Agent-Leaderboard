@@ -9,7 +9,7 @@ const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
-    nav_skills:     'Skills 排行榜',
+    nav_skills:     'Skills',
     nav_research:   'Auto Research',
     nav_mcp:        'MCP Servers',
     nav_prompts:    'Prompt Library',
@@ -287,6 +287,16 @@ function updateFavBtn() {
 }
 
 /* ── Nav render ─────────────────────────────────────────────────── */
+function toggleMobileNav() {
+  const nav = document.getElementById('navbar');
+  if (nav) nav.classList.toggle('nav-open');
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('navbar');
+  if (nav && nav.classList.contains('nav-open') && !nav.contains(e.target))
+    nav.classList.remove('nav-open');
+});
+
 function renderNav() {
   const pg = app.pageConfig.page;
   const nav = document.getElementById('navbar');
@@ -296,20 +306,23 @@ function renderNav() {
       <img src="favicon.svg" alt="logo" />
       <span class="nav-brand-text">Agent Skills Leaderboard</span>
     </a>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu" style="display:none">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
-      <a class="nav-link${pg==='skills'?' active':''}" href="index.html">
+      <a class="nav-link${pg==='skills'?' active':''}" href="index.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         ⚡ <span class="full">${t('nav_skills')}</span>
       </a>
-      <a class="nav-link${pg==='research'?' active':''}" href="auto-research.html">
+      <a class="nav-link${pg==='research'?' active':''}" href="auto-research.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🔬 <span class="full">${t('nav_research')}</span>
       </a>
-      <a class="nav-link${pg==='mcp'?' active':''}" href="mcp.html">
+      <a class="nav-link${pg==='mcp'?' active':''}" href="mcp.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🔌 <span class="full">${t('nav_mcp')}</span>
       </a>
-      <a class="nav-link${pg==='prompts'?' active':''}" href="prompts.html">
+      <a class="nav-link${pg==='prompts'?' active':''}" href="prompts.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         📝 <span class="full">${t('nav_prompts')}</span>
       </a>
-      <a class="nav-link${pg==='frameworks'?' active':''}" href="frameworks.html">
+      <a class="nav-link${pg==='frameworks'?' active':''}" href="frameworks.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🤖 <span class="full">${t('nav_frameworks')}</span>
       </a>
     </div>

@@ -747,6 +747,32 @@ button, select, input { font: inherit; }
 }
 .no-data code { background: rgba(0,0,0,.2); padding: 1px 5px; border-radius: 4px; }
 
+/* ── Hamburger (hidden on desktop) ─────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 4px;
+  margin-left: auto;
+  width: 32px;
+  height: 36px;
+}
+.nav-hamburger span {
+  display: block;
+  height: 2px;
+  width: 20px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+.navbar.nav-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar.nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
+.navbar.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ══════════════════════════════════════════════════════════════════
    RESPONSIVE — tablet ≤768px
 ══════════════════════════════════════════════════════════════════ */
@@ -772,12 +798,41 @@ button, select, input { font: inherit; }
    RESPONSIVE — phone ≤480px
 ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-  /* Navbar */
-  .navbar { padding: 0 12px; gap: 0; }
+  /* Navbar: single row with hamburger */
+  .navbar {
+    padding: 0 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto;
+    min-height: var(--nav-h);
+  }
+  .nav-brand { margin-right: 0; flex-shrink: 0; }
   .nav-brand-text { display: none; }
-  .nav-brand { margin-right: 8px; }
-  .nav-link { padding: 6px 8px; font-size: 12px; }
+
+  /* Show hamburger, override inline display:none */
+  .nav-hamburger { display: flex !important; margin-left: 8px; order: 2; flex-shrink: 0; }
+
+  /* Push actions to the right */
+  .nav-actions { order: 3; margin-left: auto; gap: 4px; }
   .nav-btn { padding: 5px 7px; font-size: 11px; }
+
+  /* Hide "GitHub" and "Favorites" text labels on mobile, keep icons */
+  .nav-btn .full { display: none; }
+
+  /* Nav links: collapsed by default */
+  .nav-links {
+    display: none;
+    order: 10;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 0 12px;
+    border-top: 1px solid var(--border);
+    gap: 2px;
+    margin-top: 4px;
+  }
+  .navbar.nav-open .nav-links { display: flex; }
+  .nav-link { padding: 10px 14px; font-size: 14px; border-radius: 8px; width: 100%; }
+  .nav-link .full { display: inline; }
 
   /* Hero */
   .hero { padding: 18px 14px 16px; }
