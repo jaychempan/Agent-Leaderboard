@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""
+fetch_auto_research.py — 从 GitHub API 爬取热门 Auto Research 仓库，
+分析 description/topics，输出 auto_research_data.js
+
+用法:
+  python3 fetch_auto_research.py
+  python3 fetch_auto_research.py --token ghp_xxx
+"""
+import json, time, sys, argparse, re
+from datetime import datetime, timezone
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
+
+MIN_STARS = 100
+PER_PAGE  = 50
+
+QUERIES = {
+    "deep_research": [
+        f"deep research agent ai stars:>{MIN_STARS}",
+        f"topic:deep-research stars:>{MIN_STARS}",
+        f"autonomous deep research stars:>{MIN_STARS}",
+    ],
+    "web_research": [
+        f"web research automation ai stars:>{MIN_STARS}",
+        f"perplexity alternative open source stars:>{MIN_STARS}",
+        f"ai web scraping research stars:>{MIN_STARS}",
+    ],
+    "literature": [
+        f"literature review ai agent stars:>{MIN_STARS}",
+        f"paper search agent stars:>{MIN_STARS}",
+        f"academic research ai stars:>{MIN_STARS}",
+    ],
+    "data_research": [
+        f"financial research agent ai stars:>{MIN_STARS}",
+        f"market research ai autonomous stars:>{MIN_STARS}",
+        f"data analysis agent stars:>{MIN_STARS}",
+    ],
+    "knowledge_base": [
+        f"second brain ai rag stars:>{MIN_STARS}",
+        f"personal knowledge management ai stars:>{MIN_STARS}",
+        f"ai research knowledge base stars:>{MIN_STARS}",
+    ],
+    "general": [
+        f"autonomous research agent stars:>{MIN_STARS}",
+        f"ai researcher agent stars:>{MIN_STARS}",
+        f"research automation llm stars:>{MIN_STARS}",
+        f"awesome autoresearch stars:>{MIN_STARS}",
+    ],
+}
+
+USE_CASE_RULES = [
+    ("深度研究",   r"deep research|comprehensive research|in.depth"),
+    ("网页搜索",   r"web search|web scraping|browse|internet search|web research"),
+    ("学术文献",   r"paper|literature|academic|arxiv|publication|scholar"),
+    ("金融数据",   r"financ|stock|market|trading|investment|alpha"),
+    ("知识库",     r"knowledge.?base|second brain|pkm|obsidian|rag|retrieval"),
+    ("自主代理",   r"autonomous|agent|agentic|multi.agent|self.evolv"),
+    ("实验自动化", r"experiment|labora|research workflow|scientific"),
+    ("资源列表",   r"awesome|curated|collection|papers|resources"),
+    ("AI 训练",    r"train|finetun|reinforcement|rlhf|dpo"),
+    ("代码研究",   r"code.*research|research.*code|codebase|github.*research"),
+    ("睡眠/后台",  r"sleep|background|24.?7|overnight|scheduled"),
+    ("竞争分析",   r"competitive|market.*intel|competitor|benchmark"),
+]
+
+CAT_META = {
+    "deep_research": {"label": "深度研究",  "icon": "🔬", "color": "#f97316"},
+    "web_research":  {"label": "网页研究",  "icon": "🌐", "color": "#10b981"},
+    "literature":    {"label": "文献综述",  "icon": "📚", "color": "#a78bfa"},
+    "data_research": {"label": "数据分析",  "icon": "📊", "color": "#22d3ee"},
+    "knowledge_base":{"label": "知识管理",  "icon": "🧠", "color": "#f59e0b"},
+    "general":       {"label": "通用研究",  "icon": "🤖", "color": "#8b949e"},
+}
+
+CAT_RULES = [
+    ("deep_research",  r"deep.research|comprehensive|in.depth.research"),
+    ("web_research",   r"web.research|web.search|perplexity|browse|internet"),
+    ("literature",     r"paper|literature|academic|arxiv|scholar"),
+    ("data_research",  r"financ|stock|market|data.*anal|alpha"),
+    ("knowledge_base", r"knowledge.?base|second.brain|pkm|obsidian"),
+]
+
+def gh_get(url, token):
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "skills-tracker/1.0"}
+    if token: headers["Authorization"] = f"Bearer {token}"
+    req = Request(url, headers=headers)
+    try:
+        with urlopen(req, timeout=15) as r:
+            return json.loads(r.read())
+    except HTTPError as e:
+        body = e.read().decode()
+        print(f"  ⚠️  HTTP {e.code}: {body[:120]}", file=sys.stderr)
+        raise
+
+def search_repos(query, token, per_page=PER_PAGE):
+    from urllib.parse import quote
+    url = f"https://api.github.com/search/repositories?q={quote(query)}&sort=stars&order=desc&per_page={per_page}"
+    return gh_get(url, token).get("items", [])
+
+def analyze_use_cases(repo):
+    text = " ".join([repo.get("name",""), repo.get("description","") or "", " ".join(repo.get("topics",[]))]).lower()
+    found = [label for label, pat in USE_CASE_RULES if re.search(pat, text)]
+    return found or ["通用研究"]
+
+def assign_category(repo, hint):
+    text = " ".join([repo.get("full_name",""), repo.get("description","") or "", " ".join(repo.get("topics",[]))]).lower()
+    for cat, pat in CAT_RULES:
+        if re.search(pat, text): return cat
+    return hint
+
+def normalize(raw, hint):
+    return {
+        "id":          raw["id"],
+        "full_name":   raw["full_name"],
+        "description": raw.get("description") or "",
+        "stars":       raw["stargazers_count"],
+        "forks":       raw["forks_count"],
+        "language":    raw.get("language") or "",
+        "topics":      raw.get("topics") or [],
+        "url":         raw["html_url"],
+        "updated_at":  raw["updated_at"],
+        "category":    assign_category(raw, hint),
+        "use_cases":   analyze_use_cases(raw),
+    }
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--token", default="")
+    args = parser.parse_args()
+    token = args.token
+
+    print("🔍 爬取 Auto Research 仓库 …")
+    seen = set()
+    repos = []
+
+    for cat, queries in QUERIES.items():
+        print(f"\n[{CAT_META[cat]['icon']} {cat}]")
+        for q in queries:
+            print(f"  › {q}")
+            try:
+                items = search_repos(q, token)
+                new = 0
+                for raw in items:
+                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS:
+                        continue
+                    seen.add(raw["id"])
+                    repos.append(normalize(raw, cat))
+                    new += 1
+                print(f"    +{new} repos (total {len(repos)})")
+            except Exception as e:
+                print(f"    ✗ 跳过: {e}", file=sys.stderr)
+            time.sleep(0.4)
+
+    repos.sort(key=lambda r: r["stars"], reverse=True)
+
+    cat_counts = {k: 0 for k in CAT_META}
+    for r in repos:
+        cat_counts[r["category"]] = cat_counts.get(r["category"], 0) + 1
+    categories_meta = {k: {**v, "count": cat_counts.get(k,0)} for k,v in CAT_META.items()}
+
+    uc_dist = {}
+    for r in repos:
+        for uc in r["use_cases"]:
+            uc_dist[uc] = uc_dist.get(uc, 0) + 1
+    uc_dist = dict(sorted(uc_dist.items(), key=lambda x: -x[1]))
+
+    output = {
+        "meta": {
+            "updated_at":  datetime.now(timezone.utc).isoformat(),
+            "min_stars":   MIN_STARS,
+            "total":       len(repos),
+            "type":        "auto_research",
+        },
+        "categories":    categories_meta,
+        "use_case_stats": uc_dist,
+        "repos":         repos,
+    }
+
+    with open("auto_research_data.json", "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+    print(f"\n✅ auto_research_data.json 写入完成，共 {len(repos)} 个仓库")
+
+    js = json.dumps(output, ensure_ascii=False, separators=(",", ":"))
+    with open("auto_research_data.js", "w", encoding="utf-8") as f:
+        f.write("/* AUTO-GENERATED — run fetch_auto_research.py to update */\n")
+        f.write(f"window.AR_DATA={js};\n")
+    print("✅ auto_research_data.js 写入完成")
+
+    print("\n📊 用途分布:")
+    for uc, cnt in list(uc_dist.items())[:8]:
+        print(f"  {uc:<12} {'█'*min(cnt,20)} {cnt}")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- background -->
+  <rect width="64" height="64" rx="14" fill="#161b22"/>
+  <!-- glow -->
+  <ellipse cx="32" cy="28" rx="20" ry="14" fill="rgba(88,166,255,0.06)"/>
+
+  <!-- silver bar (#2) -->
+  <rect x="5"  y="30" width="17" height="24" rx="3" fill="#adbac7"/>
+  <!-- gold bar (#1) -->
+  <rect x="23" y="16" width="18" height="38" rx="3" fill="#e3b341"/>
+  <!-- bronze bar (#3) -->
+  <rect x="42" y="38" width="17" height="16" rx="3" fill="#c77834"/>
+
+  <!-- rank numbers -->
+  <text x="13.5" y="44" text-anchor="middle" font-size="9" font-weight="800"
+        fill="#0d1117" font-family="ui-sans-serif,system-ui,sans-serif">2</text>
+  <text x="32"   y="32" text-anchor="middle" font-size="9" font-weight="800"
+        fill="#0d1117" font-family="ui-sans-serif,system-ui,sans-serif">1</text>
+  <text x="50.5" y="51" text-anchor="middle" font-size="9" font-weight="800"
+        fill="#0d1117" font-family="ui-sans-serif,system-ui,sans-serif">3</text>
+
+  <!-- star crown -->
+  <text x="32" y="13" text-anchor="middle" font-size="11" fill="#e3b341"
+        font-family="ui-sans-serif,system-ui,sans-serif">★</text>
+</svg>
