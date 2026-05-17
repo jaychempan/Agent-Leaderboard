@@ -5,15 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agent Skills Leaderboard</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="shared.css" />
+  <style>html{background:#0d1117}html[data-theme="light"]{background:#f6f8fa}</style>
   <script>(function(){var t=localStorage.getItem('st_theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="shared.css" />
 </head>
 <body>
 
-<!-- ── Page loader ── -->
+<!-- ── Page loader / skeleton ── -->
 <div id="pageLoader">
-  <div class="loader-ring"></div>
-  <span class="loader-label">Loading…</span>
+  <div class="skel-navbar">
+    <div class="skel skel-navbar-logo"></div>
+    <div class="skel-navbar-right">
+      <div class="skel skel-navbar-btn"></div>
+      <div class="skel skel-navbar-btn"></div>
+      <div class="skel skel-navbar-btn"></div>
+    </div>
+  </div>
+  <div class="skel-hero">
+    <div class="skel skel-hero-title"></div>
+    <div class="skel skel-hero-sub"></div>
+    <div class="skel-pills">
+      <div class="skel skel-pill"></div>
+      <div class="skel skel-pill"></div>
+      <div class="skel skel-pill"></div>
+      <div class="skel skel-pill"></div>
+    </div>
+  </div>
+  <div class="skel-grid">
+    <div class="skel skel-card"></div><div class="skel skel-card"></div>
+    <div class="skel skel-card"></div><div class="skel skel-card"></div>
+    <div class="skel skel-card"></div><div class="skel skel-card"></div>
+    <div class="skel skel-card"></div><div class="skel skel-card"></div>
+    <div class="skel skel-card"></div>
+  </div>
 </div>
 
 <!-- ── Navbar ── -->
@@ -73,7 +97,7 @@
   });
 </script>
 
-<script src="data.js"></script>
+<script src="data.js?v=202605171653"></script>
 <script src="shared.js"></script>
 <script>
   window.addEventListener('DOMContentLoaded', () => {

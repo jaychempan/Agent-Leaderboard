@@ -395,6 +395,13 @@ function onLangChange() {
   app.currentPage = 1;
   applyFilters();
 }
+function setLang(lang) {
+  app.language    = lang;
+  app.currentPage = 1;
+  const sel = document.getElementById('langSelect');
+  if (sel) sel.value = lang;
+  applyFilters();
+}
 function setStars(val) {
   app.minStars    = parseInt(val);
   app.currentPage = 1;
@@ -457,15 +464,29 @@ function applyFilters() {
     const cutoff = Date.now() - app.maxDaysOld * 86400000;
     list = list.filter(r => new Date(r.updated_at) >= cutoff);
   }
+
+  // Update UC chip counts based on pre-UC-filter results
+  updateUCCounts(list);
+
   if (app.selectedUCs.size) {
-    list = list.filter(r => r.use_cases.some(uc => app.selectedUCs.has(uc)));
+    list = list.filter(r => [...app.selectedUCs].every(uc => r.use_cases.includes(uc)));
   }
 
-  // sort: stars (default since data is pre-sorted)
   app.filtered = list;
   renderActiveFilters();
   renderContent();
   renderPagination();
+}
+
+function updateUCCounts(list) {
+  const counts = {};
+  list.forEach(r => (r.use_cases || []).forEach(uc => {
+    counts[uc] = (counts[uc] || 0) + 1;
+  }));
+  document.querySelectorAll('.uc-chip').forEach(chip => {
+    const cnt = chip.querySelector('.uc-cnt');
+    if (cnt) cnt.textContent = counts[chip.dataset.uc] || 0;
+  });
 }
 
 /* ── Active filters bar ─────────────────────────────────────────── */
@@ -540,7 +561,9 @@ function cardHTML(repo, gr) {
   const ucTags = (repo.use_cases || []).slice(0, 4).map(uc =>
     `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
            onclick="event.preventDefault();toggleUC('${uc}')">${tUC(uc)}</span>`).join('');
-  const lang = repo.language ? `<span class="badge lang-badge">${repo.language}</span>` : '';
+  const lang = repo.language
+    ? `<span class="badge lang-badge clickable" onclick="event.preventDefault();event.stopPropagation();setLang('${repo.language}')">${repo.language}</span>`
+    : '';
 
   return `
     <a class="card${rankCls}" href="${repo.url}" target="_blank" rel="noopener">
@@ -556,13 +579,13 @@ function cardHTML(repo, gr) {
         </div>
       </div>
       <div class="card-name"><span class="owner">${owner}/</span>${name}</div>
-      <div class="card-desc">${repo.description || t('no_desc')}</div>
+      <div class="card-desc" title="${(repo.description || '').replace(/"/g,'&quot;')}">${repo.description || t('no_desc')}</div>
       <div class="card-footer">
         <div class="card-ucs">${ucTags}</div>
         <div class="card-meta">
           ${lang}
-          <span class="badge cat-badge ${repo.category}">${catIcon} ${catLbl}</span>
-          <span class="fork-info">🍴${fmtNum(repo.forks)} · ${timeAgo(repo.updated_at)}</span>
+          <span class="badge cat-badge ${repo.category} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${repo.category}')">${catIcon} ${catLbl}</span>
+          <span class="fork-info">🍴${fmtNum(repo.forks)} · 🗓️ ${timeAgo(repo.created_at || repo.updated_at)}</span>
         </div>
       </div>
     </a>`;
@@ -617,13 +640,13 @@ function renderList() {
         <a href="${repo.url}" target="_blank" rel="noopener">
           <span class="owner">${owner}/</span>${name}
         </a>
-        <div class="desc">${(repo.description || t('no_desc')).slice(0, 90)}</div>
+        <div class="desc" title="${(repo.description || '').replace(/"/g,'&quot;')}">${(repo.description || t('no_desc')).slice(0, 90)}</div>
       </td>
       <td class="lt-stars">★ ${fmtNum(repo.stars)}</td>
       <td class="lt-ucs">${ucTags}</td>
-      <td class="lt-cat"><span class="badge cat-badge ${repo.category}">${catIcon} ${catLbl}</span></td>
-      <td class="lt-lang">${repo.language || '—'}</td>
-      <td class="lt-updated">${timeAgo(repo.updated_at)}</td>
+      <td class="lt-cat"><span class="badge cat-badge ${repo.category} clickable" onclick="setTab('${repo.category}')">${catIcon} ${catLbl}</span></td>
+      <td class="lt-lang">${repo.language ? `<span class="clickable" onclick="setLang('${repo.language}')">${repo.language}</span>` : '—'}</td>
+      <td class="lt-updated">${timeAgo(repo.created_at || repo.updated_at)}</td>
       <td class="lt-fav">
         <button class="fav-btn${isSaved ? ' saved' : ''}"
                 onclick="toggleFav(${repo.id},this)">

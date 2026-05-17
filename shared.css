@@ -47,40 +47,67 @@
   --shadow-sm: 0 1px 4px rgba(0,0,0,.1);
 }
 
-/* ── Page loader ────────────────────────────────────────────────── */
+/* ── Page loader / skeleton ─────────────────────────────────────── */
 #pageLoader {
   position: fixed;
   inset: 0;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
+  background: var(--bg);
   z-index: 9999;
+  overflow: hidden;
   opacity: 1;
   transition: opacity 0.35s ease;
 }
-#pageLoader.fade-out {
-  opacity: 0;
-  pointer-events: none;
+#pageLoader.fade-out { opacity: 0; pointer-events: none; }
+
+@keyframes shimmer {
+  0%   { background-position: -700px 0; }
+  100% { background-position:  700px 0; }
 }
-.loader-ring {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--surface3);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: loaderSpin 0.75s linear infinite;
+.skel {
+  background: linear-gradient(90deg,
+    var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+  background-size: 700px 100%;
+  animation: shimmer 1.5s ease infinite;
+  border-radius: 6px;
 }
-.loader-label {
-  font-size: 13px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+.skel-navbar {
+  height: 54px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 12px;
 }
-@keyframes loaderSpin {
-  to { transform: rotate(360deg); }
+.skel-navbar-logo { width: 160px; height: 18px; }
+.skel-navbar-right { margin-left: auto; display: flex; gap: 8px; }
+.skel-navbar-btn { width: 32px; height: 18px; }
+.skel-hero {
+  max-width: 700px;
+  margin: 40px auto 28px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
+.skel-hero-title { width: 300px; height: 30px; }
+.skel-hero-sub   { width: 200px; height: 14px; }
+.skel-pills { display: flex; gap: 8px; }
+.skel-pill  { width: 90px; height: 26px; border-radius: 20px; }
+.skel-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+}
+.skel-card { height: 162px; border-radius: 12px; }
+
+/* ── Clickable badges ───────────────────────────────────────────── */
+.clickable { cursor: pointer; }
+.clickable:hover { opacity: 0.75; }
 
 /* ── Visit counter badge ────────────────────────────────────────── */
 #visitBadge > a { display: none; }

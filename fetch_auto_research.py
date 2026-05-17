@@ -119,6 +119,7 @@ def normalize(raw, hint):
         "language":    raw.get("language") or "",
         "topics":      raw.get("topics") or [],
         "url":         raw["html_url"],
+        "created_at":  raw["created_at"],
         "updated_at":  raw["updated_at"],
         "category":    assign_category(raw, hint),
         "use_cases":   analyze_use_cases(raw),
@@ -186,6 +187,15 @@ def main():
         f.write("/* AUTO-GENERATED — run fetch_auto_research.py to update */\n")
         f.write(f"window.AR_DATA={js};\n")
     print("✅ auto_research_data.js 写入完成")
+
+    # ── 更新 auto-research.html 中的版本号 (防缓存) ───────────────────────────
+    version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
+    with open("auto-research.html", "r", encoding="utf-8") as f:
+        html = f.read()
+    html = re.sub(r'auto_research_data\.js\?v=\d+', f'auto_research_data.js?v={version}', html)
+    with open("auto-research.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"✅ auto-research.html 版本号更新为 {version}")
 
     print("\n📊 用途分布:")
     for uc, cnt in list(uc_dist.items())[:8]:

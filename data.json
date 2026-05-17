@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-05-17T14:55:51.962338+00:00",
+    "updated_at": "2026-05-17T16:53:18.055377+00:00",
     "min_stars": 100,
     "total": 371,
     "generator": "fetch_data.py"
@@ -65,8 +65,8 @@
       "id": 1136590548,
       "full_name": "affaan-m/everything-claude-code",
       "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
-      "stars": 185355,
-      "forks": 28670,
+      "stars": 185433,
+      "forks": 28682,
       "language": "JavaScript",
       "topics": [
         "ai-agents",
@@ -79,7 +79,8 @@
         "productivity"
       ],
       "url": "https://github.com/affaan-m/everything-claude-code",
-      "updated_at": "2026-05-17T14:53:58Z",
+      "created_at": "2026-01-18T00:51:51Z",
+      "updated_at": "2026-05-17T16:52:37Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -94,8 +95,8 @@
       "id": 1024554267,
       "full_name": "NousResearch/hermes-agent",
       "description": "The agent that grows with you",
-      "stars": 154273,
-      "forks": 24687,
+      "stars": 154433,
+      "forks": 24725,
       "language": "Python",
       "topics": [
         "ai",
@@ -116,7 +117,8 @@
         "openclaw"
       ],
       "url": "https://github.com/NousResearch/hermes-agent",
-      "updated_at": "2026-05-17T14:51:25Z",
+      "created_at": "2025-07-22T22:22:28Z",
+      "updated_at": "2026-05-17T16:52:09Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -128,8 +130,8 @@
       "id": 943398999,
       "full_name": "x1xhlol/system-prompts-and-models-of-ai-tools",
       "description": "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, Lovable, Manus, NotionAI, Orchids.app, Perplexity, Poke, Qoder, Replit, Same.dev, Trae, Traycer AI, VSCode Agent, Warp.dev, Windsurf, Xcode, Z.ai Code, Dia & v0. (And other Open Sourced) System Prompts, Internal Tools & AI Models",
-      "stars": 137532,
-      "forks": 34254,
+      "stars": 137539,
+      "forks": 34256,
       "language": "",
       "topics": [
         "ai",
@@ -154,7 +156,8 @@
         "windsurf-ai"
       ],
       "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
-      "updated_at": "2026-05-17T14:49:46Z",
+      "created_at": "2025-03-05T16:38:29Z",
+      "updated_at": "2026-05-17T16:24:17Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -165,12 +168,13 @@
       "id": 1142983825,
       "full_name": "multica-ai/andrej-karpathy-skills",
       "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
-      "stars": 133529,
-      "forks": 13642,
+      "stars": 133672,
+      "forks": 13655,
       "language": "",
       "topics": [],
       "url": "https://github.com/multica-ai/andrej-karpathy-skills",
-      "updated_at": "2026-05-17T14:54:39Z",
+      "created_at": "2026-01-27T03:53:13Z",
+      "updated_at": "2026-05-17T16:52:50Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -180,12 +184,13 @@
       "id": 1148788086,
       "full_name": "mattpocock/skills",
       "description": "Skills for Real Engineers. Straight from my .claude directory.",
-      "stars": 88185,
-      "forks": 7693,
+      "stars": 88417,
+      "forks": 7715,
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/mattpocock/skills",
-      "updated_at": "2026-05-17T14:55:07Z",
+      "created_at": "2026-02-03T11:15:53Z",
+      "updated_at": "2026-05-17T16:52:31Z",
       "category": "claude",
       "use_cases": [
         "资源列表"
@@ -195,8 +200,8 @@
       "id": 1106996539,
       "full_name": "nextlevelbuilder/ui-ux-pro-max-skill",
       "description": "An AI SKILL that provide design intelligence for building professional UI/UX multiple platforms",
-      "stars": 79571,
-      "forks": 8184,
+      "stars": 79597,
+      "forks": 8187,
       "language": "Python",
       "topics": [
         "ai-skills",
@@ -220,7 +225,8 @@
         "windsurf-ai"
       ],
       "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
-      "updated_at": "2026-05-17T14:52:03Z",
+      "created_at": "2025-11-30T11:36:31Z",
+      "updated_at": "2026-05-17T16:46:28Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计",
@@ -231,8 +237,8 @@
       "id": 979115477,
       "full_name": "bytedance/deer-flow",
       "description": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.",
-      "stars": 68076,
-      "forks": 9071,
+      "stars": 68101,
+      "forks": 9072,
       "language": "Python",
       "topics": [
         "agent",
@@ -255,7 +261,8 @@
         "typescript"
       ],
       "url": "https://github.com/bytedance/deer-flow",
-      "updated_at": "2026-05-17T14:45:05Z",
+      "created_at": "2025-05-07T02:50:19Z",
+      "updated_at": "2026-05-17T16:50:30Z",
       "category": "other",
       "use_cases": [
         "AI 代理",
@@ -272,7 +279,7 @@
       "id": 1201173969,
       "full_name": "JuliusBrussee/caveman",
       "description": "🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman",
-      "stars": 61217,
+      "stars": 61254,
       "forks": 3410,
       "language": "JavaScript",
       "topics": [
@@ -288,7 +295,8 @@
         "tokens"
       ],
       "url": "https://github.com/JuliusBrussee/caveman",
-      "updated_at": "2026-05-17T14:51:14Z",
+      "created_at": "2026-04-04T10:03:00Z",
+      "updated_at": "2026-05-17T16:49:19Z",
       "category": "claude",
       "use_cases": [
         "Prompt 优化"
@@ -298,8 +306,8 @@
       "id": 1078079172,
       "full_name": "ComposioHQ/awesome-claude-skills",
       "description": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows",
-      "stars": 60260,
-      "forks": 6558,
+      "stars": 60279,
+      "forks": 6560,
       "language": "Python",
       "topics": [
         "agent-skills",
@@ -321,7 +329,8 @@
         "workflow-automation"
       ],
       "url": "https://github.com/ComposioHQ/awesome-claude-skills",
-      "updated_at": "2026-05-17T14:53:34Z",
+      "created_at": "2025-10-17T07:15:01Z",
+      "updated_at": "2026-05-17T16:48:05Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -335,8 +344,8 @@
       "id": 1200597263,
       "full_name": "safishamsi/graphify",
       "description": "AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts, shell scripts, docs, papers, images, or videos into a queryable knowledge graph. App code + database schema + infrastructure in one graph.",
-      "stars": 48702,
-      "forks": 5292,
+      "stars": 48727,
+      "forks": 5296,
       "language": "Python",
       "topics": [
         "antigravity",
@@ -352,7 +361,8 @@
         "tree-sitter"
       ],
       "url": "https://github.com/safishamsi/graphify",
-      "updated_at": "2026-05-17T14:53:21Z",
+      "created_at": "2026-04-03T15:49:07Z",
+      "updated_at": "2026-05-17T16:50:10Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -365,7 +375,7 @@
       "id": 159152904,
       "full_name": "jeecgboot/JeecgBoot",
       "description": "AI 低代码平台，「低代码 + 零代码」双模式驱动：低代码一键生成前后端代码，零代码 5 分钟搭建系统，AI Skills 一句话画流程、设计表单、生成整套系统。内置 AI聊天、知识库、流程编排、MCP插件等，兼容主流大模型。引领「AI 生成 → 在线配置 → 代码生成 → 手工合并->AI修改」开发模式，消除 Java 项目 80% 的重复工作，提效而不失灵活。",
-      "stars": 46296,
+      "stars": 46299,
       "forks": 15998,
       "language": "Java",
       "topics": [
@@ -391,7 +401,8 @@
         "vue3"
       ],
       "url": "https://github.com/jeecgboot/JeecgBoot",
-      "updated_at": "2026-05-17T14:29:22Z",
+      "created_at": "2018-11-26T10:40:00Z",
+      "updated_at": "2026-05-17T16:47:33Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -404,8 +415,8 @@
       "id": 1201476594,
       "full_name": "santifer/career-ops",
       "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.",
-      "stars": 45128,
-      "forks": 9475,
+      "stars": 45142,
+      "forks": 9476,
       "language": "JavaScript",
       "topics": [
         "ai-agent",
@@ -422,7 +433,8 @@
         "resume"
       ],
       "url": "https://github.com/santifer/career-ops",
-      "updated_at": "2026-05-17T14:50:13Z",
+      "created_at": "2026-04-04T18:21:18Z",
+      "updated_at": "2026-05-17T16:47:42Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -436,8 +448,8 @@
       "id": 522158088,
       "full_name": "zhayujie/CowAgent",
       "description": "CowAgent (chatgpt-on-wechat) 是基于大模型的超级AI助理，能主动思考和任务规划、访问操作系统和外部资源、创造和执行Skills、通过长期记忆和知识库不断成长，比OpenClaw更轻量和便捷。同时支持微信、飞书、钉钉、企微、QQ、公众号、网页等接入，可选择DeepSeek/OpenAI/Claude/Gemini/ MiniMax/Qwen/GLM/LinkAI，能处理文本、语音、图片和文件，可快速搭建个人AI助理和企业数字员工。",
-      "stars": 44534,
-      "forks": 10109,
+      "stars": 44541,
+      "forks": 10110,
       "language": "Python",
       "topics": [
         "ai",
@@ -462,7 +474,8 @@
         "weixin"
       ],
       "url": "https://github.com/zhayujie/CowAgent",
-      "updated_at": "2026-05-17T13:55:05Z",
+      "created_at": "2022-08-07T08:33:41Z",
+      "updated_at": "2026-05-17T16:47:32Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -473,7 +486,7 @@
       "id": 969302809,
       "full_name": "hesreallyhim/awesome-claude-code",
       "description": "A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic",
-      "stars": 44018,
+      "stars": 44022,
       "forks": 3773,
       "language": "Python",
       "topics": [
@@ -498,7 +511,8 @@
         "llm"
       ],
       "url": "https://github.com/hesreallyhim/awesome-claude-code",
-      "updated_at": "2026-05-17T14:50:35Z",
+      "created_at": "2025-04-19T20:55:59Z",
+      "updated_at": "2026-05-17T16:37:23Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -511,8 +525,8 @@
       "id": 1223170290,
       "full_name": "nexu-io/open-design",
       "description": "🎨 Local-first, open-source alternative to Anthropic's Claude Design. ⚡ 19 Skills · ✨ 71 brand-grade Design Systems 🖼 Generate web · desktop · mobile prototypes · slides · images · videos · HyperFrames 📦 Sandboxed preview · HTML/PDF/PPTX/MP4 export 🤖 Runs on Claude Code / Codex / Cursor / Gemini / OpenCode / Qwen / Copilot / Hermes / Kimi CLI.",
-      "stars": 43264,
-      "forks": 4934,
+      "stars": 43383,
+      "forks": 4952,
       "language": "TypeScript",
       "topics": [
         "agent-skills",
@@ -537,7 +551,8 @@
         "vibe-coding"
       ],
       "url": "https://github.com/nexu-io/open-design",
-      "updated_at": "2026-05-17T14:55:19Z",
+      "created_at": "2026-04-28T04:25:20Z",
+      "updated_at": "2026-05-17T16:52:16Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -550,8 +565,8 @@
       "id": 1158722119,
       "full_name": "addyosmani/agent-skills",
       "description": "Production-grade engineering skills for AI coding agents.",
-      "stars": 42732,
-      "forks": 4703,
+      "stars": 42777,
+      "forks": 4707,
       "language": "Shell",
       "topics": [
         "agent-skills",
@@ -562,7 +577,8 @@
         "skills"
       ],
       "url": "https://github.com/addyosmani/agent-skills",
-      "updated_at": "2026-05-17T14:52:17Z",
+      "created_at": "2026-02-15T20:20:26Z",
+      "updated_at": "2026-05-17T16:46:36Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -572,8 +588,8 @@
       "id": 1147094660,
       "full_name": "HKUDS/nanobot",
       "description": "\"🐈 nanobot: The Ultra-Lightweight Personal AI Agent\"",
-      "stars": 42639,
-      "forks": 7499,
+      "stars": 42647,
+      "forks": 7502,
       "language": "Python",
       "topics": [
         "ai",
@@ -590,7 +606,8 @@
         "openclaw"
       ],
       "url": "https://github.com/HKUDS/nanobot",
-      "updated_at": "2026-05-17T14:46:44Z",
+      "created_at": "2026-02-01T07:16:15Z",
+      "updated_at": "2026-05-17T16:46:12Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -600,8 +617,8 @@
       "id": 976921297,
       "full_name": "asgeirtj/system_prompts_leaks",
       "description": "Extracted system prompts from ChatGPT (GPT-5.5 Thinking), Claude (Opus 4.7, Opus 4.6, Sonnet 4.6, Claude Code), Gemini (3.1 Pro, 3 Flash, Gemini CLI), Grok (4.3 beta), Perplexity, and more. Updated regularly.",
-      "stars": 40339,
-      "forks": 6711,
+      "stars": 40342,
+      "forks": 6712,
       "language": "",
       "topics": [
         "ai",
@@ -626,7 +643,8 @@
         "xai"
       ],
       "url": "https://github.com/asgeirtj/system_prompts_leaks",
-      "updated_at": "2026-05-17T14:25:20Z",
+      "created_at": "2025-05-03T02:43:56Z",
+      "updated_at": "2026-05-17T16:50:30Z",
       "category": "claude",
       "use_cases": [
         "Prompt 优化"
@@ -647,6 +665,7 @@
         "cursorrules"
       ],
       "url": "https://github.com/PatrickJS/awesome-cursorrules",
+      "created_at": "2024-09-16T15:38:38Z",
       "updated_at": "2026-05-17T14:11:09Z",
       "category": "cursor",
       "use_cases": [
@@ -657,8 +676,8 @@
       "id": 1134426800,
       "full_name": "sickn33/antigravity-awesome-skills",
       "description": "Installable GitHub library of 1,400+ agentic skills for Claude Code, Cursor, Codex CLI, Gemini CLI, Antigravity, and more. Includes installer CLI, bundles, workflows, and official/community skill collections.",
-      "stars": 37783,
-      "forks": 6183,
+      "stars": 37805,
+      "forks": 6185,
       "language": "Python",
       "topics": [
         "agent-skills",
@@ -683,7 +702,8 @@
         "skill-library"
       ],
       "url": "https://github.com/sickn33/antigravity-awesome-skills",
-      "updated_at": "2026-05-17T14:50:41Z",
+      "created_at": "2026-01-14T17:48:09Z",
+      "updated_at": "2026-05-17T16:48:22Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -697,8 +717,8 @@
       "id": 1000362065,
       "full_name": "github/awesome-copilot",
       "description": "Community-contributed instructions, agents, skills, and configurations to help you make the most of GitHub Copilot.",
-      "stars": 33179,
-      "forks": 4046,
+      "stars": 33186,
+      "forks": 4045,
       "language": "Python",
       "topics": [
         "agent-skills",
@@ -711,7 +731,8 @@
         "prompt-engineering"
       ],
       "url": "https://github.com/github/awesome-copilot",
-      "updated_at": "2026-05-17T14:44:49Z",
+      "created_at": "2025-06-11T16:57:39Z",
+      "updated_at": "2026-05-17T16:26:04Z",
       "category": "copilot",
       "use_cases": [
         "资源列表",
@@ -724,8 +745,8 @@
       "id": 1012087571,
       "full_name": "router-for-me/CLIProxyAPI",
       "description": "Wrap Gemini CLI, Antigravity, ChatGPT Codex, Claude Code, Grok Build as an OpenAI/Gemini/Claude/Codex compatible API service, allowing you to enjoy the free Gemini 3.1 Pro, GPT 5.5, Claude model through API",
-      "stars": 33110,
-      "forks": 5505,
+      "stars": 33132,
+      "forks": 5508,
       "language": "Go",
       "topics": [
         "antigravity",
@@ -736,7 +757,8 @@
         "openai"
       ],
       "url": "https://github.com/router-for-me/CLIProxyAPI",
-      "updated_at": "2026-05-17T14:48:04Z",
+      "created_at": "2025-07-01T19:43:27Z",
+      "updated_at": "2026-05-17T16:50:17Z",
       "category": "claude",
       "use_cases": [
         "工具集成",
@@ -747,8 +769,8 @@
       "id": 1126947080,
       "full_name": "kepano/obsidian-skills",
       "description": "Agent skills for Obsidian. Teach your agent to use Markdown, Bases, JSON Canvas, and use the CLI.",
-      "stars": 31709,
-      "forks": 2200,
+      "stars": 31726,
+      "forks": 2203,
       "language": "",
       "topics": [
         "claude",
@@ -762,7 +784,8 @@
         "skills"
       ],
       "url": "https://github.com/kepano/obsidian-skills",
-      "updated_at": "2026-05-17T14:43:46Z",
+      "created_at": "2026-01-02T21:45:11Z",
+      "updated_at": "2026-05-17T16:40:47Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -773,8 +796,8 @@
       "id": 1135212071,
       "full_name": "coreyhaines31/marketingskills",
       "description": "Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.",
-      "stars": 29080,
-      "forks": 4729,
+      "stars": 29098,
+      "forks": 4733,
       "language": "JavaScript",
       "topics": [
         "claude",
@@ -782,7 +805,8 @@
         "marketing"
       ],
       "url": "https://github.com/coreyhaines31/marketingskills",
-      "updated_at": "2026-05-17T14:51:30Z",
+      "created_at": "2026-01-15T19:45:23Z",
+      "updated_at": "2026-05-17T16:46:31Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -794,7 +818,7 @@
       "id": 1140843380,
       "full_name": "mvanhorn/last30days-skill",
       "description": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
-      "stars": 26015,
+      "stars": 26025,
       "forks": 2207,
       "language": "Python",
       "topics": [
@@ -820,7 +844,8 @@
         "youtube"
       ],
       "url": "https://github.com/mvanhorn/last30days-skill",
-      "updated_at": "2026-05-17T14:53:25Z",
+      "created_at": "2026-01-23T20:37:37Z",
+      "updated_at": "2026-05-17T16:45:21Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -833,8 +858,8 @@
       "id": 1128123594,
       "full_name": "volcengine/OpenViking",
       "description": "OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and skills) that Agents need through a file system paradigm, enabling hierarchical context delivery and self-evolving.",
-      "stars": 24003,
-      "forks": 1786,
+      "stars": 24008,
+      "forks": 1788,
       "language": "Python",
       "topics": [
         "agent",
@@ -852,7 +877,8 @@
         "skill"
       ],
       "url": "https://github.com/volcengine/OpenViking",
-      "updated_at": "2026-05-17T14:49:58Z",
+      "created_at": "2026-01-05T07:11:17Z",
+      "updated_at": "2026-05-17T16:23:35Z",
       "category": "other",
       "use_cases": [
         "资源列表",
@@ -867,8 +893,8 @@
       "id": 1079456184,
       "full_name": "K-Dense-AI/scientific-agent-skills",
       "description": "A set of ready to use Agent Skills for research, science, engineering, analysis, finance and writing.",
-      "stars": 23613,
-      "forks": 2523,
+      "stars": 23682,
+      "forks": 2528,
       "language": "Python",
       "topics": [
         "agent-skills",
@@ -890,7 +916,8 @@
         "scientific-visualization"
       ],
       "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
-      "updated_at": "2026-05-17T14:50:44Z",
+      "created_at": "2025-10-19T20:54:15Z",
+      "updated_at": "2026-05-17T16:49:40Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -904,8 +931,8 @@
       "id": 1084853233,
       "full_name": "VoltAgent/awesome-agent-skills",
       "description": "A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.",
-      "stars": 22041,
-      "forks": 2351,
+      "stars": 22046,
+      "forks": 2352,
       "language": "",
       "topics": [
         "agent-skills",
@@ -924,7 +951,8 @@
         "skills"
       ],
       "url": "https://github.com/VoltAgent/awesome-agent-skills",
-      "updated_at": "2026-05-17T14:51:49Z",
+      "created_at": "2025-10-28T08:55:32Z",
+      "updated_at": "2026-05-17T16:34:47Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -936,8 +964,8 @@
       "id": 1127110039,
       "full_name": "OthmanAdi/planning-with-files",
       "description": "Claude Code skill implementing Manus-style persistent markdown planning — the workflow pattern behind the $2B acquisition.",
-      "stars": 21472,
-      "forks": 1901,
+      "stars": 21479,
+      "forks": 1902,
       "language": "Python",
       "topics": [
         "adal",
@@ -961,7 +989,8 @@
         "planning"
       ],
       "url": "https://github.com/OthmanAdi/planning-with-files",
-      "updated_at": "2026-05-17T14:36:12Z",
+      "created_at": "2026-01-03T07:37:28Z",
+      "updated_at": "2026-05-17T16:40:36Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -973,8 +1002,8 @@
       "id": 1118601518,
       "full_name": "Wei-Shaw/sub2api",
       "description": "Sub2API-CRS2 一站式开源中转服务，让 Claude、Openai 、Gemini、Antigravity订阅统一接入，支持拼车共享，更高效分摊成本，原生工具无缝使用。",
-      "stars": 21436,
-      "forks": 4059,
+      "stars": 21449,
+      "forks": 4064,
       "language": "Go",
       "topics": [
         "2api",
@@ -988,7 +1017,8 @@
         "gemini"
       ],
       "url": "https://github.com/Wei-Shaw/sub2api",
-      "updated_at": "2026-05-17T14:55:27Z",
+      "created_at": "2025-12-18T02:26:18Z",
+      "updated_at": "2026-05-17T16:31:32Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -998,12 +1028,13 @@
       "id": 1136666433,
       "full_name": "blader/humanizer",
       "description": "Claude Code skill that removes signs of AI-generated writing from text",
-      "stars": 19238,
+      "stars": 19254,
       "forks": 1831,
       "language": "",
       "topics": [],
       "url": "https://github.com/blader/humanizer",
-      "updated_at": "2026-05-17T14:52:14Z",
+      "created_at": "2026-01-18T05:30:15Z",
+      "updated_at": "2026-05-17T16:49:55Z",
       "category": "claude",
       "use_cases": [
         "写作/内容"
@@ -1013,7 +1044,7 @@
       "id": 1155965274,
       "full_name": "Donchitos/Claude-Code-Game-Studios",
       "description": "Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio hierarchy.",
-      "stars": 19030,
+      "stars": 19033,
       "forks": 2782,
       "language": "Shell",
       "topics": [
@@ -1031,7 +1062,8 @@
         "unreal-engine"
       ],
       "url": "https://github.com/Donchitos/Claude-Code-Game-Studios",
-      "updated_at": "2026-05-17T14:52:02Z",
+      "created_at": "2026-02-12T05:21:38Z",
+      "updated_at": "2026-05-17T15:43:22Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1044,8 +1076,8 @@
       "id": 1143767804,
       "full_name": "zarazhangrui/frontend-slides",
       "description": "Create beautiful slides on the web using Claude's frontend skills",
-      "stars": 17814,
-      "forks": 1482,
+      "stars": 17837,
+      "forks": 1483,
       "language": "Shell",
       "topics": [
         "ai-slides",
@@ -1060,7 +1092,8 @@
         "vibe-coding"
       ],
       "url": "https://github.com/zarazhangrui/frontend-slides",
-      "updated_at": "2026-05-17T14:54:45Z",
+      "created_at": "2026-01-28T00:42:34Z",
+      "updated_at": "2026-05-17T16:52:23Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计"
@@ -1070,8 +1103,8 @@
       "id": 1162099055,
       "full_name": "Leonxlnx/taste-skill",
       "description": "Taste-Skill - gives your AI good taste. stops the AI from generating boring, generic slop ",
-      "stars": 17751,
-      "forks": 1515,
+      "stars": 17768,
+      "forks": 1516,
       "language": "Shell",
       "topics": [
         "agent",
@@ -1089,7 +1122,8 @@
         "vibecoding"
       ],
       "url": "https://github.com/Leonxlnx/taste-skill",
-      "updated_at": "2026-05-17T14:49:57Z",
+      "created_at": "2026-02-19T21:44:05Z",
+      "updated_at": "2026-05-17T16:52:49Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -1101,7 +1135,7 @@
       "id": 975318071,
       "full_name": "AsyncFuncAI/deepwiki-open",
       "description": "Open Source DeepWiki: AI-Powered Wiki Generator for GitHub/Gitlab/Bitbucket Repositories. Join the discord: https://discord.gg/gMwThUMeme",
-      "stars": 16398,
+      "stars": 16402,
       "forks": 1831,
       "language": "Python",
       "topics": [
@@ -1118,7 +1152,8 @@
         "wiki"
       ],
       "url": "https://github.com/AsyncFuncAI/deepwiki-open",
-      "updated_at": "2026-05-17T14:55:13Z",
+      "created_at": "2025-04-30T06:01:29Z",
+      "updated_at": "2026-05-17T16:40:29Z",
       "category": "codex",
       "use_cases": [
         "代码生成",
@@ -1130,8 +1165,8 @@
       "id": 1079084637,
       "full_name": "alirezarezvani/claude-skills",
       "description": "263+ Claude Code skills & agent plugins for Claude Code, Codex, Gemini CLI, Cursor, and 8 more coding agents — engineering, marketing, product, compliance, C-level advisory.",
-      "stars": 15144,
-      "forks": 2052,
+      "stars": 15153,
+      "forks": 2054,
       "language": "Python",
       "topics": [
         "agent-plugins",
@@ -1156,7 +1191,8 @@
         "prompt-engineering"
       ],
       "url": "https://github.com/alirezarezvani/claude-skills",
-      "updated_at": "2026-05-17T14:54:21Z",
+      "created_at": "2025-10-19T04:04:05Z",
+      "updated_at": "2026-05-17T16:41:49Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1170,7 +1206,7 @@
       "full_name": "wasp-lang/open-saas",
       "description": "A 100% free modern JS SaaS boilerplate (React, NodeJS, Prisma). Full-featured: Auth (email, google, github, slack, MS), Email sending, Background jobs, Landing page, Payments (Stripe, Polar.sh), Shadcn UI, S3 file upload. AI-ready with tailored AGENTS.md, skills, and Claude Code plugin. One cmd deploy. Powered by Wasp full-stack framework.",
       "stars": 14447,
-      "forks": 1715,
+      "forks": 1714,
       "language": "TypeScript",
       "topics": [
         "ai",
@@ -1195,7 +1231,8 @@
         "typescript"
       ],
       "url": "https://github.com/wasp-lang/open-saas",
-      "updated_at": "2026-05-17T14:46:11Z",
+      "created_at": "2023-12-01T13:54:36Z",
+      "updated_at": "2026-05-17T16:11:20Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1209,12 +1246,13 @@
       "id": 1215145625,
       "full_name": "alchaincyf/huashu-design",
       "description": "Huashu Design · HTML-native design skill for Claude Code · Claude Code 里 HTML 原生的设计 skill · 高保真原型 / 幻灯片 / 动画 + 20 设计哲学 + 5 维评审 + MP4 导出 · Agent-agnostic",
-      "stars": 14025,
-      "forks": 1924,
+      "stars": 14039,
+      "forks": 1926,
       "language": "HTML",
       "topics": [],
       "url": "https://github.com/alchaincyf/huashu-design",
-      "updated_at": "2026-05-17T14:51:19Z",
+      "created_at": "2026-04-19T14:42:06Z",
+      "updated_at": "2026-05-17T16:46:10Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1225,8 +1263,8 @@
       "id": 931950959,
       "full_name": "liyupi/ai-guide",
       "description": "程序员鱼皮的 AI 资源大全 + Vibe Coding 零基础教程，分享 OpenClaw 保姆级教程、大模型玩法（DeepSeek / GPT / Gemini / Claude）、最新 AI 资讯、Prompt 提示词大全、AI 知识百科（Agent Skills / RAG / MCP / A2A）、AI 编程教程（Harness Engineering）、AI 工具用法（Cursor / Claude Code / TRAE / Codex / Copilot）、AI 开发框架教程（Spring AI / LangChain）、AI 产品变现指南，帮你快速掌握 AI 技术，走在时代前沿。本项目为开源文档，已升级为鱼皮 AI 导航网站",
-      "stars": 14001,
-      "forks": 1578,
+      "stars": 14006,
+      "forks": 1581,
       "language": "JavaScript",
       "topics": [
         "ai",
@@ -1251,7 +1289,8 @@
         "vuepress"
       ],
       "url": "https://github.com/liyupi/ai-guide",
-      "updated_at": "2026-05-17T14:45:55Z",
+      "created_at": "2025-02-13T05:47:46Z",
+      "updated_at": "2026-05-17T16:09:50Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1288,7 +1327,8 @@
         "web-scraping"
       ],
       "url": "https://github.com/yusufkaraaslan/Skill_Seekers",
-      "updated_at": "2026-05-17T12:28:34Z",
+      "created_at": "2025-10-17T14:43:48Z",
+      "updated_at": "2026-05-17T16:49:54Z",
       "category": "claude",
       "use_cases": [
         "文档生成",
@@ -1300,8 +1340,8 @@
       "id": 1129786550,
       "full_name": "teng-lin/notebooklm-py",
       "description": "Unofficial Python API and agentic skill for Google NotebookLM. Full programmatic access to NotebookLM's features—including capabilities the web UI doesn't expose—via Python, CLI, and AI agents like Claude Code, Codex, and OpenClaw.",
-      "stars": 13400,
-      "forks": 1878,
+      "stars": 13408,
+      "forks": 1879,
       "language": "Python",
       "topics": [
         "agentic-skill",
@@ -1320,7 +1360,8 @@
         "skills"
       ],
       "url": "https://github.com/teng-lin/notebooklm-py",
-      "updated_at": "2026-05-17T14:44:06Z",
+      "created_at": "2026-01-07T15:27:19Z",
+      "updated_at": "2026-05-17T16:48:55Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1331,8 +1372,8 @@
       "id": 1077850011,
       "full_name": "travisvn/awesome-claude-skills",
       "description": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows — particularly Claude Code",
-      "stars": 12629,
-      "forks": 1372,
+      "stars": 12631,
+      "forks": 1370,
       "language": "",
       "topics": [
         "agentic-coding",
@@ -1348,7 +1389,8 @@
         "claudeskills"
       ],
       "url": "https://github.com/travisvn/awesome-claude-skills",
-      "updated_at": "2026-05-17T14:25:04Z",
+      "created_at": "2025-10-16T20:42:39Z",
+      "updated_at": "2026-05-17T16:47:59Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -1360,8 +1402,8 @@
       "id": 1097695258,
       "full_name": "steipete/CodexBar",
       "description": "Show usage stats for OpenAI Codex and Claude Code, without having to login.",
-      "stars": 12550,
-      "forks": 978,
+      "stars": 12569,
+      "forks": 980,
       "language": "Swift",
       "topics": [
         "ai",
@@ -1370,7 +1412,8 @@
         "swift"
       ],
       "url": "https://github.com/steipete/CodexBar",
-      "updated_at": "2026-05-17T14:52:01Z",
+      "created_at": "2025-11-16T17:00:44Z",
+      "updated_at": "2026-05-17T16:41:31Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -1380,7 +1423,7 @@
       "id": 1135791677,
       "full_name": "lsdefine/GenericAgent",
       "description": "Self-evolving agent: grows skill tree from 3.3K-line seed, achieving full system control with 6x less token consumption",
-      "stars": 11636,
+      "stars": 11643,
       "forks": 1334,
       "language": "Python",
       "topics": [
@@ -1401,7 +1444,8 @@
         "task-automation"
       ],
       "url": "https://github.com/lsdefine/GenericAgent",
-      "updated_at": "2026-05-17T14:09:54Z",
+      "created_at": "2026-01-16T15:45:24Z",
+      "updated_at": "2026-05-17T16:26:43Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1412,48 +1456,11 @@
       ]
     },
     {
-      "id": 1174369519,
-      "full_name": "jnMetaCode/agency-agents-zh",
-      "description": "🎭 211 个即插即用的 AI 专家角色 — 支持 Hermes Agent/Claude Code/Cursor/Copilot 等 16 种工具，覆盖工程/设计/营销/金融等 18 个部门。含 46 个中国市场原创智能体（小红书/抖音/微信/飞书/钉钉等）",
-      "stars": 11430,
-      "forks": 2109,
-      "language": "Shell",
-      "topics": [
-        "agency-orchestrator",
-        "agent-definitions",
-        "ai-agents",
-        "ai-roles",
-        "chinese",
-        "claude",
-        "claude-code",
-        "copilot-agent",
-        "cursor-rules",
-        "deepseek",
-        "hermes-agent",
-        "llm",
-        "multi-agent",
-        "no-code",
-        "prompt-engineering",
-        "qwen",
-        "system-prompt",
-        "workbuddy",
-        "workflow"
-      ],
-      "url": "https://github.com/jnMetaCode/agency-agents-zh",
-      "updated_at": "2026-05-17T14:54:58Z",
-      "category": "claude",
-      "use_cases": [
-        "AI 代理",
-        "工作流自动化",
-        "Prompt 优化"
-      ]
-    },
-    {
       "id": 1128025899,
       "full_name": "decolua/9router",
       "description": "Unlimited FREE AI coding. Connect Claude Code, Codex, Cursor, Cline, Copilot, Antigravity to FREE Claude/GPT/Gemini via 40+ providers. Auto-fallback, RTK -40% tokens, never hit limits.",
-      "stars": 11406,
-      "forks": 1741,
+      "stars": 11456,
+      "forks": 1750,
       "language": "JavaScript",
       "topics": [
         "ai-agents",
@@ -1478,7 +1485,8 @@
         "token-saver"
       ],
       "url": "https://github.com/decolua/9router",
-      "updated_at": "2026-05-17T14:49:52Z",
+      "created_at": "2026-01-05T02:59:30Z",
+      "updated_at": "2026-05-17T16:45:12Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1488,11 +1496,49 @@
       ]
     },
     {
+      "id": 1174369519,
+      "full_name": "jnMetaCode/agency-agents-zh",
+      "description": "🎭 211 个即插即用的 AI 专家角色 — 支持 Hermes Agent/Claude Code/Cursor/Copilot 等 16 种工具，覆盖工程/设计/营销/金融等 18 个部门。含 46 个中国市场原创智能体（小红书/抖音/微信/飞书/钉钉等）",
+      "stars": 11452,
+      "forks": 2112,
+      "language": "Shell",
+      "topics": [
+        "agency-orchestrator",
+        "agent-definitions",
+        "ai-agents",
+        "ai-roles",
+        "chinese",
+        "claude",
+        "claude-code",
+        "copilot-agent",
+        "cursor-rules",
+        "deepseek",
+        "hermes-agent",
+        "llm",
+        "multi-agent",
+        "no-code",
+        "prompt-engineering",
+        "qwen",
+        "system-prompt",
+        "workbuddy",
+        "workflow"
+      ],
+      "url": "https://github.com/jnMetaCode/agency-agents-zh",
+      "created_at": "2026-03-06T11:11:51Z",
+      "updated_at": "2026-05-17T16:46:42Z",
+      "category": "claude",
+      "use_cases": [
+        "AI 代理",
+        "工作流自动化",
+        "Prompt 优化"
+      ]
+    },
+    {
       "id": 1177608268,
       "full_name": "wanshuiyin/Auto-claude-code-research-in-sleep",
       "description": "ARIS ⚔️ (Auto-Research-In-Sleep) — Lightweight Markdown-only skills for autonomous ML research: cross-model review loops, idea discovery, and experiment automation. No framework, no lock-in — works with Claude Code, Codex, OpenClaw, or any LLM agent.",
-      "stars": 9652,
-      "forks": 931,
+      "stars": 9675,
+      "forks": 933,
       "language": "Python",
       "topics": [
         "ai-research",
@@ -1517,7 +1563,8 @@
         "research-automation"
       ],
       "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
-      "updated_at": "2026-05-17T14:43:58Z",
+      "created_at": "2026-03-10T07:31:45Z",
+      "updated_at": "2026-05-17T16:48:34Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1532,12 +1579,13 @@
       "id": 1086161926,
       "full_name": "diet103/claude-code-infrastructure-showcase",
       "description": "Examples of my Claude Code infrastructure with skill auto-activation, hooks, and agents",
-      "stars": 9643,
+      "stars": 9644,
       "forks": 1224,
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/diet103/claude-code-infrastructure-showcase",
-      "updated_at": "2026-05-17T12:56:15Z",
+      "created_at": "2025-10-30T03:12:16Z",
+      "updated_at": "2026-05-17T16:31:12Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1548,8 +1596,8 @@
       "id": 1219042200,
       "full_name": "op7418/guizang-ppt-skill",
       "description": "AI-agent Skill for generating polished HTML slide decks: editorial magazine and Swiss layouts, image prompts, social covers, and a WebGL/low-power presentation runtime.",
-      "stars": 9441,
-      "forks": 769,
+      "stars": 9469,
+      "forks": 770,
       "language": "HTML",
       "topics": [
         "ai-agent",
@@ -1564,7 +1612,8 @@
         "web-ppt"
       ],
       "url": "https://github.com/op7418/guizang-ppt-skill",
-      "updated_at": "2026-05-17T14:52:22Z",
+      "created_at": "2026-04-23T13:23:07Z",
+      "updated_at": "2026-05-17T16:52:05Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -1574,10 +1623,39 @@
       ]
     },
     {
+      "id": 1167300963,
+      "full_name": "Imbad0202/academic-research-skills",
+      "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
+      "stars": 9158,
+      "forks": 1018,
+      "language": "Python",
+      "topics": [
+        "academic-pipeline",
+        "academic-writing",
+        "ai-research",
+        "claude",
+        "claude-code",
+        "literature-review",
+        "peer-review",
+        "prompt-engineering"
+      ],
+      "url": "https://github.com/Imbad0202/academic-research-skills",
+      "created_at": "2026-02-26T06:31:01Z",
+      "updated_at": "2026-05-17T16:52:19Z",
+      "category": "claude",
+      "use_cases": [
+        "工作流自动化",
+        "数据分析",
+        "写作/内容",
+        "搜索",
+        "Prompt 优化"
+      ]
+    },
+    {
       "id": 1014729376,
       "full_name": "MemTensor/MemOS",
       "description": "Self-evolving memory OS for LLM & AI Agents: ultra-persistent memory, hybrid-retrieval, and cross-task skill reuse, with 35.24% token savings",
-      "stars": 9143,
+      "stars": 9145,
       "forks": 819,
       "language": "TypeScript",
       "topics": [
@@ -1603,7 +1681,8 @@
         "token-savings"
       ],
       "url": "https://github.com/MemTensor/MemOS",
-      "updated_at": "2026-05-17T14:44:34Z",
+      "created_at": "2025-07-06T09:51:27Z",
+      "updated_at": "2026-05-17T16:18:47Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1643,6 +1722,7 @@
         "vector-database"
       ],
       "url": "https://github.com/activeloopai/deeplake",
+      "created_at": "2019-08-09T06:17:59Z",
       "updated_at": "2026-05-17T10:30:10Z",
       "category": "other",
       "use_cases": [
@@ -1655,7 +1735,7 @@
       "id": 1080070047,
       "full_name": "Jeffallan/claude-skills",
       "description": "66 Specialized Skills for Full-Stack Developers. Transform Claude Code into your expert pair programmer.",
-      "stars": 9116,
+      "stars": 9118,
       "forks": 768,
       "language": "Python",
       "topics": [
@@ -1666,7 +1746,8 @@
         "claude-skills"
       ],
       "url": "https://github.com/Jeffallan/claude-skills",
-      "updated_at": "2026-05-17T14:52:15Z",
+      "created_at": "2025-10-20T20:27:22Z",
+      "updated_at": "2026-05-17T16:46:17Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -1678,10 +1759,11 @@
       "full_name": "BehiSecc/awesome-claude-skills",
       "description": "A curated list of Claude Skills.",
       "stars": 9112,
-      "forks": 1130,
+      "forks": 1129,
       "language": "",
       "topics": [],
       "url": "https://github.com/BehiSecc/awesome-claude-skills",
+      "created_at": "2025-10-17T15:05:35Z",
       "updated_at": "2026-05-17T14:18:31Z",
       "category": "claude",
       "use_cases": [
@@ -1689,38 +1771,10 @@
       ]
     },
     {
-      "id": 1167300963,
-      "full_name": "Imbad0202/academic-research-skills",
-      "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
-      "stars": 9066,
-      "forks": 1009,
-      "language": "Python",
-      "topics": [
-        "academic-pipeline",
-        "academic-writing",
-        "ai-research",
-        "claude",
-        "claude-code",
-        "literature-review",
-        "peer-review",
-        "prompt-engineering"
-      ],
-      "url": "https://github.com/Imbad0202/academic-research-skills",
-      "updated_at": "2026-05-17T14:55:17Z",
-      "category": "claude",
-      "use_cases": [
-        "工作流自动化",
-        "数据分析",
-        "写作/内容",
-        "搜索",
-        "Prompt 优化"
-      ]
-    },
-    {
       "id": 1088558237,
       "full_name": "Orchestra-Research/AI-Research-SKILLs",
       "description": "Comprehensive open-source library of AI research and engineering skills for any AI model. Package the skills and your claude code/codex/gemini agent will be an AI research agent with full horsepower. Maintained by Orchestra Research.",
-      "stars": 8539,
+      "stars": 8542,
       "forks": 652,
       "language": "TeX",
       "topics": [
@@ -1740,7 +1794,8 @@
         "vllm"
       ],
       "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
-      "updated_at": "2026-05-17T14:04:27Z",
+      "created_at": "2025-11-03T06:13:06Z",
+      "updated_at": "2026-05-17T16:29:30Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -1772,6 +1827,7 @@
         "xcode-extensions"
       ],
       "url": "https://github.com/intitni/CopilotForXcode",
+      "created_at": "2022-12-05T16:08:32Z",
       "updated_at": "2026-05-16T06:45:08Z",
       "category": "copilot",
       "use_cases": [
@@ -1795,6 +1851,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/automazeio/ccpm",
+      "created_at": "2025-08-18T23:20:08Z",
       "updated_at": "2026-05-17T12:13:39Z",
       "category": "claude",
       "use_cases": [
@@ -1806,8 +1863,8 @@
       "id": 1135492298,
       "full_name": "jlcodes99/cockpit-tools",
       "description": " 🚀 通用 AI IDE 账号管理工具：支持 Antigravity / Codex / GitHub Copilot / Windsurf / Kiro / Cursor / Gemini-cli / CodeBuddy，多账号切换、配额监控、自动唤醒与多开实例管理。 🚀 Universal AI IDE account manager for Antigravity / Codex / GitHub Copilot / Windsurf / Kiro / Cursor / Gemini-cli / CodeBuddy, with multi-account switching, quota monitoring, wake-up automation, and multi-insta",
-      "stars": 8015,
-      "forks": 722,
+      "stars": 8019,
+      "forks": 724,
       "language": "Rust",
       "topics": [
         "account-manager",
@@ -1821,7 +1878,8 @@
         "windsurf"
       ],
       "url": "https://github.com/jlcodes99/cockpit-tools",
-      "updated_at": "2026-05-17T14:47:47Z",
+      "created_at": "2026-01-16T07:09:32Z",
+      "updated_at": "2026-05-17T16:42:06Z",
       "category": "codex",
       "use_cases": [
         "工作流自动化"
@@ -1831,7 +1889,7 @@
       "id": 725266899,
       "full_name": "microsoft/Mastering-GitHub-Copilot-for-Paired-Programming",
       "description": "A multi-module course teaching everything you need to know about using GitHub Copilot as an AI Peer Programming resource.",
-      "stars": 7895,
+      "stars": 7897,
       "forks": 1730,
       "language": "Python",
       "topics": [
@@ -1857,7 +1915,8 @@
         "vscode"
       ],
       "url": "https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming",
-      "updated_at": "2026-05-17T08:00:07Z",
+      "created_at": "2023-11-29T19:35:47Z",
+      "updated_at": "2026-05-17T15:31:38Z",
       "category": "copilot",
       "use_cases": [
         "UI/UX 设计"
@@ -1867,7 +1926,7 @@
       "id": 1022937426,
       "full_name": "justlovemaki/AIClient2API",
       "description": "Simulates Gemini CLI, Antigravity, Codex, Grok, and Kiro client requests, compatible with the OpenAI API. It supports thousands of Gemini model requests per day and offers free use of the built-in Claude model in Kiro. Easily connect to any client via the API, making AI development more efficient!",
-      "stars": 7873,
+      "stars": 7874,
       "forks": 1246,
       "language": "JavaScript",
       "topics": [
@@ -1875,7 +1934,8 @@
         "free"
       ],
       "url": "https://github.com/justlovemaki/AIClient2API",
-      "updated_at": "2026-05-17T13:04:38Z",
+      "created_at": "2025-07-20T07:05:56Z",
+      "updated_at": "2026-05-17T16:48:17Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -1885,12 +1945,13 @@
       "id": 1137212306,
       "full_name": "op7418/Humanizer-zh",
       "description": "Humanizer 的汉化版本，Claude Code Skills，旨在消除文本中 AI 生成的痕迹。",
-      "stars": 7728,
+      "stars": 7744,
       "forks": 625,
       "language": "",
       "topics": [],
       "url": "https://github.com/op7418/Humanizer-zh",
-      "updated_at": "2026-05-17T14:53:31Z",
+      "created_at": "2026-01-19T04:23:44Z",
+      "updated_at": "2026-05-17T16:41:31Z",
       "category": "claude",
       "use_cases": [
         "写作/内容"
@@ -1900,8 +1961,8 @@
       "id": 1179046874,
       "full_name": "nidhinjs/prompt-master",
       "description": "A Claude skill that writes the accurate prompts for any AI tool. Zero tokens or credits wasted. Full context and memory retention",
-      "stars": 7645,
-      "forks": 833,
+      "stars": 7663,
+      "forks": 835,
       "language": "",
       "topics": [
         "claude-ai",
@@ -1910,7 +1971,8 @@
         "prompt-engineering"
       ],
       "url": "https://github.com/nidhinjs/prompt-master",
-      "updated_at": "2026-05-17T14:52:36Z",
+      "created_at": "2026-03-11T16:25:43Z",
+      "updated_at": "2026-05-17T16:52:05Z",
       "category": "claude",
       "use_cases": [
         "知识管理",
@@ -1927,6 +1989,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/zubair-trabzada/geo-seo-claude",
+      "created_at": "2026-02-18T09:01:07Z",
       "updated_at": "2026-05-17T14:26:15Z",
       "category": "claude",
       "use_cases": [
@@ -1963,6 +2026,7 @@
         "workflow"
       ],
       "url": "https://github.com/refly-ai/refly",
+      "created_at": "2024-02-19T11:04:30Z",
       "updated_at": "2026-05-17T14:51:04Z",
       "category": "claude",
       "use_cases": [
@@ -1976,7 +2040,7 @@
       "id": 1152014594,
       "full_name": "AgriciDaniel/claude-seo",
       "description": "Universal SEO skill for Claude Code. 25 sub-skills + 18 sub-agents covering technical SEO, E-E-A-T, schema, GEO/AEO, backlinks, local SEO, maps intelligence, semantic clustering, e-commerce SEO, international SEO, Google APIs, and PDF/Excel reporting. Optional DataForSEO, Firecrawl, and Banana extensions.",
-      "stars": 6667,
+      "stars": 6670,
       "forks": 1014,
       "language": "Python",
       "topics": [
@@ -1989,7 +2053,8 @@
         "seo"
       ],
       "url": "https://github.com/AgriciDaniel/claude-seo",
-      "updated_at": "2026-05-17T14:17:47Z",
+      "created_at": "2026-02-07T08:17:38Z",
+      "updated_at": "2026-05-17T16:50:20Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2002,12 +2067,13 @@
       "id": 1184985738,
       "full_name": "eze-is/web-access",
       "description": "给 Claude Code 装上完整联网能力的 skill：三层通道调度 + 浏览器 CDP + 并行分治",
-      "stars": 6516,
-      "forks": 496,
+      "stars": 6521,
+      "forks": 497,
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/eze-is/web-access",
-      "updated_at": "2026-05-17T14:34:34Z",
+      "created_at": "2026-03-18T05:54:57Z",
+      "updated_at": "2026-05-17T16:45:58Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -2017,12 +2083,13 @@
       "id": 1079107863,
       "full_name": "PleasePrompto/notebooklm-skill",
       "description": "Use this skill to enable Claude Code to communicate directly with your Google NotebookLM notebooks. Query your uploaded documents and get source-grounded, citation-backed answers from Gemini. Features browser automation, library management, persistent authentication, and answers exclusively from your own knowledge base.",
-      "stars": 6494,
-      "forks": 722,
+      "stars": 6496,
+      "forks": 723,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/PleasePrompto/notebooklm-skill",
-      "updated_at": "2026-05-17T14:37:46Z",
+      "created_at": "2025-10-19T05:36:13Z",
+      "updated_at": "2026-05-17T16:16:03Z",
       "category": "claude",
       "use_cases": [
         "工作流自动化",
@@ -2033,7 +2100,7 @@
       "id": 1166506614,
       "full_name": "mukul975/Anthropic-Cybersecurity-Skills",
       "description": "754 structured cybersecurity skills for AI agents · Mapped to 5 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND & NIST AI RMF · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 26 security domains · Apache 2.0",
-      "stars": 6371,
+      "stars": 6375,
       "forks": 886,
       "language": "Python",
       "topics": [
@@ -2059,7 +2126,8 @@
         "threat-intelligence"
       ],
       "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills",
-      "updated_at": "2026-05-17T14:16:33Z",
+      "created_at": "2026-02-25T09:47:50Z",
+      "updated_at": "2026-05-17T16:18:51Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -2073,7 +2141,7 @@
       "id": 1108682714,
       "full_name": "SawyerHood/dev-browser",
       "description": "A Claude Skill to give your agent the ability to use a web browser",
-      "stars": 6112,
+      "stars": 6113,
       "forks": 391,
       "language": "TypeScript",
       "topics": [
@@ -2082,7 +2150,8 @@
         "skills"
       ],
       "url": "https://github.com/SawyerHood/dev-browser",
-      "updated_at": "2026-05-17T14:37:46Z",
+      "created_at": "2025-12-02T19:20:20Z",
+      "updated_at": "2026-05-17T15:14:56Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -2107,6 +2176,7 @@
         "xcode"
       ],
       "url": "https://github.com/github/CopilotForXcode",
+      "created_at": "2024-09-19T17:48:15Z",
       "updated_at": "2026-05-17T02:40:30Z",
       "category": "copilot",
       "use_cases": [
@@ -2117,8 +2187,8 @@
       "id": 1214028719,
       "full_name": "OpenCoworkAI/open-codesign",
       "description": "Open-source Claude Design alternative. One-click import your Claude Code / Codex API key. Prompt → prototype / slides / PDF. Multi-model (Claude, GPT, Gemini, Kimi, GLM, Ollama). BYOK, local-first, MIT.",
-      "stars": 6021,
-      "forks": 635,
+      "stars": 6024,
+      "forks": 636,
       "language": "TypeScript",
       "topics": [
         "ai-design",
@@ -2143,7 +2213,8 @@
         "ui-generator"
       ],
       "url": "https://github.com/OpenCoworkAI/open-codesign",
-      "updated_at": "2026-05-17T14:25:58Z",
+      "created_at": "2026-04-18T03:14:33Z",
+      "updated_at": "2026-05-17T16:40:39Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计",
@@ -2181,6 +2252,7 @@
         "zcf"
       ],
       "url": "https://github.com/UfoMiao/zcf",
+      "created_at": "2025-07-30T06:09:00Z",
       "updated_at": "2026-05-17T14:30:06Z",
       "category": "claude",
       "use_cases": [
@@ -2198,6 +2270,7 @@
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/ChrisWiles/claude-code-showcase",
+      "created_at": "2026-01-06T18:51:02Z",
       "updated_at": "2026-05-17T10:06:55Z",
       "category": "claude",
       "use_cases": [
@@ -2227,6 +2300,7 @@
         "sdk"
       ],
       "url": "https://github.com/openai-php/client",
+      "created_at": "2022-09-25T22:08:39Z",
       "updated_at": "2026-05-17T04:18:48Z",
       "category": "codex",
       "use_cases": [
@@ -2237,7 +2311,7 @@
       "id": 1151411061,
       "full_name": "op7418/CodePilot",
       "description": "A multi-model AI agent desktop client — connect any AI provider, extend with MCP & skills, control from your phone. Built with Electron + Next.js.",
-      "stars": 5728,
+      "stars": 5729,
       "forks": 619,
       "language": "TypeScript",
       "topics": [
@@ -2251,7 +2325,8 @@
         "nextjs"
       ],
       "url": "https://github.com/op7418/CodePilot",
-      "updated_at": "2026-05-17T13:50:33Z",
+      "created_at": "2026-02-06T12:38:55Z",
+      "updated_at": "2026-05-17T16:25:30Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2268,6 +2343,7 @@
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/SimoneAvogadro/android-reverse-engineering-skill",
+      "created_at": "2026-02-02T15:57:57Z",
       "updated_at": "2026-05-17T13:52:31Z",
       "category": "claude",
       "use_cases": [
@@ -2278,12 +2354,13 @@
       "id": 1135847870,
       "full_name": "google-labs-code/stitch-skills",
       "description": "A library of Agent Skills designed to work with the Stitch MCP server. Each skill follows the Agent Skills open standard, for compatibility with coding agents such as Antigravity, Gemini CLI, Claude Code, Cursor.",
-      "stars": 5446,
+      "stars": 5449,
       "forks": 669,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/google-labs-code/stitch-skills",
-      "updated_at": "2026-05-17T14:00:07Z",
+      "created_at": "2026-01-16T17:17:17Z",
+      "updated_at": "2026-05-17T16:34:08Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2306,6 +2383,7 @@
         "stable-diffusion"
       ],
       "url": "https://github.com/phodal/understand-prompt",
+      "created_at": "2023-02-19T01:22:52Z",
       "updated_at": "2026-05-16T09:13:55Z",
       "category": "copilot",
       "use_cases": [
@@ -2323,6 +2401,7 @@
         "agent-skills"
       ],
       "url": "https://github.com/trailofbits/skills",
+      "created_at": "2026-01-14T18:23:21Z",
       "updated_at": "2026-05-17T13:55:10Z",
       "category": "claude",
       "use_cases": [
@@ -2350,6 +2429,7 @@
         "tpu-acceleration"
       ],
       "url": "https://github.com/salesforce/CodeGen",
+      "created_at": "2022-03-28T20:48:29Z",
       "updated_at": "2026-05-15T04:44:08Z",
       "category": "codex",
       "use_cases": [
@@ -2361,7 +2441,7 @@
       "full_name": "czlonkowski/n8n-skills",
       "description": "n8n skillset for Claude Code to build flawless n8n workflows",
       "stars": 5018,
-      "forks": 865,
+      "forks": 866,
       "language": "Shell",
       "topics": [
         "ai-agents",
@@ -2369,6 +2449,7 @@
         "workflow-automation"
       ],
       "url": "https://github.com/czlonkowski/n8n-skills",
+      "created_at": "2025-10-20T05:51:27Z",
       "updated_at": "2026-05-17T10:51:31Z",
       "category": "claude",
       "use_cases": [
@@ -2380,7 +2461,7 @@
       "id": 1155383451,
       "full_name": "AgriciDaniel/claude-ads",
       "description": "Comprehensive paid advertising audit & optimization skill for Claude Code. 250+ checks across Google, Meta, YouTube, LinkedIn, TikTok, Microsoft & Apple Ads with weighted scoring, parallel agents, industry templates, and AI creative generation.",
-      "stars": 4935,
+      "stars": 4939,
       "forks": 764,
       "language": "Python",
       "topics": [
@@ -2392,7 +2473,8 @@
         "open-source"
       ],
       "url": "https://github.com/AgriciDaniel/claude-ads",
-      "updated_at": "2026-05-17T13:47:41Z",
+      "created_at": "2026-02-11T13:01:49Z",
+      "updated_at": "2026-05-17T16:16:42Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -2406,8 +2488,8 @@
       "id": 1124920990,
       "full_name": "heilcheng/awesome-agent-skills",
       "description": "Tutorials, Guides and Agent Skills Directories",
-      "stars": 4857,
-      "forks": 451,
+      "stars": 4858,
+      "forks": 452,
       "language": "TypeScript",
       "topics": [
         "agent-skills",
@@ -2428,7 +2510,8 @@
         "vscode"
       ],
       "url": "https://github.com/heilcheng/awesome-agent-skills",
-      "updated_at": "2026-05-17T14:30:02Z",
+      "created_at": "2025-12-29T21:13:40Z",
+      "updated_at": "2026-05-17T15:53:53Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -2441,7 +2524,7 @@
       "id": 1179363570,
       "full_name": "tw93/Waza",
       "description": "🥷 Engineering habits you already know, turned into skills Claude can run.",
-      "stars": 4846,
+      "stars": 4847,
       "forks": 293,
       "language": "Shell",
       "topics": [
@@ -2456,7 +2539,8 @@
         "superpowers"
       ],
       "url": "https://github.com/tw93/Waza",
-      "updated_at": "2026-05-17T14:31:17Z",
+      "created_at": "2026-03-12T00:35:56Z",
+      "updated_at": "2026-05-17T15:53:41Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计"
@@ -2466,7 +2550,7 @@
       "id": 974157595,
       "full_name": "ModelEngine-Group/nexent",
       "description": "Nexent is a zero-code platform for auto-generating production-grade AI agents using Harness Engineering principles — unified tools, skills, memory, and orchestration with built-in constraints, feedback loops, and control planes.",
-      "stars": 4527,
+      "stars": 4528,
       "forks": 593,
       "language": "Python",
       "topics": [
@@ -2484,7 +2568,8 @@
         "rag"
       ],
       "url": "https://github.com/ModelEngine-Group/nexent",
-      "updated_at": "2026-05-17T14:17:55Z",
+      "created_at": "2025-04-28T10:44:33Z",
+      "updated_at": "2026-05-17T15:14:34Z",
       "category": "other",
       "use_cases": [
         "AI 代理",
@@ -2498,7 +2583,7 @@
       "id": 1180917769,
       "full_name": "uditgoenka/autoresearch",
       "description": "Claude Autoresearch Skill — Autonomous goal-directed iteration for Claude Code. Inspired by Karpathy's autoresearch. Modify → Verify → Keep/Discard → Repeat forever.",
-      "stars": 4496,
+      "stars": 4497,
       "forks": 345,
       "language": "Shell",
       "topics": [
@@ -2513,7 +2598,8 @@
         "skill"
       ],
       "url": "https://github.com/uditgoenka/autoresearch",
-      "updated_at": "2026-05-17T10:25:11Z",
+      "created_at": "2026-03-13T14:51:54Z",
+      "updated_at": "2026-05-17T15:34:03Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2525,7 +2611,7 @@
       "id": 1150205470,
       "full_name": "deanpeters/Product-Manager-Skills",
       "description": "Product Management skills framework built on battle-tested methods for Claude Code, Cowork, Codex, and AI agents.",
-      "stars": 4331,
+      "stars": 4332,
       "forks": 559,
       "language": "Shell",
       "topics": [
@@ -2536,7 +2622,8 @@
         "product-management"
       ],
       "url": "https://github.com/deanpeters/Product-Manager-Skills",
-      "updated_at": "2026-05-17T12:41:26Z",
+      "created_at": "2026-02-05T02:16:46Z",
+      "updated_at": "2026-05-17T16:51:34Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -2546,7 +2633,7 @@
       "id": 1079345325,
       "full_name": "CaviraOSS/OpenMemory",
       "description": "Local persistent memory store for LLM applications including claude desktop, github copilot, codex, antigravity, etc.",
-      "stars": 4115,
+      "stars": 4116,
       "forks": 470,
       "language": "TypeScript",
       "topics": [
@@ -2572,7 +2659,8 @@
         "vector-database"
       ],
       "url": "https://github.com/CaviraOSS/OpenMemory",
-      "updated_at": "2026-05-17T03:54:29Z",
+      "created_at": "2025-10-19T16:12:49Z",
+      "updated_at": "2026-05-17T16:31:17Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2585,7 +2673,7 @@
       "id": 477171675,
       "full_name": "zbirenbaum/copilot.lua",
       "description": "Fully featured & enhanced replacement for copilot.vim complete with API for interacting with Github Copilot",
-      "stars": 4077,
+      "stars": 4078,
       "forks": 156,
       "language": "Lua",
       "topics": [
@@ -2597,7 +2685,8 @@
         "nvim-cmp"
       ],
       "url": "https://github.com/zbirenbaum/copilot.lua",
-      "updated_at": "2026-05-17T08:29:30Z",
+      "created_at": "2022-04-02T21:07:51Z",
+      "updated_at": "2026-05-17T15:10:39Z",
       "category": "copilot",
       "use_cases": [
         "通用工具"
@@ -2607,7 +2696,7 @@
       "id": 915108897,
       "full_name": "ericc-ch/copilot-api",
       "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
-      "stars": 3945,
+      "stars": 3943,
       "forks": 607,
       "language": "TypeScript",
       "topics": [
@@ -2617,7 +2706,8 @@
         "reverse-engineering"
       ],
       "url": "https://github.com/ericc-ch/copilot-api",
-      "updated_at": "2026-05-17T10:28:05Z",
+      "created_at": "2025-01-11T01:54:45Z",
+      "updated_at": "2026-05-17T15:46:32Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -2627,12 +2717,13 @@
       "id": 1173845549,
       "full_name": "twostraws/SwiftUI-Agent-Skill",
       "description": "SwiftUI agent skill for Claude Code, Codex, and other AI tools.",
-      "stars": 3905,
+      "stars": 3907,
       "forks": 139,
       "language": "",
       "topics": [],
       "url": "https://github.com/twostraws/SwiftUI-Agent-Skill",
-      "updated_at": "2026-05-17T13:16:31Z",
+      "created_at": "2026-03-05T20:13:14Z",
+      "updated_at": "2026-05-17T16:28:17Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -2642,7 +2733,7 @@
       "id": 1053598893,
       "full_name": "looplj/axonhub",
       "description": "⚡️ Open-source AI Gateway — Use any SDK to call 100+ LLMs. Built-in failover, load balancing, cost control & end-to-end tracing.",
-      "stars": 3822,
+      "stars": 3825,
       "forks": 462,
       "language": "Go",
       "topics": [
@@ -2663,7 +2754,8 @@
         "opencode"
       ],
       "url": "https://github.com/looplj/axonhub",
-      "updated_at": "2026-05-17T14:19:54Z",
+      "created_at": "2025-09-09T17:04:33Z",
+      "updated_at": "2026-05-17T15:49:59Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2675,7 +2767,7 @@
       "id": 1195360525,
       "full_name": "calesthio/OpenMontage",
       "description": "World's first open-source, agentic video production system. 12 pipelines, 52 tools, 500+ agent skills. Turn your AI coding assistant into a full video production studio.",
-      "stars": 3769,
+      "stars": 3772,
       "forks": 750,
       "language": "Python",
       "topics": [
@@ -2700,7 +2792,8 @@
         "video-production"
       ],
       "url": "https://github.com/calesthio/OpenMontage",
-      "updated_at": "2026-05-17T14:53:59Z",
+      "created_at": "2026-03-29T15:23:22Z",
+      "updated_at": "2026-05-17T16:35:31Z",
       "category": "claude",
       "use_cases": [
         "代码生成",
@@ -2729,6 +2822,7 @@
         "zotero"
       ],
       "url": "https://github.com/Galaxy-Dawn/claude-scholar",
+      "created_at": "2026-01-27T10:32:17Z",
       "updated_at": "2026-05-17T13:57:35Z",
       "category": "claude",
       "use_cases": [
@@ -2769,6 +2863,7 @@
         "vulnerability"
       ],
       "url": "https://github.com/Tencent/AI-Infra-Guard",
+      "created_at": "2024-12-25T06:39:30Z",
       "updated_at": "2026-05-17T03:00:07Z",
       "category": "other",
       "use_cases": [
@@ -2795,6 +2890,7 @@
         "neovim-plugin"
       ],
       "url": "https://github.com/CopilotC-Nvim/CopilotChat.nvim",
+      "created_at": "2023-12-12T00:59:30Z",
       "updated_at": "2026-05-17T06:53:18Z",
       "category": "copilot",
       "use_cases": [
@@ -2805,8 +2901,8 @@
       "id": 1052828228,
       "full_name": "qixing-jk/all-api-hub",
       "description": "​一站式 New-API/Sub2API 等中转站账号管理：余额/用量看板、自动签到、密钥一键使用、价格对比、可用性测试，另提供高级渠道管理 | All-in-one New-API/Sub2API account hub: balance/usage dashboard, auto check-in, one-click keys, price comparison, health checks, plus advanced channel management",
-      "stars": 3609,
-      "forks": 249,
+      "stars": 3611,
+      "forks": 250,
       "language": "TypeScript",
       "topics": [
         "ai",
@@ -2826,7 +2922,8 @@
         "voapi"
       ],
       "url": "https://github.com/qixing-jk/all-api-hub",
-      "updated_at": "2026-05-17T14:32:13Z",
+      "created_at": "2025-09-08T15:51:38Z",
+      "updated_at": "2026-05-17T15:34:52Z",
       "category": "claude",
       "use_cases": [
         "数据分析",
@@ -2838,7 +2935,7 @@
       "id": 1158449837,
       "full_name": "golutra/golutra",
       "description": "Multi-agent AI orchestration platform for automation, workflows, and developer tools. Golutra transforms Codex, Claude Code, and OpenClaw into a unified agent system with parallel execution, task orchestration, long-running workflows, and AI productivity workspace.",
-      "stars": 3499,
+      "stars": 3500,
       "forks": 400,
       "language": "Rust",
       "topics": [
@@ -2864,7 +2961,8 @@
         "workflows"
       ],
       "url": "https://github.com/golutra/golutra",
-      "updated_at": "2026-05-17T14:54:07Z",
+      "created_at": "2026-02-15T11:49:39Z",
+      "updated_at": "2026-05-17T15:35:09Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -2873,11 +2971,35 @@
       ]
     },
     {
+      "id": 1137515077,
+      "full_name": "tech-leads-club/agent-skills",
+      "description": "The secure, validated skill registry for professional AI coding agents. Extend Antigravity, Claude Code, Cursor, Copilot and more with absolute confidence.",
+      "stars": 3364,
+      "forks": 311,
+      "language": "TypeScript",
+      "topics": [
+        "agent",
+        "ai",
+        "antigravity",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "skills"
+      ],
+      "url": "https://github.com/tech-leads-club/agent-skills",
+      "created_at": "2026-01-19T13:21:32Z",
+      "updated_at": "2026-05-17T16:47:16Z",
+      "category": "claude",
+      "use_cases": [
+        "AI 代理"
+      ]
+    },
+    {
       "id": 1021219064,
       "full_name": "gotalab/cc-sdd",
       "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with Agent Skills for Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity.",
-      "stars": 3361,
-      "forks": 247,
+      "stars": 3362,
+      "forks": 246,
       "language": "TypeScript",
       "topics": [
         "agent-skills",
@@ -2894,7 +3016,8 @@
         "subagents"
       ],
       "url": "https://github.com/gotalab/cc-sdd",
-      "updated_at": "2026-05-17T14:54:16Z",
+      "created_at": "2025-07-17T04:41:37Z",
+      "updated_at": "2026-05-17T15:05:43Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -2905,7 +3028,7 @@
       "id": 1186742994,
       "full_name": "jnMetaCode/superpowers-zh",
       "description": "🦸 AI 编程超能力 · 中文增强版 — superpowers（116k+ ⭐）完整汉化 + 6 个中国原创 skills，让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 16 款 AI 编程工具真正会干活",
-      "stars": 3311,
+      "stars": 3318,
       "forks": 331,
       "language": "Shell",
       "topics": [
@@ -2927,36 +3050,14 @@
         "trae"
       ],
       "url": "https://github.com/jnMetaCode/superpowers-zh",
-      "updated_at": "2026-05-17T14:15:27Z",
+      "created_at": "2026-03-20T00:12:39Z",
+      "updated_at": "2026-05-17T16:22:28Z",
       "category": "claude",
       "use_cases": [
         "测试",
         "AI 代理",
         "工具集成",
         "Prompt 优化"
-      ]
-    },
-    {
-      "id": 1137515077,
-      "full_name": "tech-leads-club/agent-skills",
-      "description": "The secure, validated skill registry for professional AI coding agents. Extend Antigravity, Claude Code, Cursor, Copilot and more with absolute confidence.",
-      "stars": 3270,
-      "forks": 306,
-      "language": "TypeScript",
-      "topics": [
-        "agent",
-        "ai",
-        "antigravity",
-        "claude-code",
-        "copilot",
-        "cursor",
-        "skills"
-      ],
-      "url": "https://github.com/tech-leads-club/agent-skills",
-      "updated_at": "2026-05-17T14:55:24Z",
-      "category": "claude",
-      "use_cases": [
-        "AI 代理"
       ]
     },
     {
@@ -2973,6 +3074,7 @@
         "stable-diffusion"
       ],
       "url": "https://github.com/phodal/prompt-patterns",
+      "created_at": "2023-02-21T14:09:29Z",
       "updated_at": "2026-05-17T07:48:21Z",
       "category": "copilot",
       "use_cases": [
@@ -3002,6 +3104,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/stravu/crystal",
+      "created_at": "2025-06-05T23:54:39Z",
       "updated_at": "2026-05-17T01:09:41Z",
       "category": "claude",
       "use_cases": [
@@ -3031,6 +3134,7 @@
         "skills"
       ],
       "url": "https://github.com/taishi-i/awesome-ChatGPT-repositories",
+      "created_at": "2023-04-02T14:00:07Z",
       "updated_at": "2026-05-17T05:19:54Z",
       "category": "claude",
       "use_cases": [
@@ -3043,7 +3147,7 @@
       "id": 959123498,
       "full_name": "IvanMurzak/Unity-MCP",
       "description": "AI Skills, MCP Tools, and CLI for Unity Engine. Full AI develop and test loop. Use cli for quick setup. Efficient token usage, advanced tools. Any C# method may be turned into a tool by a single line. Works with Claude Code, Gemini, Copilot, Cursor and any other absolutely for free.",
-      "stars": 2773,
+      "stars": 2776,
       "forks": 257,
       "language": "C#",
       "topics": [
@@ -3068,7 +3172,8 @@
         "windsurf"
       ],
       "url": "https://github.com/IvanMurzak/Unity-MCP",
-      "updated_at": "2026-05-17T14:28:57Z",
+      "created_at": "2025-04-02T09:57:01Z",
+      "updated_at": "2026-05-17T15:54:44Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -3107,6 +3212,7 @@
         "vlm"
       ],
       "url": "https://github.com/SharpAI/DeepCamera",
+      "created_at": "2019-03-05T14:29:23Z",
       "updated_at": "2026-05-17T09:55:29Z",
       "category": "claude",
       "use_cases": [
@@ -3118,8 +3224,8 @@
       "id": 1235403234,
       "full_name": "nexu-io/html-anything",
       "description": "✨ The agentic HTML editor — your local AI agent writes the HTML, you ship it. 🚀 75 Skills × 9 Surfaces (magazine · deck · poster · XHS / tweet · prototype · data report · Hyperframes) 🛡️ Sandboxed preview · 📤 1-click to WeChat / X / Zhihu / HTML / PNG 🔑 Zero API key — Claude Code / Cursor / Codex / Gemini / Copilot / OpenCode / Qwen / Aider.",
-      "stars": 2706,
-      "forks": 323,
+      "stars": 2739,
+      "forks": 327,
       "language": "HTML",
       "topics": [
         "agent-skills",
@@ -3144,7 +3250,8 @@
         "xiaohongshu"
       ],
       "url": "https://github.com/nexu-io/html-anything",
-      "updated_at": "2026-05-17T14:55:05Z",
+      "created_at": "2026-05-11T09:40:38Z",
+      "updated_at": "2026-05-17T16:47:19Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -3172,7 +3279,8 @@
         "windsurf"
       ],
       "url": "https://github.com/intellectronica/ruler",
-      "updated_at": "2026-05-16T20:45:51Z",
+      "created_at": "2025-05-20T08:22:59Z",
+      "updated_at": "2026-05-17T15:50:09Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -3182,7 +3290,7 @@
       "id": 1152159038,
       "full_name": "FireRedTeam/FireRed-OpenStoryline",
       "description": "FireRed-OpenStoryline is an AI video editing agent that transforms manual editing into intention-driven directing through natural language interaction, LLM-powered planning, and precise tool orchestration. It facilitates transparent, human-in-the-loop creation with reusable Style Skills for consistent, professional storytelling.",
-      "stars": 2688,
+      "stars": 2689,
       "forks": 317,
       "language": "Python",
       "topics": [
@@ -3197,7 +3305,8 @@
         "video-editing-tools"
       ],
       "url": "https://github.com/FireRedTeam/FireRed-OpenStoryline",
-      "updated_at": "2026-05-17T12:48:49Z",
+      "created_at": "2026-02-07T13:03:57Z",
+      "updated_at": "2026-05-17T15:06:05Z",
       "category": "other",
       "use_cases": [
         "AI 代理",
@@ -3210,7 +3319,7 @@
       "full_name": "op7418/Claude-to-IM-skill",
       "description": "Bridge Claude Code / Codex to IM platforms — chat with AI coding agents from Telegram, Discord, or Feishu/Lark.",
       "stars": 2529,
-      "forks": 281,
+      "forks": 280,
       "language": "TypeScript",
       "topics": [
         "chatbot",
@@ -3223,6 +3332,7 @@
         "telegram"
       ],
       "url": "https://github.com/op7418/Claude-to-IM-skill",
+      "created_at": "2026-03-05T11:00:16Z",
       "updated_at": "2026-05-17T13:27:01Z",
       "category": "claude",
       "use_cases": [
@@ -3257,6 +3367,7 @@
         "vlm"
       ],
       "url": "https://github.com/BAAI-Agents/Cradle",
+      "created_at": "2024-03-03T09:39:05Z",
       "updated_at": "2026-05-16T04:25:20Z",
       "category": "other",
       "use_cases": [
@@ -3268,8 +3379,8 @@
       "id": 1059472549,
       "full_name": "microsoft/apm",
       "description": "Agent Package Manager",
-      "stars": 2398,
-      "forks": 176,
+      "stars": 2399,
+      "forks": 175,
       "language": "Python",
       "topics": [
         "ai-agents",
@@ -3281,7 +3392,8 @@
         "prompt-engineering"
       ],
       "url": "https://github.com/microsoft/apm",
-      "updated_at": "2026-05-17T13:19:10Z",
+      "created_at": "2025-09-18T13:45:22Z",
+      "updated_at": "2026-05-17T15:47:23Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -3304,6 +3416,7 @@
         "stable-diffusion"
       ],
       "url": "https://github.com/prompt-engineering/click-prompt",
+      "created_at": "2023-03-03T02:44:55Z",
       "updated_at": "2026-05-16T07:59:53Z",
       "category": "copilot",
       "use_cases": [
@@ -3315,7 +3428,7 @@
       "id": 1087885657,
       "full_name": "kaitranntt/ccs",
       "description": "Switch between Claude accounts, Gemini, Copilot, OpenRouter (300+ models) via CLIProxyAPI OAuth proxy. Visual dashboard, remote proxy support, WebSearch fallback. Zero-config to production-ready.",
-      "stars": 2360,
+      "stars": 2363,
       "forks": 195,
       "language": "TypeScript",
       "topics": [
@@ -3338,7 +3451,8 @@
         "websearch"
       ],
       "url": "https://github.com/kaitranntt/ccs",
-      "updated_at": "2026-05-17T14:26:11Z",
+      "created_at": "2025-11-01T21:01:53Z",
+      "updated_at": "2026-05-17T15:34:00Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计",
@@ -3375,6 +3489,7 @@
         "skills"
       ],
       "url": "https://github.com/jeremylongshore/claude-code-plugins-plus-skills",
+      "created_at": "2025-10-10T01:01:00Z",
       "updated_at": "2026-05-17T13:17:37Z",
       "category": "claude",
       "use_cases": [
@@ -3389,7 +3504,7 @@
       "id": 1219400421,
       "full_name": "0x0funky/agent-sprite-forge",
       "description": "Agent Skill for generating 2D sprite sheets and map, transparent PNG frames, and animated GIFs from prompts.",
-      "stars": 2186,
+      "stars": 2188,
       "forks": 228,
       "language": "Python",
       "topics": [
@@ -3399,7 +3514,8 @@
         "sprite-generator"
       ],
       "url": "https://github.com/0x0funky/agent-sprite-forge",
-      "updated_at": "2026-05-17T13:26:56Z",
+      "created_at": "2026-04-23T20:52:52Z",
+      "updated_at": "2026-05-17T16:06:41Z",
       "category": "codex",
       "use_cases": [
         "代码生成",
@@ -3436,6 +3552,7 @@
         "worktrees"
       ],
       "url": "https://github.com/rohitg00/pro-workflow",
+      "created_at": "2026-02-01T19:47:29Z",
       "updated_at": "2026-05-17T12:02:05Z",
       "category": "claude",
       "use_cases": [
@@ -3450,8 +3567,8 @@
       "id": 1098665524,
       "full_name": "bestruirui/octopus",
       "description": "One Hub All LLMs For You | 为个人打造的 LLM API 聚合服务",
-      "stars": 2135,
-      "forks": 274,
+      "stars": 2136,
+      "forks": 275,
       "language": "TypeScript",
       "topics": [
         "ai",
@@ -3465,7 +3582,8 @@
         "self-hosted"
       ],
       "url": "https://github.com/bestruirui/octopus",
-      "updated_at": "2026-05-17T13:32:03Z",
+      "created_at": "2025-11-18T01:41:03Z",
+      "updated_at": "2026-05-17T15:57:24Z",
       "category": "claude",
       "use_cases": [
         "工具集成",
@@ -3476,7 +3594,7 @@
       "id": 1164005541,
       "full_name": "foryourhealth111-pixel/Vibe-Skills",
       "description": "Vibe-Skills is an all-in-one AI skills package. It seamlessly integrates expert-level capabilities and context management into a general-purpose skills package， enabling any AI agent to instantly upgrade its functionality—eliminating the friction of fragmented tools and complex harnesses.",
-      "stars": 2107,
+      "stars": 2108,
       "forks": 161,
       "language": "Python",
       "topics": [
@@ -3501,7 +3619,8 @@
         "workflow-automation"
       ],
       "url": "https://github.com/foryourhealth111-pixel/Vibe-Skills",
-      "updated_at": "2026-05-17T14:51:22Z",
+      "created_at": "2026-02-22T13:51:44Z",
+      "updated_at": "2026-05-17T15:22:31Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -3514,12 +3633,13 @@
       "id": 1068140466,
       "full_name": "numman-ali/opencode-openai-codex-auth",
       "description": "OAuth authentication plugin for personal coding assistance with ChatGPT Plus/Pro subscriptions - uses OpenAI's official authentication method",
-      "stars": 2055,
+      "stars": 2056,
       "forks": 138,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/numman-ali/opencode-openai-codex-auth",
-      "updated_at": "2026-05-17T09:18:21Z",
+      "created_at": "2025-10-01T23:16:59Z",
+      "updated_at": "2026-05-17T16:27:51Z",
       "category": "codex",
       "use_cases": [
         "工具集成"
@@ -3529,7 +3649,7 @@
       "id": 1147566999,
       "full_name": "ljagiello/ctf-skills",
       "description": "Agent skills for solving CTF challenges - web exploitation, binary pwn, crypto, reverse engineering, forensics, OSINT, and more",
-      "stars": 2035,
+      "stars": 2036,
       "forks": 255,
       "language": "Python",
       "topics": [
@@ -3547,7 +3667,8 @@
         "security"
       ],
       "url": "https://github.com/ljagiello/ctf-skills",
-      "updated_at": "2026-05-17T12:33:13Z",
+      "created_at": "2026-02-01T23:49:52Z",
+      "updated_at": "2026-05-17T15:31:48Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -3571,6 +3692,7 @@
         "website"
       ],
       "url": "https://github.com/openai/gpt-5-coding-examples",
+      "created_at": "2025-08-07T01:06:40Z",
       "updated_at": "2026-05-17T02:20:39Z",
       "category": "codex",
       "use_cases": [
@@ -3596,6 +3718,7 @@
         "tauri"
       ],
       "url": "https://github.com/iamzhihuix/skills-manage",
+      "created_at": "2026-04-13T05:03:06Z",
       "updated_at": "2026-05-17T14:28:54Z",
       "category": "claude",
       "use_cases": [
@@ -3615,6 +3738,7 @@
         "cursor-rules"
       ],
       "url": "https://github.com/flyeric0212/cursor-rules",
+      "created_at": "2025-03-18T07:20:57Z",
       "updated_at": "2026-05-17T09:13:13Z",
       "category": "cursor",
       "use_cases": [
@@ -3626,7 +3750,7 @@
       "full_name": "runkids/skillshare",
       "description": "📚 Sync skills across all AI CLI tools with one command and simplify team sharing. Supporting Codex, Claude Code, OpenClaw & more",
       "stars": 1823,
-      "forks": 112,
+      "forks": 111,
       "language": "Go",
       "topics": [
         "agenthub",
@@ -3651,6 +3775,7 @@
         "team-management"
       ],
       "url": "https://github.com/runkids/skillshare",
+      "created_at": "2026-01-14T10:07:46Z",
       "updated_at": "2026-05-17T14:38:16Z",
       "category": "claude",
       "use_cases": [
@@ -3664,10 +3789,11 @@
       "full_name": "badlogic/pi-skills",
       "description": "Skills for pi coding agent (compatible with Claude Code and Codex CLI)",
       "stars": 1731,
-      "forks": 166,
+      "forks": 167,
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/badlogic/pi-skills",
+      "created_at": "2025-12-12T22:00:15Z",
       "updated_at": "2026-05-17T14:09:32Z",
       "category": "claude",
       "use_cases": [
@@ -3688,6 +3814,7 @@
         "zsh"
       ],
       "url": "https://github.com/tom-doerr/zsh_codex",
+      "created_at": "2021-09-23T18:50:33Z",
       "updated_at": "2026-05-11T15:40:40Z",
       "category": "codex",
       "use_cases": [
@@ -3698,7 +3825,7 @@
       "id": 1184866064,
       "full_name": "leo-lilinxiao/codex-autoresearch",
       "description": "Codex Autoresearch Skill — A self-directed iterative system for Codex that continuously cycles through: modify, verify, retain or discard, and repeat indefinitely. Inspired by Karpathy’s autoresearch concept.",
-      "stars": 1722,
+      "stars": 1723,
       "forks": 98,
       "language": "Python",
       "topics": [
@@ -3714,7 +3841,8 @@
         "skill"
       ],
       "url": "https://github.com/leo-lilinxiao/codex-autoresearch",
-      "updated_at": "2026-05-17T03:41:19Z",
+      "created_at": "2026-03-18T02:20:03Z",
+      "updated_at": "2026-05-17T15:05:03Z",
       "category": "codex",
       "use_cases": [
         "AI 代理",
@@ -3752,7 +3880,8 @@
         "vibe-coding"
       ],
       "url": "https://github.com/samber/cc-skills-golang",
-      "updated_at": "2026-05-17T14:19:15Z",
+      "created_at": "2026-03-21T23:10:11Z",
+      "updated_at": "2026-05-17T15:17:52Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -3784,6 +3913,7 @@
         "windsurf"
       ],
       "url": "https://github.com/CoderGamester/mcp-unity",
+      "created_at": "2025-03-13T20:41:25Z",
       "updated_at": "2026-05-17T07:15:26Z",
       "category": "claude",
       "use_cases": [
@@ -3798,7 +3928,7 @@
       "full_name": "rohitg00/awesome-claude-code-toolkit",
       "description": "The most comprehensive toolkit for Claude Code -- 135 agents, 35 curated skills (+400,000 via SkillKit), 42 commands, 176+ plugins, 20 hooks, 15 rules, 7 templates, 14 MCP configs, 26 companion apps, 52 ecosystem entries, and more.",
       "stars": 1700,
-      "forks": 530,
+      "forks": 531,
       "language": "JavaScript",
       "topics": [
         "claude",
@@ -3809,6 +3939,7 @@
         "skills"
       ],
       "url": "https://github.com/rohitg00/awesome-claude-code-toolkit",
+      "created_at": "2026-02-04T21:09:33Z",
       "updated_at": "2026-05-17T12:47:52Z",
       "category": "claude",
       "use_cases": [
@@ -3838,6 +3969,7 @@
         "seo-tools"
       ],
       "url": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+      "created_at": "2025-12-18T03:35:29Z",
       "updated_at": "2026-05-17T14:23:25Z",
       "category": "claude",
       "use_cases": [
@@ -3862,6 +3994,7 @@
         "ide"
       ],
       "url": "https://github.com/LakshmanTurlapati/Review-Gate",
+      "created_at": "2025-05-07T11:23:17Z",
       "updated_at": "2026-05-17T05:18:17Z",
       "category": "claude",
       "use_cases": [
@@ -3872,7 +4005,7 @@
       "id": 1129437678,
       "full_name": "Soju06/codex-lb",
       "description": "Codex/ChatGPT multiple account load balancer & proxy with usage tracking, dashboard, and OpenCode-compatible endpoints",
-      "stars": 1497,
+      "stars": 1496,
       "forks": 210,
       "language": "Python",
       "topics": [
@@ -3893,7 +4026,8 @@
         "usage-tracking"
       ],
       "url": "https://github.com/Soju06/codex-lb",
-      "updated_at": "2026-05-17T14:54:56Z",
+      "created_at": "2026-01-07T05:06:29Z",
+      "updated_at": "2026-05-17T16:09:59Z",
       "category": "codex",
       "use_cases": [
         "数据分析",
@@ -3919,6 +4053,7 @@
         "writing"
       ],
       "url": "https://github.com/conorbronsdon/avoid-ai-writing",
+      "created_at": "2026-03-06T07:47:40Z",
       "updated_at": "2026-05-17T12:49:57Z",
       "category": "claude",
       "use_cases": [
@@ -3932,7 +4067,7 @@
       "id": 1122859216,
       "full_name": "covibes/zeroshot",
       "description": "Your autonomous engineering team in a CLI. Point Zeroshot at an issue, walk away, and return to production-grade code. Supports Claude Code, OpenAI Codex, OpenCode, and Gemini CLI.",
-      "stars": 1480,
+      "stars": 1481,
       "forks": 126,
       "language": "JavaScript",
       "topics": [
@@ -3956,7 +4091,8 @@
         "vibecoding"
       ],
       "url": "https://github.com/covibes/zeroshot",
-      "updated_at": "2026-05-17T10:38:38Z",
+      "created_at": "2025-12-25T17:12:45Z",
+      "updated_at": "2026-05-17T15:04:06Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -3967,12 +4103,13 @@
       "id": 1170291083,
       "full_name": "xingkongliang/skills-manager",
       "description": "A lightweight desktop app to manage, sync, and organize AI agent skills across 15+ coding tools — Cursor, Claude Code, Codex, Copilot, and more.",
-      "stars": 1471,
-      "forks": 122,
+      "stars": 1474,
+      "forks": 123,
       "language": "Rust",
       "topics": [],
       "url": "https://github.com/xingkongliang/skills-manager",
-      "updated_at": "2026-05-17T14:24:19Z",
+      "created_at": "2026-03-02T00:38:18Z",
+      "updated_at": "2026-05-17T16:32:41Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -3996,6 +4133,7 @@
         "openai-codex-intergration"
       ],
       "url": "https://github.com/RayBytes/ChatMock",
+      "created_at": "2025-08-15T10:28:50Z",
       "updated_at": "2026-05-15T09:23:08Z",
       "category": "codex",
       "use_cases": [
@@ -4006,8 +4144,8 @@
       "id": 1212718768,
       "full_name": "ciembor/agent-rules-books",
       "description": "AGENTS.md rules / skills for AI coding agents: Codex, Cursor & Claude Code. Inspired by Clean Code, Refactoring, DDD, Clean Architecture and DDIA programming books.",
-      "stars": 1410,
-      "forks": 200,
+      "stars": 1413,
+      "forks": 201,
       "language": "",
       "topics": [
         "agent-rules",
@@ -4027,7 +4165,8 @@
         "refactoring"
       ],
       "url": "https://github.com/ciembor/agent-rules-books",
-      "updated_at": "2026-05-17T11:32:58Z",
+      "created_at": "2026-04-16T16:58:19Z",
+      "updated_at": "2026-05-17T16:37:11Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -4046,6 +4185,7 @@
         "chatgpt"
       ],
       "url": "https://github.com/adrianhajdin/project_openai_codex",
+      "created_at": "2022-12-20T16:58:47Z",
       "updated_at": "2026-05-16T16:22:01Z",
       "category": "codex",
       "use_cases": [
@@ -4067,6 +4207,7 @@
         "nvim-cmp"
       ],
       "url": "https://github.com/zbirenbaum/copilot-cmp",
+      "created_at": "2022-04-02T22:24:10Z",
       "updated_at": "2026-05-15T14:30:03Z",
       "category": "copilot",
       "use_cases": [
@@ -4091,6 +4232,7 @@
         "workflow"
       ],
       "url": "https://github.com/CloudAI-X/claude-workflow-v2",
+      "created_at": "2026-01-01T02:20:41Z",
       "updated_at": "2026-05-16T02:24:41Z",
       "category": "claude",
       "use_cases": [
@@ -4114,6 +4256,7 @@
         "swiftui"
       ],
       "url": "https://github.com/Shpigford/chops",
+      "created_at": "2026-03-18T17:17:12Z",
       "updated_at": "2026-05-16T19:22:18Z",
       "category": "claude",
       "use_cases": [
@@ -4144,6 +4287,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/wrtnlabs/autobe",
+      "created_at": "2025-04-28T09:57:52Z",
       "updated_at": "2026-05-17T04:36:08Z",
       "category": "other",
       "use_cases": [
@@ -4167,6 +4311,7 @@
         "react"
       ],
       "url": "https://github.com/browserwing/browserwing",
+      "created_at": "2025-12-10T23:54:17Z",
       "updated_at": "2026-05-15T07:04:52Z",
       "category": "claude",
       "use_cases": [
@@ -4205,6 +4350,7 @@
         "skills"
       ],
       "url": "https://github.com/Prat011/awesome-llm-skills",
+      "created_at": "2025-10-22T06:15:37Z",
       "updated_at": "2026-05-17T10:38:40Z",
       "category": "claude",
       "use_cases": [
@@ -4217,8 +4363,8 @@
       "id": 1072945981,
       "full_name": "Priivacy-ai/spec-kitty",
       "description": "Spec-Driven Development for serious software developers. Spec Coding with with Claude, Cursor, Gemini, Codex. Kanban dashboard, git worktrees, auto-merge and more.",
-      "stars": 1235,
-      "forks": 98,
+      "stars": 1234,
+      "forks": 99,
       "language": "Python",
       "topics": [
         "agentic-coding",
@@ -4243,7 +4389,8 @@
         "windsurf"
       ],
       "url": "https://github.com/Priivacy-ai/spec-kitty",
-      "updated_at": "2026-05-17T13:33:47Z",
+      "created_at": "2025-10-09T12:29:47Z",
+      "updated_at": "2026-05-17T15:47:04Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -4264,6 +4411,7 @@
         "github-copilot-chat"
       ],
       "url": "https://github.com/doggy8088/github-copilot-configs",
+      "created_at": "2025-03-27T15:19:00Z",
       "updated_at": "2026-05-17T04:20:21Z",
       "category": "copilot",
       "use_cases": [
@@ -4299,7 +4447,8 @@
         "typescript"
       ],
       "url": "https://github.com/theopenco/llmgateway",
-      "updated_at": "2026-05-17T14:51:45Z",
+      "created_at": "2025-04-12T18:37:18Z",
+      "updated_at": "2026-05-17T15:20:52Z",
       "category": "claude",
       "use_cases": [
         "数据分析",
@@ -4311,7 +4460,7 @@
       "id": 426414439,
       "full_name": "sceneview/sceneview",
       "description": "3D & AR SDK for Android (Jetpack Compose + Filament), iOS (SwiftUI + RealityKit), and Web. AI-first: llms.txt, MCP server, Copilot/Cursor rules. The only Compose-native 3D library.",
-      "stars": 1206,
+      "stars": 1207,
       "forks": 220,
       "language": "Kotlin",
       "topics": [
@@ -4337,7 +4486,8 @@
         "web"
       ],
       "url": "https://github.com/sceneview/sceneview",
-      "updated_at": "2026-05-17T10:19:51Z",
+      "created_at": "2021-11-09T23:03:50Z",
+      "updated_at": "2026-05-17T16:38:05Z",
       "category": "cursor",
       "use_cases": [
         "工具集成",
@@ -4366,6 +4516,7 @@
         "prd"
       ],
       "url": "https://github.com/codeaholicguy/ai-devkit",
+      "created_at": "2025-10-14T08:00:48Z",
       "updated_at": "2026-05-17T02:59:02Z",
       "category": "claude",
       "use_cases": [
@@ -4390,6 +4541,7 @@
         "session-management"
       ],
       "url": "https://github.com/yigitkonur/cli-continues",
+      "created_at": "2026-01-31T10:16:42Z",
       "updated_at": "2026-05-17T09:19:44Z",
       "category": "claude",
       "use_cases": [
@@ -4405,6 +4557,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/pinchbench/skill",
+      "created_at": "2026-02-11T01:41:39Z",
       "updated_at": "2026-05-17T05:25:01Z",
       "category": "other",
       "use_cases": [
@@ -4431,7 +4584,8 @@
         "openai"
       ],
       "url": "https://github.com/xenodium/agent-shell",
-      "updated_at": "2026-05-17T10:17:17Z",
+      "created_at": "2025-09-09T14:26:23Z",
+      "updated_at": "2026-05-17T16:02:48Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -4441,7 +4595,7 @@
       "id": 1190557545,
       "full_name": "eugeniughelbur/obsidian-second-brain",
       "description": "Cross-CLI skill for Obsidian. Turns your vault into a living AI-first second brain across Claude Code, Codex CLI, Gemini CLI, and OpenCode. 32 commands, vault-first research, scheduled agents, write-time AI-first validator.",
-      "stars": 1162,
+      "stars": 1164,
       "forks": 121,
       "language": "Python",
       "topics": [
@@ -4467,7 +4621,8 @@
         "second-brain"
       ],
       "url": "https://github.com/eugeniughelbur/obsidian-second-brain",
-      "updated_at": "2026-05-17T14:21:51Z",
+      "created_at": "2026-03-24T11:58:12Z",
+      "updated_at": "2026-05-17T16:51:49Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -4489,6 +4644,7 @@
       "language": "Vue",
       "topics": [],
       "url": "https://github.com/cubezhao/ai-tools-mng",
+      "created_at": "2025-07-08T01:48:37Z",
       "updated_at": "2026-05-16T05:37:15Z",
       "category": "claude",
       "use_cases": [
@@ -4512,6 +4668,7 @@
         "skills"
       ],
       "url": "https://github.com/legeling/PromptHub",
+      "created_at": "2025-11-29T07:06:01Z",
       "updated_at": "2026-05-17T12:29:20Z",
       "category": "other",
       "use_cases": [
@@ -4536,6 +4693,7 @@
         "qwen3-coder"
       ],
       "url": "https://github.com/heyhuynhgiabuu/proxypal",
+      "created_at": "2025-12-01T19:50:13Z",
       "updated_at": "2026-05-16T17:32:40Z",
       "category": "claude",
       "use_cases": [
@@ -4553,6 +4711,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/IsHexx/system-prompts-and-models-of-ai-tools-chinese",
+      "created_at": "2025-04-25T02:28:40Z",
       "updated_at": "2026-05-17T14:19:52Z",
       "category": "cursor",
       "use_cases": [
@@ -4564,7 +4723,7 @@
       "id": 1144764199,
       "full_name": "didilili/ai-agents-from-zero",
       "description": " 🚀 2026 最系统的 AI Agent 速成指南｜智能体实战教程 · 完整学习路径  + 实战项目 + 面试题库 · 对标大模型应用开发工程师岗位 · 覆盖LangChain / LangGraph / Coze / Dify / MCP / skills / LLM / RAG / 提示词 · 企业级部署与微调 · 从0到企业级落地 + 从学习到上线项目 + 面试准备一体化 ",
-      "stars": 1109,
+      "stars": 1111,
       "forks": 146,
       "language": "Python",
       "topics": [
@@ -4585,7 +4744,8 @@
         "tutorial"
       ],
       "url": "https://github.com/didilili/ai-agents-from-zero",
-      "updated_at": "2026-05-17T14:11:31Z",
+      "created_at": "2026-01-29T02:49:11Z",
+      "updated_at": "2026-05-17T15:51:44Z",
       "category": "other",
       "use_cases": [
         "AI 代理",
@@ -4597,7 +4757,7 @@
       "id": 997900525,
       "full_name": "kbwo/ccmanager",
       "description": "Coding Agent Session Manager for Claude Code / Gemini CLI / Codex CLI / Cursor Agent / Copilot CLI / Cline CLI / OpenCode / Kimi CLI",
-      "stars": 1107,
+      "stars": 1108,
       "forks": 86,
       "language": "TypeScript",
       "topics": [
@@ -4620,10 +4780,39 @@
         "vibe-coding"
       ],
       "url": "https://github.com/kbwo/ccmanager",
-      "updated_at": "2026-05-17T13:18:35Z",
+      "created_at": "2025-06-07T12:41:22Z",
+      "updated_at": "2026-05-17T16:03:24Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
+      ]
+    },
+    {
+      "id": 1179835404,
+      "full_name": "minsight-ai-info/AI-Search-Hub",
+      "description": "One Query. All Search Skill. 聚合 Gemini、Grok、豆包、元宝等平台原生 AI 搜索能力，免费获取科技趋势、行业舆情、热点追踪、旅行规划、日常问题统一接进自己的 Agent 与工作流，指定链接免费爬取",
+      "stars": 1097,
+      "forks": 92,
+      "language": "Python",
+      "topics": [
+        "ai",
+        "claude-skills",
+        "deep-search",
+        "knowledge-graph",
+        "llm",
+        "multi-agent-systems",
+        "openclaw",
+        "python3",
+        "skill"
+      ],
+      "url": "https://github.com/minsight-ai-info/AI-Search-Hub",
+      "created_at": "2026-03-12T12:36:02Z",
+      "updated_at": "2026-05-17T15:15:06Z",
+      "category": "claude",
+      "use_cases": [
+        "AI 代理",
+        "知识管理",
+        "搜索"
       ]
     },
     {
@@ -4643,6 +4832,7 @@
         "coding-agents"
       ],
       "url": "https://github.com/itsmostafa/aws-agent-skills",
+      "created_at": "2019-05-18T19:38:59Z",
       "updated_at": "2026-05-12T19:05:46Z",
       "category": "claude",
       "use_cases": [
@@ -4650,37 +4840,10 @@
       ]
     },
     {
-      "id": 1179835404,
-      "full_name": "minsight-ai-info/AI-Search-Hub",
-      "description": "One Query. All Search Skill. 聚合 Gemini、Grok、豆包、元宝等平台原生 AI 搜索能力，免费获取科技趋势、行业舆情、热点追踪、旅行规划、日常问题统一接进自己的 Agent 与工作流，指定链接免费爬取",
-      "stars": 1096,
-      "forks": 92,
-      "language": "Python",
-      "topics": [
-        "ai",
-        "claude-skills",
-        "deep-search",
-        "knowledge-graph",
-        "llm",
-        "multi-agent-systems",
-        "openclaw",
-        "python3",
-        "skill"
-      ],
-      "url": "https://github.com/minsight-ai-info/AI-Search-Hub",
-      "updated_at": "2026-05-17T08:49:18Z",
-      "category": "claude",
-      "use_cases": [
-        "AI 代理",
-        "知识管理",
-        "搜索"
-      ]
-    },
-    {
       "id": 1138376193,
       "full_name": "rohitg00/skillkit",
       "description": "Supercharge AI coding agents with portable skills. Install, translate & share skills across Claude Code, Cursor, Codex, Copilot & 40 more",
-      "stars": 1092,
+      "stars": 1094,
       "forks": 100,
       "language": "TypeScript",
       "topics": [
@@ -4695,7 +4858,8 @@
         "skills"
       ],
       "url": "https://github.com/rohitg00/skillkit",
-      "updated_at": "2026-05-17T14:34:52Z",
+      "created_at": "2026-01-20T15:41:14Z",
+      "updated_at": "2026-05-17T16:32:04Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -4731,6 +4895,7 @@
         "windows"
       ],
       "url": "https://github.com/skalesapp/skales",
+      "created_at": "2026-03-08T09:17:47Z",
       "updated_at": "2026-05-17T14:33:57Z",
       "category": "other",
       "use_cases": [
@@ -4746,12 +4911,13 @@
       "id": 1160134919,
       "full_name": "icebear0828/codex-proxy",
       "description": "OpenAI-compatible proxy for ChatGPT Codex Responses API",
-      "stars": 1062,
+      "stars": 1063,
       "forks": 146,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/icebear0828/codex-proxy",
-      "updated_at": "2026-05-17T13:50:57Z",
+      "created_at": "2026-02-17T15:30:15Z",
+      "updated_at": "2026-05-17T15:26:45Z",
       "category": "codex",
       "use_cases": [
         "工具集成",
@@ -4762,7 +4928,7 @@
       "id": 1178198291,
       "full_name": "caliber-ai-org/ai-setup",
       "description": "Continuously sync your AI setups with one command. Codebase tailor suited agent skills, MCPs and config files for Claude Code, Cursor, and Codex.",
-      "stars": 1062,
+      "stars": 1063,
       "forks": 109,
       "language": "TypeScript",
       "topics": [
@@ -4783,7 +4949,8 @@
         "skills"
       ],
       "url": "https://github.com/caliber-ai-org/ai-setup",
-      "updated_at": "2026-05-16T13:11:33Z",
+      "created_at": "2026-03-10T19:39:38Z",
+      "updated_at": "2026-05-17T16:44:30Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -4799,6 +4966,7 @@
       "language": "PowerShell",
       "topics": [],
       "url": "https://github.com/microsoft/hve-core",
+      "created_at": "2025-11-02T21:24:46Z",
       "updated_at": "2026-05-16T17:38:54Z",
       "category": "copilot",
       "use_cases": [
@@ -4816,6 +4984,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/Bhartendu-Kumar/rules_template",
+      "created_at": "2025-03-21T10:31:17Z",
       "updated_at": "2026-05-16T08:02:27Z",
       "category": "cursor",
       "use_cases": [
@@ -4841,6 +5010,7 @@
         "productivity"
       ],
       "url": "https://github.com/MoizIbnYousaf/Ai-Agent-Skills",
+      "created_at": "2025-12-17T20:31:30Z",
       "updated_at": "2026-05-17T05:33:13Z",
       "category": "claude",
       "use_cases": [
@@ -4878,6 +5048,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/DeepMyst/Mysti",
+      "created_at": "2025-11-29T13:29:57Z",
       "updated_at": "2026-05-17T05:41:45Z",
       "category": "claude",
       "use_cases": [
@@ -4897,6 +5068,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/sandroandric/AgentHandover",
+      "created_at": "2026-03-30T18:50:21Z",
       "updated_at": "2026-05-17T09:44:00Z",
       "category": "claude",
       "use_cases": [
@@ -4924,6 +5096,7 @@
         "windsurf"
       ],
       "url": "https://github.com/instructa/ai-prompts",
+      "created_at": "2025-02-12T13:26:00Z",
       "updated_at": "2026-05-16T08:02:30Z",
       "category": "cursor",
       "use_cases": [
@@ -4951,6 +5124,7 @@
         "windsurf"
       ],
       "url": "https://github.com/NeoLabHQ/context-engineering-kit",
+      "created_at": "2025-11-13T23:23:04Z",
       "updated_at": "2026-05-17T13:17:41Z",
       "category": "claude",
       "use_cases": [
@@ -4967,6 +5141,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/numman-ali/n-skills",
+      "created_at": "2026-01-02T13:14:28Z",
       "updated_at": "2026-05-17T09:12:00Z",
       "category": "claude",
       "use_cases": [
@@ -4984,6 +5159,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/wanxingai/LightAgent",
+      "created_at": "2025-01-20T12:31:57Z",
       "updated_at": "2026-05-17T12:57:42Z",
       "category": "other",
       "use_cases": [
@@ -4996,7 +5172,7 @@
       "id": 1145914675,
       "full_name": "first-fluke/oh-my-agent",
       "description": "Portable multi-agent harness for .agents-based skills, workflows, and standards-aware agent teams across Antigravity, Claude Code, Codex, Cursor, OpenCode, and more.",
-      "stars": 962,
+      "stars": 964,
       "forks": 113,
       "language": "TypeScript",
       "topics": [
@@ -5016,7 +5192,8 @@
         "serena"
       ],
       "url": "https://github.com/first-fluke/oh-my-agent",
-      "updated_at": "2026-05-17T14:42:52Z",
+      "created_at": "2026-01-30T11:29:46Z",
+      "updated_at": "2026-05-17T15:55:31Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -5043,6 +5220,7 @@
         "nlp-library"
       ],
       "url": "https://github.com/taishi-i/awesome-japanese-nlp-resources",
+      "created_at": "2022-06-08T09:57:28Z",
       "updated_at": "2026-05-17T06:54:22Z",
       "category": "claude",
       "use_cases": [
@@ -5057,7 +5235,7 @@
       "full_name": "777genius/agent-teams-ai",
       "description": "You're the CTO, agents are your team. They handle tasks on their own, message each other, and review each other's work. You just watch the kanban board and give high-level commands. Codex/Claude/OpenCode(200+ models). Build your AI company.",
       "stars": 943,
-      "forks": 208,
+      "forks": 209,
       "language": "TypeScript",
       "topics": [
         "agent-teams",
@@ -5082,6 +5260,7 @@
         "typescript"
       ],
       "url": "https://github.com/777genius/agent-teams-ai",
+      "created_at": "2026-02-21T08:14:44Z",
       "updated_at": "2026-05-17T14:14:59Z",
       "category": "claude",
       "use_cases": [
@@ -5100,6 +5279,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/FrancyJGLisboa/agent-skill-creator",
+      "created_at": "2025-10-18T15:01:46Z",
       "updated_at": "2026-05-17T11:15:41Z",
       "category": "claude",
       "use_cases": [
@@ -5136,6 +5316,7 @@
         "spec-driven-development"
       ],
       "url": "https://github.com/asklokesh/loki-mode",
+      "created_at": "2025-12-26T16:26:14Z",
       "updated_at": "2026-05-17T10:45:27Z",
       "category": "claude",
       "use_cases": [
@@ -5149,7 +5330,7 @@
       "id": 1145269520,
       "full_name": "RefoundAI/lenny-skills",
       "description": "86 product management skills from Lenny's Podcast for Claude Code and AI agents. Hiring, user research, strategy, shipping, and more.",
-      "stars": 920,
+      "stars": 922,
       "forks": 118,
       "language": "",
       "topics": [
@@ -5165,7 +5346,8 @@
         "skills"
       ],
       "url": "https://github.com/RefoundAI/lenny-skills",
-      "updated_at": "2026-05-17T12:49:22Z",
+      "created_at": "2026-01-29T16:14:48Z",
+      "updated_at": "2026-05-17T16:49:35Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -5201,6 +5383,7 @@
         "hugo"
       ],
       "url": "https://github.com/FidelusAleksander/ghcertified",
+      "created_at": "2023-08-17T06:09:14Z",
       "updated_at": "2026-05-15T16:26:42Z",
       "category": "copilot",
       "use_cases": [
@@ -5233,6 +5416,7 @@
         "ui"
       ],
       "url": "https://github.com/bergside/typeui",
+      "created_at": "2026-03-03T07:46:57Z",
       "updated_at": "2026-05-17T14:21:36Z",
       "category": "claude",
       "use_cases": [
@@ -5242,29 +5426,10 @@
       ]
     },
     {
-      "id": 1090680350,
-      "full_name": "ShepAlderson/copilot-orchestra",
-      "description": "Agents and workflow for GitHub Copilot",
-      "stars": 875,
-      "forks": 91,
-      "language": "",
-      "topics": [
-        "github-copilot",
-        "github-copilot-agent"
-      ],
-      "url": "https://github.com/ShepAlderson/copilot-orchestra",
-      "updated_at": "2026-05-17T04:21:25Z",
-      "category": "copilot",
-      "use_cases": [
-        "AI 代理",
-        "工作流自动化"
-      ]
-    },
-    {
       "id": 1188191061,
       "full_name": "jnMetaCode/agency-orchestrator",
       "description": "🚀 One sentence → multi-AI-role collaboration → complete plan in minutes. 211+ expert roles, zero-code YAML, 9 LLM providers (6 free). 一句话调度多个AI专家自动协作，几分钟交付完整方案。",
-      "stars": 874,
+      "stars": 876,
       "forks": 142,
       "language": "TypeScript",
       "topics": [
@@ -5290,13 +5455,34 @@
         "yaml-workflow"
       ],
       "url": "https://github.com/jnMetaCode/agency-orchestrator",
-      "updated_at": "2026-05-17T14:21:45Z",
+      "created_at": "2026-03-21T18:32:02Z",
+      "updated_at": "2026-05-17T16:47:22Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
         "工作流自动化",
         "工具集成",
         "任务规划"
+      ]
+    },
+    {
+      "id": 1090680350,
+      "full_name": "ShepAlderson/copilot-orchestra",
+      "description": "Agents and workflow for GitHub Copilot",
+      "stars": 875,
+      "forks": 91,
+      "language": "",
+      "topics": [
+        "github-copilot",
+        "github-copilot-agent"
+      ],
+      "url": "https://github.com/ShepAlderson/copilot-orchestra",
+      "created_at": "2025-11-06T01:54:47Z",
+      "updated_at": "2026-05-17T04:21:25Z",
+      "category": "copilot",
+      "use_cases": [
+        "AI 代理",
+        "工作流自动化"
       ]
     },
     {
@@ -5313,6 +5499,7 @@
         "windsurf"
       ],
       "url": "https://github.com/perrypixel/10x-Tool-Calls",
+      "created_at": "2025-06-11T06:47:57Z",
       "updated_at": "2026-05-17T14:03:45Z",
       "category": "cursor",
       "use_cases": [
@@ -5325,12 +5512,13 @@
       "id": 1150380174,
       "full_name": "ilysenko/codex-desktop-linux",
       "description": "Run OpenAI Codex Desktop on Linux - automated installer",
-      "stars": 857,
+      "stars": 859,
       "forks": 140,
       "language": "Rust",
       "topics": [],
       "url": "https://github.com/ilysenko/codex-desktop-linux",
-      "updated_at": "2026-05-17T14:35:33Z",
+      "created_at": "2026-02-05T07:57:25Z",
+      "updated_at": "2026-05-17T15:28:21Z",
       "category": "codex",
       "use_cases": [
         "工作流自动化"
@@ -5350,6 +5538,7 @@
         "claude-code-router"
       ],
       "url": "https://github.com/lich0821/ccNexus",
+      "created_at": "2025-10-24T13:08:29Z",
       "updated_at": "2026-05-17T06:15:17Z",
       "category": "claude",
       "use_cases": [
@@ -5380,6 +5569,7 @@
         "rag-alternative"
       ],
       "url": "https://github.com/Astro-Han/karpathy-llm-wiki",
+      "created_at": "2026-04-05T06:17:20Z",
       "updated_at": "2026-05-17T07:54:54Z",
       "category": "claude",
       "use_cases": [
@@ -5410,6 +5600,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/flexpilot-ai/vscode-extension",
+      "created_at": "2024-11-01T09:45:08Z",
       "updated_at": "2026-05-15T19:48:28Z",
       "category": "cursor",
       "use_cases": [
@@ -5425,6 +5616,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/new-silvermoon/awesome-android-agent-skills",
+      "created_at": "2024-02-06T17:13:24Z",
       "updated_at": "2026-05-17T12:38:26Z",
       "category": "claude",
       "use_cases": [
@@ -5436,7 +5628,7 @@
       "id": 1213220459,
       "full_name": "iFurySt/open-codex-computer-use",
       "description": "👾 Open Computer Use – Open-Source Alternative to Codex Computer Use",
-      "stars": 811,
+      "stars": 812,
       "forks": 87,
       "language": "Swift",
       "topics": [
@@ -5462,7 +5654,8 @@
         "opencode"
       ],
       "url": "https://github.com/iFurySt/open-codex-computer-use",
-      "updated_at": "2026-05-17T13:01:46Z",
+      "created_at": "2026-04-17T06:51:32Z",
+      "updated_at": "2026-05-17T15:43:32Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -5501,6 +5694,7 @@
         "workflow"
       ],
       "url": "https://github.com/agent-sh/agentsys",
+      "created_at": "2026-01-15T09:33:05Z",
       "updated_at": "2026-05-17T08:16:50Z",
       "category": "claude",
       "use_cases": [
@@ -5514,7 +5708,7 @@
       "id": 1176668188,
       "full_name": "bergside/awesome-design-skills",
       "description": "List of 67 awesome DESIGN.md and SKILL.md design skill files for agentic tools like Claude Design, Google Stitch, Codex, Cursor, and other AI tools",
-      "stars": 795,
+      "stars": 799,
       "forks": 68,
       "language": "",
       "topics": [
@@ -5538,7 +5732,8 @@
         "skills"
       ],
       "url": "https://github.com/bergside/awesome-design-skills",
-      "updated_at": "2026-05-17T14:42:57Z",
+      "created_at": "2026-03-09T08:55:36Z",
+      "updated_at": "2026-05-17T15:36:49Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -5559,6 +5754,7 @@
         "github-copilot"
       ],
       "url": "https://github.com/caozhiyuan/copilot-api",
+      "created_at": "2025-08-20T06:18:02Z",
       "updated_at": "2026-05-17T13:55:53Z",
       "category": "claude",
       "use_cases": [
@@ -5597,6 +5793,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/shanraisshan/codex-cli-best-practice",
+      "created_at": "2026-02-27T07:37:49Z",
       "updated_at": "2026-05-17T10:04:19Z",
       "category": "codex",
       "use_cases": [
@@ -5633,6 +5830,7 @@
         "swarm"
       ],
       "url": "https://github.com/helixml/helix",
+      "created_at": "2023-10-17T07:11:12Z",
       "updated_at": "2026-05-15T14:52:21Z",
       "category": "claude",
       "use_cases": [
@@ -5658,6 +5856,7 @@
         "claude-skills-creator"
       ],
       "url": "https://github.com/alirezarezvani/claude-code-skill-factory",
+      "created_at": "2025-10-21T15:20:47Z",
       "updated_at": "2026-05-16T13:54:31Z",
       "category": "claude",
       "use_cases": [
@@ -5692,6 +5891,7 @@
         "websocket"
       ],
       "url": "https://github.com/K9i-0/ccpocket",
+      "created_at": "2026-02-06T00:18:05Z",
       "updated_at": "2026-05-17T14:44:25Z",
       "category": "claude",
       "use_cases": [
@@ -5703,8 +5903,8 @@
       "id": 1187868068,
       "full_name": "zhu1090093659/spec_driven_develop",
       "description": "A cross-platform AI agent skill that turns \"rewrite this in Rust\" or \"migrate to microservices\" into a disciplined, document-driven workflow — analyze, decompose, track, execute. One SKILL.md, no framework, no runtime. Works with Claude Code, Codex, Cursor, or any agent that reads Markdown.",
-      "stars": 744,
-      "forks": 87,
+      "stars": 746,
+      "forks": 88,
       "language": "Shell",
       "topics": [
         "ai-agent",
@@ -5713,7 +5913,8 @@
         "spec-driven-development"
       ],
       "url": "https://github.com/zhu1090093659/spec_driven_develop",
-      "updated_at": "2026-05-17T14:41:35Z",
+      "created_at": "2026-03-21T09:37:20Z",
+      "updated_at": "2026-05-17T16:24:57Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -5737,6 +5938,7 @@
         "github-copilot"
       ],
       "url": "https://github.com/doccker/cc-use-exp",
+      "created_at": "2026-01-04T09:52:00Z",
       "updated_at": "2026-05-17T06:43:24Z",
       "category": "claude",
       "use_cases": [
@@ -5752,6 +5954,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/Maoleio/CPA-Codex-Manager",
+      "created_at": "2026-03-25T14:29:56Z",
       "updated_at": "2026-05-17T14:31:16Z",
       "category": "codex",
       "use_cases": [
@@ -5789,6 +5992,7 @@
         "workflow"
       ],
       "url": "https://github.com/sangrokjung/claude-forge",
+      "created_at": "2026-02-23T07:46:08Z",
       "updated_at": "2026-05-14T19:19:19Z",
       "category": "claude",
       "use_cases": [
@@ -5807,6 +6011,7 @@
       "language": "Go",
       "topics": [],
       "url": "https://github.com/kittors/CliRelay",
+      "created_at": "2026-02-27T01:35:42Z",
       "updated_at": "2026-05-17T06:53:35Z",
       "category": "claude",
       "use_cases": [
@@ -5817,7 +6022,7 @@
       "id": 1191358549,
       "full_name": "adminlove520/AI-Account-Toolkit",
       "description": "AI 账号注册与管理一站式工具集 | ChatGPT, Claude, Gemini, Codex, Cursor, Grok 批量注册、Token 管理、临时邮箱服务",
-      "stars": 691,
+      "stars": 693,
       "forks": 234,
       "language": "Python",
       "topics": [
@@ -5833,7 +6038,8 @@
         "temp-email"
       ],
       "url": "https://github.com/adminlove520/AI-Account-Toolkit",
-      "updated_at": "2026-05-17T14:49:41Z",
+      "created_at": "2026-03-25T06:53:37Z",
+      "updated_at": "2026-05-17T16:17:46Z",
       "category": "claude",
       "use_cases": [
         "工作流自动化",
@@ -5870,6 +6076,7 @@
         "openai-codex-cli"
       ],
       "url": "https://github.com/milisp/codexia",
+      "created_at": "2025-08-13T09:23:59Z",
       "updated_at": "2026-05-17T12:27:16Z",
       "category": "claude",
       "use_cases": [
@@ -5910,6 +6117,7 @@
         "oss"
       ],
       "url": "https://github.com/devtoolsd/awesome-devtools",
+      "created_at": "2019-01-02T07:31:45Z",
       "updated_at": "2026-05-14T13:27:39Z",
       "category": "cursor",
       "use_cases": [
@@ -5922,7 +6130,7 @@
       "id": 1208451003,
       "full_name": "dominikmartn/hue",
       "description": "open-source skill that learns any brand and turns it into a complete design system. works on claude code and codex. install once, every UI your assistant builds matches your brand.",
-      "stars": 612,
+      "stars": 613,
       "forks": 53,
       "language": "",
       "topics": [
@@ -5936,7 +6144,8 @@
         "openai"
       ],
       "url": "https://github.com/dominikmartn/hue",
-      "updated_at": "2026-05-17T12:53:31Z",
+      "created_at": "2026-04-12T09:51:03Z",
+      "updated_at": "2026-05-17T15:04:34Z",
       "category": "claude",
       "use_cases": [
         "UI/UX 设计"
@@ -5959,6 +6168,7 @@
         "wizardcoder"
       ],
       "url": "https://github.com/ErikBjare/are-copilots-local-yet",
+      "created_at": "2023-07-19T09:48:55Z",
       "updated_at": "2026-05-07T22:56:44Z",
       "category": "copilot",
       "use_cases": [
@@ -5980,6 +6190,7 @@
         "repair-prompt"
       ],
       "url": "https://github.com/fjb040911/ai-rules",
+      "created_at": "2026-03-06T08:07:15Z",
       "updated_at": "2026-05-08T17:51:28Z",
       "category": "cursor",
       "use_cases": [
@@ -6011,6 +6222,7 @@
         "windsurf"
       ],
       "url": "https://github.com/botingw/rulebook-ai",
+      "created_at": "2025-04-12T05:18:08Z",
       "updated_at": "2026-05-11T05:36:51Z",
       "category": "claude",
       "use_cases": [
@@ -6022,7 +6234,7 @@
       "id": 1214805512,
       "full_name": "JuneYaooo/gpt-image2-ppt-skills",
       "description": "Clone any .pptx into your own deck — OpenAI gpt-image-2 mimics the layout, you supply the content. 10 bundled styles. | 把任何 .pptx 模板\"抄\"成你的 PPT：gpt-image-2 仿版式、你换内容，另含 10 套精选风格。Claude Code / OpenClaw skill. ",
-      "stars": 592,
+      "stars": 593,
       "forks": 28,
       "language": "Python",
       "topics": [
@@ -6036,7 +6248,8 @@
         "pptx-templater"
       ],
       "url": "https://github.com/JuneYaooo/gpt-image2-ppt-skills",
-      "updated_at": "2026-05-17T14:30:49Z",
+      "created_at": "2026-04-19T04:25:35Z",
+      "updated_at": "2026-05-17T16:30:55Z",
       "category": "claude",
       "use_cases": [
         "写作/内容"
@@ -6057,6 +6270,7 @@
         "prompts"
       ],
       "url": "https://github.com/pnp/copilot-prompts",
+      "created_at": "2024-04-25T06:53:50Z",
       "updated_at": "2026-05-15T06:28:47Z",
       "category": "copilot",
       "use_cases": [
@@ -6090,6 +6304,7 @@
         "workflow"
       ],
       "url": "https://github.com/gmickel/flow-next",
+      "created_at": "2025-12-26T22:27:07Z",
       "updated_at": "2026-05-16T14:36:54Z",
       "category": "claude",
       "use_cases": [
@@ -6103,7 +6318,7 @@
       "id": 1214951658,
       "full_name": "rohitg00/awesome-claude-design",
       "description": "Claude Design DESIGN.md prompts by aesthetic family, remix recipes, skills, video teardowns, X signal, honest community takes.",
-      "stars": 581,
+      "stars": 582,
       "forks": 67,
       "language": "",
       "topics": [
@@ -6118,7 +6333,8 @@
         "design-system"
       ],
       "url": "https://github.com/rohitg00/awesome-claude-design",
-      "updated_at": "2026-05-17T14:23:24Z",
+      "created_at": "2026-04-19T09:20:44Z",
+      "updated_at": "2026-05-17T14:59:21Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -6154,6 +6370,7 @@
         "vscode"
       ],
       "url": "https://github.com/xNul/code-llama-for-vscode",
+      "created_at": "2023-08-25T03:48:12Z",
       "updated_at": "2026-04-08T16:53:47Z",
       "category": "copilot",
       "use_cases": [
@@ -6165,7 +6382,7 @@
       "id": 1121267947,
       "full_name": "skillmatic-ai/awesome-agent-skills",
       "description": "The definitive resource for Agent Skills - modular capabilities revolutionizing AI agent architecture",
-      "stars": 565,
+      "stars": 566,
       "forks": 102,
       "language": "",
       "topics": [
@@ -6191,7 +6408,8 @@
         "vscode"
       ],
       "url": "https://github.com/skillmatic-ai/awesome-agent-skills",
-      "updated_at": "2026-05-17T03:51:36Z",
+      "created_at": "2025-12-22T17:50:42Z",
+      "updated_at": "2026-05-17T15:00:13Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -6221,6 +6439,7 @@
         "windsurf-ai"
       ],
       "url": "https://github.com/evanca/flutter-ai-rules",
+      "created_at": "2025-04-22T12:23:27Z",
       "updated_at": "2026-05-16T18:57:36Z",
       "category": "cursor",
       "use_cases": [
@@ -6232,7 +6451,7 @@
       "full_name": "MicrosoftDocs/Agent-Skills",
       "description": "Curated Agent Skills for Microsoft & Azure – giving AI coding assistants structured, real-time expertise from Microsoft Learn docs.",
       "stars": 546,
-      "forks": 53,
+      "forks": 54,
       "language": "",
       "topics": [
         "agent",
@@ -6256,6 +6475,7 @@
         "skills"
       ],
       "url": "https://github.com/MicrosoftDocs/Agent-Skills",
+      "created_at": "2026-01-27T03:52:27Z",
       "updated_at": "2026-05-17T03:38:59Z",
       "category": "claude",
       "use_cases": [
@@ -6271,7 +6491,7 @@
       "id": 1170939774,
       "full_name": "Bhanunamikaze/Agentic-SEO-Skill",
       "description": "An LLM-first SEO analysis skill for Antigravity, Codex, Claude with 16 specialized sub-skills, 10 specialist agents, and 88 optional utility scripts used as evidence collectors.",
-      "stars": 539,
+      "stars": 540,
       "forks": 89,
       "language": "Python",
       "topics": [
@@ -6289,7 +6509,8 @@
         "skills"
       ],
       "url": "https://github.com/Bhanunamikaze/Agentic-SEO-Skill",
-      "updated_at": "2026-05-17T07:43:12Z",
+      "created_at": "2026-03-02T17:37:53Z",
+      "updated_at": "2026-05-17T15:53:07Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -6327,6 +6548,7 @@
         "spaced-repetition"
       ],
       "url": "https://github.com/24kchengYe/human-skill-tree",
+      "created_at": "2026-03-07T19:08:46Z",
       "updated_at": "2026-05-17T14:02:04Z",
       "category": "claude",
       "use_cases": [
@@ -6339,7 +6561,7 @@
       "id": 1213015951,
       "full_name": "Storybloq/storybloq",
       "description": "Cross-session context for Claude Code. CLI + MCP server + /story skill that tracks tickets, issues, handovers, and roadmap in a .story/ directory.",
-      "stars": 527,
+      "stars": 528,
       "forks": 22,
       "language": "TypeScript",
       "topics": [
@@ -6362,7 +6584,8 @@
         "workflow"
       ],
       "url": "https://github.com/Storybloq/storybloq",
-      "updated_at": "2026-05-17T13:23:52Z",
+      "created_at": "2026-04-17T00:51:21Z",
+      "updated_at": "2026-05-17T16:44:36Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -6377,7 +6600,7 @@
       "id": 969235474,
       "full_name": "Code-and-Sorts/awesome-copilot-agents",
       "description": "✨ A curated list of awesome GitHub instructions, prompt, skills, MCPs and agent markdown files for enhancing your GitHub Copilot AI experience.",
-      "stars": 513,
+      "stars": 515,
       "forks": 78,
       "language": "TypeScript",
       "topics": [
@@ -6394,7 +6617,8 @@
         "vscode-copilot-chat"
       ],
       "url": "https://github.com/Code-and-Sorts/awesome-copilot-agents",
-      "updated_at": "2026-05-15T12:12:57Z",
+      "created_at": "2025-04-19T17:37:01Z",
+      "updated_at": "2026-05-17T15:46:25Z",
       "category": "copilot",
       "use_cases": [
         "资源列表",
@@ -6407,7 +6631,7 @@
       "id": 1143816215,
       "full_name": "JackyST0/awesome-agent-skills",
       "description": "🤖 精选的 AI Agent Skills 列表，适用于 Cursor、Claude Code、GitHub Copilot 等 AI 编程工具",
-      "stars": 509,
+      "stars": 510,
       "forks": 66,
       "language": "Shell",
       "topics": [
@@ -6420,7 +6644,8 @@
         "cursor"
       ],
       "url": "https://github.com/JackyST0/awesome-agent-skills",
-      "updated_at": "2026-05-17T12:53:22Z",
+      "created_at": "2026-01-28T02:08:09Z",
+      "updated_at": "2026-05-17T15:49:41Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -6436,6 +6661,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/aitytech/agentkits-marketing",
+      "created_at": "2026-01-24T08:44:05Z",
       "updated_at": "2026-05-16T10:44:55Z",
       "category": "claude",
       "use_cases": [
@@ -6473,6 +6699,7 @@
         "typescript"
       ],
       "url": "https://github.com/HoangNguyen0403/agent-skills-standard",
+      "created_at": "2026-01-15T15:33:38Z",
       "updated_at": "2026-05-17T11:01:24Z",
       "category": "cursor",
       "use_cases": [
@@ -6501,6 +6728,7 @@
         "ucp"
       ],
       "url": "https://github.com/smallmain/vscode-unify-chat-provider",
+      "created_at": "2025-12-01T16:30:27Z",
       "updated_at": "2026-05-17T09:34:45Z",
       "category": "claude",
       "use_cases": [
@@ -6529,6 +6757,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/VikashLoomba/copilot-mcp",
+      "created_at": "2025-02-17T10:40:33Z",
       "updated_at": "2026-05-11T09:15:24Z",
       "category": "claude",
       "use_cases": [
@@ -6541,7 +6770,7 @@
       "id": 1206101159,
       "full_name": "Ar9av/PaperOrchestra",
       "description": "An automated AI research-paper writer based off Google's PaperOrchestra paper's implementation through a skills -  benchmark + autoraters using any coding agent (Claude Code, Cursor, Antigravity, Cline, Aider). No API keys, no LLM SDKs.",
-      "stars": 488,
+      "stars": 489,
       "forks": 69,
       "language": "Python",
       "topics": [
@@ -6566,7 +6795,8 @@
         "skill-pack"
       ],
       "url": "https://github.com/Ar9av/PaperOrchestra",
-      "updated_at": "2026-05-17T04:55:08Z",
+      "created_at": "2026-04-09T15:20:37Z",
+      "updated_at": "2026-05-17T16:34:26Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -6597,6 +6827,7 @@
         "plugin"
       ],
       "url": "https://github.com/Pierrad/obsidian-github-copilot",
+      "created_at": "2024-03-31T11:53:07Z",
       "updated_at": "2026-05-10T19:48:51Z",
       "category": "claude",
       "use_cases": [
@@ -6621,6 +6852,7 @@
         "skill"
       ],
       "url": "https://github.com/meodai/skill.color-expert",
+      "created_at": "2026-03-22T17:09:18Z",
       "updated_at": "2026-05-17T11:35:45Z",
       "category": "claude",
       "use_cases": [
@@ -6656,6 +6888,7 @@
         "material3"
       ],
       "url": "https://github.com/aldefy/compose-skill",
+      "created_at": "2026-02-28T06:00:36Z",
       "updated_at": "2026-05-17T10:42:45Z",
       "category": "claude",
       "use_cases": [
@@ -6683,6 +6916,7 @@
         "web"
       ],
       "url": "https://github.com/liyupi/yupi-hot-monitor",
+      "created_at": "2026-02-27T08:15:28Z",
       "updated_at": "2026-05-17T13:56:07Z",
       "category": "copilot",
       "use_cases": [
@@ -6723,6 +6957,7 @@
         "zero-dependencies"
       ],
       "url": "https://github.com/manojmallick/sigmap",
+      "created_at": "2026-03-31T20:17:51Z",
       "updated_at": "2026-05-17T11:08:28Z",
       "category": "claude",
       "use_cases": [
@@ -6748,6 +6983,7 @@
         "writing-style"
       ],
       "url": "https://github.com/yzhao062/agent-style",
+      "created_at": "2026-04-19T08:12:16Z",
       "updated_at": "2026-05-17T09:49:31Z",
       "category": "claude",
       "use_cases": [
@@ -6760,7 +6996,7 @@
       "id": 1200800171,
       "full_name": "matlab/matlab-agentic-toolkit",
       "description": "The MATLAB Agentic Toolkit brings trusted MATLAB capabilities to AI agents, making engineering and scientific workflows agent-ready.",
-      "stars": 441,
+      "stars": 443,
       "forks": 56,
       "language": "MATLAB",
       "topics": [
@@ -6773,7 +7009,8 @@
         "matlab-mcp-server"
       ],
       "url": "https://github.com/matlab/matlab-agentic-toolkit",
-      "updated_at": "2026-05-17T14:46:33Z",
+      "created_at": "2026-04-03T20:58:13Z",
+      "updated_at": "2026-05-17T15:43:07Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -6808,6 +7045,7 @@
         "xagent-hackathon"
       ],
       "url": "https://github.com/Th0rgal/sandboxed.sh",
+      "created_at": "2025-12-15T10:15:26Z",
       "updated_at": "2026-05-16T08:57:53Z",
       "category": "claude",
       "use_cases": [
@@ -6846,6 +7084,7 @@
         "subagents"
       ],
       "url": "https://github.com/josstei/maestro-orchestrate",
+      "created_at": "2026-02-09T06:49:37Z",
       "updated_at": "2026-05-16T19:34:52Z",
       "category": "claude",
       "use_cases": [
@@ -6869,6 +7108,7 @@
         "ai-agents"
       ],
       "url": "https://github.com/qdleader/Awesome-AI-Pedia",
+      "created_at": "2026-01-26T03:47:06Z",
       "updated_at": "2026-05-17T14:16:12Z",
       "category": "claude",
       "use_cases": [
@@ -6907,6 +7147,7 @@
         "youtube"
       ],
       "url": "https://github.com/Affitor/affiliate-skills",
+      "created_at": "2026-03-15T20:51:26Z",
       "updated_at": "2026-05-16T15:51:11Z",
       "category": "claude",
       "use_cases": [
@@ -6923,7 +7164,7 @@
       "id": 1211464405,
       "full_name": "minhnv0807/ai-business-skills",
       "description": "60 production-ready AI marketing skills (29 VN + 30 Global) for Claude Code, ChatGPT, Gemini & Copilot. 4 regions (US/EU/SEA/LATAM), Personal Brand + AI Avatar cluster, Dropshipping flagship for US/EU. Universal agents auto-detect cluster. Vietnam-market 2025-2026. Plugin or standalone prompts.",
-      "stars": 396,
+      "stars": 398,
       "forks": 187,
       "language": "PowerShell",
       "topics": [
@@ -6949,7 +7190,8 @@
         "vietnam"
       ],
       "url": "https://github.com/minhnv0807/ai-business-skills",
-      "updated_at": "2026-05-17T09:56:56Z",
+      "created_at": "2026-04-15T12:23:06Z",
+      "updated_at": "2026-05-17T15:36:06Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -6963,7 +7205,7 @@
       "id": 1182308005,
       "full_name": "managedcode/dotnet-skills",
       "description": "Installable .NET skill catalog and CLI for Codex, Claude Code, GitHub Copilot, and Gemini.",
-      "stars": 395,
+      "stars": 396,
       "forks": 31,
       "language": "C#",
       "topics": [
@@ -6976,7 +7218,8 @@
         "skills"
       ],
       "url": "https://github.com/managedcode/dotnet-skills",
-      "updated_at": "2026-05-17T10:08:50Z",
+      "created_at": "2026-03-15T10:43:01Z",
+      "updated_at": "2026-05-17T15:18:59Z",
       "category": "claude",
       "use_cases": [
         "通用工具"
@@ -7001,6 +7244,7 @@
         "skills"
       ],
       "url": "https://github.com/gotalab/skillport",
+      "created_at": "2025-12-01T17:29:59Z",
       "updated_at": "2026-05-12T16:01:38Z",
       "category": "claude",
       "use_cases": [
@@ -7034,6 +7278,7 @@
         "tool-call"
       ],
       "url": "https://github.com/opensolon/solon-ai",
+      "created_at": "2025-03-04T23:42:44Z",
       "updated_at": "2026-05-16T08:03:54Z",
       "category": "other",
       "use_cases": [
@@ -7071,6 +7316,7 @@
         "system-prompts"
       ],
       "url": "https://github.com/jabrena/cursor-rules-java",
+      "created_at": "2025-02-08T23:14:36Z",
       "updated_at": "2026-05-17T08:33:25Z",
       "category": "claude",
       "use_cases": [
@@ -7109,6 +7355,7 @@
         "vscode"
       ],
       "url": "https://github.com/codexstar69/bug-hunter",
+      "created_at": "2026-03-07T19:19:24Z",
       "updated_at": "2026-05-14T22:22:57Z",
       "category": "claude",
       "use_cases": [
@@ -7146,6 +7393,7 @@
         "vscode"
       ],
       "url": "https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers",
+      "created_at": "2025-02-06T18:09:33Z",
       "updated_at": "2026-05-16T05:49:03Z",
       "category": "copilot",
       "use_cases": [
@@ -7172,6 +7420,7 @@
         "gpt3"
       ],
       "url": "https://github.com/yuhattor/copilot-patterns",
+      "created_at": "2023-04-25T04:34:21Z",
       "updated_at": "2026-05-13T01:20:17Z",
       "category": "copilot",
       "use_cases": [
@@ -7196,6 +7445,7 @@
         "personal"
       ],
       "url": "https://github.com/open-gitagent/gitagent",
+      "created_at": "2026-03-04T12:30:03Z",
       "updated_at": "2026-05-17T10:32:07Z",
       "category": "claude",
       "use_cases": [
@@ -7222,6 +7472,7 @@
         "security"
       ],
       "url": "https://github.com/matank001/cursor-security-rules",
+      "created_at": "2025-06-12T11:20:34Z",
       "updated_at": "2026-05-13T23:58:17Z",
       "category": "cursor",
       "use_cases": [
@@ -7246,6 +7497,7 @@
         "claude-subagents"
       ],
       "url": "https://github.com/alirezarezvani/ClaudeForge",
+      "created_at": "2025-11-12T09:46:18Z",
       "updated_at": "2026-05-17T03:25:54Z",
       "category": "claude",
       "use_cases": [
@@ -7268,6 +7520,7 @@
         "cursorrules"
       ],
       "url": "https://github.com/worryzyy/awesome-cursor-download",
+      "created_at": "2025-03-20T09:36:01Z",
       "updated_at": "2026-05-15T15:14:26Z",
       "category": "cursor",
       "use_cases": [
@@ -7304,6 +7557,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/bitjaru/styleseed",
+      "created_at": "2026-04-07T02:32:20Z",
       "updated_at": "2026-05-16T11:17:54Z",
       "category": "claude",
       "use_cases": [
@@ -7337,6 +7591,7 @@
         "workflows"
       ],
       "url": "https://github.com/inmve/awesome-ai-coding-techniques",
+      "created_at": "2025-08-24T19:14:21Z",
       "updated_at": "2026-05-04T14:55:05Z",
       "category": "claude",
       "use_cases": [
@@ -7373,6 +7628,7 @@
         "windsurf-ai"
       ],
       "url": "https://github.com/analyticalrohit/awesome-vibe-coding-guide",
+      "created_at": "2025-07-20T07:04:17Z",
       "updated_at": "2026-05-17T13:30:30Z",
       "category": "claude",
       "use_cases": [
@@ -7384,7 +7640,7 @@
       "full_name": "KAOPU-XiaoPu/web-design",
       "description": "A Claude Code SKILL for designing beautiful, consistent web pages — spec first, code second. ",
       "stars": 342,
-      "forks": 23,
+      "forks": 24,
       "language": "Python",
       "topics": [
         "claude-code",
@@ -7396,6 +7652,7 @@
         "xiaopu"
       ],
       "url": "https://github.com/KAOPU-XiaoPu/web-design",
+      "created_at": "2026-04-16T19:24:52Z",
       "updated_at": "2026-05-17T10:34:05Z",
       "category": "claude",
       "use_cases": [
@@ -7423,6 +7680,7 @@
         "playstore"
       ],
       "url": "https://github.com/alirezarezvani/claude-code-aso-skill",
+      "created_at": "2025-11-07T09:08:00Z",
       "updated_at": "2026-05-16T22:28:05Z",
       "category": "claude",
       "use_cases": [
@@ -7435,7 +7693,7 @@
       "id": 1176559390,
       "full_name": "aklofas/kicad-happy",
       "description": "AI coding agent skills for KiCad electronics design. Works with Claude Code and OpenAI Codex. Analyze schematics, review PCB layouts, EMC pre-compliance, SPICE simulation, download datasheets, source components, and prep boards for fabrication.",
-      "stars": 338,
+      "stars": 339,
       "forks": 29,
       "language": "Python",
       "topics": [
@@ -7461,7 +7719,8 @@
         "spice-simulation"
       ],
       "url": "https://github.com/aklofas/kicad-happy",
-      "updated_at": "2026-05-17T10:41:30Z",
+      "created_at": "2026-03-09T06:19:59Z",
+      "updated_at": "2026-05-17T15:27:26Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -7485,10 +7744,40 @@
         "product-management"
       ],
       "url": "https://github.com/menkesu/awesome-pm-skills",
+      "created_at": "2026-01-28T20:50:34Z",
       "updated_at": "2026-05-16T18:06:47Z",
       "category": "claude",
       "use_cases": [
         "资源列表"
+      ]
+    },
+    {
+      "id": 1211139949,
+      "full_name": "tt-a1i/archify",
+      "description": "Any agent Skill: generate beautiful architecture diagrams with dark/light theme toggle and PNG/JPEG/WebP/SVG export",
+      "stars": 335,
+      "forks": 20,
+      "language": "HTML",
+      "topics": [
+        "anthropic",
+        "architecture-diagram",
+        "claude-skill",
+        "dark-mode",
+        "developer-tools",
+        "diagram-as-code",
+        "html-diagram",
+        "mermaid-alternative",
+        "svg",
+        "system-design"
+      ],
+      "url": "https://github.com/tt-a1i/archify",
+      "created_at": "2026-04-15T05:27:37Z",
+      "updated_at": "2026-05-17T16:51:27Z",
+      "category": "claude",
+      "use_cases": [
+        "代码生成",
+        "AI 代理",
+        "UI/UX 设计"
       ]
     },
     {
@@ -7520,6 +7809,7 @@
         "tdd"
       ],
       "url": "https://github.com/karanb192/awesome-claude-skills",
+      "created_at": "2025-10-21T11:29:25Z",
       "updated_at": "2026-05-17T13:39:58Z",
       "category": "claude",
       "use_cases": [
@@ -7556,6 +7846,7 @@
         "web-search"
       ],
       "url": "https://github.com/Shelpuk-AI-Technology-Consulting/kindly-web-search-mcp-server",
+      "created_at": "2026-01-02T17:27:27Z",
       "updated_at": "2026-05-17T06:43:10Z",
       "category": "claude",
       "use_cases": [
@@ -7583,6 +7874,7 @@
         "skills"
       ],
       "url": "https://github.com/Castor6/tactus",
+      "created_at": "2026-01-23T09:41:41Z",
       "updated_at": "2026-05-15T11:11:06Z",
       "category": "other",
       "use_cases": [
@@ -7592,31 +7884,34 @@
       ]
     },
     {
-      "id": 1211139949,
-      "full_name": "tt-a1i/archify",
-      "description": "Any agent Skill: generate beautiful architecture diagrams with dark/light theme toggle and PNG/JPEG/WebP/SVG export",
-      "stars": 323,
-      "forks": 20,
-      "language": "HTML",
+      "id": 1220899692,
+      "full_name": "Imbad0202/academic-research-skills-codex",
+      "description": "Codex-native Academic Research Skills suite for human-in-the-loop academic research workflows",
+      "stars": 326,
+      "forks": 28,
+      "language": "Python",
       "topics": [
-        "anthropic",
-        "architecture-diagram",
-        "claude-skill",
-        "dark-mode",
-        "developer-tools",
-        "diagram-as-code",
-        "html-diagram",
-        "mermaid-alternative",
-        "svg",
-        "system-design"
+        "academic-pipeline",
+        "academic-research",
+        "academic-writing",
+        "ai-research",
+        "codex",
+        "literature-review",
+        "openai-codex",
+        "peer-review",
+        "prompt-engineering",
+        "research-assistant"
       ],
-      "url": "https://github.com/tt-a1i/archify",
-      "updated_at": "2026-05-17T14:49:48Z",
-      "category": "claude",
+      "url": "https://github.com/Imbad0202/academic-research-skills-codex",
+      "created_at": "2026-04-25T13:39:58Z",
+      "updated_at": "2026-05-17T16:48:45Z",
+      "category": "codex",
       "use_cases": [
-        "代码生成",
-        "AI 代理",
-        "UI/UX 设计"
+        "工作流自动化",
+        "数据分析",
+        "写作/内容",
+        "搜索",
+        "Prompt 优化"
       ]
     },
     {
@@ -7638,6 +7933,7 @@
         "simulink"
       ],
       "url": "https://github.com/matlab/simulink-agentic-toolkit",
+      "created_at": "2026-04-15T14:41:36Z",
       "updated_at": "2026-05-17T14:41:22Z",
       "category": "claude",
       "use_cases": [
@@ -7663,6 +7959,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/Lampese/codex-switcher",
+      "created_at": "2026-01-14T02:44:13Z",
       "updated_at": "2026-05-17T10:01:14Z",
       "category": "codex",
       "use_cases": [
@@ -7699,42 +7996,13 @@
         "token-optimization"
       ],
       "url": "https://github.com/Lap-Platform/LAP",
+      "created_at": "2026-02-08T14:29:28Z",
       "updated_at": "2026-05-17T13:51:29Z",
       "category": "claude",
       "use_cases": [
         "测试",
         "AI 代理",
         "工具集成",
-        "Prompt 优化"
-      ]
-    },
-    {
-      "id": 1220899692,
-      "full_name": "Imbad0202/academic-research-skills-codex",
-      "description": "Codex-native Academic Research Skills suite for human-in-the-loop academic research workflows",
-      "stars": 304,
-      "forks": 27,
-      "language": "Python",
-      "topics": [
-        "academic-pipeline",
-        "academic-research",
-        "academic-writing",
-        "ai-research",
-        "codex",
-        "literature-review",
-        "openai-codex",
-        "peer-review",
-        "prompt-engineering",
-        "research-assistant"
-      ],
-      "url": "https://github.com/Imbad0202/academic-research-skills-codex",
-      "updated_at": "2026-05-17T14:51:13Z",
-      "category": "codex",
-      "use_cases": [
-        "工作流自动化",
-        "数据分析",
-        "写作/内容",
-        "搜索",
         "Prompt 优化"
       ]
     },
@@ -7747,6 +8015,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/maccman/ai-monorepo-scaffold",
+      "created_at": "2025-06-16T17:06:45Z",
       "updated_at": "2026-05-12T06:57:51Z",
       "category": "cursor",
       "use_cases": [
@@ -7776,7 +8045,8 @@
         "ollama"
       ],
       "url": "https://github.com/notebook-intelligence/notebook-intelligence",
-      "updated_at": "2026-05-17T00:59:26Z",
+      "created_at": "2024-09-22T21:43:15Z",
+      "updated_at": "2026-05-17T15:12:43Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -7808,6 +8078,7 @@
         "pull-request"
       ],
       "url": "https://github.com/besimple-oss/broccoli",
+      "created_at": "2026-04-14T20:55:57Z",
       "updated_at": "2026-05-11T13:44:18Z",
       "category": "claude",
       "use_cases": [
@@ -7831,6 +8102,7 @@
         "monaco-editor"
       ],
       "url": "https://github.com/arshad-yaseen/monacopilot",
+      "created_at": "2024-04-12T14:07:46Z",
       "updated_at": "2026-05-12T23:35:50Z",
       "category": "copilot",
       "use_cases": [
@@ -7851,6 +8123,7 @@
         "llm"
       ],
       "url": "https://github.com/cssmagic/Awesome-AI",
+      "created_at": "2024-01-17T15:25:13Z",
       "updated_at": "2026-05-09T02:28:34Z",
       "category": "copilot",
       "use_cases": [
@@ -7874,6 +8147,7 @@
         "power-platform"
       ],
       "url": "https://github.com/microsoft/power-platform-skills",
+      "created_at": "2026-01-21T18:25:14Z",
       "updated_at": "2026-05-17T10:30:26Z",
       "category": "claude",
       "use_cases": [
@@ -7897,6 +8171,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/badboysm890/clara-copilot",
+      "created_at": "2021-07-04T16:16:58Z",
       "updated_at": "2026-04-10T22:44:57Z",
       "category": "copilot",
       "use_cases": [
@@ -7921,6 +8196,7 @@
         "workshop"
       ],
       "url": "https://github.com/github/GitHub-Copilot-Dev-Days",
+      "created_at": "2025-12-17T12:48:17Z",
       "updated_at": "2026-05-16T19:22:47Z",
       "category": "copilot",
       "use_cases": [
@@ -7952,6 +8228,7 @@
         "web-accessibility"
       ],
       "url": "https://github.com/Community-Access/accessibility-agents",
+      "created_at": "2026-02-21T00:29:08Z",
       "updated_at": "2026-05-17T05:04:30Z",
       "category": "claude",
       "use_cases": [
@@ -7964,7 +8241,7 @@
       "id": 1055377324,
       "full_name": "webcoyote/sandvault",
       "description": "Run AI agents isolated in a macOS user account and sandbox-exec. Configured to run Claude Code, OpenAI Codex, Cursor Agent, Google Gemini.",
-      "stars": 272,
+      "stars": 273,
       "forks": 14,
       "language": "Shell",
       "topics": [
@@ -7974,7 +8251,8 @@
         "sandbox"
       ],
       "url": "https://github.com/webcoyote/sandvault",
-      "updated_at": "2026-05-15T10:35:11Z",
+      "created_at": "2025-09-12T07:17:45Z",
+      "updated_at": "2026-05-17T15:13:26Z",
       "category": "claude",
       "use_cases": [
         "AI 代理"
@@ -7989,6 +8267,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/fleurytian/awesome-claude-skills",
+      "created_at": "2025-10-26T02:06:15Z",
       "updated_at": "2026-05-14T08:59:15Z",
       "category": "claude",
       "use_cases": [
@@ -8011,6 +8290,7 @@
         "tauri2"
       ],
       "url": "https://github.com/chrlsio/agent-skills",
+      "created_at": "2026-03-17T10:03:48Z",
       "updated_at": "2026-05-17T05:58:43Z",
       "category": "claude",
       "use_cases": [
@@ -8027,6 +8307,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/github/copilot-plugins",
+      "created_at": "2026-01-21T19:25:42Z",
       "updated_at": "2026-05-17T05:29:10Z",
       "category": "copilot",
       "use_cases": [
@@ -8052,6 +8333,7 @@
         "windsurf"
       ],
       "url": "https://github.com/przeprogramowani/ai-rules-builder",
+      "created_at": "2025-03-13T18:41:11Z",
       "updated_at": "2026-05-16T07:40:47Z",
       "category": "cursor",
       "use_cases": [
@@ -8085,6 +8367,7 @@
         "vulnerability-scanner"
       ],
       "url": "https://github.com/getagentseal/agentseal",
+      "created_at": "2026-03-03T10:01:58Z",
       "updated_at": "2026-05-16T23:58:28Z",
       "category": "other",
       "use_cases": [
@@ -8121,6 +8404,7 @@
         "windsurf-ai"
       ],
       "url": "https://github.com/CreatorEdition/system-prompts-and-models-of-ai-tools-chinese",
+      "created_at": "2025-12-12T16:05:41Z",
       "updated_at": "2026-05-17T11:26:34Z",
       "category": "claude",
       "use_cases": [
@@ -8129,10 +8413,37 @@
       ]
     },
     {
+      "id": 1193798478,
+      "full_name": "RealZST/HarnessKit",
+      "description": "More than a skill manager — manage skills, MCP servers, plugins, hooks, CLIs, configs, memory & rules across every AI coding agent. 🌟 Star if you like it!",
+      "stars": 254,
+      "forks": 14,
+      "language": "Rust",
+      "topics": [
+        "ai-coding-agents",
+        "claude-code",
+        "cli-tools",
+        "codex",
+        "cursor",
+        "developer-tools",
+        "gemini-cli",
+        "skill-manager"
+      ],
+      "url": "https://github.com/RealZST/HarnessKit",
+      "created_at": "2026-03-27T15:37:08Z",
+      "updated_at": "2026-05-17T15:54:16Z",
+      "category": "claude",
+      "use_cases": [
+        "AI 代理",
+        "知识管理",
+        "工具集成"
+      ]
+    },
+    {
       "id": 1145473185,
       "full_name": "ai-dashboad/flutter-skill",
       "description": "AI-powered E2E testing for 10 platforms. 253 MCP tools. Zero config. Works with Claude, Cursor, Windsurf, Copilot. Test Flutter, React Native, iOS, Android, Web, Electron, Tauri, KMP, .NET MAUI — all from natural language.",
-      "stars": 253,
+      "stars": 254,
       "forks": 33,
       "language": "Dart",
       "topics": [
@@ -8158,7 +8469,8 @@
         "web-testing"
       ],
       "url": "https://github.com/ai-dashboad/flutter-skill",
-      "updated_at": "2026-05-16T16:49:25Z",
+      "created_at": "2026-01-29T20:55:29Z",
+      "updated_at": "2026-05-17T15:46:41Z",
       "category": "claude",
       "use_cases": [
         "测试",
@@ -8169,37 +8481,11 @@
       ]
     },
     {
-      "id": 1193798478,
-      "full_name": "RealZST/HarnessKit",
-      "description": "More than a skill manager — manage skills, MCP servers, plugins, hooks, CLIs, configs, memory & rules across every AI coding agent. 🌟 Star if you like it!",
-      "stars": 252,
-      "forks": 14,
-      "language": "Rust",
-      "topics": [
-        "ai-coding-agents",
-        "claude-code",
-        "cli-tools",
-        "codex",
-        "cursor",
-        "developer-tools",
-        "gemini-cli",
-        "skill-manager"
-      ],
-      "url": "https://github.com/RealZST/HarnessKit",
-      "updated_at": "2026-05-17T14:43:42Z",
-      "category": "claude",
-      "use_cases": [
-        "AI 代理",
-        "知识管理",
-        "工具集成"
-      ]
-    },
-    {
       "id": 1112154391,
       "full_name": "Eyadkelleh/awesome-claude-skills-security",
       "description": "Security testing toolkit for Claude Code: curated SecLists wordlists, injection payloads, and expert agents for authorized pentesting, CTFs, and bug bounties",
-      "stars": 251,
-      "forks": 40,
+      "stars": 252,
+      "forks": 41,
       "language": "PHP",
       "topics": [
         "anthropic",
@@ -8215,7 +8501,8 @@
         "security"
       ],
       "url": "https://github.com/Eyadkelleh/awesome-claude-skills-security",
-      "updated_at": "2026-05-16T21:34:26Z",
+      "created_at": "2025-12-08T08:21:05Z",
+      "updated_at": "2026-05-17T16:50:40Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -8240,6 +8527,7 @@
         "skill"
       ],
       "url": "https://github.com/WoJiSama/skill-based-architecture",
+      "created_at": "2026-04-08T06:08:53Z",
       "updated_at": "2026-05-17T12:48:30Z",
       "category": "claude",
       "use_cases": [
@@ -8258,6 +8546,7 @@
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/microsoft/skills-for-copilot-studio",
+      "created_at": "2026-01-13T18:13:22Z",
       "updated_at": "2026-05-16T01:50:28Z",
       "category": "claude",
       "use_cases": [
@@ -8294,6 +8583,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/agent-sh/agnix",
+      "created_at": "2026-01-30T23:54:10Z",
       "updated_at": "2026-05-16T09:37:35Z",
       "category": "claude",
       "use_cases": [
@@ -8325,6 +8615,7 @@
         "typescript"
       ],
       "url": "https://github.com/humeo/code-helm",
+      "created_at": "2026-04-20T10:50:04Z",
       "updated_at": "2026-05-15T19:24:13Z",
       "category": "codex",
       "use_cases": [
@@ -8342,6 +8633,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/knoxgraeme/skillfish",
+      "created_at": "2026-01-21T17:59:31Z",
       "updated_at": "2026-05-15T21:24:55Z",
       "category": "claude",
       "use_cases": [
@@ -8362,6 +8654,7 @@
         "openai-codex"
       ],
       "url": "https://github.com/johnseth97/codex.nvim",
+      "created_at": "2025-04-18T07:47:29Z",
       "updated_at": "2026-05-16T19:42:55Z",
       "category": "codex",
       "use_cases": [
@@ -8382,6 +8675,7 @@
         "vscode-extension"
       ],
       "url": "https://github.com/mbeijen/andrej-karpathy-skills-cursor-vscode",
+      "created_at": "2026-02-11T09:57:52Z",
       "updated_at": "2026-05-17T01:40:00Z",
       "category": "cursor",
       "use_cases": [
@@ -8397,6 +8691,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/SunWeb3Sec/llm-sast-scanner",
+      "created_at": "2026-03-29T06:02:03Z",
       "updated_at": "2026-05-17T08:03:45Z",
       "category": "other",
       "use_cases": [
@@ -8409,10 +8704,11 @@
       "full_name": "LingyiChen-AI/comfyui-workflow-skill",
       "description": "Natural language → ComfyUI workflow JSON. 34 built-in templates, 360+ node definitions, auto model download. Supports txt2img,       img2img, txt2vid, img2vid, audio, 3D generation across SD1.5/SDXL/SD3/FLUX/Wan2.2/HunyuanVideo/LTXV/Mochi/Cosmos + LLM integration.    Works as a skill for Claude Code, Cursor, and other AI coding agents.  ",
       "stars": 240,
-      "forks": 40,
+      "forks": 41,
       "language": "",
       "topics": [],
       "url": "https://github.com/LingyiChen-AI/comfyui-workflow-skill",
+      "created_at": "2026-04-04T05:56:54Z",
       "updated_at": "2026-05-17T02:24:59Z",
       "category": "claude",
       "use_cases": [
@@ -8443,6 +8739,7 @@
         "terms-of-service"
       ],
       "url": "https://github.com/kimlawtech/korean-privacy-terms",
+      "created_at": "2026-04-18T12:31:18Z",
       "updated_at": "2026-05-17T05:49:14Z",
       "category": "claude",
       "use_cases": [
@@ -8455,7 +8752,7 @@
       "id": 1182045509,
       "full_name": "TYH-labs/unsloth-buddy",
       "description": "Zero-friction LLM fine-tuning skill for Claude Code, Gemini CLI & any ACP agent. Unsloth on NVIDIA · TRL+MPS/MLX on Apple Silicon. Automates env setup, LoRA training (SFT, DPO, GRPO, vision), post-hoc GRPO log diagnostics, evaluation, and export end-to-end. Part of the Gaslamp AI platform.",
-      "stars": 238,
+      "stars": 239,
       "forks": 13,
       "language": "Python",
       "topics": [
@@ -8474,10 +8771,49 @@
         "unsloth"
       ],
       "url": "https://github.com/TYH-labs/unsloth-buddy",
-      "updated_at": "2026-05-15T12:13:56Z",
+      "created_at": "2026-03-15T00:52:57Z",
+      "updated_at": "2026-05-17T16:36:34Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
+        "工作流自动化"
+      ]
+    },
+    {
+      "id": 1206815767,
+      "full_name": "zhinkgit/embeddedskills",
+      "description": "An open-source collection of embedded development and debugging skills for Claude Code, Copilot, TRAE, and other AI coding assistants that support the Skill protocol. Once installed, the AI assistant can directly operate compilers, debuggers, and communication buses, automating the full workflow from code generation to hardware verification.",
+      "stars": 234,
+      "forks": 31,
+      "language": "Python",
+      "topics": [
+        "ai-coding-assistant",
+        "automation",
+        "can-bus",
+        "can-fd",
+        "debugging",
+        "devtools",
+        "embedded",
+        "embedded-development",
+        "firmware",
+        "gcc",
+        "gdb",
+        "hardware-verification",
+        "jlink",
+        "keil",
+        "openocd",
+        "serial",
+        "skill-protocol",
+        "toolchain",
+        "workflow"
+      ],
+      "url": "https://github.com/zhinkgit/embeddedskills",
+      "created_at": "2026-04-10T09:27:48Z",
+      "updated_at": "2026-05-17T16:40:48Z",
+      "category": "claude",
+      "use_cases": [
+        "资源列表",
+        "代码生成",
         "工作流自动化"
       ]
     },
@@ -8505,6 +8841,7 @@
         "skill"
       ],
       "url": "https://github.com/LycheeMem/LycheeMem",
+      "created_at": "2026-03-23T12:01:43Z",
       "updated_at": "2026-05-15T19:30:53Z",
       "category": "other",
       "use_cases": [
@@ -8522,6 +8859,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/wiz-sec-public/secure-rules-files",
+      "created_at": "2025-06-05T18:18:05Z",
       "updated_at": "2026-05-13T23:58:16Z",
       "category": "claude",
       "use_cases": [
@@ -8556,6 +8894,7 @@
         "vscode"
       ],
       "url": "https://github.com/quack-ai/companion-vscode",
+      "created_at": "2023-08-07T06:51:07Z",
       "updated_at": "2025-12-10T06:41:52Z",
       "category": "copilot",
       "use_cases": [
@@ -8563,43 +8902,6 @@
         "UI/UX 设计",
         "工具集成",
         "Prompt 优化"
-      ]
-    },
-    {
-      "id": 1206815767,
-      "full_name": "zhinkgit/embeddedskills",
-      "description": "An open-source collection of embedded development and debugging skills for Claude Code, Copilot, TRAE, and other AI coding assistants that support the Skill protocol. Once installed, the AI assistant can directly operate compilers, debuggers, and communication buses, automating the full workflow from code generation to hardware verification.",
-      "stars": 233,
-      "forks": 31,
-      "language": "Python",
-      "topics": [
-        "ai-coding-assistant",
-        "automation",
-        "can-bus",
-        "can-fd",
-        "debugging",
-        "devtools",
-        "embedded",
-        "embedded-development",
-        "firmware",
-        "gcc",
-        "gdb",
-        "hardware-verification",
-        "jlink",
-        "keil",
-        "openocd",
-        "serial",
-        "skill-protocol",
-        "toolchain",
-        "workflow"
-      ],
-      "url": "https://github.com/zhinkgit/embeddedskills",
-      "updated_at": "2026-05-17T09:38:51Z",
-      "category": "claude",
-      "use_cases": [
-        "资源列表",
-        "代码生成",
-        "工作流自动化"
       ]
     },
     {
@@ -8626,6 +8928,7 @@
         "workflow"
       ],
       "url": "https://github.com/VintLin/skill-flow",
+      "created_at": "2026-03-21T10:46:31Z",
       "updated_at": "2026-05-14T08:48:34Z",
       "category": "claude",
       "use_cases": [
@@ -8642,6 +8945,7 @@
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/Mizoreww/awesome-claude-code-config",
+      "created_at": "2026-02-25T03:27:52Z",
       "updated_at": "2026-05-11T06:38:45Z",
       "category": "claude",
       "use_cases": [
@@ -8662,6 +8966,7 @@
         "skills"
       ],
       "url": "https://github.com/assafelovic/skyll",
+      "created_at": "2026-01-31T18:04:09Z",
       "updated_at": "2026-05-12T23:36:37Z",
       "category": "claude",
       "use_cases": [
@@ -8696,6 +9001,7 @@
         "rules-for"
       ],
       "url": "https://github.com/thehimel/cursor-rules-and-prompts",
+      "created_at": "2025-10-28T20:32:47Z",
       "updated_at": "2026-05-16T16:21:43Z",
       "category": "cursor",
       "use_cases": [
@@ -8739,6 +9045,7 @@
         "test-driven-development"
       ],
       "url": "https://github.com/tninja/ai-code-interface.el",
+      "created_at": "2025-07-19T02:48:03Z",
       "updated_at": "2026-05-17T03:35:55Z",
       "category": "claude",
       "use_cases": [
@@ -8776,6 +9083,7 @@
         "windows"
       ],
       "url": "https://github.com/mylee04/code-notify",
+      "created_at": "2025-07-29T14:26:05Z",
       "updated_at": "2026-05-16T09:49:24Z",
       "category": "claude",
       "use_cases": [
@@ -8800,6 +9108,7 @@
         "resume"
       ],
       "url": "https://github.com/he-yufeng/FindJobs-Agent",
+      "created_at": "2025-11-15T21:14:05Z",
       "updated_at": "2026-05-17T12:31:55Z",
       "category": "other",
       "use_cases": [
@@ -8839,6 +9148,7 @@
         "room"
       ],
       "url": "https://github.com/Meet-Miyani/compose-skill",
+      "created_at": "2026-03-14T11:47:18Z",
       "updated_at": "2026-05-17T14:08:25Z",
       "category": "claude",
       "use_cases": [
@@ -8861,6 +9171,7 @@
         "now-in-android"
       ],
       "url": "https://github.com/dpconde/claude-android-skill",
+      "created_at": "2025-12-07T21:18:53Z",
       "updated_at": "2026-05-16T22:28:27Z",
       "category": "claude",
       "use_cases": [
@@ -8872,7 +9183,7 @@
       "full_name": "JSONbored/awesome-claude",
       "description": "HeyClaude is a curated registry and distribution surface for Claude and AI-workflow assets: agents, MCP servers, skills, commands, hooks, rules, guides, tools, jobs, Raycast feeds, static data exports, and an npm MCP package.",
       "stars": 218,
-      "forks": 27,
+      "forks": 28,
       "language": "MDX",
       "topics": [
         "agent-skills",
@@ -8897,6 +9208,7 @@
         "prompt-engineering"
       ],
       "url": "https://github.com/JSONbored/awesome-claude",
+      "created_at": "2025-09-15T04:40:32Z",
       "updated_at": "2026-05-17T08:04:08Z",
       "category": "claude",
       "use_cases": [
@@ -8916,6 +9228,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/hoodini/ai-agents-skills",
+      "created_at": "2026-01-07T15:25:35Z",
       "updated_at": "2026-05-14T22:38:14Z",
       "category": "claude",
       "use_cases": [
@@ -8928,8 +9241,8 @@
       "id": 1036544455,
       "full_name": "bvisible/mcp-ssh-manager",
       "description": "MCP SSH Server: 37 tools for remote SSH management | Claude Code & OpenAI Codex | DevOps automation, backups, database operations, health monitoring",
-      "stars": 207,
-      "forks": 35,
+      "stars": 209,
+      "forks": 34,
       "language": "JavaScript",
       "topics": [
         "anthropic",
@@ -8954,7 +9267,8 @@
         "toml"
       ],
       "url": "https://github.com/bvisible/mcp-ssh-manager",
-      "updated_at": "2026-05-17T13:49:47Z",
+      "created_at": "2025-08-12T08:25:41Z",
+      "updated_at": "2026-05-17T16:43:41Z",
       "category": "claude",
       "use_cases": [
         "工作流自动化",
@@ -8986,6 +9300,7 @@
         "skills"
       ],
       "url": "https://github.com/sharpdeveye/maestro",
+      "created_at": "2026-04-02T16:30:40Z",
       "updated_at": "2026-05-12T07:36:51Z",
       "category": "claude",
       "use_cases": [
@@ -9010,6 +9325,7 @@
         "robotics"
       ],
       "url": "https://github.com/arpitg1304/robotics-agent-skills",
+      "created_at": "2026-02-26T14:02:32Z",
       "updated_at": "2026-05-16T22:09:38Z",
       "category": "claude",
       "use_cases": [
@@ -9041,6 +9357,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/feiskyer/codex-settings",
+      "created_at": "2025-10-06T08:40:43Z",
       "updated_at": "2026-05-15T15:06:42Z",
       "category": "claude",
       "use_cases": [
@@ -9053,7 +9370,7 @@
       "id": 1133894957,
       "full_name": "bitwize-music-studio/claude-ai-music-skills",
       "description": "Human + AI music production workflow for Suno - skills, templates, and tools",
-      "stars": 191,
+      "stars": 192,
       "forks": 33,
       "language": "Python",
       "topics": [
@@ -9079,7 +9396,8 @@
         "sunoai"
       ],
       "url": "https://github.com/bitwize-music-studio/claude-ai-music-skills",
-      "updated_at": "2026-05-17T13:14:50Z",
+      "created_at": "2026-01-14T00:55:56Z",
+      "updated_at": "2026-05-17T15:17:32Z",
       "category": "claude",
       "use_cases": [
         "工作流自动化",
@@ -9088,32 +9406,10 @@
       ]
     },
     {
-      "id": 405366316,
-      "full_name": "jameshiew/nvim-magic",
-      "description": ":genie: Pluggable framework for using AI code assistance in Neovim",
-      "stars": 189,
-      "forks": 16,
-      "language": "Lua",
-      "topics": [
-        "lua",
-        "neovim",
-        "neovim-plugin",
-        "nvim",
-        "openai",
-        "openai-codex"
-      ],
-      "url": "https://github.com/jameshiew/nvim-magic",
-      "updated_at": "2026-03-09T12:10:45Z",
-      "category": "codex",
-      "use_cases": [
-        "工具集成"
-      ]
-    },
-    {
       "id": 1196948954,
       "full_name": "RoggeOhta/awesome-codex-cli",
       "description": "Curated list of 150+ tools, skills, subagents & plugins for OpenAI Codex CLI",
-      "stars": 188,
+      "stars": 189,
       "forks": 38,
       "language": "",
       "topics": [
@@ -9137,11 +9433,35 @@
         "terminal"
       ],
       "url": "https://github.com/RoggeOhta/awesome-codex-cli",
-      "updated_at": "2026-05-15T10:55:31Z",
+      "created_at": "2026-03-31T07:31:19Z",
+      "updated_at": "2026-05-17T16:44:17Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
         "AI 代理",
+        "工具集成"
+      ]
+    },
+    {
+      "id": 405366316,
+      "full_name": "jameshiew/nvim-magic",
+      "description": ":genie: Pluggable framework for using AI code assistance in Neovim",
+      "stars": 189,
+      "forks": 16,
+      "language": "Lua",
+      "topics": [
+        "lua",
+        "neovim",
+        "neovim-plugin",
+        "nvim",
+        "openai",
+        "openai-codex"
+      ],
+      "url": "https://github.com/jameshiew/nvim-magic",
+      "created_at": "2021-09-11T11:54:52Z",
+      "updated_at": "2026-03-09T12:10:45Z",
+      "category": "codex",
+      "use_cases": [
         "工具集成"
       ]
     },
@@ -9168,6 +9488,7 @@
         "rust-language"
       ],
       "url": "https://github.com/leonardomso/rust-skills",
+      "created_at": "2026-01-19T13:22:27Z",
       "updated_at": "2026-05-17T11:38:11Z",
       "category": "claude",
       "use_cases": [
@@ -9206,6 +9527,7 @@
         "zeroclaw-claude-code"
       ],
       "url": "https://github.com/keerthanapranesh/Claude-Code-Swarm-Toolkit",
+      "created_at": "2026-05-14T21:26:41Z",
       "updated_at": "2026-05-16T21:55:36Z",
       "category": "claude",
       "use_cases": [
@@ -9234,6 +9556,7 @@
         "openai-codex-cli"
       ],
       "url": "https://github.com/zippoxer/recall",
+      "created_at": "2025-11-27T22:03:56Z",
       "updated_at": "2026-05-11T13:57:52Z",
       "category": "claude",
       "use_cases": [
@@ -9249,6 +9572,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/danderfer/Comp_Sci_Sem_2",
+      "created_at": "2022-06-07T20:15:11Z",
       "updated_at": "2026-05-10T11:40:30Z",
       "category": "copilot",
       "use_cases": [
@@ -9276,6 +9600,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/T1nker-1220/UltraContextAI",
+      "created_at": "2025-02-07T12:11:09Z",
       "updated_at": "2026-02-22T22:12:57Z",
       "category": "cursor",
       "use_cases": [
@@ -9302,6 +9627,7 @@
         "vitepress"
       ],
       "url": "https://github.com/LessUp/awesome-cursorrules-zh",
+      "created_at": "2025-05-28T12:21:22Z",
       "updated_at": "2026-05-17T14:48:55Z",
       "category": "cursor",
       "use_cases": [
@@ -9323,6 +9649,7 @@
         "skills"
       ],
       "url": "https://github.com/littleben/awesomeAgentskills",
+      "created_at": "2025-10-18T15:57:22Z",
       "updated_at": "2026-05-10T14:05:40Z",
       "category": "claude",
       "use_cases": [
@@ -9351,6 +9678,7 @@
         "responses-api"
       ],
       "url": "https://github.com/teabranch/open-responses-server",
+      "created_at": "2025-04-18T00:01:35Z",
       "updated_at": "2026-05-16T11:56:30Z",
       "category": "codex",
       "use_cases": [
@@ -9372,6 +9700,7 @@
         "skills"
       ],
       "url": "https://github.com/lifedever/claude-rules",
+      "created_at": "2026-03-18T02:07:08Z",
       "updated_at": "2026-05-14T18:01:49Z",
       "category": "claude",
       "use_cases": [
@@ -9387,6 +9716,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/thomast1906/github-copilot-agent-skills",
+      "created_at": "2026-02-18T10:53:42Z",
       "updated_at": "2026-05-14T01:16:52Z",
       "category": "copilot",
       "use_cases": [
@@ -9417,6 +9747,7 @@
         "windows"
       ],
       "url": "https://github.com/cloveric/cc-telegram-bridge",
+      "created_at": "2026-04-08T11:59:19Z",
       "updated_at": "2026-05-16T05:25:22Z",
       "category": "claude",
       "use_cases": [
@@ -9434,6 +9765,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/JayZeeDesign/awesome-claude-skills",
+      "created_at": "2025-10-17T23:59:04Z",
       "updated_at": "2026-04-23T08:37:37Z",
       "category": "claude",
       "use_cases": [
@@ -9449,6 +9781,7 @@
       "language": "Batchfile",
       "topics": [],
       "url": "https://github.com/Mr-chen-05/rules-2.1-optimized",
+      "created_at": "2025-08-01T03:46:51Z",
       "updated_at": "2026-05-13T08:15:24Z",
       "category": "claude",
       "use_cases": [
@@ -9460,7 +9793,7 @@
       "id": 1103259159,
       "full_name": "ckelsoe/prompt-architect",
       "description": "Claude Code skill that transforms vague prompts into structured, expert-level prompts using 7 research-backed   frameworks (CO-STAR, RISEN, RISE, TIDD-EC, RTF, CoT, CoD)",
-      "stars": 164,
+      "stars": 165,
       "forks": 19,
       "language": "Python",
       "topics": [
@@ -9485,7 +9818,8 @@
         "windsurf"
       ],
       "url": "https://github.com/ckelsoe/prompt-architect",
-      "updated_at": "2026-05-16T15:21:00Z",
+      "created_at": "2025-11-24T16:27:21Z",
+      "updated_at": "2026-05-17T15:04:16Z",
       "category": "claude",
       "use_cases": [
         "AI 代理",
@@ -9503,6 +9837,7 @@
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/asadm/codemirror-copilot",
+      "created_at": "2023-11-27T05:44:46Z",
       "updated_at": "2026-04-14T12:25:44Z",
       "category": "copilot",
       "use_cases": [
@@ -9524,6 +9859,7 @@
         "swiftui"
       ],
       "url": "https://github.com/yibie/skills-manager",
+      "created_at": "2026-04-05T10:10:59Z",
       "updated_at": "2026-05-17T10:56:36Z",
       "category": "claude",
       "use_cases": [
@@ -9549,6 +9885,7 @@
         "web-research"
       ],
       "url": "https://github.com/PleasePrompto/google-ai-mode-skill",
+      "created_at": "2026-01-03T19:31:32Z",
       "updated_at": "2026-05-16T06:36:23Z",
       "category": "claude",
       "use_cases": [
@@ -9580,6 +9917,7 @@
         "software"
       ],
       "url": "https://github.com/AbsolutelySkilled/AbsolutelySkilled",
+      "created_at": "2026-03-14T11:32:25Z",
       "updated_at": "2026-05-17T13:08:53Z",
       "category": "claude",
       "use_cases": [
@@ -9593,7 +9931,7 @@
       "id": 1209586916,
       "full_name": "helloianneo/awesome-claude-code-skills",
       "description": "Claude Code 最实用的 Skills / Agents / Plugins 精选合集 | 50+ 精选 | 按场景分类 | 带推荐等级 | 复制即装",
-      "stars": 149,
+      "stars": 150,
       "forks": 27,
       "language": "",
       "topics": [
@@ -9609,7 +9947,8 @@
         "skills"
       ],
       "url": "https://github.com/helloianneo/awesome-claude-code-skills",
-      "updated_at": "2026-05-15T15:56:07Z",
+      "created_at": "2026-04-13T15:19:44Z",
+      "updated_at": "2026-05-17T16:36:15Z",
       "category": "claude",
       "use_cases": [
         "资源列表",
@@ -9635,6 +9974,7 @@
         "reverse-engineering"
       ],
       "url": "https://github.com/saschaschramm/github-copilot",
+      "created_at": "2022-10-23T17:37:58Z",
       "updated_at": "2026-04-03T21:53:44Z",
       "category": "copilot",
       "use_cases": [
@@ -9669,6 +10009,7 @@
         "windsurf"
       ],
       "url": "https://github.com/Ylsssq926/relic.skill",
+      "created_at": "2026-04-08T16:45:47Z",
       "updated_at": "2026-05-16T08:34:49Z",
       "category": "claude",
       "use_cases": [
@@ -9700,6 +10041,7 @@
         "windsurf"
       ],
       "url": "https://github.com/softspark/ai-toolkit",
+      "created_at": "2026-03-26T10:02:59Z",
       "updated_at": "2026-05-12T20:34:27Z",
       "category": "claude",
       "use_cases": [
@@ -9737,6 +10079,7 @@
         "vertical-advisors"
       ],
       "url": "https://github.com/borghei/Claude-Skills",
+      "created_at": "2026-01-13T16:15:31Z",
       "updated_at": "2026-05-17T08:31:31Z",
       "category": "claude",
       "use_cases": [
@@ -9764,6 +10107,7 @@
         "thinking"
       ],
       "url": "https://github.com/mattnowdev/thinking-partner",
+      "created_at": "2026-03-20T10:21:15Z",
       "updated_at": "2026-05-17T01:59:04Z",
       "category": "claude",
       "use_cases": [
@@ -9800,6 +10144,7 @@
         "storyline"
       ],
       "url": "https://github.com/likaku/Mck-ppt-design-skill",
+      "created_at": "2026-03-03T05:48:13Z",
       "updated_at": "2026-05-17T12:37:07Z",
       "category": "claude",
       "use_cases": [
@@ -9821,6 +10166,7 @@
         "claude-skill"
       ],
       "url": "https://github.com/iamzifei/wechat-article-publisher-skill",
+      "created_at": "2026-01-13T23:31:00Z",
       "updated_at": "2026-05-16T13:38:10Z",
       "category": "claude",
       "use_cases": [
@@ -9840,6 +10186,7 @@
         "models"
       ],
       "url": "https://github.com/copilot-extensions/github-models-extension",
+      "created_at": "2024-08-06T20:13:40Z",
       "updated_at": "2026-04-22T07:43:51Z",
       "category": "copilot",
       "use_cases": [
@@ -9860,6 +10207,7 @@
         "cursor-rules"
       ],
       "url": "https://github.com/Aaronontheweb/dotnet-cursor-rules",
+      "created_at": "2025-02-18T00:13:30Z",
       "updated_at": "2026-05-13T19:01:39Z",
       "category": "cursor",
       "use_cases": [
@@ -9870,7 +10218,7 @@
       "id": 1155232375,
       "full_name": "Arman-Kudaibergenov/1c-ai-development-kit",
       "description": "Comprehensive AI agents, skills and rules toolkit for 1C:Enterprise development in Cursor IDE",
-      "stars": 126,
+      "stars": 127,
       "forks": 16,
       "language": "PowerShell",
       "topics": [
@@ -9884,7 +10232,8 @@
         "mcp-servers"
       ],
       "url": "https://github.com/Arman-Kudaibergenov/1c-ai-development-kit",
-      "updated_at": "2026-05-10T15:15:14Z",
+      "created_at": "2026-02-11T09:24:31Z",
+      "updated_at": "2026-05-17T15:09:04Z",
       "category": "cursor",
       "use_cases": [
         "AI 代理",
@@ -9905,7 +10254,8 @@
         "skills"
       ],
       "url": "https://github.com/Chat2AnyLLM/awesome-claude-skills",
-      "updated_at": "2026-05-17T14:19:15Z",
+      "created_at": "2025-12-23T03:14:39Z",
+      "updated_at": "2026-05-17T16:42:16Z",
       "category": "claude",
       "use_cases": [
         "资源列表"
@@ -9937,6 +10287,7 @@
         "token-savings"
       ],
       "url": "https://github.com/elara-labs/code-context-engine",
+      "created_at": "2026-04-27T11:22:39Z",
       "updated_at": "2026-05-16T22:36:53Z",
       "category": "claude",
       "use_cases": [
@@ -9959,6 +10310,7 @@
         "claude-skills"
       ],
       "url": "https://github.com/oaustegard/claude-skills",
+      "created_at": "2025-10-17T02:32:23Z",
       "updated_at": "2026-05-15T12:53:57Z",
       "category": "claude",
       "use_cases": [
@@ -9992,6 +10344,7 @@
         "text-to-image"
       ],
       "url": "https://github.com/EddieTYP/image-prompt-library",
+      "created_at": "2026-04-26T11:32:00Z",
       "updated_at": "2026-05-14T09:28:44Z",
       "category": "codex",
       "use_cases": [
@@ -10019,6 +10372,7 @@
         "zwift"
       ],
       "url": "https://github.com/felixrieseberg/claude-coach",
+      "created_at": "2026-01-02T21:46:53Z",
       "updated_at": "2026-05-17T03:43:14Z",
       "category": "claude",
       "use_cases": [
@@ -10047,6 +10401,7 @@
         "yaml"
       ],
       "url": "https://github.com/Goldziher/ai-rulez",
+      "created_at": "2025-06-24T12:09:42Z",
       "updated_at": "2026-05-09T02:18:36Z",
       "category": "claude",
       "use_cases": [
@@ -10076,6 +10431,7 @@
         "skills"
       ],
       "url": "https://github.com/AIPMAndy/awesome-openclaw-skills-CN",
+      "created_at": "2026-02-28T02:49:15Z",
       "updated_at": "2026-05-15T03:54:05Z",
       "category": "claude",
       "use_cases": [
@@ -10102,6 +10458,7 @@
         "tmux"
       ],
       "url": "https://github.com/mertkayacs/reevesagents",
+      "created_at": "2026-05-04T10:55:56Z",
       "updated_at": "2026-05-16T14:26:53Z",
       "category": "claude",
       "use_cases": [
@@ -10132,6 +10489,7 @@
         "terminal"
       ],
       "url": "https://github.com/rishi255/posh_codex",
+      "created_at": "2021-12-11T20:48:20Z",
       "updated_at": "2026-05-16T01:11:58Z",
       "category": "codex",
       "use_cases": [
@@ -10159,6 +10517,7 @@
         "minimax-m2"
       ],
       "url": "https://github.com/madebyaris/advance-minimax-m2-cursor-rules",
+      "created_at": "2025-12-08T11:51:54Z",
       "updated_at": "2026-05-06T06:36:01Z",
       "category": "cursor",
       "use_cases": [
@@ -10177,6 +10536,7 @@
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/Bronc-X/Lotus",
+      "created_at": "2026-04-14T09:55:53Z",
       "updated_at": "2026-05-11T20:21:28Z",
       "category": "claude",
       "use_cases": [
@@ -10196,6 +10556,7 @@
         "claude-skill"
       ],
       "url": "https://github.com/axiaoge2/Apple-Hig-Designer",
+      "created_at": "2025-12-12T16:36:56Z",
       "updated_at": "2026-05-16T22:28:50Z",
       "category": "claude",
       "use_cases": [
@@ -10220,6 +10581,7 @@
         "rules"
       ],
       "url": "https://github.com/SkywalkerJi/Clash-Rules",
+      "created_at": "2020-08-04T09:28:43Z",
       "updated_at": "2026-05-06T02:19:13Z",
       "category": "cursor",
       "use_cases": [
@@ -10249,6 +10611,7 @@
         "style-guide"
       ],
       "url": "https://github.com/BlueBirdBack/godot-cursorrules",
+      "created_at": "2025-02-08T13:05:12Z",
       "updated_at": "2026-05-08T08:58:46Z",
       "category": "cursor",
       "use_cases": [
@@ -10260,7 +10623,7 @@
       "full_name": "GetBindu/awesome-claude-code-and-skills",
       "description": "A collection of Claude Skills",
       "stars": 109,
-      "forks": 37,
+      "forks": 40,
       "language": "",
       "topics": [
         "awesome",
@@ -10270,6 +10633,7 @@
         "claue-code"
       ],
       "url": "https://github.com/GetBindu/awesome-claude-code-and-skills",
+      "created_at": "2025-10-17T16:51:03Z",
       "updated_at": "2026-05-17T14:17:05Z",
       "category": "claude",
       "use_cases": [
@@ -10292,6 +10656,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/askbudi/roundtable",
+      "created_at": "2025-09-19T04:53:02Z",
       "updated_at": "2026-05-15T08:50:19Z",
       "category": "claude",
       "use_cases": [
@@ -10308,6 +10673,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/ai-driven-dev/rules",
+      "created_at": "2025-03-09T05:49:42Z",
       "updated_at": "2026-05-01T21:40:34Z",
       "category": "cursor",
       "use_cases": [
@@ -10323,6 +10689,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/skindhu/harmony-cursor-rules",
+      "created_at": "2025-07-01T12:09:00Z",
       "updated_at": "2026-05-14T08:27:42Z",
       "category": "cursor",
       "use_cases": [
@@ -10345,6 +10712,7 @@
         "project-management"
       ],
       "url": "https://github.com/wrsmith108/linear-claude-skill",
+      "created_at": "2025-12-14T23:42:51Z",
       "updated_at": "2026-05-14T12:49:42Z",
       "category": "claude",
       "use_cases": [
@@ -10384,6 +10752,7 @@
         "visual-design"
       ],
       "url": "https://github.com/Wholiver/swiftui-design-skill",
+      "created_at": "2026-04-30T03:50:18Z",
       "updated_at": "2026-05-16T21:45:22Z",
       "category": "claude",
       "use_cases": [
@@ -10409,6 +10778,7 @@
         "skill-manager"
       ],
       "url": "https://github.com/arkylab/aspm",
+      "created_at": "2026-03-05T15:21:23Z",
       "updated_at": "2026-05-02T05:10:41Z",
       "category": "claude",
       "use_cases": [
@@ -10446,6 +10816,7 @@
         "windsurf"
       ],
       "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
+      "created_at": "2026-02-04T16:25:16Z",
       "updated_at": "2026-05-16T07:49:56Z",
       "category": "claude",
       "use_cases": [

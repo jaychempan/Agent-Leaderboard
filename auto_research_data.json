@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-05-17T14:55:52.505241+00:00",
+    "updated_at": "2026-05-17T16:53:45.230392+00:00",
     "min_stars": 100,
     "total": 194,
     "type": "auto_research"
@@ -63,12 +63,13 @@
       "id": 1174820787,
       "full_name": "karpathy/autoresearch",
       "description": "AI agents running research on single-GPU nanochat training automatically",
-      "stars": 81483,
-      "forks": 11843,
+      "stars": 81499,
+      "forks": 11850,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/karpathy/autoresearch",
-      "updated_at": "2026-05-17T14:28:44Z",
+      "created_at": "2026-03-06T22:00:43Z",
+      "updated_at": "2026-05-17T16:34:31Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -79,8 +80,8 @@
       "id": 979115477,
       "full_name": "bytedance/deer-flow",
       "description": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.",
-      "stars": 68076,
-      "forks": 9071,
+      "stars": 68101,
+      "forks": 9072,
       "language": "Python",
       "topics": [
         "agent",
@@ -103,7 +104,8 @@
         "typescript"
       ],
       "url": "https://github.com/bytedance/deer-flow",
-      "updated_at": "2026-05-17T14:45:05Z",
+      "created_at": "2025-05-07T02:50:19Z",
+      "updated_at": "2026-05-17T16:50:30Z",
       "category": "deep_research",
       "use_cases": [
         "知识库",
@@ -115,8 +117,8 @@
       "id": 287463830,
       "full_name": "microsoft/qlib",
       "description": "Qlib is an AI-oriented Quant investment platform that aims to use AI tech to empower Quant Research, from exploring ideas to implementing productions. Qlib supports diverse ML modeling paradigms, including supervised learning, market dynamics modeling, and RL, and is now equipped with https://github.com/microsoft/RD-Agent to automate R&D process.",
-      "stars": 43098,
-      "forks": 6769,
+      "stars": 43104,
+      "forks": 6771,
       "language": "Python",
       "topics": [
         "algorithmic-trading",
@@ -139,7 +141,8 @@
         "stock-data"
       ],
       "url": "https://github.com/microsoft/qlib",
-      "updated_at": "2026-05-17T14:51:47Z",
+      "created_at": "2020-08-14T06:46:00Z",
+      "updated_at": "2026-05-17T16:03:15Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -152,7 +155,7 @@
       "id": 822604462,
       "full_name": "666ghj/BettaFish",
       "description": "微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。",
-      "stars": 40936,
+      "stars": 40937,
       "forks": 7562,
       "language": "Python",
       "topics": [
@@ -168,7 +171,8 @@
         "sentiment-analysis"
       ],
       "url": "https://github.com/666ghj/BettaFish",
-      "updated_at": "2026-05-17T14:10:07Z",
+      "created_at": "2024-07-01T13:11:38Z",
+      "updated_at": "2026-05-17T16:42:35Z",
       "category": "deep_research",
       "use_cases": [
         "自主代理"
@@ -178,7 +182,7 @@
       "id": 396569538,
       "full_name": "khoj-ai/khoj",
       "description": "Your AI second brain. Self-hostable. Get answers from the web or your docs. Build custom agents, schedule automations, do deep research. Turn any online or local LLM into your personal, autonomous AI (gpt, claude, gemini, llama, qwen, mistral). Get started - free.",
-      "stars": 34578,
+      "stars": 34580,
       "forks": 2202,
       "language": "Python",
       "topics": [
@@ -204,7 +208,8 @@
         "whatsapp-ai"
       ],
       "url": "https://github.com/khoj-ai/khoj",
-      "updated_at": "2026-05-17T13:42:12Z",
+      "created_at": "2021-08-16T01:48:44Z",
+      "updated_at": "2026-05-17T16:46:59Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -231,6 +236,7 @@
         "retrieval-augmented-generation"
       ],
       "url": "https://github.com/stanford-oval/storm",
+      "created_at": "2024-03-24T16:23:39Z",
       "updated_at": "2026-05-17T14:05:49Z",
       "category": "deep_research",
       "use_cases": [
@@ -242,7 +248,7 @@
       "id": 639835356,
       "full_name": "assafelovic/gpt-researcher",
       "description": "An autonomous agent that conducts deep research on any data using any LLM providers",
-      "stars": 27113,
+      "stars": 27115,
       "forks": 3645,
       "language": "Python",
       "topics": [
@@ -259,7 +265,8 @@
         "webscraping"
       ],
       "url": "https://github.com/assafelovic/gpt-researcher",
-      "updated_at": "2026-05-17T14:40:58Z",
+      "created_at": "2023-05-12T10:33:54Z",
+      "updated_at": "2026-05-17T16:52:46Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -270,7 +277,7 @@
       "id": 1140843380,
       "full_name": "mvanhorn/last30days-skill",
       "description": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
-      "stars": 26015,
+      "stars": 26025,
       "forks": 2207,
       "language": "Python",
       "topics": [
@@ -296,7 +303,8 @@
         "youtube"
       ],
       "url": "https://github.com/mvanhorn/last30days-skill",
-      "updated_at": "2026-05-17T14:53:25Z",
+      "created_at": "2026-01-23T20:37:37Z",
+      "updated_at": "2026-05-17T16:45:21Z",
       "category": "deep_research",
       "use_cases": [
         "金融数据",
@@ -308,12 +316,13 @@
       "id": 1076426995,
       "full_name": "virattt/dexter",
       "description": "An autonomous agent for deep financial research",
-      "stars": 25789,
-      "forks": 3156,
+      "stars": 25793,
+      "forks": 3157,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/virattt/dexter",
-      "updated_at": "2026-05-17T14:54:36Z",
+      "created_at": "2025-10-14T21:02:00Z",
+      "updated_at": "2026-05-17T15:40:54Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -335,6 +344,7 @@
         "research"
       ],
       "url": "https://github.com/dzhng/deep-research",
+      "created_at": "2025-02-04T01:27:56Z",
       "updated_at": "2026-05-17T09:18:55Z",
       "category": "deep_research",
       "use_cases": [
@@ -362,6 +372,7 @@
         "web-agent"
       ],
       "url": "https://github.com/Alibaba-NLP/DeepResearch",
+      "created_at": "2025-01-09T11:07:35Z",
       "updated_at": "2026-05-17T14:40:25Z",
       "category": "deep_research",
       "use_cases": [
@@ -398,6 +409,7 @@
         "transformers"
       ],
       "url": "https://github.com/arc53/DocsGPT",
+      "created_at": "2023-02-02T11:03:23Z",
       "updated_at": "2026-05-17T11:00:12Z",
       "category": "deep_research",
       "use_cases": [
@@ -431,6 +443,7 @@
         "typescript"
       ],
       "url": "https://github.com/MODSetter/SurfSense",
+      "created_at": "2024-07-30T23:00:09Z",
       "updated_at": "2026-05-17T14:04:19Z",
       "category": "web_research",
       "use_cases": [
@@ -442,7 +455,7 @@
       "id": 781261349,
       "full_name": "microsoft/RD-Agent",
       "description": "Research and development (R&D) is crucial for the enhancement of industrial productivity, especially in the AI era, where the core aspects of R&D are mainly focused on data and models. We are committed to automating these high-value generic R&D processes through R&D-Agent, which lets AI drive data-driven AI. 🔗https://aka.ms/RD-Agent-Tech-Report",
-      "stars": 13065,
+      "stars": 13068,
       "forks": 1610,
       "language": "Python",
       "topics": [
@@ -456,7 +469,8 @@
         "research"
       ],
       "url": "https://github.com/microsoft/RD-Agent",
-      "updated_at": "2026-05-17T14:43:20Z",
+      "created_at": "2024-04-03T03:39:33Z",
+      "updated_at": "2026-05-17T16:49:52Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -466,7 +480,7 @@
       "id": 985839104,
       "full_name": "browseros-ai/BrowserOS",
       "description": "🌐 The open-source Agentic browser; alternative to ChatGPT Atlas, Perplexity Comet, Dia.",
-      "stars": 10960,
+      "stars": 10963,
       "forks": 1104,
       "language": "TypeScript",
       "topics": [
@@ -483,7 +497,8 @@
         "windows"
       ],
       "url": "https://github.com/browseros-ai/BrowserOS",
-      "updated_at": "2026-05-17T13:54:51Z",
+      "created_at": "2025-05-18T16:23:54Z",
+      "updated_at": "2026-05-17T16:01:32Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -508,6 +523,7 @@
         "ui"
       ],
       "url": "https://github.com/microsoft/magentic-ui",
+      "created_at": "2025-05-05T20:24:30Z",
       "updated_at": "2026-05-17T11:03:10Z",
       "category": "web_research",
       "use_cases": [
@@ -519,8 +535,8 @@
       "id": 1177608268,
       "full_name": "wanshuiyin/Auto-claude-code-research-in-sleep",
       "description": "ARIS ⚔️ (Auto-Research-In-Sleep) — Lightweight Markdown-only skills for autonomous ML research: cross-model review loops, idea discovery, and experiment automation. No framework, no lock-in — works with Claude Code, Codex, OpenClaw, or any LLM agent.",
-      "stars": 9652,
-      "forks": 931,
+      "stars": 9675,
+      "forks": 933,
       "language": "Python",
       "topics": [
         "ai-research",
@@ -545,7 +561,8 @@
         "research-automation"
       ],
       "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
-      "updated_at": "2026-05-17T14:43:58Z",
+      "created_at": "2026-03-10T07:31:45Z",
+      "updated_at": "2026-05-17T16:48:34Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -559,7 +576,7 @@
       "id": 1017550802,
       "full_name": "0x4m4/hexstrike-ai",
       "description": "HexStrike AI MCP Agents is an advanced MCP server that lets AI agents (Claude, GPT, Copilot, etc.) autonomously run 150+ cybersecurity tools for automated pentesting, vulnerability discovery, bug bounty automation, and security research. Seamlessly bridge LLMs with real-world offensive security capabilities.",
-      "stars": 8779,
+      "stars": 8778,
       "forks": 1892,
       "language": "Python",
       "topics": [
@@ -585,7 +602,8 @@
         "pentesting-tools"
       ],
       "url": "https://github.com/0x4m4/hexstrike-ai",
-      "updated_at": "2026-05-17T14:12:38Z",
+      "created_at": "2025-07-10T17:53:18Z",
+      "updated_at": "2026-05-17T15:30:26Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -596,7 +614,7 @@
       "full_name": "reorproject/reor",
       "description": "Private & local AI personal knowledge management app for high entropy people.",
       "stars": 8562,
-      "forks": 524,
+      "forks": 525,
       "language": "JavaScript",
       "topics": [
         "ai",
@@ -613,6 +631,7 @@
         "vector-database"
       ],
       "url": "https://github.com/reorproject/reor",
+      "created_at": "2023-11-27T01:30:44Z",
       "updated_at": "2026-05-17T11:21:37Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -623,7 +642,7 @@
       "id": 1088558237,
       "full_name": "Orchestra-Research/AI-Research-SKILLs",
       "description": "Comprehensive open-source library of AI research and engineering skills for any AI model. Package the skills and your claude code/codex/gemini agent will be an AI research agent with full horsepower. Maintained by Orchestra Research.",
-      "stars": 8539,
+      "stars": 8542,
       "forks": 652,
       "language": "TeX",
       "topics": [
@@ -643,7 +662,8 @@
         "vllm"
       ],
       "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
-      "updated_at": "2026-05-17T14:04:27Z",
+      "created_at": "2025-11-03T06:13:06Z",
+      "updated_at": "2026-05-17T16:29:30Z",
       "category": "deep_research",
       "use_cases": [
         "自主代理",
@@ -670,6 +690,7 @@
         "xbench"
       ],
       "url": "https://github.com/MiroMindAI/MiroThinker",
+      "created_at": "2025-08-07T13:32:12Z",
       "updated_at": "2026-05-17T11:21:21Z",
       "category": "deep_research",
       "use_cases": [
@@ -705,6 +726,7 @@
         "zilliz"
       ],
       "url": "https://github.com/zilliztech/deep-searcher",
+      "created_at": "2025-02-08T02:07:05Z",
       "updated_at": "2026-05-17T14:24:11Z",
       "category": "deep_research",
       "use_cases": [
@@ -743,6 +765,7 @@
         "openclaw"
       ],
       "url": "https://github.com/MervinPraison/PraisonAI",
+      "created_at": "2024-03-19T16:45:25Z",
       "updated_at": "2026-05-17T13:27:12Z",
       "category": "general",
       "use_cases": [
@@ -756,7 +779,7 @@
       "id": 929868765,
       "full_name": "LearningCircuit/local-deep-research",
       "description": " ~95% on SimpleQA (e.g. Qwen3.6-27B on a 3090). Supports all local and cloud LLMs (llama.cpp, Ollama, Google, ...). 10+ search engines - arXiv, PubMed, your private documents. Everything Local & Encrypted.",
-      "stars": 7725,
+      "stars": 7730,
       "forks": 674,
       "language": "Python",
       "topics": [
@@ -782,7 +805,8 @@
         "self-hosted"
       ],
       "url": "https://github.com/LearningCircuit/local-deep-research",
-      "updated_at": "2026-05-17T14:52:07Z",
+      "created_at": "2025-02-09T15:41:32Z",
+      "updated_at": "2026-05-17T16:08:37Z",
       "category": "deep_research",
       "use_cases": [
         "学术文献",
@@ -803,6 +827,7 @@
         "neural-networks"
       ],
       "url": "https://github.com/google-deepmind/lab",
+      "created_at": "2016-11-30T13:41:26Z",
       "updated_at": "2026-05-14T08:19:59Z",
       "category": "general",
       "use_cases": [
@@ -818,6 +843,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/nickscamara/open-deep-research",
+      "created_at": "2025-02-03T16:02:40Z",
       "updated_at": "2026-05-15T02:18:09Z",
       "category": "deep_research",
       "use_cases": [
@@ -834,6 +860,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/SamuelSchmidgall/AgentLaboratory",
+      "created_at": "2025-01-08T02:00:51Z",
       "updated_at": "2026-05-17T11:00:29Z",
       "category": "general",
       "use_cases": [
@@ -845,8 +872,8 @@
       "id": 1124295269,
       "full_name": "brokermr810/QuantDinger",
       "description": "AI quantitative trading platform for crypto, stocks, and forex with backtesting, live trading, market data, and multi-agent research.vibe-trading ,trading-agents,ai-trader,ai-trading",
-      "stars": 5530,
-      "forks": 1210,
+      "stars": 5543,
+      "forks": 1217,
       "language": "Python",
       "topics": [
         "agent",
@@ -871,7 +898,8 @@
         "trade"
       ],
       "url": "https://github.com/brokermr810/QuantDinger",
-      "updated_at": "2026-05-17T14:53:49Z",
+      "created_at": "2025-12-28T18:39:26Z",
+      "updated_at": "2026-05-17T16:42:40Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -882,7 +910,7 @@
       "id": 108945887,
       "full_name": "yanshengjia/ml-road",
       "description": "Machine Learning and Agentic AI Resources, Practice and Research",
-      "stars": 4781,
+      "stars": 4782,
       "forks": 1701,
       "language": "Python",
       "topics": [
@@ -896,7 +924,8 @@
         "tensorflow"
       ],
       "url": "https://github.com/yanshengjia/ml-road",
-      "updated_at": "2026-05-17T09:46:34Z",
+      "created_at": "2017-10-31T04:36:37Z",
+      "updated_at": "2026-05-17T15:10:04Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -923,6 +952,7 @@
         "openai"
       ],
       "url": "https://github.com/u14app/deep-research",
+      "created_at": "2025-02-22T03:29:07Z",
       "updated_at": "2026-05-17T07:06:58Z",
       "category": "deep_research",
       "use_cases": [
@@ -945,6 +975,7 @@
         "memory"
       ],
       "url": "https://github.com/modelscope/ms-agent",
+      "created_at": "2023-08-03T09:06:03Z",
       "updated_at": "2026-05-17T13:25:08Z",
       "category": "deep_research",
       "use_cases": [
@@ -982,6 +1013,7 @@
         "science"
       ],
       "url": "https://github.com/ruc-datalab/DeepAnalyze",
+      "created_at": "2025-10-11T11:19:21Z",
       "updated_at": "2026-05-17T03:05:42Z",
       "category": "deep_research",
       "use_cases": [
@@ -997,6 +1029,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/TraderAlice/OpenAlice",
+      "created_at": "2026-02-18T16:42:55Z",
       "updated_at": "2026-05-17T14:37:08Z",
       "category": "general",
       "use_cases": [
@@ -1008,12 +1041,13 @@
       "id": 1204451436,
       "full_name": "alchaincyf/hermes-agent-orange-book",
       "description": "Hermes Agent 从入门到精通 · 橙皮书系列 · Nous Research 开源 AI Agent 框架实战指南",
-      "stars": 3747,
-      "forks": 391,
+      "stars": 3748,
+      "forks": 390,
       "language": "",
       "topics": [],
       "url": "https://github.com/alchaincyf/hermes-agent-orange-book",
-      "updated_at": "2026-05-17T14:51:41Z",
+      "created_at": "2026-04-08T02:49:02Z",
+      "updated_at": "2026-05-17T15:06:10Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1028,6 +1062,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/NAalytics/Assemblies-of-putative-SARS-CoV2-spike-encoding-mRNA-sequences-for-vaccines-BNT-162b2-and-mRNA-1273",
+      "created_at": "2021-03-24T01:50:41Z",
       "updated_at": "2026-05-14T09:58:33Z",
       "category": "data_research",
       "use_cases": [
@@ -1066,6 +1101,7 @@
         "swiftui"
       ],
       "url": "https://github.com/johnbean393/Sidekick",
+      "created_at": "2024-10-09T04:01:37Z",
       "updated_at": "2026-05-17T14:24:23Z",
       "category": "deep_research",
       "use_cases": [
@@ -1094,6 +1130,7 @@
         "xbench"
       ],
       "url": "https://github.com/MiroMindAI/MiroFlow",
+      "created_at": "2025-08-05T09:43:34Z",
       "updated_at": "2026-05-16T17:14:33Z",
       "category": "deep_research",
       "use_cases": [
@@ -1111,6 +1148,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/TheBlewish/Automated-AI-Web-Researcher-Ollama",
+      "created_at": "2024-11-20T07:50:38Z",
       "updated_at": "2026-05-14T14:41:15Z",
       "category": "web_research",
       "use_cases": [
@@ -1147,6 +1185,7 @@
         "xri"
       ],
       "url": "https://github.com/sahibzada-allahyar/YC-Killer",
+      "created_at": "2025-02-22T19:00:23Z",
       "updated_at": "2026-05-17T12:09:39Z",
       "category": "data_research",
       "use_cases": [
@@ -1176,6 +1215,7 @@
         "rag"
       ],
       "url": "https://github.com/decodingai-magazine/second-brain-ai-assistant-course",
+      "created_at": "2024-12-30T14:57:41Z",
       "updated_at": "2026-05-17T14:25:20Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -1192,7 +1232,8 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/gadievron/raptor",
-      "updated_at": "2026-05-17T13:35:38Z",
+      "created_at": "2025-10-17T10:10:40Z",
+      "updated_at": "2026-05-17T15:45:52Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1203,12 +1244,13 @@
       "id": 1077547100,
       "full_name": "PleasePrompto/notebooklm-mcp",
       "description": "MCP server for NotebookLM - Let your AI agents (Claude Code, Codex) research documentation directly with grounded, citation-backed answers from Gemini. Persistent auth, library management, cross-client sharing. Zero hallucinations, just your knowledge base.",
-      "stars": 2431,
+      "stars": 2435,
       "forks": 333,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/PleasePrompto/notebooklm-mcp",
-      "updated_at": "2026-05-17T14:21:07Z",
+      "created_at": "2025-10-16T11:59:47Z",
+      "updated_at": "2026-05-17T16:26:17Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库",
@@ -1231,6 +1273,7 @@
         "system-prompts"
       ],
       "url": "https://github.com/Leonxlnx/agentic-ai-prompt-research",
+      "created_at": "2026-03-31T11:47:04Z",
       "updated_at": "2026-05-16T07:59:52Z",
       "category": "general",
       "use_cases": [
@@ -1254,6 +1297,7 @@
         "ppt-generator"
       ],
       "url": "https://github.com/OpenDCAI/Paper2Any",
+      "created_at": "2025-10-17T03:33:30Z",
       "updated_at": "2026-05-17T06:16:49Z",
       "category": "literature",
       "use_cases": [
@@ -1270,6 +1314,7 @@
       "language": "Jupyter Notebook",
       "topics": [],
       "url": "https://github.com/jmiao24/Paper2Agent",
+      "created_at": "2025-09-09T11:06:50Z",
       "updated_at": "2026-05-16T09:21:28Z",
       "category": "literature",
       "use_cases": [
@@ -1296,6 +1341,7 @@
         "web"
       ],
       "url": "https://github.com/AnotiaWang/deep-research-web-ui",
+      "created_at": "2025-02-10T05:56:43Z",
       "updated_at": "2026-05-15T21:23:04Z",
       "category": "deep_research",
       "use_cases": [
@@ -1309,7 +1355,7 @@
       "full_name": "crshdn/mission-control",
       "description": "The world's first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode, crash recovery, cost tracking, 80+ API endpoints. Self-hosted via OpenClaw Gateway.",
       "stars": 2031,
-      "forks": 433,
+      "forks": 434,
       "language": "TypeScript",
       "topics": [
         "aiagent",
@@ -1317,6 +1363,7 @@
         "openclaw"
       ],
       "url": "https://github.com/crshdn/mission-control",
+      "created_at": "2026-01-31T13:27:48Z",
       "updated_at": "2026-05-17T14:45:11Z",
       "category": "data_research",
       "use_cases": [
@@ -1348,6 +1395,7 @@
         "vercel-ai-sdk"
       ],
       "url": "https://github.com/agentset-ai/agentset",
+      "created_at": "2025-03-10T04:52:13Z",
       "updated_at": "2026-05-16T11:11:11Z",
       "category": "deep_research",
       "use_cases": [
@@ -1360,12 +1408,13 @@
       "id": 906406820,
       "full_name": "virattt/ai-financial-agent",
       "description": "A financial agent for investment research",
-      "stars": 1964,
+      "stars": 1965,
       "forks": 396,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/virattt/ai-financial-agent",
-      "updated_at": "2026-05-16T15:27:56Z",
+      "created_at": "2024-12-20T20:50:46Z",
+      "updated_at": "2026-05-17T15:49:26Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -1376,7 +1425,7 @@
       "id": 1187150337,
       "full_name": "alvinreal/awesome-autoresearch",
       "description": "A curated list of autonomous improvement loops, research agents, and autoresearch-style systems inspired by Karpathy's autoresearch.",
-      "stars": 1931,
+      "stars": 1933,
       "forks": 151,
       "language": "",
       "topics": [
@@ -1397,7 +1446,8 @@
         "self-improving-systems"
       ],
       "url": "https://github.com/alvinreal/awesome-autoresearch",
-      "updated_at": "2026-05-17T14:47:11Z",
+      "created_at": "2026-03-20T11:55:51Z",
+      "updated_at": "2026-05-17T15:50:25Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1431,6 +1481,7 @@
         "tavily-search"
       ],
       "url": "https://github.com/guy-hartstein/company-research-agent",
+      "created_at": "2025-02-12T18:08:45Z",
       "updated_at": "2026-05-16T10:09:50Z",
       "category": "data_research",
       "use_cases": [
@@ -1458,6 +1509,7 @@
         "scene-understanding"
       ],
       "url": "https://github.com/zchoi/Awesome-Embodied-Robotics-and-Agent",
+      "created_at": "2023-07-19T06:55:49Z",
       "updated_at": "2026-05-17T09:22:50Z",
       "category": "general",
       "use_cases": [
@@ -1490,6 +1542,7 @@
         "python"
       ],
       "url": "https://github.com/starpig1129/DATAGEN",
+      "created_at": "2024-07-23T05:50:15Z",
       "updated_at": "2026-05-16T13:45:39Z",
       "category": "data_research",
       "use_cases": [
@@ -1506,6 +1559,7 @@
       "language": "Ruby",
       "topics": [],
       "url": "https://github.com/parruda/swarm",
+      "created_at": "2025-05-24T18:42:36Z",
       "updated_at": "2026-05-16T01:51:26Z",
       "category": "general",
       "use_cases": [
@@ -1529,6 +1583,7 @@
         "ui-agent"
       ],
       "url": "https://github.com/trycua/acu",
+      "created_at": "2025-01-05T15:56:34Z",
       "updated_at": "2026-05-15T16:29:04Z",
       "category": "literature",
       "use_cases": [
@@ -1558,6 +1613,7 @@
         "seo-tools"
       ],
       "url": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+      "created_at": "2025-12-18T03:35:29Z",
       "updated_at": "2026-05-17T14:23:25Z",
       "category": "data_research",
       "use_cases": [
@@ -1577,6 +1633,7 @@
         "research"
       ],
       "url": "https://github.com/bytedance/pasa",
+      "created_at": "2024-12-23T08:38:18Z",
       "updated_at": "2026-05-17T01:45:42Z",
       "category": "deep_research",
       "use_cases": [
@@ -1601,6 +1658,7 @@
         "mlops"
       ],
       "url": "https://github.com/MLSysOps/MLE-agent",
+      "created_at": "2024-04-16T23:49:21Z",
       "updated_at": "2026-05-16T03:37:27Z",
       "category": "literature",
       "use_cases": [
@@ -1623,6 +1681,7 @@
         "llm"
       ],
       "url": "https://github.com/HKUDS/Auto-Deep-Research",
+      "created_at": "2025-02-16T05:28:50Z",
       "updated_at": "2026-05-15T11:43:12Z",
       "category": "deep_research",
       "use_cases": [
@@ -1642,6 +1701,7 @@
         "simulation"
       ],
       "url": "https://github.com/edbeeching/godot_rl_agents",
+      "created_at": "2021-07-01T14:04:11Z",
       "updated_at": "2026-05-17T11:15:54Z",
       "category": "general",
       "use_cases": [
@@ -1653,7 +1713,7 @@
       "id": 1162309594,
       "full_name": "delibae/claude-prism",
       "description": "An offline-first scientific writing workspace powered by Claude. LaTeX + Python + 100+ scientific skills all running locally.",
-      "stars": 1447,
+      "stars": 1448,
       "forks": 129,
       "language": "TypeScript",
       "topics": [
@@ -1677,7 +1737,8 @@
         "zotero"
       ],
       "url": "https://github.com/delibae/claude-prism",
-      "updated_at": "2026-05-17T14:52:23Z",
+      "created_at": "2026-02-20T05:19:42Z",
+      "updated_at": "2026-05-17T15:35:23Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -1711,6 +1772,7 @@
         "writing-tool"
       ],
       "url": "https://github.com/limecloud/lime",
+      "created_at": "2025-12-13T17:23:15Z",
       "updated_at": "2026-05-17T10:39:29Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -1723,8 +1785,8 @@
       "id": 1194601021,
       "full_name": "0xSteph/pentest-ai-agents",
       "description": "Turn Claude Code into your offensive security research assistant. Specialized AI subagents for authorized penetration testing plan engagements, analyze recon, research exploits, build detections, audit STIGs, and write reports.",
-      "stars": 1379,
-      "forks": 294,
+      "stars": 1380,
+      "forks": 296,
       "language": "Shell",
       "topics": [
         "ai-agents",
@@ -1747,7 +1809,8 @@
         "security-tools"
       ],
       "url": "https://github.com/0xSteph/pentest-ai-agents",
-      "updated_at": "2026-05-17T14:45:05Z",
+      "created_at": "2026-03-28T15:21:59Z",
+      "updated_at": "2026-05-17T16:40:57Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1775,6 +1838,7 @@
         "yaml"
       ],
       "url": "https://github.com/NPC-Worldwide/npcpy",
+      "created_at": "2024-09-27T07:18:20Z",
       "updated_at": "2026-05-16T09:50:18Z",
       "category": "web_research",
       "use_cases": [
@@ -1785,7 +1849,7 @@
       "id": 1176808813,
       "full_name": "DeadWaveWave/opencove",
       "description": "Your infinite canvas workspace for agents, tasks, knowledge, and research. An infinite canvas for Claude Code, Codex, terminals, tasks, and notes.",
-      "stars": 1350,
+      "stars": 1351,
       "forks": 105,
       "language": "TypeScript",
       "topics": [
@@ -1803,7 +1867,8 @@
         "typescript"
       ],
       "url": "https://github.com/DeadWaveWave/opencove",
-      "updated_at": "2026-05-17T10:23:22Z",
+      "created_at": "2026-03-09T11:56:55Z",
+      "updated_at": "2026-05-17T16:20:23Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1839,6 +1904,7 @@
         "research-paper"
       ],
       "url": "https://github.com/tmgthb/Autonomous-Agents",
+      "created_at": "2023-09-16T15:09:48Z",
       "updated_at": "2026-05-15T18:12:28Z",
       "category": "literature",
       "use_cases": [
@@ -1861,6 +1927,7 @@
         "retrieval-augmented-generation"
       ],
       "url": "https://github.com/gomate-community/TrustRAG",
+      "created_at": "2024-02-04T08:51:12Z",
       "updated_at": "2026-05-16T08:59:06Z",
       "category": "deep_research",
       "use_cases": [
@@ -1886,6 +1953,7 @@
         "skills"
       ],
       "url": "https://github.com/Eronred/aso-skills",
+      "created_at": "2026-02-27T23:56:44Z",
       "updated_at": "2026-05-17T12:15:15Z",
       "category": "data_research",
       "use_cases": [
@@ -1917,6 +1985,7 @@
         "python"
       ],
       "url": "https://github.com/curiousily/Get-Things-Done-with-Prompt-Engineering-and-LangChain",
+      "created_at": "2023-04-12T21:11:48Z",
       "updated_at": "2026-05-16T08:01:46Z",
       "category": "data_research",
       "use_cases": [
@@ -1943,6 +2012,7 @@
         "playwright"
       ],
       "url": "https://github.com/browserable/browserable",
+      "created_at": "2025-04-07T16:04:36Z",
       "updated_at": "2026-05-16T08:33:57Z",
       "category": "deep_research",
       "use_cases": [
@@ -1954,7 +2024,7 @@
       "id": 1216672009,
       "full_name": "Zafer-Liu/Data-Analysis-Agent",
       "description": "面向商业分析师的智能数据分析体。Intelligent Data Analysis Agent for Business Analysts.",
-      "stars": 1173,
+      "stars": 1177,
       "forks": 90,
       "language": "Python",
       "topics": [
@@ -1966,7 +2036,8 @@
         "datavisualization"
       ],
       "url": "https://github.com/Zafer-Liu/Data-Analysis-Agent",
-      "updated_at": "2026-05-17T14:42:35Z",
+      "created_at": "2026-04-21T06:04:19Z",
+      "updated_at": "2026-05-17T15:50:56Z",
       "category": "data_research",
       "use_cases": [
         "自主代理"
@@ -1976,7 +2047,7 @@
       "id": 1190557545,
       "full_name": "eugeniughelbur/obsidian-second-brain",
       "description": "Cross-CLI skill for Obsidian. Turns your vault into a living AI-first second brain across Claude Code, Codex CLI, Gemini CLI, and OpenCode. 32 commands, vault-first research, scheduled agents, write-time AI-first validator.",
-      "stars": 1162,
+      "stars": 1164,
       "forks": 121,
       "language": "Python",
       "topics": [
@@ -2002,7 +2073,8 @@
         "second-brain"
       ],
       "url": "https://github.com/eugeniughelbur/obsidian-second-brain",
-      "updated_at": "2026-05-17T14:21:51Z",
+      "created_at": "2026-03-24T11:58:12Z",
+      "updated_at": "2026-05-17T16:51:49Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库",
@@ -2015,7 +2087,7 @@
       "id": 699343375,
       "full_name": "your-papa/obsidian-Smart2Brain",
       "description": "An Obsidian plugin to interact with your privacy focused AI-Assistant making your second brain even smarter!",
-      "stars": 1113,
+      "stars": 1114,
       "forks": 94,
       "language": "TypeScript",
       "topics": [
@@ -2028,7 +2100,8 @@
         "rag"
       ],
       "url": "https://github.com/your-papa/obsidian-Smart2Brain",
-      "updated_at": "2026-05-17T06:46:50Z",
+      "created_at": "2023-10-02T12:57:54Z",
+      "updated_at": "2026-05-17T15:16:08Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库"
@@ -2053,6 +2126,7 @@
         "structured-output"
       ],
       "url": "https://github.com/vamplabAI/sgr-agent-core",
+      "created_at": "2025-08-26T05:19:58Z",
       "updated_at": "2026-05-15T17:58:40Z",
       "category": "deep_research",
       "use_cases": [
@@ -2074,6 +2148,7 @@
         "skills"
       ],
       "url": "https://github.com/HughYau/AcademicForge",
+      "created_at": "2026-02-03T13:26:21Z",
       "updated_at": "2026-05-17T12:03:04Z",
       "category": "literature",
       "use_cases": [
@@ -2105,6 +2180,7 @@
         "science"
       ],
       "url": "https://github.com/AutoX-AI-Labs/AutoR",
+      "created_at": "2026-03-13T23:37:55Z",
       "updated_at": "2026-05-17T06:47:08Z",
       "category": "literature",
       "use_cases": [
@@ -2140,6 +2216,7 @@
         "optimize"
       ],
       "url": "https://github.com/shyamsaktawat/OpenAlpha_Evolve",
+      "created_at": "2025-05-17T21:04:30Z",
       "updated_at": "2026-05-16T05:52:25Z",
       "category": "data_research",
       "use_cases": [
@@ -2152,8 +2229,8 @@
       "id": 1200204014,
       "full_name": "brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
       "description": "🔬 A curated collection of 23,000+ agent skills for empirical research across 8 social science disciplines. | 精选 23,000+ AI Agent 技能库，覆盖8大社会科学学科的实证研究。CoPaper.AI 20分钟完成一篇可复现的规范实证论文，并支持用户上传 Skills。-- Maintained by CoPaper.AI from Stanford REAP.",
-      "stars": 1012,
-      "forks": 173,
+      "stars": 1015,
+      "forks": 174,
       "language": "Stata",
       "topics": [
         "academic-research",
@@ -2175,7 +2252,8 @@
         "sociology"
       ],
       "url": "https://github.com/brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
-      "updated_at": "2026-05-17T14:35:43Z",
+      "created_at": "2026-04-03T06:31:20Z",
+      "updated_at": "2026-05-17T16:22:56Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -2200,6 +2278,7 @@
         "nlp"
       ],
       "url": "https://github.com/uber-archive/plato-research-dialogue-system",
+      "created_at": "2019-06-18T22:31:15Z",
       "updated_at": "2026-04-14T03:39:10Z",
       "category": "general",
       "use_cases": [
@@ -2225,6 +2304,7 @@
         "nlp"
       ],
       "url": "https://github.com/IAAR-Shanghai/SurveyX",
+      "created_at": "2025-02-19T05:19:40Z",
       "updated_at": "2026-05-17T07:43:53Z",
       "category": "deep_research",
       "use_cases": [
@@ -2253,11 +2333,40 @@
         "self-improving-ai"
       ],
       "url": "https://github.com/WecoAI/awesome-autoresearch",
+      "created_at": "2026-03-22T16:59:33Z",
       "updated_at": "2026-05-17T05:19:34Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "资源列表",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1145269520,
+      "full_name": "RefoundAI/lenny-skills",
+      "description": "86 product management skills from Lenny's Podcast for Claude Code and AI agents. Hiring, user research, strategy, shipping, and more.",
+      "stars": 922,
+      "forks": 118,
+      "language": "",
+      "topics": [
+        "ai-agents",
+        "ai-assistant",
+        "claude",
+        "claude-code",
+        "lenny-rachitsky",
+        "llm",
+        "pm-tools",
+        "product-management",
+        "product-skills",
+        "skills"
+      ],
+      "url": "https://github.com/RefoundAI/lenny-skills",
+      "created_at": "2026-01-29T16:14:48Z",
+      "updated_at": "2026-05-17T16:49:35Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
         "代码研究"
       ]
     },
@@ -2277,37 +2386,11 @@
         "planning"
       ],
       "url": "https://github.com/principia-ai/WriteHERE",
+      "created_at": "2025-03-04T17:31:50Z",
       "updated_at": "2026-05-16T15:13:42Z",
       "category": "deep_research",
       "use_cases": [
         "自主代理"
-      ]
-    },
-    {
-      "id": 1145269520,
-      "full_name": "RefoundAI/lenny-skills",
-      "description": "86 product management skills from Lenny's Podcast for Claude Code and AI agents. Hiring, user research, strategy, shipping, and more.",
-      "stars": 920,
-      "forks": 118,
-      "language": "",
-      "topics": [
-        "ai-agents",
-        "ai-assistant",
-        "claude",
-        "claude-code",
-        "lenny-rachitsky",
-        "llm",
-        "pm-tools",
-        "product-management",
-        "product-skills",
-        "skills"
-      ],
-      "url": "https://github.com/RefoundAI/lenny-skills",
-      "updated_at": "2026-05-17T12:49:22Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "代码研究"
       ]
     },
     {
@@ -2331,6 +2414,7 @@
         "transformers"
       ],
       "url": "https://github.com/zamalali/DeepGit",
+      "created_at": "2024-12-16T04:43:10Z",
       "updated_at": "2026-05-13T19:44:39Z",
       "category": "deep_research",
       "use_cases": [
@@ -2343,7 +2427,7 @@
       "id": 1204520409,
       "full_name": "Xiangyue-Zhang/auto-deep-researcher-24x7",
       "description": "🔥 An autonomous AI agent that runs your deep learning experiments 24/7 while you sleep. Zero-cost monitoring, Leader-Worker architecture, constant-size memory.",
-      "stars": 867,
+      "stars": 868,
       "forks": 66,
       "language": "Python",
       "topics": [
@@ -2361,7 +2445,8 @@
         "research-automation"
       ],
       "url": "https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7",
-      "updated_at": "2026-05-17T03:16:30Z",
+      "created_at": "2026-04-08T04:48:26Z",
+      "updated_at": "2026-05-17T14:56:36Z",
       "category": "deep_research",
       "use_cases": [
         "自主代理",
@@ -2400,6 +2485,7 @@
         "vibe-coding"
       ],
       "url": "https://github.com/bgauryy/octocode-mcp",
+      "created_at": "2025-06-05T13:56:40Z",
       "updated_at": "2026-05-17T09:35:45Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -2425,6 +2511,7 @@
         "research-paper"
       ],
       "url": "https://github.com/VoltAgent/awesome-ai-agent-papers",
+      "created_at": "2026-02-10T10:58:31Z",
       "updated_at": "2026-05-17T13:14:00Z",
       "category": "literature",
       "use_cases": [
@@ -2443,6 +2530,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/MarsWang42/OrbitOS",
+      "created_at": "2026-01-24T02:00:01Z",
       "updated_at": "2026-05-17T14:26:57Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -2463,6 +2551,7 @@
         "mcp"
       ],
       "url": "https://github.com/heurist-network/heurist-agent-framework",
+      "created_at": "2024-12-02T00:49:16Z",
       "updated_at": "2026-05-16T13:21:26Z",
       "category": "deep_research",
       "use_cases": [
@@ -2497,6 +2586,7 @@
         "vstorm"
       ],
       "url": "https://github.com/vstorm-co/pydantic-deepagents",
+      "created_at": "2025-11-29T14:36:36Z",
       "updated_at": "2026-05-17T04:24:26Z",
       "category": "deep_research",
       "use_cases": [
@@ -2520,6 +2610,7 @@
         "openai"
       ],
       "url": "https://github.com/qx-labs/agents-deep-research",
+      "created_at": "2025-03-18T19:00:49Z",
       "updated_at": "2026-05-12T07:16:35Z",
       "category": "deep_research",
       "use_cases": [
@@ -2540,6 +2631,7 @@
         "retrieval"
       ],
       "url": "https://github.com/TIGER-AI-Lab/OpenResearcher",
+      "created_at": "2026-02-03T00:34:05Z",
       "updated_at": "2026-05-15T11:39:38Z",
       "category": "deep_research",
       "use_cases": [
@@ -2567,6 +2659,7 @@
         "search-agent"
       ],
       "url": "https://github.com/DavidZWZ/Awesome-Deep-Research",
+      "created_at": "2025-06-06T01:54:55Z",
       "updated_at": "2026-05-15T21:21:55Z",
       "category": "deep_research",
       "use_cases": [
@@ -2603,6 +2696,7 @@
         "video-generation"
       ],
       "url": "https://github.com/Haervwe/open-webui-tools",
+      "created_at": "2024-11-09T16:21:51Z",
       "updated_at": "2026-05-16T18:25:56Z",
       "category": "literature",
       "use_cases": [
@@ -2640,6 +2734,7 @@
         "spatial-transcriptomics"
       ],
       "url": "https://github.com/aipoch/medical-research-skills",
+      "created_at": "2026-02-04T07:50:06Z",
       "updated_at": "2026-05-17T12:41:37Z",
       "category": "literature",
       "use_cases": [
@@ -2656,6 +2751,7 @@
       "language": "Jupyter Notebook",
       "topics": [],
       "url": "https://github.com/dCaples/AutoDidact",
+      "created_at": "2025-03-08T05:11:43Z",
       "updated_at": "2026-05-15T09:11:21Z",
       "category": "general",
       "use_cases": [
@@ -2689,6 +2785,7 @@
         "telemetry"
       ],
       "url": "https://github.com/orb-community/orb",
+      "created_at": "2021-02-18T20:53:46Z",
       "updated_at": "2026-05-10T00:10:09Z",
       "category": "data_research",
       "use_cases": [
@@ -2704,6 +2801,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/DeepXiv/deepxiv_sdk",
+      "created_at": "2026-02-08T01:54:34Z",
       "updated_at": "2026-05-17T14:11:39Z",
       "category": "literature",
       "use_cases": [
@@ -2726,6 +2824,7 @@
         "reranking"
       ],
       "url": "https://github.com/sunnweiwei/RankGPT",
+      "created_at": "2023-04-19T11:56:06Z",
       "updated_at": "2026-05-11T13:49:57Z",
       "category": "literature",
       "use_cases": [
@@ -2749,6 +2848,7 @@
         "rag-chatbot"
       ],
       "url": "https://github.com/nuglifeleoji/Options-Analytics-Agent",
+      "created_at": "2025-11-19T20:22:18Z",
       "updated_at": "2026-05-17T01:11:31Z",
       "category": "data_research",
       "use_cases": [
@@ -2779,6 +2879,7 @@
         "text2sql"
       ],
       "url": "https://github.com/zhongyu09/openchatbi",
+      "created_at": "2025-09-09T02:08:10Z",
       "updated_at": "2026-05-16T11:37:11Z",
       "category": "data_research",
       "use_cases": [
@@ -2812,6 +2913,7 @@
         "workflow-automation"
       ],
       "url": "https://github.com/henrydaum/second-brain",
+      "created_at": "2025-09-19T15:54:58Z",
       "updated_at": "2026-05-16T19:08:36Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -2831,6 +2933,7 @@
         "llm"
       ],
       "url": "https://github.com/Tencent/CognitiveKernel-Pro",
+      "created_at": "2025-08-01T01:49:18Z",
       "updated_at": "2026-05-15T20:05:54Z",
       "category": "deep_research",
       "use_cases": [
@@ -2869,6 +2972,7 @@
         "terminal-ui"
       ],
       "url": "https://github.com/ImKKingshuk/LockKnife",
+      "created_at": "2023-07-20T23:01:55Z",
       "updated_at": "2026-05-17T14:05:17Z",
       "category": "deep_research",
       "use_cases": [
@@ -2888,6 +2992,7 @@
         "llms"
       ],
       "url": "https://github.com/Wilson-ZheLin/Streamline-Analyst",
+      "created_at": "2024-01-26T20:53:32Z",
       "updated_at": "2026-05-12T19:56:38Z",
       "category": "data_research",
       "use_cases": [
@@ -2923,6 +3028,7 @@
         "operator"
       ],
       "url": "https://github.com/BrowserOperator/browser-operator-core",
+      "created_at": "2025-05-10T16:56:31Z",
       "updated_at": "2026-05-12T13:26:46Z",
       "category": "web_research",
       "use_cases": [
@@ -2951,6 +3057,7 @@
         "task-management"
       ],
       "url": "https://github.com/cyanheads/atlas-mcp-server",
+      "created_at": "2024-12-16T05:55:30Z",
       "updated_at": "2026-05-13T23:43:43Z",
       "category": "deep_research",
       "use_cases": [
@@ -2971,6 +3078,7 @@
         "instruction-following"
       ],
       "url": "https://github.com/NVlabs/UniversalDeepResearch",
+      "created_at": "2025-07-11T23:53:04Z",
       "updated_at": "2026-05-10T06:13:09Z",
       "category": "deep_research",
       "use_cases": [
@@ -2989,6 +3097,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/theNetworkChuck/dark-web-scraping-guide",
+      "created_at": "2025-11-17T18:02:58Z",
       "updated_at": "2026-05-16T00:42:17Z",
       "category": "deep_research",
       "use_cases": [
@@ -3025,6 +3134,7 @@
         "wiki"
       ],
       "url": "https://github.com/swarmclawai/swarmvault",
+      "created_at": "2026-04-06T20:52:30Z",
       "updated_at": "2026-05-17T13:29:45Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -3041,6 +3151,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/Jun-jie-Huang/awesome-LLM-AIOps",
+      "created_at": "2023-10-11T02:22:32Z",
       "updated_at": "2026-05-16T00:01:18Z",
       "category": "literature",
       "use_cases": [
@@ -3077,6 +3188,7 @@
         "zero-day"
       ],
       "url": "https://github.com/416rehman/DeepZero",
+      "created_at": "2026-04-07T01:51:34Z",
       "updated_at": "2026-05-17T14:30:29Z",
       "category": "deep_research",
       "use_cases": [
@@ -3099,6 +3211,7 @@
         "obsidian-plugin"
       ],
       "url": "https://github.com/hkcanan/katmer-code",
+      "created_at": "2026-03-22T12:08:26Z",
       "updated_at": "2026-05-17T04:21:58Z",
       "category": "literature",
       "use_cases": [
@@ -3118,6 +3231,7 @@
         "deep-research"
       ],
       "url": "https://github.com/scienceaix/deepresearch",
+      "created_at": "2025-05-17T15:47:52Z",
       "updated_at": "2026-05-17T14:47:31Z",
       "category": "deep_research",
       "use_cases": [
@@ -3135,6 +3249,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/Din829/DbRheo-CLI",
+      "created_at": "2025-08-01T02:20:55Z",
       "updated_at": "2026-04-19T05:45:59Z",
       "category": "data_research",
       "use_cases": [
@@ -3159,6 +3274,7 @@
         "python"
       ],
       "url": "https://github.com/oneil512/INSIGHT",
+      "created_at": "2023-04-08T15:20:14Z",
       "updated_at": "2026-04-26T06:02:50Z",
       "category": "general",
       "use_cases": [
@@ -3169,7 +3285,7 @@
       "id": 1193465306,
       "full_name": "iusztinpaul/designing-real-world-ai-agents-workshop",
       "description": "Hands-on workshop: Build a multi-agent AI system from scratch — Deep Research Agent + Writing Workflow served as MCP servers. Includes code, slides, and video",
-      "stars": 410,
+      "stars": 411,
       "forks": 112,
       "language": "Python",
       "topics": [
@@ -3182,7 +3298,8 @@
         "workshop"
       ],
       "url": "https://github.com/iusztinpaul/designing-real-world-ai-agents-workshop",
-      "updated_at": "2026-05-16T10:33:32Z",
+      "created_at": "2026-03-27T08:55:20Z",
+      "updated_at": "2026-05-17T16:29:09Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -3209,7 +3326,8 @@
         "xpert"
       ],
       "url": "https://github.com/xpert-ai/xpert",
-      "updated_at": "2026-05-17T01:46:24Z",
+      "created_at": "2024-11-20T05:40:38Z",
+      "updated_at": "2026-05-17T15:15:53Z",
       "category": "data_research",
       "use_cases": [
         "自主代理"
@@ -3219,7 +3337,7 @@
       "id": 1066539011,
       "full_name": "liangdabiao/claude-data-analysis",
       "description": "Create a data analysis AI agent with Claude Code. Make data analysis as simple as having a chat!​​ 别忘了！claude code也是agent框架，类似langgraph,crewAI，autogen等等agent框架。我改造claude code搞一个数据分析智能体AI。 让数据分析变得像聊天一样简单！",
-      "stars": 395,
+      "stars": 396,
       "forks": 58,
       "language": "Python",
       "topics": [
@@ -3227,7 +3345,8 @@
         "agentic-ai"
       ],
       "url": "https://github.com/liangdabiao/claude-data-analysis",
-      "updated_at": "2026-05-16T14:20:11Z",
+      "created_at": "2025-09-29T16:11:24Z",
+      "updated_at": "2026-05-17T15:13:37Z",
       "category": "data_research",
       "use_cases": [
         "自主代理"
@@ -3242,6 +3361,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/yibie/awesome-autoresearch",
+      "created_at": "2026-03-31T12:49:49Z",
       "updated_at": "2026-05-17T08:27:27Z",
       "category": "general",
       "use_cases": [
@@ -3264,6 +3384,7 @@
         "websearch"
       ],
       "url": "https://github.com/assafelovic/gptr-mcp",
+      "created_at": "2025-03-30T16:47:15Z",
       "updated_at": "2026-05-08T20:45:29Z",
       "category": "deep_research",
       "use_cases": [
@@ -3279,6 +3400,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/claesbackman/AI-research-feedback",
+      "created_at": "2026-03-01T11:37:44Z",
       "updated_at": "2026-05-17T10:26:52Z",
       "category": "literature",
       "use_cases": [
@@ -3303,6 +3425,7 @@
         "qgis-plugin"
       ],
       "url": "https://github.com/opengeos/GeoAgent",
+      "created_at": "2026-02-01T00:32:13Z",
       "updated_at": "2026-05-17T14:34:29Z",
       "category": "data_research",
       "use_cases": [
@@ -3318,6 +3441,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/OpsPAI/awesome-AIOps",
+      "created_at": "2021-06-19T11:39:38Z",
       "updated_at": "2026-05-09T17:24:22Z",
       "category": "literature",
       "use_cases": [
@@ -3354,6 +3478,7 @@
         "webscrape"
       ],
       "url": "https://github.com/libraryofcelsus/Aetherius_AI_Assistant",
+      "created_at": "2023-04-03T17:40:23Z",
       "updated_at": "2026-05-16T11:38:02Z",
       "category": "general",
       "use_cases": [
@@ -3375,6 +3500,7 @@
         "deep-research-agent"
       ],
       "url": "https://github.com/jordan-gibbs/hyperresearch",
+      "created_at": "2026-04-09T20:46:46Z",
       "updated_at": "2026-05-17T13:46:05Z",
       "category": "deep_research",
       "use_cases": [
@@ -3400,6 +3526,7 @@
         "tools"
       ],
       "url": "https://github.com/ymx10086/ResearchClaw",
+      "created_at": "2026-03-03T13:25:43Z",
       "updated_at": "2026-05-16T19:51:47Z",
       "category": "literature",
       "use_cases": [
@@ -3438,6 +3565,7 @@
         "text-to-speech"
       ],
       "url": "https://github.com/sanjay3290/ai-skills",
+      "created_at": "2025-12-22T18:51:46Z",
       "updated_at": "2026-05-15T19:22:48Z",
       "category": "deep_research",
       "use_cases": [
@@ -3455,6 +3583,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/molyswu/hand_detection",
+      "created_at": "2018-11-29T01:35:59Z",
       "updated_at": "2026-05-09T13:31:56Z",
       "category": "literature",
       "use_cases": [
@@ -3470,7 +3599,7 @@
       "id": 997435231,
       "full_name": "Osilly/Awesome-Interleaving-Reasoning",
       "description": "Interleaving Reasoning: Next-Generation Reasoning Systems for AGI",
-      "stars": 273,
+      "stars": 274,
       "forks": 11,
       "language": "",
       "topics": [
@@ -3488,7 +3617,8 @@
         "reasoning"
       ],
       "url": "https://github.com/Osilly/Awesome-Interleaving-Reasoning",
-      "updated_at": "2026-05-14T08:16:30Z",
+      "created_at": "2025-06-06T14:19:01Z",
+      "updated_at": "2026-05-17T16:15:09Z",
       "category": "deep_research",
       "use_cases": [
         "学术文献",
@@ -3508,6 +3638,7 @@
         "medical-ai"
       ],
       "url": "https://github.com/jarrycyx/openlens-ai",
+      "created_at": "2025-08-21T05:37:16Z",
       "updated_at": "2026-05-15T05:41:36Z",
       "category": "general",
       "use_cases": [
@@ -3531,6 +3662,7 @@
         "trading"
       ],
       "url": "https://github.com/OctagonAI/kalshi-trading-bot-cli",
+      "created_at": "2025-07-14T22:29:07Z",
       "updated_at": "2026-05-16T18:45:26Z",
       "category": "deep_research",
       "use_cases": [
@@ -3554,6 +3686,7 @@
         "typescript"
       ],
       "url": "https://github.com/edinetdb/dexter-jp",
+      "created_at": "2026-03-26T13:41:12Z",
       "updated_at": "2026-05-17T07:24:13Z",
       "category": "data_research",
       "use_cases": [
@@ -3589,6 +3722,7 @@
         "urban-computing-papers"
       ],
       "url": "https://github.com/Knowledge-Precipitation-Tribe/Spatio-Temporal-papers",
+      "created_at": "2020-03-11T12:46:13Z",
       "updated_at": "2026-02-11T08:20:39Z",
       "category": "literature",
       "use_cases": [
@@ -3605,6 +3739,7 @@
       "language": "Jupyter Notebook",
       "topics": [],
       "url": "https://github.com/abusufyanvu/6S191_MIT_DeepLearning",
+      "created_at": "2022-01-16T11:01:50Z",
       "updated_at": "2026-05-05T01:54:30Z",
       "category": "literature",
       "use_cases": [
@@ -3637,6 +3772,7 @@
         "nextjs14"
       ],
       "url": "https://github.com/MODSetter/gpt-instagram",
+      "created_at": "2024-07-10T08:31:11Z",
       "updated_at": "2026-04-04T14:26:27Z",
       "category": "general",
       "use_cases": [
@@ -3658,6 +3794,7 @@
         "evaluation-framework"
       ],
       "url": "https://github.com/guestrin-lab/deepscholar",
+      "created_at": "2025-08-28T20:50:17Z",
       "updated_at": "2026-05-17T06:39:50Z",
       "category": "deep_research",
       "use_cases": [
@@ -3682,6 +3819,7 @@
         "llm-orchestration"
       ],
       "url": "https://github.com/bernatsampera/event-deep-research",
+      "created_at": "2025-10-01T12:52:50Z",
       "updated_at": "2026-04-30T00:26:51Z",
       "category": "deep_research",
       "use_cases": [
@@ -3697,6 +3835,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/guhaohao0991/PaperClaw",
+      "created_at": "2026-03-02T03:03:10Z",
       "updated_at": "2026-05-15T05:07:59Z",
       "category": "literature",
       "use_cases": [
@@ -3720,6 +3859,7 @@
         "rust"
       ],
       "url": "https://github.com/shadowfax92/Fyin",
+      "created_at": "2024-05-17T21:02:47Z",
       "updated_at": "2026-05-17T09:11:35Z",
       "category": "web_research",
       "use_cases": [
@@ -3754,6 +3894,7 @@
         "skill"
       ],
       "url": "https://github.com/Pthahnix/De-Anthropocentric-Research-Engine",
+      "created_at": "2026-02-10T05:47:00Z",
       "updated_at": "2026-05-17T12:19:27Z",
       "category": "deep_research",
       "use_cases": [
@@ -3784,6 +3925,7 @@
         "super-agent"
       ],
       "url": "https://github.com/hawkli-1994/deerflow-book",
+      "created_at": "2026-03-31T12:16:29Z",
       "updated_at": "2026-05-17T08:28:55Z",
       "category": "deep_research",
       "use_cases": [
@@ -3800,6 +3942,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/ventr1c/Awesome-RL-based-Agentic-Search-Papers",
+      "created_at": "2025-10-07T04:44:14Z",
       "updated_at": "2026-05-16T15:13:43Z",
       "category": "deep_research",
       "use_cases": [
@@ -3827,6 +3970,7 @@
         "python"
       ],
       "url": "https://github.com/Anaconda-Labs/building-intelligent-apps-with-anaconda",
+      "created_at": "2026-04-13T16:05:34Z",
       "updated_at": "2026-05-17T00:11:28Z",
       "category": "data_research",
       "use_cases": [
@@ -3842,6 +3986,7 @@
       "language": "HTML",
       "topics": [],
       "url": "https://github.com/tsinghua-fib-lab/AgentSquare",
+      "created_at": "2024-10-08T15:38:57Z",
       "updated_at": "2026-05-17T13:58:26Z",
       "category": "literature",
       "use_cases": [
@@ -3873,6 +4018,7 @@
         "skill"
       ],
       "url": "https://github.com/krzysztofdudek/ResearcherSkill",
+      "created_at": "2026-03-22T16:41:35Z",
       "updated_at": "2026-05-13T08:23:02Z",
       "category": "general",
       "use_cases": [
@@ -3895,6 +4041,7 @@
         "machine-learning"
       ],
       "url": "https://github.com/kohjingyu/search-agents",
+      "created_at": "2024-06-18T06:20:53Z",
       "updated_at": "2026-04-16T14:04:35Z",
       "category": "literature",
       "use_cases": [
@@ -3911,6 +4058,7 @@
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/wentorai/research-plugins",
+      "created_at": "2026-03-09T14:01:59Z",
       "updated_at": "2026-05-14T16:07:31Z",
       "category": "literature",
       "use_cases": [
@@ -3943,6 +4091,7 @@
         "skills"
       ],
       "url": "https://github.com/fcakyon/phd-skills",
+      "created_at": "2026-03-11T07:08:30Z",
       "updated_at": "2026-05-16T23:15:54Z",
       "category": "literature",
       "use_cases": [
@@ -3950,6 +4099,27 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ]
+    },
+    {
+      "id": 814878405,
+      "full_name": "openags/auto-research",
+      "description": "Auto Research with UI. Autonomous Generalist Scientist / AI Scientist / Agent Scientist / Robot Scientist, across all Scientific Fields.",
+      "stars": 209,
+      "forks": 15,
+      "language": "TypeScript",
+      "topics": [
+        "ai-scientist",
+        "artificial-intelligence",
+        "robotics"
+      ],
+      "url": "https://github.com/openags/auto-research",
+      "created_at": "2024-06-13T22:47:38Z",
+      "updated_at": "2026-05-17T16:39:05Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "实验自动化"
       ]
     },
     {
@@ -3961,30 +4131,11 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/surendranb/google-analytics-mcp",
+      "created_at": "2025-05-24T03:21:10Z",
       "updated_at": "2026-05-15T15:55:33Z",
       "category": "data_research",
       "use_cases": [
         "自主代理"
-      ]
-    },
-    {
-      "id": 814878405,
-      "full_name": "openags/auto-research",
-      "description": "Auto Research with UI. Autonomous Generalist Scientist / AI Scientist / Agent Scientist / Robot Scientist, across all Scientific Fields.",
-      "stars": 208,
-      "forks": 15,
-      "language": "TypeScript",
-      "topics": [
-        "ai-scientist",
-        "artificial-intelligence",
-        "robotics"
-      ],
-      "url": "https://github.com/openags/auto-research",
-      "updated_at": "2026-05-17T12:40:37Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "实验自动化"
       ]
     },
     {
@@ -4001,6 +4152,7 @@
         "whale-tracking-source"
       ],
       "url": "https://github.com/chaoleiyv/polymarket-whale-watcher",
+      "created_at": "2026-01-07T07:39:40Z",
       "updated_at": "2026-05-17T10:56:44Z",
       "category": "data_research",
       "use_cases": [
@@ -4013,7 +4165,7 @@
       "full_name": "Prompthon-IO/agent-systems-handbook",
       "description": "A practical AI agents handbook covering agent systems, agentic workflows, LangGraph, MCP/A2A, context engineering, agent memory, evaluation, observability, and multi-agent architecture. Current trend focus: prompt injection defenses, emerging agent runtimes, and production AI workflow patterns.",
       "stars": 202,
-      "forks": 29,
+      "forks": 30,
       "language": "MDX",
       "topics": [
         "a2a",
@@ -4038,6 +4190,7 @@
         "workflow-automation"
       ],
       "url": "https://github.com/Prompthon-IO/agent-systems-handbook",
+      "created_at": "2026-04-20T13:28:26Z",
       "updated_at": "2026-05-17T13:10:48Z",
       "category": "deep_research",
       "use_cases": [
@@ -4062,6 +4215,7 @@
         "writing"
       ],
       "url": "https://github.com/Academic-ID/sapienAI",
+      "created_at": "2024-03-31T06:30:08Z",
       "updated_at": "2026-05-12T21:42:37Z",
       "category": "literature",
       "use_cases": [
@@ -4099,6 +4253,7 @@
         "xmind"
       ],
       "url": "https://github.com/mindolph/Mindolph",
+      "created_at": "2022-04-11T18:31:45Z",
       "updated_at": "2026-05-12T18:05:09Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -4114,6 +4269,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/li-xiu-qi/data_analysis_agent",
+      "created_at": "2025-06-06T06:48:29Z",
       "updated_at": "2026-05-14T17:27:17Z",
       "category": "data_research",
       "use_cases": [
@@ -4132,6 +4288,7 @@
         "llms"
       ],
       "url": "https://github.com/InfiAgent/InfiAgent",
+      "created_at": "2023-12-16T15:35:35Z",
       "updated_at": "2026-04-19T07:02:48Z",
       "category": "data_research",
       "use_cases": [
@@ -4153,6 +4310,7 @@
         "llms"
       ],
       "url": "https://github.com/togethercomputer/open-data-scientist",
+      "created_at": "2025-06-05T16:13:09Z",
       "updated_at": "2026-05-14T13:52:31Z",
       "category": "data_research",
       "use_cases": [
@@ -4180,6 +4338,7 @@
         "workflow-automation"
       ],
       "url": "https://github.com/VAMFI/claude-user-memory",
+      "created_at": "2025-07-25T05:57:39Z",
       "updated_at": "2026-05-15T06:20:18Z",
       "category": "general",
       "use_cases": [
@@ -4196,6 +4355,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/Zhou-Zi7/Awesome-AI-Security-BIG4",
+      "created_at": "2023-07-23T14:47:27Z",
       "updated_at": "2026-05-13T21:02:27Z",
       "category": "literature",
       "use_cases": [
@@ -4213,6 +4373,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/USTCPCS/CVPR2018_attention",
+      "created_at": "2018-06-01T10:39:52Z",
       "updated_at": "2026-02-13T11:38:47Z",
       "category": "web_research",
       "use_cases": [
@@ -4229,6 +4390,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/omni-georgio/deep_research-",
+      "created_at": "2025-02-01T12:07:27Z",
       "updated_at": "2026-04-22T16:23:55Z",
       "category": "deep_research",
       "use_cases": [
@@ -4244,6 +4406,7 @@
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/CurryTang/Amadeus",
+      "created_at": "2026-01-22T15:42:59Z",
       "updated_at": "2026-05-01T10:22:29Z",
       "category": "literature",
       "use_cases": [
@@ -4270,6 +4433,7 @@
         "text-to-sql"
       ],
       "url": "https://github.com/pragunbhutani/dbt-llm-agent",
+      "created_at": "2024-02-11T09:55:38Z",
       "updated_at": "2026-05-11T13:20:08Z",
       "category": "data_research",
       "use_cases": [
@@ -4306,6 +4470,7 @@
         "wet-lab-protocols"
       ],
       "url": "https://github.com/InternScience/SGI-Bench",
+      "created_at": "2025-12-03T02:59:11Z",
       "updated_at": "2026-05-16T18:02:28Z",
       "category": "deep_research",
       "use_cases": [
@@ -4333,6 +4498,7 @@
         "ollama-api"
       ],
       "url": "https://github.com/tarun7r/deep-research-agent",
+      "created_at": "2025-11-13T17:34:28Z",
       "updated_at": "2026-05-13T16:39:25Z",
       "category": "deep_research",
       "use_cases": [
@@ -4359,6 +4525,7 @@
         "serper"
       ],
       "url": "https://github.com/akj2018/Multi-AI-Agent-Systems-with-crewAI",
+      "created_at": "2024-05-19T08:03:38Z",
       "updated_at": "2026-05-12T05:07:28Z",
       "category": "general",
       "use_cases": [
@@ -4392,6 +4559,7 @@
         "vercel-ai-sdk"
       ],
       "url": "https://github.com/codebucks27/Deep-Research-AI-Agent",
+      "created_at": "2025-03-20T10:16:18Z",
       "updated_at": "2026-05-16T11:05:10Z",
       "category": "deep_research",
       "use_cases": [
@@ -4413,6 +4581,7 @@
         "science"
       ],
       "url": "https://github.com/bio-xyz/BioAgents",
+      "created_at": "2025-10-17T12:59:30Z",
       "updated_at": "2026-05-16T15:37:51Z",
       "category": "deep_research",
       "use_cases": [
@@ -4452,6 +4621,7 @@
         "scraper-tools"
       ],
       "url": "https://github.com/ai-naymul/BrowserPilot",
+      "created_at": "2025-06-23T15:36:09Z",
       "updated_at": "2026-05-17T11:22:46Z",
       "category": "deep_research",
       "use_cases": [
@@ -4468,6 +4638,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/jettbrains/-L-",
+      "created_at": "2019-10-28T21:50:26Z",
       "updated_at": "2026-05-15T13:14:47Z",
       "category": "deep_research",
       "use_cases": [
@@ -4502,6 +4673,7 @@
         "tauri"
       ],
       "url": "https://github.com/kdsz001/OpenWiki",
+      "created_at": "2026-02-13T14:31:44Z",
       "updated_at": "2026-05-17T13:49:47Z",
       "category": "knowledge_base",
       "use_cases": [
@@ -4529,6 +4701,7 @@
         "research-assistant"
       ],
       "url": "https://github.com/kaymen99/local-rag-researcher-deepseek",
+      "created_at": "2025-02-06T23:31:15Z",
       "updated_at": "2026-05-12T18:17:29Z",
       "category": "deep_research",
       "use_cases": [
@@ -4558,6 +4731,7 @@
         "social-listening"
       ],
       "url": "https://github.com/cporter202/agentic-ai-starters",
+      "created_at": "2026-04-07T13:28:33Z",
       "updated_at": "2026-05-15T07:05:51Z",
       "category": "general",
       "use_cases": [
@@ -4574,6 +4748,7 @@
       "language": "",
       "topics": [],
       "url": "https://github.com/YunjiaXi/Awesome-Search-Agent-Papers",
+      "created_at": "2025-06-11T07:22:26Z",
       "updated_at": "2026-05-14T07:21:44Z",
       "category": "literature",
       "use_cases": [
@@ -4591,6 +4766,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/colossus-lab/openarg_backend",
+      "created_at": "2026-03-22T01:47:18Z",
       "updated_at": "2026-05-16T22:14:14Z",
       "category": "data_research",
       "use_cases": [
@@ -4614,6 +4790,7 @@
         "research-agent"
       ],
       "url": "https://github.com/liugangcode/deepevolve",
+      "created_at": "2025-06-25T15:18:03Z",
       "updated_at": "2026-05-15T11:57:59Z",
       "category": "deep_research",
       "use_cases": [
@@ -4652,6 +4829,7 @@
         "software-engineering"
       ],
       "url": "https://github.com/mahmoudrabie/agentic-ai",
+      "created_at": "2025-03-21T08:23:49Z",
       "updated_at": "2026-05-16T08:03:29Z",
       "category": "deep_research",
       "use_cases": [
@@ -4687,6 +4865,7 @@
         "xai"
       ],
       "url": "https://github.com/AthenaCore/AwesomeResponsibleAI",
+      "created_at": "2021-09-05T10:36:47Z",
       "updated_at": "2026-05-16T06:48:38Z",
       "category": "literature",
       "use_cases": [
@@ -4704,6 +4883,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/zubair-trabzada/ai-trading-claude",
+      "created_at": "2026-04-07T20:08:19Z",
       "updated_at": "2026-05-17T00:54:01Z",
       "category": "data_research",
       "use_cases": [
@@ -4721,6 +4901,7 @@
       "language": "JavaScript",
       "topics": [],
       "url": "https://github.com/clover-Saber/Review-Helper",
+      "created_at": "2025-11-05T22:26:12Z",
       "updated_at": "2026-05-17T09:26:11Z",
       "category": "literature",
       "use_cases": [
@@ -4745,6 +4926,7 @@
         "reinforcement-learning"
       ],
       "url": "https://github.com/DVampire/FinWorld",
+      "created_at": "2025-07-25T09:06:38Z",
       "updated_at": "2026-05-12T00:10:42Z",
       "category": "data_research",
       "use_cases": [
@@ -4774,6 +4956,7 @@
         "search-engine"
       ],
       "url": "https://github.com/jkudish/librarium",
+      "created_at": "2026-02-20T18:24:21Z",
       "updated_at": "2026-05-13T22:31:19Z",
       "category": "deep_research",
       "use_cases": [
@@ -4796,6 +4979,7 @@
         "multiagent-systems"
       ],
       "url": "https://github.com/SalesforceAIResearch/LiveResearchBench",
+      "created_at": "2025-10-17T20:13:04Z",
       "updated_at": "2026-05-12T04:25:32Z",
       "category": "deep_research",
       "use_cases": [
@@ -4813,6 +4997,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/agruai/company-research-agent",
+      "created_at": "2025-09-28T04:02:52Z",
       "updated_at": "2026-05-15T17:53:50Z",
       "category": "data_research",
       "use_cases": [
@@ -4836,6 +5021,7 @@
         "research-tool"
       ],
       "url": "https://github.com/aws-samples/sample-bedrock-deep-researcher",
+      "created_at": "2025-02-27T16:34:33Z",
       "updated_at": "2026-04-27T15:25:05Z",
       "category": "deep_research",
       "use_cases": [
@@ -4858,6 +5044,7 @@
         "openai"
       ],
       "url": "https://github.com/FranciscoMoretti/ai-sdk-deep-research",
+      "created_at": "2025-08-05T10:14:44Z",
       "updated_at": "2026-05-07T02:39:12Z",
       "category": "deep_research",
       "use_cases": [
@@ -4882,6 +5069,7 @@
         "scientist-agent"
       ],
       "url": "https://github.com/AI4Scientist/awesome-autoresearch",
+      "created_at": "2025-11-27T06:40:05Z",
       "updated_at": "2026-05-16T02:56:29Z",
       "category": "general",
       "use_cases": [
@@ -4911,6 +5099,7 @@
         "scholar"
       ],
       "url": "https://github.com/jerry609/PaperBot",
+      "created_at": "2024-06-28T02:00:48Z",
       "updated_at": "2026-05-16T22:10:27Z",
       "category": "literature",
       "use_cases": [
@@ -4938,6 +5127,7 @@
         "review-tools"
       ],
       "url": "https://github.com/PouriaRouzrokh/LatteReview",
+      "created_at": "2024-12-10T17:28:50Z",
       "updated_at": "2026-05-14T00:30:39Z",
       "category": "literature",
       "use_cases": [
@@ -4975,6 +5165,7 @@
         "workflow"
       ],
       "url": "https://github.com/chaohong-ai/ai-auto-work",
+      "created_at": "2026-04-21T02:55:11Z",
       "updated_at": "2026-05-13T02:16:51Z",
       "category": "general",
       "use_cases": [
@@ -4998,6 +5189,7 @@
         "survey"
       ],
       "url": "https://github.com/Peilin-FF/Awesome-Deep-Research",
+      "created_at": "2025-03-10T07:11:26Z",
       "updated_at": "2026-05-10T13:38:05Z",
       "category": "deep_research",
       "use_cases": [
@@ -5027,6 +5219,7 @@
         "serverless"
       ],
       "url": "https://github.com/G4brym/workers-research",
+      "created_at": "2025-02-09T19:40:57Z",
       "updated_at": "2026-04-18T04:56:25Z",
       "category": "deep_research",
       "use_cases": [
@@ -5043,6 +5236,7 @@
       "language": "Python",
       "topics": [],
       "url": "https://github.com/Jiaye-s-Group/AutoSTAT",
+      "created_at": "2025-10-31T06:49:59Z",
       "updated_at": "2026-05-16T10:13:18Z",
       "category": "data_research",
       "use_cases": [

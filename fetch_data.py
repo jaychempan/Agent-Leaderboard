@@ -142,6 +142,7 @@ def normalize_repo(raw: dict, hint_cat: str) -> dict:
         "language":    raw.get("language") or "",
         "topics":      raw.get("topics") or [],
         "url":         raw["html_url"],
+        "created_at":  raw["created_at"],
         "updated_at":  raw["updated_at"],
         "category":    assign_category(raw, hint_cat),
         "use_cases":   analyze_use_cases(raw),
@@ -217,6 +218,15 @@ def main():
         f.write(f"/* AUTO-GENERATED — run fetch_data.py to update */\n")
         f.write(f"window.SKILLS_DATA={js_payload};\n")
     print("✅ data.js 写入完成")
+
+    # ── 更新 index.html 中的 data.js 版本号 (防缓存) ─────────────────────────
+    version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
+    with open("index.html", "r", encoding="utf-8") as f:
+        html = f.read()
+    html = re.sub(r'data\.js\?v=\d+', f'data.js?v={version}', html)
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"✅ index.html 版本号更新为 {version}")
 
     print("\n📊 用途分布 Top 10:")
     for uc, cnt in list(uc_dist_sorted.items())[:10]:
