@@ -9,15 +9,27 @@ const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
-    nav_skills:    'Skills 排行榜',
-    nav_research:  'Auto Research',
-    nav_favorites: '收藏',
-    skills_title:  'Agent Skills 排行榜',
-    skills_sub:    '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
-    research_title:'Auto Research 排行榜',
-    research_sub:  '一站式发现顶尖 AI 自动研究工具 · 从学术文献到深度调研，一搜即达',
-    search_skills: '搜索 Skills…',
+    nav_skills:     'Skills 排行榜',
+    nav_research:   'Auto Research',
+    nav_mcp:        'MCP Servers',
+    nav_prompts:    'Prompt Library',
+    nav_frameworks: 'AI Frameworks',
+    nav_favorites:  '收藏',
+    skills_title:   'Agent Skills 排行榜',
+    skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
+    research_title: 'Auto Research 排行榜',
+    research_sub:   '一站式发现顶尖 AI 自动研究工具 · 从学术文献到深度调研，一搜即达',
+    mcp_title:      'MCP Servers 排行榜',
+    mcp_sub:        '发现最热门的 Model Context Protocol 服务器 · 为 Claude 扩展无限能力',
+    prompts_title:  'Prompt Library 排行榜',
+    prompts_sub:    '精选最实用的 AI 提示词库 · 提示工程、系统提示、场景模板一站直达',
+    frameworks_title:'AI Agent Frameworks 排行榜',
+    frameworks_sub: '发现顶尖 AI Agent 构建框架 · 从编排到多智能体，快速上手最佳实践',
+    search_skills:  '搜索 Skills…',
     search_research:'搜索 Research 工具…',
+    search_mcp:     '搜索 MCP Servers…',
+    search_prompts: '搜索 Prompt 库…',
+    search_frameworks:'搜索 Frameworks…',
     lang_label:    '语言',
     lang_all:      '所有语言',
     stars_all:     '全部',
@@ -51,15 +63,27 @@ const I18N = {
     page_size:     '每页',
   },
   en: {
-    nav_skills:    'Skills',
-    nav_research:  'Auto Research',
-    nav_favorites: 'Favorites',
-    skills_title:  'Agent Skills Leaderboard',
-    skills_sub:    'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
-    research_title:'Auto Research Leaderboard',
-    research_sub:  'One-stop hub for top AI research tools — from deep research agents to literature review, all in one place.',
-    search_skills: 'Search Skills…',
+    nav_skills:     'Skills',
+    nav_research:   'Auto Research',
+    nav_mcp:        'MCP Servers',
+    nav_prompts:    'Prompts',
+    nav_frameworks: 'Frameworks',
+    nav_favorites:  'Favorites',
+    skills_title:   'Agent Skills Leaderboard',
+    skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
+    research_title: 'Auto Research Leaderboard',
+    research_sub:   'One-stop hub for top AI research tools — from deep research agents to literature review, all in one place.',
+    mcp_title:      'MCP Servers Leaderboard',
+    mcp_sub:        'Discover the most popular Model Context Protocol servers — extend Claude with databases, web, dev tools and more.',
+    prompts_title:  'Prompt Library Leaderboard',
+    prompts_sub:    'Curated collection of top prompt libraries — engineering guides, system prompts, and templates all in one place.',
+    frameworks_title:'AI Agent Frameworks Leaderboard',
+    frameworks_sub: 'Top frameworks for building AI agents — orchestration, multi-agent systems, memory, and evaluation tools.',
+    search_skills:  'Search Skills…',
     search_research:'Search Research tools…',
+    search_mcp:     'Search MCP Servers…',
+    search_prompts: 'Search Prompt libraries…',
+    search_frameworks:'Search Frameworks…',
     lang_label:    'Language',
     lang_all:      'All Languages',
     stars_all:     'All',
@@ -106,6 +130,17 @@ const UC_EN = {
   "学术文献":"Literature","深度研究":"Deep Res.","金融数据":"Finance",
   "实验自动化":"Lab Auto","网页搜索":"Web Search","AI 训练":"AI Train",
   "睡眠/后台":"Background","竞争分析":"Competitive","通用研究":"General",
+  // MCP
+  "数据库连接":"Database","文件系统":"Filesystem","网页浏览":"Web Browse",
+  "代码工具":"Dev Tools","生产力":"Productivity","官方服务器":"Official",
+  "API集成":"API","通用MCP":"General MCP","搜索":"Search",
+  // Prompts
+  "提示工程":"Prompt Eng.","系统提示":"System Prompt","角色扮演":"Roleplay",
+  "多语言":"Multilingual","图像生成":"Image Gen","通用提示":"General",
+  // Frameworks
+  "多智能体":"Multi-Agent","工具调用":"Tool Use","记忆管理":"Memory",
+  "流程编排":"Orchestration","评估测试":"Evaluation","RAG":"RAG",
+  "语音/视觉":"Voice/Vision","通用框架":"General",
 };
 
 /* ── Category label translations (for research cats) ────────────── */
@@ -190,7 +225,7 @@ function init(config) {
   applyFilters();
   applyThemeBtn();
   applyLangBtn();
-  // visit counter widget injected directly in HTML
+  loadVisitCount();
 
   // dismiss page loader
   const loader = document.getElementById('pageLoader');
@@ -253,8 +288,7 @@ function updateFavBtn() {
 
 /* ── Nav render ─────────────────────────────────────────────────── */
 function renderNav() {
-  const isSkills   = app.pageConfig.page === 'skills';
-  const isResearch = app.pageConfig.page === 'research';
+  const pg = app.pageConfig.page;
   const nav = document.getElementById('navbar');
   if (!nav) return;
   nav.innerHTML = `
@@ -263,11 +297,20 @@ function renderNav() {
       <span class="nav-brand-text">Agent Skills Leaderboard</span>
     </a>
     <div class="nav-links">
-      <a class="nav-link${isSkills ? ' active' : ''}" href="index.html">
+      <a class="nav-link${pg==='skills'?' active':''}" href="index.html">
         ⚡ <span class="full">${t('nav_skills')}</span>
       </a>
-      <a class="nav-link${isResearch ? ' active' : ''}" href="auto-research.html">
+      <a class="nav-link${pg==='research'?' active':''}" href="auto-research.html">
         🔬 <span class="full">${t('nav_research')}</span>
+      </a>
+      <a class="nav-link${pg==='mcp'?' active':''}" href="mcp.html">
+        🔌 <span class="full">${t('nav_mcp')}</span>
+      </a>
+      <a class="nav-link${pg==='prompts'?' active':''}" href="prompts.html">
+        📝 <span class="full">${t('nav_prompts')}</span>
+      </a>
+      <a class="nav-link${pg==='frameworks'?' active':''}" href="frameworks.html">
+        🤖 <span class="full">${t('nav_frameworks')}</span>
       </a>
     </div>
     <div class="nav-actions">
@@ -307,8 +350,8 @@ function renderHero() {
   const top = app.allRepos[0]?.stars ?? 0;
   const cfg = app.pageConfig;
 
-  const titleKey = cfg.page === 'skills' ? 'skills_title' : 'research_title';
-  const subKey   = cfg.page === 'skills' ? 'skills_sub'   : 'research_sub';
+  const titleKey = cfg.page + '_title';
+  const subKey   = cfg.page + '_sub';
 
   const heroEl = document.getElementById('hero');
   if (!heroEl) return;
@@ -715,7 +758,7 @@ function renderAll() {
 function renderFilterBar() {
   const bar = document.getElementById('filterBar');
   if (!bar || !app.data) return;
-  const ph = t(app.pageConfig.page === 'skills' ? 'search_skills' : 'search_research');
+  const ph = t('search_' + app.pageConfig.page) || t('search_skills');
 
   bar.innerHTML = `
     <div class="filter-bar">
@@ -749,5 +792,26 @@ function renderFilterBar() {
     </div>`;
 
   renderLangSelect();
+}
+
+/* ── Visit counter ──────────────────────────────────────────────── */
+async function loadVisitCount() {
+  const key   = app.pageConfig.page;
+  const badge = document.getElementById('visitBadge');
+  if (!badge) return;
+  try {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 5000);
+    const res  = await fetch(
+      `https://api.counterapi.dev/v1/agentskills/${key}/up`,
+      { signal: ctrl.signal }
+    );
+    clearTimeout(tid);
+    if (!res.ok) throw new Error('non-ok');
+    const { count } = await res.json();
+    badge.textContent = `👁 ${count.toLocaleString()} ${t('stat_visits')}`;
+  } catch {
+    badge.textContent = '';
+  }
 }
 

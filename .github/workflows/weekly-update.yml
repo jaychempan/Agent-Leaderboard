@@ -9,7 +9,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      contents: write       # Required to push data.js back to repo
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -40,16 +40,53 @@ jobs:
             python3 fetch_auto_research.py
           fi
 
+      - name: Fetch MCP Servers data
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            python3 fetch_mcp.py --token "$GH_TOKEN"
+          else
+            python3 fetch_mcp.py
+          fi
+
+      - name: Fetch Prompt Library data
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            python3 fetch_prompts.py --token "$GH_TOKEN"
+          else
+            python3 fetch_prompts.py
+          fi
+
+      - name: Fetch AI Frameworks data
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            python3 fetch_frameworks.py --token "$GH_TOKEN"
+          else
+            python3 fetch_frameworks.py
+          fi
+
       - name: Commit and push if data changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json data.js auto_research_data.json auto_research_data.js
+          git add data.json data.js auto_research_data.json auto_research_data.js \
+                  mcp_data.json mcp_data.js \
+                  prompts_data.json prompts_data.js \
+                  frameworks_data.json frameworks_data.js \
+                  index.html auto-research.html mcp.html prompts.html frameworks.html
           if git diff --cached --quiet; then
             echo "No changes — skipping commit"
           else
-            TOTAL_SKILLS=$(python3 -c "import json; print(json.load(open('data.json'))['meta']['total'])")
-            TOTAL_RESEARCH=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
-            git commit -m "chore: weekly data update [skills=${TOTAL_SKILLS}, research=${TOTAL_RESEARCH}]"
+            S=$(python3 -c "import json; print(json.load(open('data.json'))['meta']['total'])")
+            R=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
+            M=$(python3 -c "import json; print(json.load(open('mcp_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
+            P=$(python3 -c "import json; print(json.load(open('prompts_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
+            F=$(python3 -c "import json; print(json.load(open('frameworks_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
+            git commit -m "chore: weekly data update [skills=${S}, research=${R}, mcp=${M}, prompts=${P}, frameworks=${F}]"
             git push
           fi

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agent Skills Leaderboard</title>
+  <title>AI Agent Frameworks — Agent Skills Leaderboard</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <style>html{background:#0d1117}html[data-theme="light"]{background:#f6f8fa}</style>
   <script>(function(){var t=localStorage.getItem('st_theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
@@ -50,7 +50,8 @@
 
   <!-- No data warning -->
   <div id="noData" class="no-data" style="display:none">
-    ⚠️ <code>data.js</code> not found. Run: <code>python3 fetch_data.py</code>
+    ⚠️ <code>frameworks_data.js</code> not found. Run:
+    <code>python3 fetch_frameworks.py</code>
     then serve with <code>python3 -m http.server 8080</code> and open
     <a href="http://localhost:8080">localhost:8080</a>.
   </div>
@@ -58,7 +59,7 @@
   <!-- Category tabs -->
   <div class="tabs" id="tabs"></div>
 
-  <!-- Filter bar (rendered by shared.js via renderFilterBar) -->
+  <!-- Filter bar -->
   <div id="filterBar"></div>
 
   <!-- Active filters -->
@@ -86,21 +87,20 @@
   <a href="#" id="ghFooterLink" target="_blank" rel="noopener noreferrer">GitHub</a>
 </div>
 <script>
-  // Update GitHub footer link from shared.js constant once it loads
   document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('ghFooterLink');
     if (el && typeof GITHUB_REPO !== 'undefined') el.href = GITHUB_REPO;
   });
 </script>
 
-<script src="data.js?v=202605171653"></script>
+<script src="frameworks_data.js?v=20260518"></script>
 <script src="shared.js"></script>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     init({
-      page:       'skills',
-      dataKey:    'SKILLS_DATA',
-      noDataHint: 'Run python3 fetch_data.py to generate data, then refresh.',
+      page:       'frameworks',
+      dataKey:    'FRAMEWORKS_DATA',
+      noDataHint: 'Run python3 fetch_frameworks.py to generate data, then refresh.',
     });
   });
 </script>
