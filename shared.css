@@ -572,7 +572,7 @@ button, select, input { font: inherit; }
   -webkit-box-orient: vertical;
   margin-bottom: 10px;
 }
-.card-footer { margin-top: auto; }
+.card-footer { margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
 .card-ucs {
   display: flex;
   flex-wrap: wrap;
@@ -747,8 +747,86 @@ button, select, input { font: inherit; }
 }
 .no-data code { background: rgba(0,0,0,.2); padding: 1px 5px; border-radius: 4px; }
 
-/* ── Responsive nav ─────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  .nav-links .nav-link span.full { display: none; }
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE — tablet ≤768px
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Navbar: hide friend links to save space */
+  .nav-friend { display: none; }
+  .nav-divider { display: none; }
+
+  /* Filter bar: wrap to two rows */
+  .filter-bar { gap: 6px; }
+  .filter-bar input[type=search] { min-width: 0; flex: 1 1 100%; }
+
+  /* Tabs: horizontal scroll, no wrap */
+  .tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; }
+
+  /* UC chips: slightly larger touch target */
+  .uc-chip { padding: 5px 11px; font-size: 12px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE — phone ≤480px
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* Navbar */
+  .navbar { padding: 0 12px; gap: 0; }
   .nav-brand-text { display: none; }
+  .nav-brand { margin-right: 8px; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .nav-btn { padding: 5px 7px; font-size: 11px; }
+
+  /* Hero */
+  .hero { padding: 18px 14px 16px; }
+  .hero-logo img { width: 36px; height: 36px; }
+  .hero h1 { font-size: 18px; }
+  .hero-sub { font-size: 12px; }
+  .hero-meta { gap: 5px; }
+  .meta-pill { font-size: 11px; padding: 2px 9px; }
+
+  /* Container */
+  .container { padding: 12px 10px 48px; }
+
+  /* Filter bar: full-width elements, preset groups scroll */
+  .filter-bar { gap: 5px; }
+  .filter-bar input[type=search] { flex: 1 1 100%; }
+  .filter-bar select { flex: 1; min-width: 0; }
+  .preset-group { overflow-x: auto; flex-shrink: 0; }
+  .preset-btn { padding: 8px 8px; font-size: 11px; }
+  .view-toggle { flex-shrink: 0; }
+
+  /* Cards */
+  .card { padding: 11px 12px; }
+  .card-name { font-size: 13px; }
+  .card-desc { font-size: 12px; -webkit-line-clamp: 2; }
+  .card-footer { flex-direction: column; gap: 6px; align-items: flex-start; }
+  .card-meta { flex-wrap: wrap; gap: 4px; }
+
+  /* List view: horizontal scroll */
+  .list-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .lt-ucs { display: none; }
+  .lt-lang { display: none; }
+  .lt-name .desc { max-width: 200px; }
+
+  /* Pagination */
+  .pg-btn { min-width: 30px; padding: 5px 7px; font-size: 12px; }
+  .pg-info { display: none; }
+
+  /* Footer */
+  .footer { font-size: 11px; padding: 12px; }
+
+  /* UC chips */
+  .uc-scroller { gap: 5px; }
+  .uc-chip { padding: 5px 10px; font-size: 12px; }
+
+  /* Active filters */
+  .af-chip { font-size: 11px; padding: 3px 8px; }
+
+  /* Skeleton: fewer cards on mobile */
+  .skel-grid { grid-template-columns: 1fr; padding: 0 10px; }
+  .skel-hero-title { width: 220px; }
+  .skel-pills { flex-wrap: wrap; justify-content: center; }
 }
