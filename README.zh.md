@@ -4,6 +4,10 @@
 
 一个追踪 GitHub 上热门 AI Skills 与 Auto Research 仓库的排行榜网站。
 
+[![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Skills-Leaderboard)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **[English](README.md)**
 
 ---

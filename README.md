@@ -4,6 +4,10 @@
 
 A leaderboard for tracking trending AI Skills and Auto Research repositories on GitHub.
 
+[![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Skills-Leaderboard)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **[中文文档](README.zh.md)**
 
 ---
