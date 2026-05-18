@@ -348,7 +348,8 @@ button, select, input { font: inherit; }
   object-fit: contain;
   display: block;
 }
-[data-theme="dark"] img.brand-logo--dark-invert { filter: brightness(0) invert(1); }
+[data-theme="dark"] .brand-logo--dark-invert { filter: brightness(0) invert(1); }
+.brand-logo--dark-invert { fill: #111; }
 
 /* ── Filter Bar ─────────────────────────────────────────────────── */
 .filter-bar {
