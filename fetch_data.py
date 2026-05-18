@@ -15,29 +15,59 @@ from urllib.error import HTTPError, URLError
 # ── 配置 ─────────────────────────────────────────────────────────────────────
 MIN_STARS    = 100
 PER_PAGE     = 50
+
+# ── 内容过滤：黑名单 + 政治敏感关键词 ────────────────────────────────────────
+REPO_BLOCKLIST = {
+    "cirosantilli/china-dictatorship",
+    "zszszszsz/.config",
+}
+_SENSITIVE_RE = re.compile(
+    r'\bdictatorship\b|china-dictatorship|\btiananmen\b'
+    r'|\bfalun[- ]?(gong|dafa)\b|\bfree[- ]tibet\b'
+    r'|\bgenocide\b|\buyghur\b',
+    re.IGNORECASE,
+)
+def is_blocked(repo: dict) -> bool:
+    if repo.get("full_name") in REPO_BLOCKLIST:
+        return True
+    text = " ".join([repo.get("full_name",""), repo.get("description","") or "",
+                     " ".join(repo.get("topics",[]))])
+    return bool(_SENSITIVE_RE.search(text))
+
 QUERIES      = {
-    "claude":  [
+    "claude":   [
         f"claude skill stars:>{MIN_STARS}",
         f"claude-code skill stars:>{MIN_STARS}",
         f"topic:claude-skill stars:>{MIN_STARS}",
         f"awesome claude skill stars:>{MIN_STARS}",
     ],
-    "codex":   [
+    "codex":    [
         f"openai codex stars:>{MIN_STARS}",
         f"topic:openai-codex stars:>{MIN_STARS}",
         f"codex skill agent stars:>{MIN_STARS}",
     ],
-    "cursor":  [
+    "cursor":   [
         f"cursor rules ai stars:>{MIN_STARS}",
         f"topic:cursor-rules stars:>{MIN_STARS}",
         f"awesome cursorrules stars:>{MIN_STARS}",
     ],
-    "copilot": [
+    "copilot":  [
         f"github copilot extension stars:>{MIN_STARS}",
         f"topic:github-copilot stars:>{MIN_STARS}",
         f"copilot skill stars:>{MIN_STARS}",
     ],
-    "other":   [
+    "deepseek": [
+        f"deepseek skill stars:>{MIN_STARS}",
+        f"topic:deepseek stars:>{MIN_STARS}",
+        f"awesome deepseek stars:>{MIN_STARS}",
+        f"deepseek coder extension stars:>{MIN_STARS}",
+    ],
+    "openclaw": [
+        f"openclaw stars:>{MIN_STARS}",
+        f"topic:openclaw stars:>{MIN_STARS}",
+        f"openclaw skill agent stars:>{MIN_STARS}",
+    ],
+    "other":    [
         f"ai skill llm agent stars:>{MIN_STARS}",
         f"gpt skill plugin stars:>{MIN_STARS}",
         f"windsurf cline skill stars:>{MIN_STARS}",
@@ -70,18 +100,22 @@ USE_CASE_RULES = [
 
 # ── 分类规则 ─────────────────────────────────────────────────────────────────
 CATEGORY_RULES = [
-    ("claude",  r"claude|anthropic"),
-    ("codex",   r"codex"),
-    ("cursor",  r"cursor"),
-    ("copilot", r"copilot"),
+    ("claude",   r"claude|anthropic"),
+    ("codex",    r"codex"),
+    ("cursor",   r"cursor"),
+    ("copilot",  r"copilot"),
+    ("deepseek", r"deepseek"),
+    ("openclaw", r"openclaw"),
 ]
 
 CATEGORY_META = {
-    "claude":  {"label": "Claude",  "icon": "🤖", "color": "#f97316"},
-    "codex":   {"label": "Codex",   "icon": "⚡", "color": "#10b981"},
-    "cursor":  {"label": "Cursor",  "icon": "🎯", "color": "#a78bfa"},
-    "copilot": {"label": "Copilot", "icon": "🚀", "color": "#22d3ee"},
-    "other":   {"label": "其他 AI", "icon": "✨", "color": "#f59e0b"},
+    "claude":   {"label": "Claude",    "icon": "🤖", "color": "#f97316"},
+    "codex":    {"label": "Codex",     "icon": "⚡", "color": "#10b981"},
+    "cursor":   {"label": "Cursor",    "icon": "🎯", "color": "#a78bfa"},
+    "copilot":  {"label": "Copilot",   "icon": "🚀", "color": "#22d3ee"},
+    "deepseek": {"label": "DeepSeek",  "icon": "🐋", "color": "#4f86f7"},
+    "openclaw": {"label": "OpenClaw",  "icon": "🦅", "color": "#e879f9"},
+    "other":    {"label": "其他 AI",   "icon": "✨", "color": "#f59e0b"},
 }
 
 # ── GitHub API ────────────────────────────────────────────────────────────────
@@ -167,7 +201,7 @@ def main():
                 items = search_repos(q, token)
                 new = 0
                 for raw in items:
-                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS:
+                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS or is_blocked(raw):
                         continue
                     seen.add(raw["id"])
                     repos.append(normalize_repo(raw, cat))

@@ -15,6 +15,24 @@ from urllib.error import HTTPError
 MIN_STARS = 100
 PER_PAGE  = 50
 
+# ── 内容过滤：黑名单 + 政治敏感关键词 ────────────────────────────────────────
+REPO_BLOCKLIST = {
+    "cirosantilli/china-dictatorship",
+    "zszszszsz/.config",
+}
+_SENSITIVE_RE = re.compile(
+    r'\bdictatorship\b|china-dictatorship|\btiananmen\b'
+    r'|\bfalun[- ]?(gong|dafa)\b|\bfree[- ]tibet\b'
+    r'|\bgenocide\b|\buyghur\b',
+    re.IGNORECASE,
+)
+def is_blocked(repo: dict) -> bool:
+    if repo.get("full_name") in REPO_BLOCKLIST:
+        return True
+    text = " ".join([repo.get("full_name",""), repo.get("description","") or "",
+                     " ".join(repo.get("topics",[]))])
+    return bool(_SENSITIVE_RE.search(text))
+
 QUERIES = {
     "orchestration": [
         f"topic:langchain stars:>{MIN_STARS}",
@@ -44,6 +62,9 @@ QUERIES = {
         f"ai agent sdk stars:>{MIN_STARS}",
         f"llm agent library stars:>{MIN_STARS}",
         f"topic:agent-framework stars:>{MIN_STARS}",
+        f"deepseek framework agent stars:>{MIN_STARS}",
+        f"topic:deepseek stars:>{MIN_STARS}",
+        f"deepseek tui client stars:>{MIN_STARS}",
     ],
 }
 
@@ -139,7 +160,7 @@ def main():
                 items = search_repos(q, token)
                 new = 0
                 for raw in items:
-                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS:
+                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS or is_blocked(raw):
                         continue
                     seen.add(raw["id"])
                     repos.append(normalize(raw, cat))

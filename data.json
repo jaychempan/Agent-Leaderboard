@@ -30,11 +30,23 @@
       "color": "#22d3ee",
       "count": 32
     },
+    "deepseek": {
+      "label": "DeepSeek",
+      "icon": "🐋",
+      "color": "#4f86f7",
+      "count": 2
+    },
+    "openclaw": {
+      "label": "OpenClaw",
+      "icon": "🦅",
+      "color": "#e879f9",
+      "count": 5
+    },
     "other": {
       "label": "其他 AI",
       "icon": "✨",
       "color": "#f59e0b",
-      "count": 19
+      "count": 12
     }
   },
   "use_case_stats": {
@@ -879,7 +891,7 @@
       "url": "https://github.com/volcengine/OpenViking",
       "created_at": "2026-01-05T07:11:17Z",
       "updated_at": "2026-05-17T16:23:35Z",
-      "category": "other",
+      "category": "openclaw",
       "use_cases": [
         "资源列表",
         "测试",
@@ -1724,7 +1736,7 @@
       "url": "https://github.com/activeloopai/deeplake",
       "created_at": "2019-08-09T06:17:59Z",
       "updated_at": "2026-05-17T10:30:10Z",
-      "category": "other",
+      "category": "openclaw",
       "use_cases": [
         "AI 代理",
         "知识管理",
@@ -2865,7 +2877,7 @@
       "url": "https://github.com/Tencent/AI-Infra-Guard",
       "created_at": "2024-12-25T06:39:30Z",
       "updated_at": "2026-05-17T03:00:07Z",
-      "category": "other",
+      "category": "openclaw",
       "use_cases": [
         "AI 代理",
         "工具集成",
@@ -4559,7 +4571,7 @@
       "url": "https://github.com/pinchbench/skill",
       "created_at": "2026-02-11T01:41:39Z",
       "updated_at": "2026-05-17T05:25:01Z",
-      "category": "other",
+      "category": "openclaw",
       "use_cases": [
         "AI 代理"
       ]
@@ -5161,7 +5173,7 @@
       "url": "https://github.com/wanxingai/LightAgent",
       "created_at": "2025-01-20T12:31:57Z",
       "updated_at": "2026-05-17T12:57:42Z",
-      "category": "other",
+      "category": "deepseek",
       "use_cases": [
         "AI 代理",
         "知识管理",
@@ -7280,7 +7292,7 @@
       "url": "https://github.com/opensolon/solon-ai",
       "created_at": "2025-03-04T23:42:44Z",
       "updated_at": "2026-05-16T08:03:54Z",
-      "category": "other",
+      "category": "deepseek",
       "use_cases": [
         "AI 代理",
         "知识管理",
@@ -8843,7 +8855,7 @@
       "url": "https://github.com/LycheeMem/LycheeMem",
       "created_at": "2026-03-23T12:01:43Z",
       "updated_at": "2026-05-15T19:30:53Z",
-      "category": "other",
+      "category": "openclaw",
       "use_cases": [
         "AI 代理",
         "知识管理",
