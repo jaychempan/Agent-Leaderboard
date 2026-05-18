@@ -2,7 +2,7 @@
   "meta": {
     "updated_at": "2026-05-18T05:20:27.501105+00:00",
     "min_stars": 50,
-    "total": 3542,
+    "total": 3541,
     "generator": "fetch_data.py"
   },
   "categories": {
@@ -28,7 +28,7 @@
       "label": "Copilot",
       "icon": "🚀",
       "color": "#22d3ee",
-      "count": 248
+      "count": 247
     },
     "deepseek": {
       "label": "DeepSeek",
@@ -43988,26 +43988,6 @@
       "created_at": "2026-03-09T16:33:03Z",
       "updated_at": "2026-05-16T20:44:40Z",
       "category": "codex",
-      "use_cases": [
-        "通用工具"
-      ]
-    },
-    {
-      "id": 1159421298,
-      "full_name": "javaevolved/javaevolved.github.io",
-      "description": "Java Evolved. Your Code Can Evolve Too!",
-      "stars": 348,
-      "forks": 24,
-      "language": "Java",
-      "topics": [
-        "copilot",
-        "java",
-        "modernized"
-      ],
-      "url": "https://github.com/javaevolved/javaevolved.github.io",
-      "created_at": "2026-02-16T17:55:20Z",
-      "updated_at": "2026-05-14T15:42:45Z",
-      "category": "copilot",
       "use_cases": [
         "通用工具"
       ]

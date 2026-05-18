@@ -2,7 +2,7 @@
   "meta": {
     "updated_at": "2026-05-18T05:22:57.198742+00:00",
     "min_stars": 50,
-    "total": 2339,
+    "total": 2337,
     "type": "frameworks"
   },
   "categories": {
@@ -16,7 +16,7 @@
       "label": "多智能体",
       "icon": "🤝",
       "color": "#10b981",
-      "count": 230
+      "count": 228
     },
     "memory": {
       "label": "记忆管理",
@@ -56858,44 +56858,6 @@
       ]
     },
     {
-      "id": 638504891,
-      "full_name": "seehiong/seehiong.github.io",
-      "description": "seehiong.github.io Tech Blog",
-      "stars": 85,
-      "forks": 10,
-      "language": "HTML",
-      "topics": [
-        "ai",
-        "autogen",
-        "blog",
-        "crewai",
-        "deepseek-r1",
-        "giscus",
-        "homelab",
-        "hugo",
-        "java",
-        "k3s",
-        "k8s",
-        "kong",
-        "kubeflow",
-        "llama",
-        "micronaut",
-        "mlflow",
-        "pagefind",
-        "raspberry-pi",
-        "vuejs",
-        "xgboost"
-      ],
-      "url": "https://github.com/seehiong/seehiong.github.io",
-      "created_at": "2023-05-09T13:53:38Z",
-      "updated_at": "2026-05-12T13:33:22Z",
-      "category": "multi_agent",
-      "use_cases": [
-        "多智能体",
-        "流程编排"
-      ]
-    },
-    {
       "id": 1150328901,
       "full_name": "LLM-VLM-GSL/AriadneMem",
       "description": "Code for Paper: AriadneMem: Threading the Maze of Lifelong Memory for LLM Agents",
@@ -61334,34 +61296,6 @@
         "自主代理",
         "资源列表",
         "语音/视觉"
-      ]
-    },
-    {
-      "id": 1035330550,
-      "full_name": "TradingGoose/TradingGoose.github.io",
-      "description": "A Multi-Agents LLM Financial Trading Framework for both individual stock analysis & portfolio management",
-      "stars": 65,
-      "forks": 22,
-      "language": "TypeScript",
-      "topics": [
-        "ai",
-        "ai-agents",
-        "alpaca",
-        "alpaca-api",
-        "finance",
-        "fintech",
-        "quantitative-finance",
-        "trade-bot",
-        "tradebot",
-        "trading",
-        "trading-agent"
-      ],
-      "url": "https://github.com/TradingGoose/TradingGoose.github.io",
-      "created_at": "2025-08-10T06:51:36Z",
-      "updated_at": "2026-05-17T20:15:40Z",
-      "category": "multi_agent",
-      "use_cases": [
-        "多智能体"
       ]
     },
     {
