@@ -1,9 +1,7 @@
-name: Weekly Data Update
+name: Update All (Manual)
 
 on:
-  schedule:
-    - cron: '0 2 * * 1'   # Every Monday at 02:00 UTC
-  workflow_dispatch:        # Allow manual trigger from GitHub UI
+  workflow_dispatch:   # Manual trigger only — daily updates are handled by per-section workflows
 
 jobs:
   update:
@@ -12,65 +10,22 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Fetch Skills data
+      - name: Fetch all data
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          if [ -n "$GH_TOKEN" ]; then
-            python3 fetch_data.py --token "$GH_TOKEN"
-          else
-            python3 fetch_data.py
-          fi
+          python3 fetch_data.py
+          python3 fetch_frameworks.py
+          python3 fetch_mcp.py
+          python3 fetch_prompts.py
+          python3 fetch_auto_research.py
 
-      - name: Fetch Auto Research data
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          if [ -n "$GH_TOKEN" ]; then
-            python3 fetch_auto_research.py --token "$GH_TOKEN"
-          else
-            python3 fetch_auto_research.py
-          fi
-
-      - name: Fetch MCP Servers data
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          if [ -n "$GH_TOKEN" ]; then
-            python3 fetch_mcp.py --token "$GH_TOKEN"
-          else
-            python3 fetch_mcp.py
-          fi
-
-      - name: Fetch Prompt Library data
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          if [ -n "$GH_TOKEN" ]; then
-            python3 fetch_prompts.py --token "$GH_TOKEN"
-          else
-            python3 fetch_prompts.py
-          fi
-
-      - name: Fetch AI Frameworks data
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          if [ -n "$GH_TOKEN" ]; then
-            python3 fetch_frameworks.py --token "$GH_TOKEN"
-          else
-            python3 fetch_frameworks.py
-          fi
-
-      - name: Commit and push if data changed
+      - name: Commit and push
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -84,9 +39,9 @@ jobs:
           else
             S=$(python3 -c "import json; print(json.load(open('data.json'))['meta']['total'])")
             R=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
-            M=$(python3 -c "import json; print(json.load(open('mcp_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
-            P=$(python3 -c "import json; print(json.load(open('prompts_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
-            F=$(python3 -c "import json; print(json.load(open('frameworks_data.json'))['meta']['total'])" 2>/dev/null || echo "?")
-            git commit -m "chore: weekly data update [skills=${S}, research=${R}, mcp=${M}, prompts=${P}, frameworks=${F}]"
+            M=$(python3 -c "import json; print(json.load(open('mcp_data.json'))['meta']['total'])")
+            P=$(python3 -c "import json; print(json.load(open('prompts_data.json'))['meta']['total'])")
+            F=$(python3 -c "import json; print(json.load(open('frameworks_data.json'))['meta']['total'])")
+            git commit -m "chore: full data update [skills=${S}, research=${R}, mcp=${M}, prompts=${P}, frameworks=${F}]"
             git push
           fi

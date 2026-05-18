@@ -1,0 +1,36 @@
+name: Update Auto Research (Friday)
+
+on:
+  schedule:
+    - cron: '0 2 * * 5'   # Friday 02:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch Auto Research data
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: python3 fetch_auto_research.py
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add auto_research_data.json auto_research_data.js auto-research.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            N=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
+            git commit -m "chore: update research data [total=${N}]"
+            git push
+          fi

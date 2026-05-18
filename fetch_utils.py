@@ -23,7 +23,7 @@ def load_token(cli_token: str = '') -> str:
                 key, _, val = line.partition('=')
                 if key.strip().upper() in ('GITHUB_TOKEN', 'TOKEN'):
                     return val.strip()
-    return os.environ.get('GITHUB_TOKEN', '')
+    return os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN', '')
 
 
 def gh_get(url: str, token: str, retries: int = 4) -> dict:
