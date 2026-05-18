@@ -37,6 +37,11 @@ def is_blocked(repo: dict) -> bool:
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
 
+_RELEVANT_RE = re.compile(r'\bmcp\b|model.context.protocol', re.I)
+def is_relevant(repo: dict) -> bool:
+    name_desc = repo.get("full_name","") + " " + (repo.get("description","") or "")
+    return bool(_RELEVANT_RE.search(name_desc))
+
 QUERIES = {
     "official": [
         f"topic:mcp-server stars:>{MIN_STARS}",
@@ -143,7 +148,7 @@ def main():
                 items = search_repos(q, token)
                 new = 0
                 for raw in items:
-                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS or is_blocked(raw):
+                    if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS or is_blocked(raw) or not is_relevant(raw):
                         continue
                     seen.add(raw["id"])
                     repos.append(normalize(raw, cat))
@@ -158,7 +163,7 @@ def main():
         try:
             with open("mcp_data.json", "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
-                            if not is_blocked(r)}
+                            if not is_blocked(r) and is_relevant(r)}
             if not repos:
                 print("⚠️  本次搜索结果为空，保留现有数据不变")
                 return
