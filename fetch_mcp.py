@@ -43,32 +43,11 @@ def is_relevant(repo: dict) -> bool:
     return bool(_RELEVANT_RE.search(name_desc))
 
 QUERIES = {
-    "official": [
-        f"topic:mcp-server stars:>{MIN_STARS}",
-        f"model-context-protocol anthropic stars:>{MIN_STARS}",
-    ],
-    "database": [
-        f"mcp database server stars:>{MIN_STARS}",
-        f"topic:mcp postgresql stars:>{MIN_STARS}",
-    ],
-    "filesystem": [
-        f"mcp filesystem server stars:>{MIN_STARS}",
-    ],
-    "web": [
-        f"mcp web browser stars:>{MIN_STARS}",
-        f"mcp web search stars:>{MIN_STARS}",
-    ],
-    "dev_tools": [
-        f"mcp github server stars:>{MIN_STARS}",
-        f"mcp docker git stars:>{MIN_STARS}",
-    ],
-    "productivity": [
-        f"mcp calendar email notion stars:>{MIN_STARS}",
-    ],
     "general": [
+        f"mcp server in:name stars:>{MIN_STARS}",
+        f"mcp server in:description stars:>{MIN_STARS}",
+        f"topic:mcp-server stars:>{MIN_STARS}",
         f"topic:model-context-protocol stars:>{MIN_STARS}",
-        f"awesome mcp servers stars:>{MIN_STARS}",
-        f"mcp server claude stars:>{MIN_STARS}",
     ],
 }
 
