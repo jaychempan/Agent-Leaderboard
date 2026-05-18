@@ -18,6 +18,7 @@ PER_PAGE  = 100
 REPO_BLOCKLIST = {
     "cirosantilli/china-dictatorship",
     "zszszszsz/.config",
+    "huggingface/transformers",
 }
 _SENSITIVE_RE = re.compile(
     r'\bdictatorship\b|china-dictatorship|\btiananmen\b'
