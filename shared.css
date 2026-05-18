@@ -330,6 +330,10 @@ button, select, input { font: inherit; }
 .tab[data-id=cursor].active .cnt  { background:#a78bfa; }
 .tab[data-id=copilot].active { border-color:#22d3ee; }
 .tab[data-id=copilot].active .cnt { background:#22d3ee; color:#0d1117; }
+.tab[data-id=deepseek].active { border-color:#4D6BFE; }
+.tab[data-id=deepseek].active .cnt { background:#4D6BFE; }
+.tab[data-id=openclaw].active { border-color:#f43f5e; }
+.tab[data-id=openclaw].active .cnt { background:#f43f5e; }
 .tab[data-id=other].active   { border-color:#f59e0b; }
 .tab[data-id=other].active .cnt   { background:#f59e0b; color:#0d1117; }
 
