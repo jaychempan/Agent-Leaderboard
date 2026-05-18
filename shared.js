@@ -120,12 +120,14 @@ const I18N = {
 
 /* ── Use-case label translations ────────────────────────────────── */
 const UC_EN = {
+  // Skills
   "AI 代理":"AI Agents","工具集成":"Tools","工作流自动化":"Automation",
   "Prompt 优化":"Prompts","UI/UX 设计":"UI/UX","资源列表":"Awesome List",
   "知识管理":"Knowledge","搜索":"Search","数据分析":"Data","写作/内容":"Writing",
   "代码生成":"Code Gen","代码审查":"Review","文档生成":"Docs","测试":"Testing",
   "DevOps":"DevOps","安全":"Security","任务规划":"Planning","Web 开发":"Web Dev",
   "模型路由":"Routing","游戏开发":"Game Dev","通用工具":"General",
+  // Auto Research
   "自主代理":"Autonomous","代码研究":"Code Research","知识库":"KBase",
   "学术文献":"Literature","深度研究":"Deep Res.","金融数据":"Finance",
   "实验自动化":"Lab Auto","网页搜索":"Web Search","AI 训练":"AI Train",
@@ -133,21 +135,33 @@ const UC_EN = {
   // MCP
   "数据库连接":"Database","文件系统":"Filesystem","网页浏览":"Web Browse",
   "代码工具":"Dev Tools","生产力":"Productivity","官方服务器":"Official",
-  "API集成":"API","通用MCP":"General MCP","搜索":"Search",
+  "API集成":"API","通用MCP":"General MCP",
   // Prompts
   "提示工程":"Prompt Eng.","系统提示":"System Prompt","角色扮演":"Roleplay",
   "多语言":"Multilingual","图像生成":"Image Gen","通用提示":"General",
+  "写作助手":"Writing","学术写作":"Academic",
   // Frameworks
   "多智能体":"Multi-Agent","工具调用":"Tool Use","记忆管理":"Memory",
   "流程编排":"Orchestration","评估测试":"Evaluation","RAG":"RAG",
   "语音/视觉":"Voice/Vision","通用框架":"General",
 };
 
-/* ── Category label translations (for research cats) ────────────── */
+/* ── Category label translations ────────────────────────────────── */
 const CAT_EN = {
+  // Skills
+  "其他 AI":"Other AI",
+  // Auto Research
   "深度研究":"Deep Research","网页研究":"Web Research","文献综述":"Literature",
   "数据分析":"Data Analysis","知识管理":"Knowledge Base","通用研究":"General",
-  "其他 AI":"Other AI",
+  // Frameworks
+  "流程编排":"Orchestration","多智能体":"Multi-Agent","记忆管理":"Memory",
+  "工具调用":"Tool Use","评估测试":"Evaluation","通用框架":"General",
+  // MCP
+  "官方服务器":"Official","数据库":"Database","文件系统":"Filesystem",
+  "网页工具":"Web Tools","开发工具":"Dev Tools","生产力":"Productivity","通用MCP":"General MCP",
+  // Prompts
+  "资源列表":"Awesome List","系统提示":"System Prompts","提示工程":"Prompt Eng.",
+  "代码生成":"Code Gen","写作助手":"Writing","通用提示":"General",
 };
 
 /* ── App State ──────────────────────────────────────────────────── */
