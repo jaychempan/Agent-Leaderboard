@@ -161,6 +161,9 @@ button, select, input { font: inherit; }
   flex: 1;
 }
 .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   border-radius: var(--radius-sm);
   color: var(--muted);
   font-size: 13px;
@@ -331,6 +334,8 @@ button, select, input { font: inherit; }
 .tab[data-id=other].active .cnt   { background:#f59e0b; color:#0d1117; }
 
 /* ── Brand logos ────────────────────────────────────────────────── */
+.nav-icon { display: block; flex-shrink: 0; line-height: 0; }
+
 .brand-logo {
   width: 12px !important;
   height: 12px !important;
@@ -339,6 +344,7 @@ button, select, input { font: inherit; }
   object-fit: contain;
   display: block;
 }
+[data-theme="dark"] img.brand-logo--dark-invert { filter: brightness(0) invert(1); }
 
 /* ── Filter Bar ─────────────────────────────────────────────────── */
 .filter-bar {
@@ -620,8 +626,10 @@ button, select, input { font: inherit; }
 .cat-badge.claude  { background:rgba(249,115,22,.15); color:#fb923c; border:1px solid rgba(249,115,22,.3); }
 .cat-badge.codex   { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }
 .cat-badge.cursor  { background:rgba(167,139,250,.15);color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
-.cat-badge.copilot { background:rgba(34,211,238,.15); color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
-.cat-badge.other   { background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+.cat-badge.copilot  { background:rgba(34,211,238,.15); color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
+.cat-badge.deepseek { background:rgba(77,107,254,.15); color:#818cf8; border:1px solid rgba(77,107,254,.3); }
+.cat-badge.openclaw { background:rgba(239,68,68,.15);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.cat-badge.other    { background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 .cat-badge.deep_research  { background:rgba(249,115,22,.15); color:#fb923c; border:1px solid rgba(249,115,22,.3); }
 .cat-badge.web_research   { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }
 .cat-badge.literature     { background:rgba(167,139,250,.15);color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }

@@ -198,13 +198,13 @@ const ROUTES = {
 const _GH = 'https://raw.githubusercontent.com';
 const _SI = `${_GH}/simple-icons/simple-icons/develop/icons`;
 const BRAND_LOGOS = {
-  claude:   `<img class="brand-logo" src="https://cdn.simpleicons.org/anthropic/D97757" alt="">`,
+  claude:   `<img class="brand-logo" src="${_GH}/anthropics/anthropic-sdk-typescript/main/.github/logo.svg" alt="">`,
   codex:    `<img class="brand-logo brand-logo--dark-invert" src="${_GH}/openclaw/openclaw/main/docs/assets/sponsors/openai-light.svg" alt="">`,
   cursor:   `<img class="brand-logo brand-logo--dark-invert" src="https://cdn.simpleicons.org/cursor/000000" alt="">`,
   copilot:  `<img class="brand-logo brand-logo--dark-invert" src="${_GH}/primer/octicons/main/icons/copilot-24.svg" alt="">`,
   deepseek: `<img class="brand-logo" src="https://cdn.simpleicons.org/deepseek/4D6BFE" alt="">`,
   openclaw: `<img class="brand-logo" src="${_GH}/openclaw/openclaw/main/ui/public/favicon.svg" alt="">`,
-  other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l1.8 5.6H20l-4.9 3.5 1.9 5.7L12 13.3l-5 3.5 1.9-5.7L4 7.6h6.2z"/><circle cx="12" cy="20" r="1.5"/></svg>`,
+  other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bl-other" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M12 2l2.5 7.6H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.5 2.4-7.4L2 9.6h7.5Z" fill="url(#bl-other)"/></svg>`,
 };
 
 function getBrandIcon(catId) {
@@ -381,19 +381,24 @@ function renderNav() {
     </button>
     <div class="nav-links">
       <a class="nav-link${pg==='skills'?' active':''}" href="#skills" onclick="document.getElementById('navbar').classList.remove('nav-open')">
-        ⚡ <span class="full">${t('nav_skills')}</span>
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-skills" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><path d="M13 2L4.5 13H10L9 22L19.5 11H14L13 2Z" fill="url(#ni-skills)"/></svg>
+        <span class="full">${t('nav_skills')}</span>
       </a>
       <a class="nav-link${pg==='research'?' active':''}" href="#research" onclick="document.getElementById('navbar').classList.remove('nav-open')">
-        🔬 <span class="full">${t('nav_research')}</span>
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs><circle cx="10" cy="10" r="6.5" stroke="url(#ni-research)" stroke-width="2.2"/><line x1="15.2" y1="15.2" x2="21" y2="21" stroke="url(#ni-research)" stroke-width="2.5" stroke-linecap="round"/><circle cx="8.2" cy="10" r="1.4" fill="#a78bfa"/><circle cx="11.8" cy="10" r="1.4" fill="#6366f1"/><path d="M8.2 10 L10 7.8 L11.8 10" fill="none" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span class="full">${t('nav_research')}</span>
       </a>
       <a class="nav-link${pg==='mcp'?' active':''}" href="#mcp" onclick="document.getElementById('navbar').classList.remove('nav-open')">
-        🔌 <span class="full">${t('nav_mcp')}</span>
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-mcp" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient></defs><rect x="9" y="9" width="6" height="6" rx="1.5" fill="url(#ni-mcp)"/><circle cx="3.5" cy="12" r="1.8" fill="#22d3ee"/><circle cx="20.5" cy="12" r="1.8" fill="#3b82f6"/><circle cx="12" cy="3.5" r="1.8" fill="#22d3ee"/><circle cx="12" cy="20.5" r="1.8" fill="#3b82f6"/><line x1="9" y1="12" x2="5.3" y2="12" stroke="#22d3ee" stroke-width="1.4"/><line x1="15" y1="12" x2="18.7" y2="12" stroke="#3b82f6" stroke-width="1.4"/><line x1="12" y1="9" x2="12" y2="5.3" stroke="#22d3ee" stroke-width="1.4"/><line x1="12" y1="15" x2="12" y2="18.7" stroke="#3b82f6" stroke-width="1.4"/></svg>
+        <span class="full">${t('nav_mcp')}</span>
       </a>
       <a class="nav-link${pg==='prompts'?' active':''}" href="#prompts" onclick="document.getElementById('navbar').classList.remove('nav-open')">
-        📝 <span class="full">${t('nav_prompts')}</span>
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-prompts" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs><rect x="5" y="4" width="14" height="16" rx="2" fill="url(#ni-prompts)"/><line x1="8.5" y1="9" x2="15.5" y2="9" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="16" x2="13" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="full">${t('nav_prompts')}</span>
       </a>
       <a class="nav-link${pg==='frameworks'?' active':''}" href="#frameworks" onclick="document.getElementById('navbar').classList.remove('nav-open')">
-        🤖 <span class="full">${t('nav_frameworks')}</span>
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-frameworks" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect x="8.5" y="3" width="7" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.6"/><rect x="5" y="9" width="14" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.8"/><rect x="2.5" y="15" width="19" height="4" rx="1.5" fill="url(#ni-frameworks)"/></svg>
+        <span class="full">${t('nav_frameworks')}</span>
       </a>
     </div>
     <div class="nav-actions">
