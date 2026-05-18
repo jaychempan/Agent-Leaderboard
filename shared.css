@@ -330,6 +330,16 @@ button, select, input { font: inherit; }
 .tab[data-id=other].active   { border-color:#f59e0b; }
 .tab[data-id=other].active .cnt   { background:#f59e0b; color:#0d1117; }
 
+/* ── Brand logos ────────────────────────────────────────────────── */
+.brand-logo {
+  width: 12px !important;
+  height: 12px !important;
+  min-width: 12px;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
 /* ── Filter Bar ─────────────────────────────────────────────────── */
 .filter-bar {
   display: flex;
@@ -598,6 +608,9 @@ button, select, input { font: inherit; }
   flex-wrap: wrap;
 }
 .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   border-radius: 4px;
   font-size: 10px;
   padding: 2px 6px;

@@ -185,6 +185,34 @@ const app = {
   pageConfig:   null,
 };
 
+/* ── Routes ─────────────────────────────────────────────────────── */
+const ROUTES = {
+  skills:     { page: 'skills',     dataKey: 'SKILLS_DATA',     noDataHint: 'Run python3 fetch_data.py' },
+  mcp:        { page: 'mcp',        dataKey: 'MCP_DATA',        noDataHint: 'Run python3 fetch_mcp.py' },
+  research:   { page: 'research',   dataKey: 'AR_DATA',         noDataHint: 'Run python3 fetch_auto_research.py' },
+  prompts:    { page: 'prompts',    dataKey: 'PROMPTS_DATA',    noDataHint: 'Run python3 fetch_prompts.py' },
+  frameworks: { page: 'frameworks', dataKey: 'FRAMEWORKS_DATA', noDataHint: 'Run python3 fetch_frameworks.py' },
+};
+
+/* ── Brand icon map (Skills page) ───────────────────────────────── */
+const _GH = 'https://raw.githubusercontent.com';
+const _SI = `${_GH}/simple-icons/simple-icons/develop/icons`;
+const BRAND_LOGOS = {
+  claude:   `<img class="brand-logo" src="${_GH}/anthropics/anthropic-sdk-typescript/main/.github/logo.svg" alt="">`,
+  codex:    `<img class="brand-logo" src="${_GH}/openclaw/openclaw/main/docs/assets/sponsors/openai-light.svg" alt="">`,
+  cursor:   `<img class="brand-logo" src="${_SI}/cursor.svg" alt="">`,
+  copilot:  `<img class="brand-logo" src="${_GH}/primer/octicons/main/icons/copilot-24.svg" alt="">`,
+  deepseek: `<img class="brand-logo" src="${_SI}/deepseek.svg" alt="">`,
+  openclaw: `<img class="brand-logo" src="${_GH}/openclaw/openclaw/main/ui/public/favicon.svg" alt="">`,
+  other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l1.8 5.6H20l-4.9 3.5 1.9 5.7L12 13.3l-5 3.5 1.9-5.7L4 7.6h6.2z"/><circle cx="12" cy="20" r="1.5"/></svg>`,
+};
+
+function getBrandIcon(catId) {
+  if (app.pageConfig?.page === 'skills' && BRAND_LOGOS[catId]) return BRAND_LOGOS[catId];
+  const cats = app.data?.categories || {};
+  return cats[catId]?.icon || '';
+}
+
 /* ── Translation helper ─────────────────────────────────────────── */
 function t(key) {
   return (I18N[app.lang] || I18N.zh)[key] || key;
@@ -212,6 +240,22 @@ function timeAgo(iso) {
   return app.lang === 'en' ? `${Math.floor(d/365)}yr ago` : `${Math.floor(d/365)}年前`;
 }
 
+/* ── Router ─────────────────────────────────────────────────────── */
+function router() {
+  const hash = location.hash.slice(1) || 'skills';
+  const config = ROUTES[hash] || ROUTES.skills;
+  app.activeTab   = 'all';
+  app.searchQ     = '';
+  app.language    = '';
+  app.minStars    = 0;
+  app.maxDaysOld  = 0;
+  app.selectedUCs = new Set();
+  app.currentPage = 1;
+  app.favOnly     = false;
+  window.scrollTo(0, 0);
+  init(config);
+}
+
 /* ── Init ───────────────────────────────────────────────────────── */
 function init(config) {
   app.pageConfig = config;
@@ -219,15 +263,27 @@ function init(config) {
   // apply stored theme
   document.documentElement.dataset.theme = app.theme === 'light' ? 'light' : 'dark';
 
+  // update page title
+  const PAGE_TITLES = {
+    skills: 'Agent Skills Leaderboard',
+    mcp: 'MCP Servers — Agent Skills Leaderboard',
+    research: 'Auto Research — Agent Skills Leaderboard',
+    prompts: 'Prompt Library — Agent Skills Leaderboard',
+    frameworks: 'AI Frameworks — Agent Skills Leaderboard',
+  };
+  document.title = PAGE_TITLES[config.page] || 'Agent Skills Leaderboard';
+
   // load data
   const raw = window[config.dataKey];
+  const noData = document.getElementById('noData');
   if (!raw) {
-    document.getElementById('noData').style.display = 'block';
+    if (noData) noData.style.display = 'block';
     document.getElementById('grid').innerHTML =
       `<div class="empty-state"><span class="icon">📭</span>${config.noDataHint}</div>`;
     renderNav();
     return;
   }
+  if (noData) noData.style.display = 'none';
   app.data     = raw;
   app.allRepos = raw.repos;
 
@@ -316,7 +372,7 @@ function renderNav() {
   const nav = document.getElementById('navbar');
   if (!nav) return;
   nav.innerHTML = `
-    <a class="nav-brand" href="index.html">
+    <a class="nav-brand" href="#skills" onclick="document.getElementById('navbar').classList.remove('nav-open')">
       <img src="favicon.svg" alt="logo" />
       <span class="nav-brand-text">Agent Skills Leaderboard</span>
     </a>
@@ -324,19 +380,19 @@ function renderNav() {
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a class="nav-link${pg==='skills'?' active':''}" href="index.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='skills'?' active':''}" href="#skills" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         ⚡ <span class="full">${t('nav_skills')}</span>
       </a>
-      <a class="nav-link${pg==='research'?' active':''}" href="auto-research.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='research'?' active':''}" href="#research" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🔬 <span class="full">${t('nav_research')}</span>
       </a>
-      <a class="nav-link${pg==='mcp'?' active':''}" href="mcp.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='mcp'?' active':''}" href="#mcp" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🔌 <span class="full">${t('nav_mcp')}</span>
       </a>
-      <a class="nav-link${pg==='prompts'?' active':''}" href="prompts.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='prompts'?' active':''}" href="#prompts" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         📝 <span class="full">${t('nav_prompts')}</span>
       </a>
-      <a class="nav-link${pg==='frameworks'?' active':''}" href="frameworks.html" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='frameworks'?' active':''}" href="#frameworks" onclick="document.getElementById('navbar').classList.remove('nav-open')">
         🤖 <span class="full">${t('nav_frameworks')}</span>
       </a>
     </div>
@@ -403,15 +459,15 @@ function renderTabs() {
   const cats = app.data.categories;
   const all  = app.allRepos.length;
 
-  const items = [{ id:'all', label: t('tab_all'), icon:'🌐', count: all }];
+  const items = [{ id:'all', label: t('tab_all'), count: all }];
   Object.entries(cats).forEach(([id, meta]) => {
-    items.push({ id, label: tCat(meta.label), icon: meta.icon, count: meta.count });
+    items.push({ id, label: tCat(meta.label), count: meta.count });
   });
 
   tabs.innerHTML = items.map(it => `
     <button class="tab${it.id === app.activeTab ? ' active' : ''}" data-id="${it.id}"
             onclick="setTab('${it.id}')">
-      ${it.icon} ${it.label} <span class="cnt">${it.count}</span>
+      ${getBrandIcon(it.id)} ${it.label} <span class="cnt">${it.count}</span>
     </button>`).join('');
 }
 
@@ -627,7 +683,7 @@ function cardHTML(repo, gr) {
   const isSaved  = app.favorites.has(repo.id);
   const cats = app.data.categories;
   const catLbl = tCat(cats[repo.category]?.label || repo.category);
-  const catIcon = cats[repo.category]?.icon || '';
+  const catIcon = getBrandIcon(repo.category);
   const ucTags = (repo.use_cases || []).slice(0, 4).map(uc =>
     `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
            onclick="event.preventDefault();toggleUC('${uc}')">${tUC(uc)}</span>`).join('');
@@ -699,7 +755,7 @@ function renderList() {
     const [owner, name] = repo.full_name.split('/');
     const isSaved = app.favorites.has(repo.id);
     const catLbl = tCat(cats[repo.category]?.label || repo.category);
-    const catIcon = cats[repo.category]?.icon || '';
+    const catIcon = getBrandIcon(repo.category);
     const ucTags = (repo.use_cases || []).slice(0, 3).map(uc =>
       `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
              onclick="toggleUC('${uc}')">${tUC(uc)}</span>`).join(' ');
@@ -820,6 +876,10 @@ function renderFilterBar() {
 
   renderLangSelect();
 }
+
+/* ── Boot ───────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', router);
+window.addEventListener('hashchange', router);
 
 /* ── Visit counter ──────────────────────────────────────────────── */
 async function loadVisitCount() {

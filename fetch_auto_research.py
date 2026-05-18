@@ -198,12 +198,12 @@ def main():
 
     # ── 更新 auto-research.html 中的版本号 (防缓存) ───────────────────────────
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-    with open("auto-research.html", "r", encoding="utf-8") as f:
+    with open("index.html", "r", encoding="utf-8") as f:
         html = f.read()
     html = re.sub(r'auto_research_data\.js\?v=\d+', f'auto_research_data.js?v={version}', html)
-    with open("auto-research.html", "w", encoding="utf-8") as f:
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"✅ auto-research.html 版本号更新为 {version}")
+    print(f"✅ index.html 版本号更新为 {version}")
 
     print("\n📊 用途分布:")
     for uc, cnt in list(uc_dist.items())[:8]:

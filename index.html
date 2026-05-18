@@ -49,16 +49,12 @@
 <div class="container">
 
   <!-- No data warning -->
-  <div id="noData" class="no-data" style="display:none">
-    ⚠️ <code>data.js</code> not found. Run: <code>python3 fetch_data.py</code>
-    then serve with <code>python3 -m http.server 8080</code> and open
-    <a href="http://localhost:8080">localhost:8080</a>.
-  </div>
+  <div id="noData" class="no-data" style="display:none"></div>
 
   <!-- Category tabs -->
   <div class="tabs" id="tabs"></div>
 
-  <!-- Filter bar (rendered by shared.js via renderFilterBar) -->
+  <!-- Filter bar -->
   <div id="filterBar"></div>
 
   <!-- Active filters -->
@@ -86,7 +82,6 @@
   <a href="#" id="ghFooterLink" target="_blank" rel="noopener noreferrer">GitHub</a>
 </div>
 <script>
-  // Update GitHub footer link from shared.js constant once it loads
   document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('ghFooterLink');
     if (el && typeof GITHUB_REPO !== 'undefined') el.href = GITHUB_REPO;
@@ -94,15 +89,10 @@
 </script>
 
 <script src="data.js?v=202605180618"></script>
+<script src="mcp_data.js?v=202605180751"></script>
+<script src="frameworks_data.js?v=202605180758"></script>
+<script src="prompts_data.js?v=202605180530"></script>
+<script src="auto_research_data.js?v=202605180530"></script>
 <script src="shared.js"></script>
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    init({
-      page:       'skills',
-      dataKey:    'SKILLS_DATA',
-      noDataHint: 'Run python3 fetch_data.py to generate data, then refresh.',
-    });
-  });
-</script>
 </body>
 </html>

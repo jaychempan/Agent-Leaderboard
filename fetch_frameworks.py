@@ -203,12 +203,12 @@ def main():
 
     # ── 更新 frameworks.html 中的版本号 (防缓存) ─────────────────────────────
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-    with open("frameworks.html", "r", encoding="utf-8") as f:
+    with open("index.html", "r", encoding="utf-8") as f:
         html = f.read()
     html = re.sub(r'frameworks_data\.js\?v=\d+', f'frameworks_data.js?v={version}', html)
-    with open("frameworks.html", "w", encoding="utf-8") as f:
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"✅ frameworks.html 版本号更新为 {version}")
+    print(f"✅ index.html 版本号更新为 {version}")
 
     print("\n📊 用途分布:")
     for uc, cnt in list(uc_dist.items())[:8]:
