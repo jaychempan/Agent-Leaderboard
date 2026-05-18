@@ -19,6 +19,7 @@ PER_PAGE     = 100
 REPO_BLOCKLIST = {
     "cirosantilli/china-dictatorship",
     "zszszszsz/.config",
+    "huggingface/transformers",
 }
 _SENSITIVE_RE = re.compile(
     r'\bdictatorship\b|china-dictatorship|\btiananmen\b'
@@ -37,6 +38,12 @@ def is_blocked(repo: dict) -> bool:
     text = " ".join([repo.get("full_name",""), repo.get("description","") or "",
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
+
+_SKILL_RE = re.compile(r'\bskills?\b', re.I)
+
+def is_skills_relevant(repo: dict) -> bool:
+    name_desc = repo.get("full_name", "") + " " + (repo.get("description", "") or "")
+    return bool(_SKILL_RE.search(name_desc))
 
 QUERIES      = {
     "claude":   [
@@ -193,6 +200,8 @@ def main():
                 for raw in items:
                     if raw["id"] in seen or raw["stargazers_count"] < MIN_STARS or is_blocked(raw):
                         continue
+                    if not is_skills_relevant(raw):
+                        continue
                     seen.add(raw["id"])
                     repos.append(normalize_repo(raw, cat))
                     new += 1
@@ -206,7 +215,7 @@ def main():
         try:
             with open("data.json", "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
-                            if not is_blocked(r)}   # 重新过滤旧数据中的违规条目
+                            if not is_blocked(r) and is_skills_relevant(r)}
             if not repos:
                 print("⚠️  本次搜索结果为空，保留现有数据不变")
                 return
