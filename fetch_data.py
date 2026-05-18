@@ -47,51 +47,47 @@ def is_skills_relevant(repo: dict) -> bool:
 
 QUERIES      = {
     "claude":   [
-        f"claude skill stars:>{MIN_STARS}",
-        f"claude-code skill stars:>{MIN_STARS}",
+        f"claude in:name stars:>{MIN_STARS}",
+        f"claude in:description stars:>{MIN_STARS}",
         f"topic:claude-skill stars:>{MIN_STARS}",
         f"topic:claude-code stars:>{MIN_STARS}",
         f"topic:anthropic stars:>{MIN_STARS}",
-        f"awesome claude skill stars:>{MIN_STARS}",
     ],
     "codex":    [
-        f"openai codex stars:>{MIN_STARS}",
+        f"codex in:name stars:>{MIN_STARS}",
+        f"openai codex in:description stars:>{MIN_STARS}",
         f"topic:openai-codex stars:>{MIN_STARS}",
         f"topic:codex stars:>{MIN_STARS}",
-        f"codex skill agent stars:>{MIN_STARS}",
     ],
     "cursor":   [
-        f"cursor rules ai stars:>{MIN_STARS}",
+        f"cursor in:name stars:>{MIN_STARS}",
+        f"cursorrules in:name stars:>{MIN_STARS}",
         f"topic:cursor-rules stars:>{MIN_STARS}",
         f"topic:cursorrules stars:>{MIN_STARS}",
-        f"awesome cursorrules stars:>{MIN_STARS}",
     ],
     "copilot":  [
-        f"github copilot extension stars:>{MIN_STARS}",
+        f"copilot in:name stars:>{MIN_STARS}",
+        f"copilot in:description stars:>{MIN_STARS}",
         f"topic:github-copilot stars:>{MIN_STARS}",
         f"topic:copilot stars:>{MIN_STARS}",
-        f"copilot skill stars:>{MIN_STARS}",
     ],
     "deepseek": [
         f"deepseek in:name stars:>{MIN_STARS}",
+        f"deepseek in:description stars:>{MIN_STARS}",
         f"topic:deepseek stars:>{MIN_STARS}",
         f"topic:deepseek-coder stars:>{MIN_STARS}",
-        f"deepseek skill stars:>{MIN_STARS}",
-        f"awesome deepseek stars:>{MIN_STARS}",
     ],
     "openclaw": [
         f"openclaw in:name stars:>{MIN_STARS}",
+        f"openclaw in:description stars:>{MIN_STARS}",
         f"topic:openclaw stars:>{MIN_STARS}",
         f"topic:clawbot stars:>{MIN_STARS}",
-        f"awesome openclaw stars:>{MIN_STARS}",
-        f"openclaw skill stars:>{MIN_STARS}",
     ],
     "other":    [
         f"topic:ai-skills stars:>{MIN_STARS}",
         f"topic:llm-tools stars:>{MIN_STARS}",
-        f"ai skill llm agent stars:>{MIN_STARS}",
-        f"gpt skill plugin stars:>{MIN_STARS}",
-        f"windsurf cline skill stars:>{MIN_STARS}",
+        f"skill in:name llm stars:>{MIN_STARS}",
+        f"ai skill in:name stars:>{MIN_STARS}",
     ],
 }
 

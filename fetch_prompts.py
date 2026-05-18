@@ -43,34 +43,14 @@ def is_relevant(repo: dict) -> bool:
     return bool(_RELEVANT_RE.search(name_desc))
 
 QUERIES = {
-    "collection": [
-        f"awesome prompts llm stars:>{MIN_STARS}",
+    "general": [
+        f"prompt in:name stars:>{MIN_STARS}",
+        f"prompts in:name stars:>{MIN_STARS}",
+        f"prompt in:description stars:>{MIN_STARS}",
+        f"topic:prompt-engineering stars:>{MIN_STARS}",
         f"topic:awesome-prompts stars:>{MIN_STARS}",
         f"topic:chatgpt-prompts stars:>{MIN_STARS}",
-        f"prompt collection ai stars:>{MIN_STARS}",
-    ],
-    "system": [
-        f"system prompt collection stars:>{MIN_STARS}",
         f"topic:system-prompt stars:>{MIN_STARS}",
-        f"ai system prompts stars:>{MIN_STARS}",
-    ],
-    "engineering": [
-        f"topic:prompt-engineering stars:>{MIN_STARS}",
-        f"prompt engineering guide stars:>{MIN_STARS}",
-        f"prompt techniques llm stars:>{MIN_STARS}",
-    ],
-    "coding": [
-        f"coding prompts llm stars:>{MIN_STARS}",
-        f"code generation prompt stars:>{MIN_STARS}",
-    ],
-    "writing": [
-        f"writing prompts ai stars:>{MIN_STARS}",
-        f"content generation prompt stars:>{MIN_STARS}",
-    ],
-    "general": [
-        f"chatgpt prompts stars:>{MIN_STARS}",
-        f"claude prompts stars:>{MIN_STARS}",
-        f"llm prompts library stars:>{MIN_STARS}",
     ],
 }
 

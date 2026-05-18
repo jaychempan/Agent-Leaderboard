@@ -44,39 +44,21 @@ def is_relevant(repo: dict) -> bool:
     return bool(_RELEVANT_RE.search(name_desc))
 
 QUERIES = {
-    "orchestration": [
-        f"topic:langchain stars:>{MIN_STARS}",
-        f"llm orchestration framework stars:>{MIN_STARS}",
-        f"topic:llamaindex stars:>{MIN_STARS}",
-    ],
-    "multi_agent": [
-        f"topic:autogen stars:>{MIN_STARS}",
-        f"topic:crewai stars:>{MIN_STARS}",
-        f"multi agent llm framework stars:>{MIN_STARS}",
-        f"topic:metagpt stars:>{MIN_STARS}",
-    ],
-    "memory": [
-        f"llm memory agent stars:>{MIN_STARS}",
-        f"agent memory framework stars:>{MIN_STARS}",
-    ],
-    "tools": [
-        f"llm tool calling framework stars:>{MIN_STARS}",
-        f"function calling agent stars:>{MIN_STARS}",
-    ],
-    "evaluation": [
-        f"llm evaluation framework stars:>{MIN_STARS}",
-        f"agent benchmark eval stars:>{MIN_STARS}",
-    ],
     "general": [
-        f"agentic framework llm stars:>{MIN_STARS}",
-        f"ai agent sdk stars:>{MIN_STARS}",
-        f"llm agent library stars:>{MIN_STARS}",
+        f"llm framework in:name stars:>{MIN_STARS}",
+        f"agent framework in:name stars:>{MIN_STARS}",
+        f"llm agent in:name stars:>{MIN_STARS}",
+        f"llm framework in:description stars:>{MIN_STARS}",
+        f"agent framework in:description stars:>{MIN_STARS}",
         f"topic:agent-framework stars:>{MIN_STARS}",
         f"topic:llm-framework stars:>{MIN_STARS}",
         f"topic:ai-agent stars:>{MIN_STARS}",
-        f"deepseek in:name stars:>{MIN_STARS}",
+        f"topic:langchain stars:>{MIN_STARS}",
+        f"topic:llamaindex stars:>{MIN_STARS}",
+        f"topic:autogen stars:>{MIN_STARS}",
+        f"topic:crewai stars:>{MIN_STARS}",
+        f"topic:metagpt stars:>{MIN_STARS}",
         f"topic:deepseek stars:>{MIN_STARS}",
-        f"deepseek framework agent stars:>{MIN_STARS}",
     ],
 }
 

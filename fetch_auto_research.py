@@ -43,38 +43,15 @@ def is_relevant(repo: dict) -> bool:
     return bool(_RELEVANT_RE.search(name_desc))
 
 QUERIES = {
-    "deep_research": [
-        f"deep research agent ai stars:>{MIN_STARS}",
-        f"topic:deep-research stars:>{MIN_STARS}",
-        f"autonomous deep research stars:>{MIN_STARS}",
-    ],
-    "web_research": [
-        f"web research automation ai stars:>{MIN_STARS}",
-        f"perplexity alternative open source stars:>{MIN_STARS}",
-        f"ai web scraping research stars:>{MIN_STARS}",
-    ],
-    "literature": [
-        f"literature review ai agent stars:>{MIN_STARS}",
-        f"paper search agent stars:>{MIN_STARS}",
-        f"academic research ai stars:>{MIN_STARS}",
-    ],
-    "data_research": [
-        f"financial research agent ai stars:>{MIN_STARS}",
-        f"market research ai autonomous stars:>{MIN_STARS}",
-        f"data analysis agent stars:>{MIN_STARS}",
-    ],
-    "knowledge_base": [
-        f"second brain ai rag stars:>{MIN_STARS}",
-        f"personal knowledge management ai stars:>{MIN_STARS}",
-        f"ai research knowledge base stars:>{MIN_STARS}",
-    ],
     "general": [
-        f"autonomous research agent stars:>{MIN_STARS}",
-        f"ai researcher agent stars:>{MIN_STARS}",
-        f"research automation llm stars:>{MIN_STARS}",
+        f"research agent in:name stars:>{MIN_STARS}",
+        f"ai research in:name stars:>{MIN_STARS}",
+        f"deep research in:name stars:>{MIN_STARS}",
+        f"research agent in:description stars:>{MIN_STARS}",
+        f"ai research agent in:description stars:>{MIN_STARS}",
+        f"topic:deep-research stars:>{MIN_STARS}",
         f"topic:research-agent stars:>{MIN_STARS}",
         f"topic:ai-research stars:>{MIN_STARS}",
-        f"awesome autoresearch stars:>{MIN_STARS}",
     ],
 }
 
