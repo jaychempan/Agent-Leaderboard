@@ -7,7 +7,7 @@ fetch_prompts.py — 从 GitHub API 爬取热门 Prompt Library 仓库，
   python3 fetch_prompts.py
   python3 fetch_prompts.py --token ghp_xxx
 """
-import json, time, sys, argparse, re
+import json, os, time, sys, argparse, re
 from datetime import datetime, timezone
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError
@@ -146,6 +146,24 @@ def main():
             except Exception as e:
                 print(f"    ✗ 跳过: {e}", file=sys.stderr)
             time.sleep(0.4)
+
+    # ── 增量合并：与现有数据合并，防止 API 限流导致数据丢失 ────────────────────
+    if os.path.exists("prompts_data.json"):
+        try:
+            with open("prompts_data.json", "r", encoding="utf-8") as f:
+                existing = {r["id"]: r for r in json.load(f).get("repos", [])}
+            if not repos:
+                print("⚠️  本次搜索结果为空，保留现有数据不变")
+                return
+            merged = dict(existing)
+            merged.update({r["id"]: r for r in repos})
+            repos = list(merged.values())
+            print(f"📦 增量合并: 共 {len(repos)} 条 (新增/更新 {len(repos)-len(existing)})")
+        except Exception as e:
+            print(f"⚠️  加载现有数据失败: {e}", file=sys.stderr)
+    elif not repos:
+        print("⚠️  搜索结果为空且无历史数据，跳过写入")
+        return
 
     repos.sort(key=lambda r: r["stars"], reverse=True)
 
