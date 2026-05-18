@@ -9,11 +9,10 @@ fetch_auto_research.py — 从 GitHub API 爬取热门 Auto Research 仓库，
 """
 import json, os, time, sys, argparse, re
 from datetime import datetime, timezone
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
+from fetch_utils import load_token, gh_get, search_repos
 
-MIN_STARS = 100
-PER_PAGE  = 50
+MIN_STARS = 50
+PER_PAGE  = 100
 
 # ── 内容过滤：黑名单 + 政治敏感关键词 ────────────────────────────────────────
 REPO_BLOCKLIST = {
@@ -65,6 +64,8 @@ QUERIES = {
         f"autonomous research agent stars:>{MIN_STARS}",
         f"ai researcher agent stars:>{MIN_STARS}",
         f"research automation llm stars:>{MIN_STARS}",
+        f"topic:research-agent stars:>{MIN_STARS}",
+        f"topic:ai-research stars:>{MIN_STARS}",
         f"awesome autoresearch stars:>{MIN_STARS}",
     ],
 }
@@ -101,23 +102,6 @@ CAT_RULES = [
     ("knowledge_base", r"knowledge.?base|second.brain|pkm|obsidian"),
 ]
 
-def gh_get(url, token):
-    headers = {"Accept": "application/vnd.github+json", "User-Agent": "skills-tracker/1.0"}
-    if token: headers["Authorization"] = f"Bearer {token}"
-    req = Request(url, headers=headers)
-    try:
-        with urlopen(req, timeout=15) as r:
-            return json.loads(r.read())
-    except HTTPError as e:
-        body = e.read().decode()
-        print(f"  ⚠️  HTTP {e.code}: {body[:120]}", file=sys.stderr)
-        raise
-
-def search_repos(query, token, per_page=PER_PAGE):
-    from urllib.parse import quote
-    url = f"https://api.github.com/search/repositories?q={quote(query)}&sort=stars&order=desc&per_page={per_page}"
-    return gh_get(url, token).get("items", [])
-
 def analyze_use_cases(repo):
     text = " ".join([repo.get("name",""), repo.get("description","") or "", " ".join(repo.get("topics",[]))]).lower()
     found = [label for label, pat in USE_CASE_RULES if re.search(pat, text)]
@@ -149,7 +133,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--token", default="")
     args = parser.parse_args()
-    token = args.token
+    token = load_token(args.token)
 
     print("🔍 爬取 Auto Research 仓库 …")
     seen = set()

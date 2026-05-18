@@ -9,12 +9,11 @@ fetch_data.py — 从 GitHub API 爬取热门 Skills 仓库，
 """
 import json, os, time, sys, argparse, re
 from datetime import datetime, timezone
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
+from fetch_utils import load_token, gh_get, search_repos
 
 # ── 配置 ─────────────────────────────────────────────────────────────────────
-MIN_STARS    = 100
-PER_PAGE     = 50
+MIN_STARS    = 50
+PER_PAGE     = 100
 
 # ── 内容过滤：黑名单 + 政治敏感关键词 ────────────────────────────────────────
 REPO_BLOCKLIST = {
@@ -41,35 +40,45 @@ QUERIES      = {
         f"claude skill stars:>{MIN_STARS}",
         f"claude-code skill stars:>{MIN_STARS}",
         f"topic:claude-skill stars:>{MIN_STARS}",
+        f"topic:claude-code stars:>{MIN_STARS}",
+        f"topic:anthropic stars:>{MIN_STARS}",
         f"awesome claude skill stars:>{MIN_STARS}",
     ],
     "codex":    [
         f"openai codex stars:>{MIN_STARS}",
         f"topic:openai-codex stars:>{MIN_STARS}",
+        f"topic:codex stars:>{MIN_STARS}",
         f"codex skill agent stars:>{MIN_STARS}",
     ],
     "cursor":   [
         f"cursor rules ai stars:>{MIN_STARS}",
         f"topic:cursor-rules stars:>{MIN_STARS}",
+        f"topic:cursorrules stars:>{MIN_STARS}",
         f"awesome cursorrules stars:>{MIN_STARS}",
     ],
     "copilot":  [
         f"github copilot extension stars:>{MIN_STARS}",
         f"topic:github-copilot stars:>{MIN_STARS}",
+        f"topic:copilot stars:>{MIN_STARS}",
         f"copilot skill stars:>{MIN_STARS}",
     ],
     "deepseek": [
-        f"deepseek skill stars:>{MIN_STARS}",
+        f"deepseek in:name stars:>{MIN_STARS}",
         f"topic:deepseek stars:>{MIN_STARS}",
+        f"topic:deepseek-coder stars:>{MIN_STARS}",
+        f"deepseek skill stars:>{MIN_STARS}",
         f"awesome deepseek stars:>{MIN_STARS}",
-        f"deepseek coder extension stars:>{MIN_STARS}",
     ],
     "openclaw": [
-        f"openclaw stars:>{MIN_STARS}",
+        f"openclaw in:name stars:>{MIN_STARS}",
         f"topic:openclaw stars:>{MIN_STARS}",
-        f"openclaw skill agent stars:>{MIN_STARS}",
+        f"topic:clawbot stars:>{MIN_STARS}",
+        f"awesome openclaw stars:>{MIN_STARS}",
+        f"openclaw skill stars:>{MIN_STARS}",
     ],
     "other":    [
+        f"topic:ai-skills stars:>{MIN_STARS}",
+        f"topic:llm-tools stars:>{MIN_STARS}",
         f"ai skill llm agent stars:>{MIN_STARS}",
         f"gpt skill plugin stars:>{MIN_STARS}",
         f"windsurf cline skill stars:>{MIN_STARS}",
@@ -120,30 +129,6 @@ CATEGORY_META = {
     "other":    {"label": "其他 AI",   "icon": "✨", "color": "#f59e0b"},
 }
 
-# ── GitHub API ────────────────────────────────────────────────────────────────
-def gh_get(url: str, token: str) -> dict:
-    headers = {"Accept": "application/vnd.github+json",
-               "User-Agent": "skills-tracker/1.0"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
-    req = Request(url, headers=headers)
-    try:
-        with urlopen(req, timeout=15) as r:
-            return json.loads(r.read())
-    except HTTPError as e:
-        body = e.read().decode()
-        print(f"  ⚠️  HTTP {e.code}: {body[:120]}", file=sys.stderr)
-        if e.code in (403, 429):
-            print("  → Rate limited. 请用 --token 传入 GitHub Token", file=sys.stderr)
-        raise
-
-def search_repos(query: str, token: str, per_page: int = PER_PAGE) -> list:
-    from urllib.parse import quote
-    url = (f"https://api.github.com/search/repositories"
-           f"?q={quote(query)}&sort=stars&order=desc&per_page={per_page}")
-    data = gh_get(url, token)
-    return data.get("items", [])
-
 # ── 分析函数 ──────────────────────────────────────────────────────────────────
 def analyze_use_cases(repo: dict) -> list[str]:
     text = " ".join([
@@ -189,7 +174,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--token", default="", help="GitHub Personal Access Token")
     args = parser.parse_args()
-    token = args.token
+    token = load_token(args.token)
 
     print("🔍 开始爬取 GitHub Skills 仓库 …")
     seen: set[int] = set()
