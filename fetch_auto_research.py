@@ -164,7 +164,8 @@ def main():
     if os.path.exists("auto_research_data.json"):
         try:
             with open("auto_research_data.json", "r", encoding="utf-8") as f:
-                existing = {r["id"]: r for r in json.load(f).get("repos", [])}
+                existing = {r["id"]: r for r in json.load(f).get("repos", [])
+                            if not is_blocked(r)}
             if not repos:
                 print("⚠️  本次搜索结果为空，保留现有数据不变")
                 return

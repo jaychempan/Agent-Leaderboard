@@ -205,7 +205,8 @@ def main():
     if os.path.exists("data.json"):
         try:
             with open("data.json", "r", encoding="utf-8") as f:
-                existing = {r["id"]: r for r in json.load(f).get("repos", [])}
+                existing = {r["id"]: r for r in json.load(f).get("repos", [])
+                            if not is_blocked(r)}   # 重新过滤旧数据中的违规条目
             if not repos:
                 print("⚠️  本次搜索结果为空，保留现有数据不变")
                 return
