@@ -365,16 +365,15 @@ function applyLangBtn() {
 }
 
 /* ── Favorites ──────────────────────────────────────────────────── */
-function toggleFav(id, btn) {
-  if (app.favorites.has(id)) {
-    app.favorites.delete(id);
-    btn.classList.remove('saved');
-    btn.title = '';
-  } else {
-    app.favorites.add(id);
-    btn.classList.add('saved');
-  }
+function toggleFav(id) {
+  const saved = app.favorites.has(id);
+  if (saved) app.favorites.delete(id);
+  else       app.favorites.add(id);
   localStorage.setItem('st_favorites', JSON.stringify([...app.favorites]));
+  document.querySelectorAll(`.fav-btn[data-id="${id}"]`).forEach(b => {
+    b.classList.toggle('saved', !saved);
+    b.textContent = saved ? '♡' : '❤';
+  });
   updateFavBtn();
   if (app.favOnly) applyFilters();
 }
@@ -391,6 +390,83 @@ function updateFavBtn() {
   cnt.textContent = app.favorites.size;
   cnt.classList.toggle('visible', app.favorites.size > 0);
 }
+
+/* ── Favorites modal ────────────────────────────────────────────── */
+const FAV_SECTION_LABELS = {
+  skills:     { en: 'Skills',        zh: 'Skills' },
+  mcp:        { en: 'MCP Servers',   zh: 'MCP Servers' },
+  research:   { en: 'Auto Research', zh: 'Auto Research' },
+  prompts:    { en: 'Prompt Library',zh: 'Prompt Library' },
+  frameworks: { en: 'AI Frameworks', zh: 'AI Frameworks' },
+};
+
+function openFavModal() {
+  // Group favorites by source page
+  const sections = Object.entries(ROUTES).map(([page, cfg]) => {
+    const repos = (window[cfg.dataKey]?.repos || [])
+      .filter(r => app.favorites.has(r.id))
+      .sort((a, b) => b.stars - a.stars);
+    return { page, label: FAV_SECTION_LABELS[page][app.lang] || page, repos };
+  }).filter(s => s.repos.length > 0);
+
+  let modal = document.getElementById('favModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'favModal';
+    modal.className = 'fav-modal-overlay';
+    modal.addEventListener('click', closeFavModal);
+    document.body.appendChild(modal);
+  }
+
+  if (!sections.length) {
+    modal.innerHTML = `
+      <div class="fav-modal" onclick="event.stopPropagation()">
+        <div class="fav-modal-header">
+          <span>❤ ${t('nav_favorites')}</span>
+          <button class="fav-modal-close" onclick="closeFavModal()">✕</button>
+        </div>
+        <div class="empty-state"><span class="icon">🤍</span><strong>${t('no_fav')}</strong><p>${t('no_fav_sub')}</p></div>
+      </div>`;
+  } else {
+    const tabsHtml = sections.map((s, i) => `
+      <button class="fav-modal-tab${i === 0 ? ' active' : ''}" onclick="switchFavTab('${s.page}')" data-page="${s.page}">
+        ${s.label} <span class="cnt">${s.repos.length}</span>
+      </button>`).join('');
+
+    const sectionsHtml = sections.map((s, i) => `
+      <div class="fav-modal-section${i === 0 ? '' : ' hidden'}" data-page="${s.page}">
+        <div class="fav-modal-grid">${s.repos.map(r => cardHTML(r, 999)).join('')}</div>
+      </div>`).join('');
+
+    modal.innerHTML = `
+      <div class="fav-modal" onclick="event.stopPropagation()">
+        <div class="fav-modal-header">
+          <span>❤ ${t('nav_favorites')}</span>
+          <button class="fav-modal-close" onclick="closeFavModal()">✕</button>
+        </div>
+        <div class="fav-modal-tabs">${tabsHtml}</div>
+        ${sectionsHtml}
+      </div>`;
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function switchFavTab(page) {
+  document.querySelectorAll('#favModal .fav-modal-tab').forEach(b =>
+    b.classList.toggle('active', b.dataset.page === page));
+  document.querySelectorAll('#favModal .fav-modal-section').forEach(s =>
+    s.classList.toggle('hidden', s.dataset.page !== page));
+}
+
+function closeFavModal() {
+  const modal = document.getElementById('favModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFavModal(); });
 
 /* ── Nav render ─────────────────────────────────────────────────── */
 function toggleMobileNav() {
@@ -453,7 +529,7 @@ function renderNav() {
         </svg>
         <span class="full">GitHub</span>
       </a>
-      <button class="nav-btn${app.favOnly ? ' active' : ''}" id="favBtn" onclick="toggleFavOnly()">
+      <button class="nav-btn" id="favBtn" onclick="openFavModal()">
         ❤ ${t('nav_favorites')} <span class="fav-count${app.favorites.size > 0 ? ' visible' : ''}">${app.favorites.size}</span>
       </button>
       <button class="nav-btn" id="langBtn" onclick="toggleLang()">
@@ -626,7 +702,7 @@ function applyFilters() {
     ? app.allRepos
     : app.allRepos.filter(r => r.category === app.activeTab);
 
-  if (app.favOnly)    list = list.filter(r => app.favorites.has(r.id));
+  if (app.favOnly) list = list.filter(r => app.favorites.has(r.id));
   if (app.searchQ)    list = list.filter(r => (r.full_name + ' ' + r.description).toLowerCase().includes(app.searchQ));
   if (app.language)   list = list.filter(r => r.language === app.language);
   if (app.minStars)   list = list.filter(r => r.stars >= app.minStars);
@@ -741,9 +817,8 @@ function cardHTML(repo, gr) {
         <span class="rank-badge">${rankLbl}</span>
         <div class="card-actions">
           <span class="star-box" style="color:var(--gold)">${STAR_SVG} ${fmtNum(repo.stars)}</span>
-          <button class="fav-btn${isSaved ? ' saved' : ''}"
-                  onclick="event.preventDefault();event.stopPropagation();toggleFav(${repo.id},this)"
-                  title="${isSaved ? '❤' : '♡'}">
+          <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repo.id}"
+                  onclick="event.preventDefault();event.stopPropagation();toggleFav(${repo.id})">
             ${isSaved ? '❤' : '♡'}
           </button>
         </div>
@@ -818,8 +893,8 @@ function renderList() {
       <td class="lt-lang">${repo.language ? `<span class="clickable" onclick="setLang('${repo.language}')">${repo.language}</span>` : '—'}</td>
       <td class="lt-updated">${timeAgo(repo.created_at || repo.updated_at)}</td>
       <td class="lt-fav">
-        <button class="fav-btn${isSaved ? ' saved' : ''}"
-                onclick="toggleFav(${repo.id},this)">
+        <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repo.id}"
+                onclick="toggleFav(${repo.id})">
           ${isSaved ? '❤' : '♡'}
         </button>
       </td>
