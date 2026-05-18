@@ -372,8 +372,9 @@ button, select, input { font: inherit; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
+  font-size: 12px;
   outline: none;
-  padding: 8px 10px;
+  padding: 6px 8px;
   cursor: pointer;
   transition: border-color var(--transition);
 }
@@ -636,6 +637,25 @@ button, select, input { font: inherit; }
 .cat-badge.data_research  { background:rgba(34,211,238,.15); color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
 .cat-badge.knowledge_base { background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 .cat-badge.general        { background:rgba(139,148,158,.15);color:#8b949e; border:1px solid rgba(139,148,158,.3); }
+/* MCP */
+.cat-badge.official      { background:rgba(249,115,22,.15);  color:#fb923c; border:1px solid rgba(249,115,22,.3); }
+.cat-badge.database      { background:rgba(16,185,129,.15);  color:#34d399; border:1px solid rgba(16,185,129,.3); }
+.cat-badge.filesystem    { background:rgba(167,139,250,.15); color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
+.cat-badge.web           { background:rgba(34,211,238,.15);  color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
+.cat-badge.dev_tools     { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+.cat-badge.productivity  { background:rgba(139,148,158,.15); color:#8b949e; border:1px solid rgba(139,148,158,.3); }
+/* Frameworks */
+.cat-badge.orchestration { background:rgba(249,115,22,.15);  color:#fb923c; border:1px solid rgba(249,115,22,.3); }
+.cat-badge.multi_agent   { background:rgba(16,185,129,.15);  color:#34d399; border:1px solid rgba(16,185,129,.3); }
+.cat-badge.memory        { background:rgba(167,139,250,.15); color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
+.cat-badge.tools         { background:rgba(34,211,238,.15);  color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
+.cat-badge.evaluation    { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+/* Prompts */
+.cat-badge.collection    { background:rgba(249,115,22,.15);  color:#fb923c; border:1px solid rgba(249,115,22,.3); }
+.cat-badge.system        { background:rgba(16,185,129,.15);  color:#34d399; border:1px solid rgba(16,185,129,.3); }
+.cat-badge.engineering   { background:rgba(167,139,250,.15); color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
+.cat-badge.coding        { background:rgba(34,211,238,.15);  color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
+.cat-badge.writing       { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 
 .fork-info { font-size: 10px; color: var(--muted); margin-left: auto; }
 

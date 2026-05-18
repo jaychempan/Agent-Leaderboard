@@ -152,16 +152,16 @@ const CAT_EN = {
   "其他 AI":"Other AI",
   // Auto Research
   "深度研究":"Deep Research","网页研究":"Web Research","文献综述":"Literature",
-  "数据分析":"Data Analysis","知识管理":"Knowledge Base","通用研究":"General",
+  "数据分析":"Data Analysis","知识管理":"Knowledge Base","通用研究":"General Research",
   // Frameworks
   "流程编排":"Orchestration","多智能体":"Multi-Agent","记忆管理":"Memory",
-  "工具调用":"Tool Use","评估测试":"Evaluation","通用框架":"General",
+  "工具调用":"Tool Use","评估测试":"Evaluation","通用框架":"General FW",
   // MCP
   "官方服务器":"Official","数据库":"Database","文件系统":"Filesystem",
   "网页工具":"Web Tools","开发工具":"Dev Tools","生产力":"Productivity","通用MCP":"General MCP",
   // Prompts
   "资源列表":"Awesome List","系统提示":"System Prompts","提示工程":"Prompt Eng.",
-  "代码生成":"Code Gen","写作助手":"Writing","通用提示":"General",
+  "代码生成":"Code Gen","写作助手":"Writing","通用提示":"General Prompts",
 };
 
 /* ── App State ──────────────────────────────────────────────────── */
@@ -207,10 +207,41 @@ const BRAND_LOGOS = {
   other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bl-other" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M12 2l2.5 7.6H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.5 2.4-7.4L2 9.6h7.5Z" fill="url(#bl-other)"/></svg>`,
 };
 
+/* ── Category icon map (MCP / Frameworks / Prompts / Auto-Research) ─ */
+const CAT_ICONS = {
+  // ── MCP ──────────────────────────────────────────────────────────
+  official:     `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-official" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><path d="M3 22V10.5L12 3l9 7.5V22h-6v-6h-6v6H3z" fill="url(#ci-official)"/></svg>`,
+  database:     `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-database" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs><ellipse cx="12" cy="6" rx="8" ry="2.5" fill="url(#ci-database)"/><path d="M4 6v5c0 1.38 3.58 2.5 8 2.5s8-1.12 8-2.5V6" fill="url(#ci-database)" opacity=".75"/><path d="M4 11v5c0 1.38 3.58 2.5 8 2.5s8-1.12 8-2.5v-5" fill="url(#ci-database)" opacity=".5"/></svg>`,
+  filesystem:   `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-filesystem" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#c4b5fd"/></linearGradient></defs><path d="M3 7a2 2 0 012-2h4l2 2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" fill="url(#ci-filesystem)"/></svg>`,
+  web:          `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-web" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#67e8f9"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="url(#ci-web)" opacity=".15"/><circle cx="12" cy="12" r="9" stroke="url(#ci-web)" stroke-width="1.5" fill="none"/><path d="M12 3c-3 3-4.5 6-4.5 9s1.5 6 4.5 9M12 3c3 3 4.5 6 4.5 9s-1.5 6-4.5 9M3 12h18M4.5 8h15M4.5 16h15" stroke="url(#ci-web)" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  dev_tools:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-dev_tools" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l2.7-2.7a6 6 0 01-7.4 7.4l-6.3 6.3a2.12 2.12 0 01-3-3l6.3-6.3a6 6 0 017.4-7.4l-2.7 2.7z" fill="url(#ci-dev_tools)"/></svg>`,
+  productivity: `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-productivity" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#8b949e"/><stop offset="100%" stop-color="#c9d1d9"/></linearGradient></defs><rect x="3" y="4" width="18" height="18" rx="2" fill="url(#ci-productivity)" opacity=".2"/><rect x="3" y="4" width="18" height="18" rx="2" stroke="url(#ci-productivity)" stroke-width="1.5" fill="none"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4" stroke="url(#ci-productivity)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  // ── Frameworks ───────────────────────────────────────────────────
+  orchestration:`<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-orchestration" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fb923c"/></linearGradient></defs><circle cx="12" cy="4" r="2.5" fill="url(#ci-orchestration)"/><circle cx="4" cy="19" r="2.5" fill="url(#ci-orchestration)"/><circle cx="20" cy="19" r="2.5" fill="url(#ci-orchestration)"/><path d="M12 6.5L5 16.8M12 6.5L19 16.8M5 19h14" stroke="url(#ci-orchestration)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  multi_agent:  `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-multi_agent" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs><circle cx="12" cy="5" r="3" fill="url(#ci-multi_agent)"/><circle cx="4.5" cy="18" r="3" fill="url(#ci-multi_agent)" opacity=".75"/><circle cx="19.5" cy="18" r="3" fill="url(#ci-multi_agent)" opacity=".75"/><path d="M12 8v3.5M9.5 16L7 12M14.5 16L17 12" stroke="url(#ci-multi_agent)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  memory:       `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-memory" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#c4b5fd"/></linearGradient></defs><path d="M9.5 2C6.46 2 4 4.46 4 7.5c0 2.08 1.13 3.9 2.82 4.9L7 12.5V14h2v2h6v-2h2v-1.5l.18-.1A5.5 5.5 0 0019.5 2H9.5z" fill="url(#ci-memory)" opacity=".85"/><path d="M10 16v2M14 16v2M8.5 20h7" stroke="url(#ci-memory)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  tools:        `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-tools" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#67e8f9"/></linearGradient></defs><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l2.7-2.7a6 6 0 01-7.4 7.4l-6.3 6.3a2.12 2.12 0 01-3-3l6.3-6.3a6 6 0 017.4-7.4l-2.7 2.7z" fill="url(#ci-tools)"/></svg>`,
+  evaluation:   `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-evaluation" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><rect x="3" y="14" width="4" height="8" rx="1" fill="url(#ci-evaluation)"/><rect x="10" y="9" width="4" height="13" rx="1" fill="url(#ci-evaluation)" opacity=".8"/><rect x="17" y="4" width="4" height="18" rx="1" fill="url(#ci-evaluation)" opacity=".6"/></svg>`,
+  // ── Prompts ──────────────────────────────────────────────────────
+  collection:   `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-collection" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fb923c"/></linearGradient></defs><path d="M4 3v18M12 3v18M20 3v18M4 3l4 3 4-3 4 3 4-3M4 21l4-3 4 3 4-3 4 3" stroke="url(#ci-collection)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  system:       `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-system" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs><path d="M12 2l1.8 3.5L17.5 7l-3.5 1.7L12 12l-1.8-3.3L6.5 7l3.5-1.8L12 2zM5 15l.9 2.2L7.8 18l-1.9.8L5 21l-.9-2.1L2.2 18l1.9-.9L5 15zM19 14l.8 1.8L21.8 17l-2 .8L19 19.5l-.8-1.8L16.2 17l2-.8L19 14z" fill="url(#ci-system)"/></svg>`,
+  engineering:  `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-engineering" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#c4b5fd"/></linearGradient></defs><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" fill="url(#ci-engineering)" opacity=".75"/><path d="M8 9h8M8 13h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  coding:       `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-coding" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#67e8f9"/></linearGradient></defs><polyline points="8,6 3,12 8,18" stroke="url(#ci-coding)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="16,6 21,12 16,18" stroke="url(#ci-coding)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="14" y1="4" x2="10" y2="20" stroke="url(#ci-coding)" stroke-width="2" stroke-linecap="round"/></svg>`,
+  writing:      `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-writing" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="url(#ci-writing)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" fill="url(#ci-writing)" opacity=".85"/></svg>`,
+  // ── Auto Research ─────────────────────────────────────────────────
+  deep_research:`<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-deep_research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fb923c"/></linearGradient></defs><circle cx="10" cy="10" r="7" fill="url(#ci-deep_research)" opacity=".2"/><circle cx="10" cy="10" r="7" stroke="url(#ci-deep_research)" stroke-width="1.5" fill="none"/><circle cx="10" cy="10" r="3.5" fill="url(#ci-deep_research)" opacity=".55"/><circle cx="10" cy="10" r="1.5" fill="url(#ci-deep_research)"/><line x1="15.5" y1="15.5" x2="21" y2="21" stroke="url(#ci-deep_research)" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  web_research: `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-web_research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="url(#ci-web_research)" opacity=".15"/><circle cx="12" cy="12" r="9" stroke="url(#ci-web_research)" stroke-width="1.5" fill="none"/><path d="M12 3c-3 3-4.5 6-4.5 9s1.5 6 4.5 9M12 3c3 3 4.5 6 4.5 9s-1.5 6-4.5 9M3 12h18" stroke="url(#ci-web_research)" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  literature:   `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-literature" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#c4b5fd"/></linearGradient></defs><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="url(#ci-literature)" stroke-width="1.5" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" fill="url(#ci-literature)" opacity=".3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="url(#ci-literature)" stroke-width="1.5" fill="none"/><path d="M8 7h8M8 11h6" stroke="url(#ci-literature)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  data_research:`<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-data_research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#67e8f9"/></linearGradient></defs><polyline points="3,18 8,11 12,14 17,7 21,9" fill="none" stroke="url(#ci-data_research)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="21" x2="21" y2="21" stroke="url(#ci-data_research)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  knowledge_base:`<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-knowledge_base" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><path d="M12 2a7 7 0 015 11.74V16H7v-2.26A7 7 0 0112 2z" fill="url(#ci-knowledge_base)" opacity=".85"/><rect x="9" y="16" width="6" height="2" rx="1" fill="url(#ci-knowledge_base)"/><rect x="10" y="18" width="4" height="2" rx="1" fill="url(#ci-knowledge_base)" opacity=".7"/></svg>`,
+};
+
+const ICON_GENERAL = `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ci-general" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#8b949e"/><stop offset="100%" stop-color="#c9d1d9"/></linearGradient></defs><circle cx="6" cy="6" r="2.5" fill="url(#ci-general)"/><circle cx="12" cy="6" r="2.5" fill="url(#ci-general)" opacity=".75"/><circle cx="18" cy="6" r="2.5" fill="url(#ci-general)" opacity=".5"/><circle cx="6" cy="12" r="2.5" fill="url(#ci-general)" opacity=".75"/><circle cx="12" cy="12" r="2.5" fill="url(#ci-general)" opacity=".55"/><circle cx="18" cy="12" r="2.5" fill="url(#ci-general)" opacity=".35"/><circle cx="6" cy="18" r="2.5" fill="url(#ci-general)" opacity=".5"/><circle cx="12" cy="18" r="2.5" fill="url(#ci-general)" opacity=".35"/><circle cx="18" cy="18" r="2.5" fill="url(#ci-general)" opacity=".2"/></svg>`;
+
 function getBrandIcon(catId) {
   if (app.pageConfig?.page === 'skills' && BRAND_LOGOS[catId]) return BRAND_LOGOS[catId];
-  const cats = app.data?.categories || {};
-  return cats[catId]?.icon || '';
+  if (catId === 'general') return ICON_GENERAL;
+  return CAT_ICONS[catId] || '';
 }
 
 /* ── Translation helper ─────────────────────────────────────────── */
@@ -241,9 +272,14 @@ function timeAgo(iso) {
 }
 
 /* ── Router ─────────────────────────────────────────────────────── */
+function navigate(page) {
+  history.pushState(null, '', page === 'skills' ? '/' : '/' + page);
+  router();
+}
+
 function router() {
-  const hash = location.hash.slice(1) || 'skills';
-  const config = ROUTES[hash] || ROUTES.skills;
+  const seg = location.pathname.replace(/^\/+/, '').replace(/\/+$/, '') || 'skills';
+  const config = ROUTES[seg] || ROUTES.skills;
   app.activeTab   = 'all';
   app.searchQ     = '';
   app.language    = '';
@@ -372,7 +408,7 @@ function renderNav() {
   const nav = document.getElementById('navbar');
   if (!nav) return;
   nav.innerHTML = `
-    <a class="nav-brand" href="#skills" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+    <a class="nav-brand" href="/" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
       <img src="favicon.svg" alt="logo" />
       <span class="nav-brand-text">Agent Skills Leaderboard</span>
     </a>
@@ -380,23 +416,23 @@ function renderNav() {
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a class="nav-link${pg==='skills'?' active':''}" href="#skills" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='skills'?' active':''}" href="/skills" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-skills" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><path d="M13 2L4.5 13H10L9 22L19.5 11H14L13 2Z" fill="url(#ni-skills)"/></svg>
         <span class="full">${t('nav_skills')}</span>
       </a>
-      <a class="nav-link${pg==='research'?' active':''}" href="#research" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='research'?' active':''}" href="/research" onclick="event.preventDefault();navigate('research');document.getElementById('navbar').classList.remove('nav-open')">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs><circle cx="10" cy="10" r="6.5" stroke="url(#ni-research)" stroke-width="2.2"/><line x1="15.2" y1="15.2" x2="21" y2="21" stroke="url(#ni-research)" stroke-width="2.5" stroke-linecap="round"/><circle cx="8.2" cy="10" r="1.4" fill="#a78bfa"/><circle cx="11.8" cy="10" r="1.4" fill="#6366f1"/><path d="M8.2 10 L10 7.8 L11.8 10" fill="none" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/></svg>
         <span class="full">${t('nav_research')}</span>
       </a>
-      <a class="nav-link${pg==='mcp'?' active':''}" href="#mcp" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='mcp'?' active':''}" href="/mcp" onclick="event.preventDefault();navigate('mcp');document.getElementById('navbar').classList.remove('nav-open')">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-mcp" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient></defs><rect x="9" y="9" width="6" height="6" rx="1.5" fill="url(#ni-mcp)"/><circle cx="3.5" cy="12" r="1.8" fill="#22d3ee"/><circle cx="20.5" cy="12" r="1.8" fill="#3b82f6"/><circle cx="12" cy="3.5" r="1.8" fill="#22d3ee"/><circle cx="12" cy="20.5" r="1.8" fill="#3b82f6"/><line x1="9" y1="12" x2="5.3" y2="12" stroke="#22d3ee" stroke-width="1.4"/><line x1="15" y1="12" x2="18.7" y2="12" stroke="#3b82f6" stroke-width="1.4"/><line x1="12" y1="9" x2="12" y2="5.3" stroke="#22d3ee" stroke-width="1.4"/><line x1="12" y1="15" x2="12" y2="18.7" stroke="#3b82f6" stroke-width="1.4"/></svg>
         <span class="full">${t('nav_mcp')}</span>
       </a>
-      <a class="nav-link${pg==='prompts'?' active':''}" href="#prompts" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='prompts'?' active':''}" href="/prompts" onclick="event.preventDefault();navigate('prompts');document.getElementById('navbar').classList.remove('nav-open')">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-prompts" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs><rect x="5" y="4" width="14" height="16" rx="2" fill="url(#ni-prompts)"/><line x1="8.5" y1="9" x2="15.5" y2="9" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="16" x2="13" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span class="full">${t('nav_prompts')}</span>
       </a>
-      <a class="nav-link${pg==='frameworks'?' active':''}" href="#frameworks" onclick="document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='frameworks'?' active':''}" href="/frameworks" onclick="event.preventDefault();navigate('frameworks');document.getElementById('navbar').classList.remove('nav-open')">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-frameworks" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect x="8.5" y="3" width="7" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.6"/><rect x="5" y="9" width="14" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.8"/><rect x="2.5" y="15" width="19" height="4" rx="1.5" fill="url(#ni-frameworks)"/></svg>
         <span class="full">${t('nav_frameworks')}</span>
       </a>
@@ -465,7 +501,10 @@ function renderTabs() {
   const all  = app.allRepos.length;
 
   const items = [{ id:'all', label: t('tab_all'), count: all }];
-  Object.entries(cats).forEach(([id, meta]) => {
+  const catEntries = Object.entries(cats);
+  const generalEntry = catEntries.find(([id]) => id === 'general');
+  const otherEntries = catEntries.filter(([id]) => id !== 'general');
+  [...(generalEntry ? [generalEntry] : []), ...otherEntries].forEach(([id, meta]) => {
     items.push({ id, label: tCat(meta.label), count: meta.count });
   });
 
@@ -884,7 +923,7 @@ function renderFilterBar() {
 
 /* ── Boot ───────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', router);
-window.addEventListener('hashchange', router);
+window.addEventListener('popstate', router);
 
 /* ── Visit counter ──────────────────────────────────────────────── */
 async function loadVisitCount() {
