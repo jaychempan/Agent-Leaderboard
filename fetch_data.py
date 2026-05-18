@@ -128,7 +128,7 @@ CATEGORY_META = {
     "cursor":   {"label": "Cursor",    "icon": "🎯", "color": "#a78bfa"},
     "copilot":  {"label": "Copilot",   "icon": "🚀", "color": "#22d3ee"},
     "deepseek": {"label": "DeepSeek",  "icon": "🐋", "color": "#4f86f7"},
-    "openclaw": {"label": "OpenClaw",  "icon": "🦅", "color": "#e879f9"},
+    "openclaw": {"label": "OpenClaw",  "icon": "🦞", "color": "#e879f9"},
     "other":    {"label": "其他 AI",   "icon": "✨", "color": "#f59e0b"},
 }
 
