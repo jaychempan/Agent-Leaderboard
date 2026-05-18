@@ -198,11 +198,11 @@ const ROUTES = {
 const _GH = 'https://raw.githubusercontent.com';
 const _SI = `${_GH}/simple-icons/simple-icons/develop/icons`;
 const BRAND_LOGOS = {
-  claude:   `<img class="brand-logo" src="${_GH}/anthropics/anthropic-sdk-typescript/main/.github/logo.svg" alt="">`,
-  codex:    `<img class="brand-logo" src="${_GH}/openclaw/openclaw/main/docs/assets/sponsors/openai-light.svg" alt="">`,
-  cursor:   `<img class="brand-logo" src="${_SI}/cursor.svg" alt="">`,
-  copilot:  `<img class="brand-logo" src="${_GH}/primer/octicons/main/icons/copilot-24.svg" alt="">`,
-  deepseek: `<img class="brand-logo" src="${_SI}/deepseek.svg" alt="">`,
+  claude:   `<img class="brand-logo" src="https://cdn.simpleicons.org/anthropic/D97757" alt="">`,
+  codex:    `<img class="brand-logo brand-logo--dark-invert" src="${_GH}/openclaw/openclaw/main/docs/assets/sponsors/openai-light.svg" alt="">`,
+  cursor:   `<img class="brand-logo brand-logo--dark-invert" src="https://cdn.simpleicons.org/cursor/000000" alt="">`,
+  copilot:  `<img class="brand-logo brand-logo--dark-invert" src="${_GH}/primer/octicons/main/icons/copilot-24.svg" alt="">`,
+  deepseek: `<img class="brand-logo" src="https://cdn.simpleicons.org/deepseek/4D6BFE" alt="">`,
   openclaw: `<img class="brand-logo" src="${_GH}/openclaw/openclaw/main/ui/public/favicon.svg" alt="">`,
   other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l1.8 5.6H20l-4.9 3.5 1.9 5.7L12 13.3l-5 3.5 1.9-5.7L4 7.6h6.2z"/><circle cx="12" cy="20" r="1.5"/></svg>`,
 };
