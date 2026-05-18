@@ -798,37 +798,41 @@ button, select, input { font: inherit; }
    RESPONSIVE — phone ≤480px
 ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-  /* Navbar: single row with hamburger */
+  /* Navbar: single fixed-height row, allow dropdown to overflow */
   .navbar {
     padding: 0 12px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    height: auto;
-    min-height: var(--nav-h);
+    height: var(--nav-h);
+    overflow: visible;
   }
   .nav-brand { margin-right: 0; flex-shrink: 0; }
   .nav-brand-text { display: none; }
 
   /* Show hamburger, override inline display:none */
-  .nav-hamburger { display: flex !important; margin-left: 8px; order: 2; flex-shrink: 0; }
+  .nav-hamburger { display: flex !important; margin-left: 8px; flex-shrink: 0; }
 
   /* Push actions to the right */
-  .nav-actions { order: 3; margin-left: auto; gap: 4px; }
+  .nav-actions { margin-left: auto; gap: 4px; }
   .nav-btn { padding: 5px 7px; font-size: 11px; }
 
-  /* Hide "GitHub" and "Favorites" text labels on mobile, keep icons */
+  /* Hide text labels on mobile, keep icons */
   .nav-btn .full { display: none; }
 
-  /* Nav links: collapsed by default */
+  /* Nav links: absolute overlay dropdown below navbar */
   .nav-links {
     display: none;
-    order: 10;
+    position: absolute;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
     flex-direction: column;
-    width: 100%;
-    padding: 8px 0 12px;
-    border-top: 1px solid var(--border);
+    padding: 8px 12px 12px;
     gap: 2px;
-    margin-top: 4px;
+    z-index: 99;
+    box-shadow: var(--shadow);
   }
   .navbar.nav-open .nav-links { display: flex; }
   .nav-link { padding: 10px 14px; font-size: 14px; border-radius: 8px; width: 100%; }
