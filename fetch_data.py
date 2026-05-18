@@ -30,6 +30,8 @@ _SENSITIVE_RE = re.compile(
 def is_blocked(repo: dict) -> bool:
     if repo.get("full_name") in REPO_BLOCKLIST:
         return True
+    if repo.get("full_name","").split("/")[-1].startswith("."):
+        return True
     text = " ".join([repo.get("full_name",""), repo.get("description","") or "",
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
