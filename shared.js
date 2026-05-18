@@ -410,7 +410,7 @@ function renderNav() {
   nav.innerHTML = `
     <a class="nav-brand" href="#" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
       <img src="favicon.svg" alt="logo" />
-      <span class="nav-brand-text">Agent Rankings</span>
+      <span class="nav-brand-text">Agent Skills Leaderboard</span>
     </a>
     <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu" style="display:none">
       <span></span><span></span><span></span>
