@@ -337,6 +337,14 @@ button, select, input { font: inherit; }
   transition: opacity 0.2s;
   pointer-events: auto;
 }
+.tabs-scroll-btn--left {
+  right: auto;
+  left: 0;
+  background: linear-gradient(to left, transparent, var(--bg) 55%);
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 4px;
+}
 .tabs-scroll-btn:hover { color: var(--text); }
 .tabs-scroll-btn.hidden { opacity: 0; pointer-events: none; }
 
@@ -589,6 +597,14 @@ button, select, input { font: inherit; }
   padding-right: 4px;
   transition: opacity 0.2s;
   pointer-events: auto;
+}
+.uc-scroll-btn--left {
+  right: auto;
+  left: 0;
+  background: linear-gradient(to left, transparent, var(--bg) 55%);
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 4px;
 }
 .uc-scroll-btn:hover { color: var(--text); }
 .uc-scroll-btn.hidden { opacity: 0; pointer-events: none; }

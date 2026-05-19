@@ -670,15 +670,23 @@ function renderTabs() {
 
 function syncTabsScrollBtn() {
   const tabs = document.getElementById('tabs');
-  const btn  = document.getElementById('tabsScrollBtn');
-  if (!tabs || !btn) return;
-  const atEnd = tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 8;
-  btn.classList.toggle('hidden', atEnd);
+  const btnR = document.getElementById('tabsScrollBtn');
+  const btnL = document.getElementById('tabsScrollBtnLeft');
+  if (!tabs) return;
+  const atEnd   = tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 8;
+  const atStart = tabs.scrollLeft <= 8;
+  if (btnR) btnR.classList.toggle('hidden', atEnd);
+  if (btnL) btnL.classList.toggle('hidden', atStart);
 }
 
 function scrollTabsRight() {
   const tabs = document.getElementById('tabs');
   if (tabs) tabs.scrollBy({ left: 240, behavior: 'smooth' });
+}
+
+function scrollTabsLeft() {
+  const tabs = document.getElementById('tabs');
+  if (tabs) tabs.scrollBy({ left: -240, behavior: 'smooth' });
 }
 
 function setTab(id) {
@@ -747,15 +755,23 @@ function renderUCChips() {
 
 function syncUCScrollBtn() {
   const row = document.getElementById('ucScroller');
-  const btn = document.getElementById('ucScrollBtn');
-  if (!row || !btn) return;
-  const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 8;
-  btn.classList.toggle('hidden', atEnd);
+  const btnR = document.getElementById('ucScrollBtn');
+  const btnL = document.getElementById('ucScrollBtnLeft');
+  if (!row) return;
+  const atEnd   = row.scrollLeft + row.clientWidth >= row.scrollWidth - 8;
+  const atStart = row.scrollLeft <= 8;
+  if (btnR) btnR.classList.toggle('hidden', atEnd);
+  if (btnL) btnL.classList.toggle('hidden', atStart);
 }
 
 function scrollUCRight() {
   const row = document.getElementById('ucScroller');
   if (row) row.scrollBy({ left: 240, behavior: 'smooth' });
+}
+
+function scrollUCLeft() {
+  const row = document.getElementById('ucScroller');
+  if (row) row.scrollBy({ left: -240, behavior: 'smooth' });
 }
 
 function toggleUC(uc) {
