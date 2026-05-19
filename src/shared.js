@@ -383,6 +383,7 @@ function init(config) {
   if (noData) noData.style.display = 'none';
   app.data     = raw;
   app.allRepos = raw.repos;
+  enrichAgentTags();
   enrichRepoCategories();
 
   renderNav();
@@ -821,6 +822,8 @@ const _CAT_PATTERNS = [
 ];
 
 function enrichRepoCategories() {
+  // Multi-category tab filtering only applies to the Skills page
+  if (app.pageConfig?.page !== 'skills') return;
   (app.allRepos || []).forEach(repo => {
     if (repo.categories) return;
     const nameTopics = (repo.full_name + ' ' + (repo.topics || []).join(' ')).toLowerCase();
@@ -830,15 +833,27 @@ function enrichRepoCategories() {
     const seen       = [...new Set([...nameCats, ...descCats])];
     repo.categories  = seen.length ? seen : [repo.category];
   });
-
   // Recompute per-category counts based on multi-category assignments
   const cats = app.data?.categories;
   if (!cats) return;
   const counts = {};
   (app.allRepos || []).forEach(repo => {
-    repo.categories.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
+    (repo.categories || [repo.category]).forEach(c => { counts[c] = (counts[c] || 0) + 1; });
   });
   Object.keys(cats).forEach(id => { cats[id].count = counts[id] || 0; });
+}
+
+function enrichAgentTags() {
+  // Detect agent brand mentions on every page for logo display
+  (app.allRepos || []).forEach(repo => {
+    if (repo.agentTags) return;
+    const text = (
+      repo.full_name + ' ' +
+      (repo.description || '') + ' ' +
+      (repo.topics || []).join(' ')
+    ).toLowerCase();
+    repo.agentTags = _CAT_PATTERNS.filter(([, re]) => re.test(text)).map(([c]) => c);
+  });
 }
 
 /* ── Apply filters ──────────────────────────────────────────────── */
@@ -951,10 +966,21 @@ function cardHTML(repo, gr) {
   const [owner, name] = repo.full_name.split('/');
   const isSaved  = app.favorites.has(repo.id);
   const cats = app.data.categories;
-  const repoCats = repo.categories || [repo.category];
-  const catBadges = repoCats.map(c =>
-    `<span class="badge cat-badge ${c} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
-  ).join('');
+  const isSkills = app.pageConfig?.page === 'skills';
+  let catBadges;
+  if (isSkills) {
+    const repoCats = repo.categories || [repo.category];
+    catBadges = repoCats.map(c =>
+      `<span class="badge cat-badge ${c} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+    ).join('');
+  } else {
+    catBadges =
+      `<span class="badge cat-badge ${repo.category} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${repo.category}')">${getBrandIcon(repo.category)} ${tCat(cats[repo.category]?.label || repo.category)}</span>` +
+      (repo.agentTags || []).map(a => BRAND_LOGOS[a]
+        ? `<span class="agent-tag" title="${a}">${BRAND_LOGOS[a]}</span>`
+        : ''
+      ).join('');
+  }
   const ucTags = (repo.use_cases || []).slice(0, 4).map(uc =>
     `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
            onclick="event.preventDefault();toggleUC('${uc}')">${tUC(uc)}</span>`).join('');
@@ -1024,10 +1050,21 @@ function renderList() {
     const rkCls = gr <= 3 ? ` lt-rank-${gr}` : '';
     const [owner, name] = repo.full_name.split('/');
     const isSaved = app.favorites.has(repo.id);
-    const repoCatsL = repo.categories || [repo.category];
-    const catBadgesL = repoCatsL.map(c =>
-      `<span class="badge cat-badge ${c} clickable" onclick="setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
-    ).join('');
+    const isSkillsL = app.pageConfig?.page === 'skills';
+    let catBadgesL;
+    if (isSkillsL) {
+      const repoCatsL = repo.categories || [repo.category];
+      catBadgesL = repoCatsL.map(c =>
+        `<span class="badge cat-badge ${c} clickable" onclick="setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+      ).join('');
+    } else {
+      catBadgesL =
+        `<span class="badge cat-badge ${repo.category} clickable" onclick="setTab('${repo.category}')">${getBrandIcon(repo.category)} ${tCat(cats[repo.category]?.label || repo.category)}</span>` +
+        (repo.agentTags || []).map(a => BRAND_LOGOS[a]
+          ? `<span class="agent-tag" title="${a}">${BRAND_LOGOS[a]}</span>`
+          : ''
+        ).join('');
+    }
     const ucTags = (repo.use_cases || []).slice(0, 3).map(uc =>
       `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
              onclick="toggleUC('${uc}')">${tUC(uc)}</span>`).join(' ');

@@ -713,6 +713,23 @@ button, select, input { font: inherit; }
 }
 .lang-badge { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
 .cat-badge { font-weight: 600; }
+.agent-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.agent-tag .brand-logo {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+}
 .cat-badge.claude  { background:rgba(249,115,22,.15); color:#fb923c; border:1px solid rgba(249,115,22,.3); }
 .cat-badge.codex   { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }
 .cat-badge.cursor  { background:rgba(167,139,250,.15);color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
