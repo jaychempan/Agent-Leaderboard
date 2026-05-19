@@ -334,6 +334,8 @@ button, select, input { font: inherit; }
 .tab[data-id=deepseek].active .cnt { background:#4D6BFE; }
 .tab[data-id=openclaw].active { border-color:#f43f5e; }
 .tab[data-id=openclaw].active .cnt { background:#f43f5e; }
+.tab[data-id=hermes].active   { border-color:#7C3AED; }
+.tab[data-id=hermes].active .cnt   { background:#7C3AED; }
 .tab[data-id=other].active   { border-color:#f59e0b; }
 .tab[data-id=other].active .cnt   { background:#f59e0b; color:#0d1117; }
 
@@ -462,16 +464,39 @@ button, select, input { font: inherit; }
 .af-clear:hover { color: var(--text); }
 
 /* ── Use Case Chips ─────────────────────────────────────────────── */
+.uc-scroller-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
 .uc-scroller {
   display: flex;
   gap: 6px;
   overflow-x: auto;
   padding-bottom: 8px;
-  margin-bottom: 12px;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .uc-scroller::-webkit-scrollbar { display: none; }
+.uc-scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 8px;
+  width: 48px;
+  border: none;
+  background: linear-gradient(to right, transparent, var(--bg) 55%);
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+  transition: opacity 0.2s;
+  pointer-events: auto;
+}
+.uc-scroll-btn:hover { color: var(--text); }
+.uc-scroll-btn.hidden { opacity: 0; pointer-events: none; }
 .uc-chip {
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -635,6 +660,7 @@ button, select, input { font: inherit; }
 .cat-badge.copilot  { background:rgba(34,211,238,.15); color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
 .cat-badge.deepseek { background:rgba(77,107,254,.15); color:#818cf8; border:1px solid rgba(77,107,254,.3); }
 .cat-badge.openclaw { background:rgba(239,68,68,.15);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.cat-badge.hermes   { background:rgba(124,58,237,.15); color:#a78bfa; border:1px solid rgba(124,58,237,.3); }
 .cat-badge.other    { background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 .cat-badge.deep_research  { background:rgba(249,115,22,.15); color:#fb923c; border:1px solid rgba(249,115,22,.3); }
 .cat-badge.web_research   { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }

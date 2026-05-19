@@ -47,6 +47,12 @@
       "icon": "✨",
       "color": "#f59e0b",
       "count": 90
+    },
+    "hermes": {
+      "label": "Hermes Agent",
+      "icon": "🪽",
+      "color": "#7C3AED",
+      "count": 0
     }
   },
   "use_case_stats": {

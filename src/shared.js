@@ -20,7 +20,7 @@ const I18N = {
     research_title: 'Auto Research 排行榜',
     research_sub:   '一站式发现顶尖 AI 自动研究工具 · 从学术文献到深度调研，一搜即达',
     mcp_title:      'MCP Servers 排行榜',
-    mcp_sub:        '发现最热门的 Model Context Protocol 服务器 · 为 Claude 扩展无限能力',
+    mcp_sub:        '发现最热门的 Model Context Protocol 服务器 · 为 AI 接入数据库、网络、开发工具等无限能力',
     prompts_title:  'Prompt Library 排行榜',
     prompts_sub:    '精选最实用的 AI 提示词库 · 提示工程、系统提示、场景模板一站直达',
     frameworks_title:'AI Agent Frameworks 排行榜',
@@ -74,7 +74,7 @@ const I18N = {
     research_title: 'Auto Research Leaderboard',
     research_sub:   'One-stop hub for top AI research tools — from deep research agents to literature review, all in one place.',
     mcp_title:      'MCP Servers Leaderboard',
-    mcp_sub:        'Discover the most popular Model Context Protocol servers — extend Claude with databases, web, dev tools and more.',
+    mcp_sub:        'Discover the most popular Model Context Protocol servers — connect any AI to databases, web, dev tools and more.',
     prompts_title:  'Prompt Library Leaderboard',
     prompts_sub:    'Curated collection of top prompt libraries — engineering guides, system prompts, and templates all in one place.',
     frameworks_title:'AI Agent Frameworks Leaderboard',
@@ -204,6 +204,7 @@ const BRAND_LOGOS = {
   copilot:  `<svg class="brand-logo brand-logo--dark-invert" viewBox="0 0 24 24" fill="currentColor"><path d="M23.922 16.992c-.861 1.495-5.859 5.023-11.922 5.023-6.063 0-11.061-3.528-11.922-5.023A.641.641 0 0 1 0 16.736v-2.869a.841.841 0 0 1 .053-.22c.372-.935 1.347-2.292 2.605-2.656.167-.429.414-1.055.644-1.517a10.195 10.195 0 0 1-.052-1.086c0-1.331.282-2.499 1.132-3.368.397-.406.89-.717 1.474-.952 1.399-1.136 3.392-2.093 6.122-2.093 2.731 0 4.767.957 6.166 2.093.584.235 1.077.546 1.474.952.85.869 1.132 2.037 1.132 3.368 0 .368-.014.733-.052 1.086.23.462.477 1.088.644 1.517 1.258.364 2.233 1.721 2.605 2.656a.832.832 0 0 1 .053.22v2.869a.641.641 0 0 1-.078.256ZM12.172 11h-.344a4.323 4.323 0 0 1-.355.508C10.703 12.455 9.555 13 7.965 13c-1.725 0-2.989-.359-3.782-1.259a2.005 2.005 0 0 1-.085-.104L4 11.741v6.585c1.435.779 4.514 2.179 8 2.179 3.486 0 6.565-1.4 8-2.179v-6.585l-.098-.104s-.033.045-.085.104c-.793.9-2.057 1.259-3.782 1.259-1.59 0-2.738-.545-3.508-1.492a4.323 4.323 0 0 1-.355-.508h-.016.016Zm.641-2.935c.136 1.057.403 1.913.878 2.497.442.544 1.134.938 2.344.938 1.573 0 2.292-.337 2.657-.751.384-.435.558-1.15.558-2.361 0-1.14-.243-1.847-.705-2.319-.477-.488-1.319-.862-2.824-1.025-1.487-.161-2.192.138-2.533.529-.269.307-.437.808-.438 1.578v.021c0 .265.021.562.063.893Zm-1.626 0c.042-.331.063-.628.063-.894v-.02c-.001-.77-.169-1.271-.438-1.578-.341-.391-1.046-.69-2.533-.529-1.505.163-2.347.537-2.824 1.025-.462.472-.705 1.179-.705 2.319 0 1.211.175 1.926.558 2.361.365.414 1.084.751 2.657.751 1.21 0 1.902-.394 2.344-.938.475-.584.742-1.44.878-2.497Z"/><path d="M14.5 14.25a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1Zm-5 0a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1Z"/></svg>`,
   deepseek: `<svg class="brand-logo" viewBox="0 0 24 24" fill="none"><path d="M23.748 4.651c-.254-.124-.364.113-.512.233-.051.04-.094.09-.137.137-.372.397-.806.657-1.373.626-.829-.046-1.537.214-2.163.848-.133-.782-.575-1.248-1.247-1.548-.352-.155-.708-.311-.955-.65-.172-.24-.219-.509-.305-.774-.055-.16-.11-.323-.293-.35-.2-.031-.278.136-.356.276-.313.572-.434 1.202-.422 1.84.027 1.436.633 2.58 1.838 3.393.137.094.172.187.129.323-.082.28-.18.553-.266.833-.055.179-.137.218-.328.14a5.5 5.5 0 0 1-1.737-1.179c-.857-.828-1.631-1.743-2.597-2.46a12 12 0 0 0-.689-.47c-.985-.957.13-1.743.387-1.836.27-.098.094-.433-.778-.428-.872.003-1.67.295-2.687.685a3 3 0 0 1-.465.136 9.6 9.6 0 0 0-2.883-.101c-1.885.21-3.39 1.1-4.497 2.622C.082 8.776-.231 10.854.152 13.02c.403 2.284 1.568 4.175 3.36 5.653 1.857 1.533 3.997 2.284 6.438 2.14 1.482-.085 3.132-.284 4.994-1.86.47.234.962.328 1.78.398.629.058 1.235-.031 1.705-.129.735-.155.684-.836.418-.961-2.155-1.004-1.682-.595-2.112-.926 1.095-1.295 2.768-3.598 3.284-6.733.05-.346.115-.834.108-1.114-.004-.171.035-.238.23-.257a4.2 4.2 0 0 0 1.545-.475c1.397-.763 1.96-2.016 2.093-3.517.02-.23-.004-.467-.247-.588M11.58 18.168c-2.088-1.642-3.101-2.183-3.52-2.16-.39.024-.32.472-.234.763.09.288.207.487.371.74.114.167.192.416-.113.603-.673.416-1.842-.14-1.897-.168-1.361-.801-2.5-1.86-3.301-3.306-.775-1.393-1.225-2.888-1.299-4.482-.02-.385.094-.522.477-.592a4.7 4.7 0 0 1 1.53-.038c2.131.311 3.946 1.264 5.467 2.774.868.86 1.525 1.887 2.202 2.89.72 1.066 1.494 2.082 2.48 2.915.348.291.626.513.892.677-.802.09-2.14.109-3.055-.615zm1.001-6.44a.306.306 0 0 1 .415-.287.3.3 0 0 1 .113.074.3.3 0 0 1 .086.214c0 .17-.136.307-.308.307a.303.303 0 0 1-.306-.307m3.11 1.596c-.2.081-.4.151-.591.16a1.25 1.25 0 0 1-.798-.254c-.274-.23-.47-.358-.551-.758a1.7 1.7 0 0 1 .015-.588c.07-.327-.007-.537-.238-.727-.188-.156-.426-.199-.689-.199a.6.6 0 0 1-.254-.078.253.253 0 0 1-.114-.358a1 1 0 0 1 .192-.21c.356-.202.767-.136 1.146.016.352.144.618.408 1.001.782.392.451.462.576.685.915.176.264.336.536.446.848.066.194-.02.353-.25.45" fill="#4D6BFE"/></svg>`,
   openclaw: `<svg class="brand-logo" viewBox="0 0 120 120" fill="none"><defs><linearGradient id="bl-openclaw" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff4d4d"/><stop offset="100%" stop-color="#991b1b"/></linearGradient></defs><path d="M60 10 C30 10 15 35 15 55 C15 75 30 95 45 100 L45 110 L55 110 L55 100 C55 100 60 102 65 100 L65 110 L75 110 L75 100 C90 95 105 75 105 55 C105 35 90 10 60 10Z" fill="url(#bl-openclaw)"/><path d="M20 45 C5 40 0 50 5 60 C10 70 20 65 25 55 C28 48 25 45 20 45Z" fill="url(#bl-openclaw)"/><path d="M100 45 C115 40 120 50 115 60 C110 70 100 65 95 55 C92 48 95 45 100 45Z" fill="url(#bl-openclaw)"/><circle cx="45" cy="35" r="6" fill="#050810"/><circle cx="75" cy="35" r="6" fill="#050810"/><circle cx="46" cy="34" r="2.5" fill="#00e5cc"/><circle cx="76" cy="34" r="2.5" fill="#00e5cc"/></svg>`,
+  hermes:   `<svg class="brand-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><image href="data:image/png;base64,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" width="48" height="48"/></svg>`,
   other:    `<svg class="brand-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bl-other" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M12 2l2.5 7.6H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.5 2.4-7.4L2 9.6h7.5Z" fill="url(#bl-other)"/></svg>`,
 };
 
@@ -578,9 +579,12 @@ function renderTabs() {
 
   const items = [{ id:'all', label: t('tab_all'), count: all }];
   const catEntries = Object.entries(cats);
-  const generalEntry = catEntries.find(([id]) => id === 'general');
-  const otherEntries = catEntries.filter(([id]) => id !== 'general');
-  [...(generalEntry ? [generalEntry] : []), ...otherEntries].forEach(([id, meta]) => {
+  // 'other' always last, regardless of data insertion order
+  const sorted = [
+    ...catEntries.filter(([id]) => id !== 'other'),
+    ...catEntries.filter(([id]) => id === 'other'),
+  ];
+  sorted.forEach(([id, meta]) => {
     items.push({ id, label: tCat(meta.label), count: meta.count });
   });
 
@@ -619,6 +623,21 @@ function renderUCChips() {
             onclick="toggleUC('${uc}')" data-uc="${uc}">
         ${tUC(uc)} <span class="uc-cnt">${cnt}</span>
       </span>`).join('');
+  syncUCScrollBtn();
+  row.addEventListener('scroll', syncUCScrollBtn, { passive: true });
+}
+
+function syncUCScrollBtn() {
+  const row = document.getElementById('ucScroller');
+  const btn = document.getElementById('ucScrollBtn');
+  if (!row || !btn) return;
+  const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 8;
+  btn.classList.toggle('hidden', atEnd);
+}
+
+function scrollUCRight() {
+  const row = document.getElementById('ucScroller');
+  if (row) row.scrollBy({ left: 240, behavior: 'smooth' });
 }
 
 function toggleUC(uc) {
@@ -700,7 +719,7 @@ function clearFilters() {
 function applyFilters() {
   let list = app.activeTab === 'all'
     ? app.allRepos
-    : app.allRepos.filter(r => r.category === app.activeTab);
+    : app.allRepos.filter(r => (r.categories || [r.category]).includes(app.activeTab));
 
   if (app.favOnly) list = list.filter(r => app.favorites.has(r.id));
   if (app.searchQ)    list = list.filter(r => (r.full_name + ' ' + r.description).toLowerCase().includes(app.searchQ));
@@ -730,8 +749,12 @@ function updateUCCounts(list) {
     counts[uc] = (counts[uc] || 0) + 1;
   }));
   document.querySelectorAll('.uc-chip').forEach(chip => {
+    const uc  = chip.dataset.uc;
+    const n   = counts[uc] || 0;
     const cnt = chip.querySelector('.uc-cnt');
-    if (cnt) cnt.textContent = counts[chip.dataset.uc] || 0;
+    if (cnt) cnt.textContent = n;
+    // hide zero-count chips unless they're actively selected
+    chip.style.display = (n === 0 && !app.selectedUCs.has(uc)) ? 'none' : '';
   });
 }
 
@@ -802,8 +825,10 @@ function cardHTML(repo, gr) {
   const [owner, name] = repo.full_name.split('/');
   const isSaved  = app.favorites.has(repo.id);
   const cats = app.data.categories;
-  const catLbl = tCat(cats[repo.category]?.label || repo.category);
-  const catIcon = getBrandIcon(repo.category);
+  const repoCats = repo.categories || [repo.category];
+  const catBadges = repoCats.map(c =>
+    `<span class="badge cat-badge ${c} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+  ).join('');
   const ucTags = (repo.use_cases || []).slice(0, 4).map(uc =>
     `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
            onclick="event.preventDefault();toggleUC('${uc}')">${tUC(uc)}</span>`).join('');
@@ -829,7 +854,7 @@ function cardHTML(repo, gr) {
         <div class="card-ucs">${ucTags}</div>
         <div class="card-meta">
           ${lang}
-          <span class="badge cat-badge ${repo.category} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${repo.category}')">${catIcon} ${catLbl}</span>
+          ${catBadges}
           <span class="fork-info">🍴${fmtNum(repo.forks)} · 🗓️ ${timeAgo(repo.created_at || repo.updated_at)}</span>
         </div>
       </div>
@@ -873,8 +898,10 @@ function renderList() {
     const rkCls = gr <= 3 ? ` lt-rank-${gr}` : '';
     const [owner, name] = repo.full_name.split('/');
     const isSaved = app.favorites.has(repo.id);
-    const catLbl = tCat(cats[repo.category]?.label || repo.category);
-    const catIcon = getBrandIcon(repo.category);
+    const repoCatsL = repo.categories || [repo.category];
+    const catBadgesL = repoCatsL.map(c =>
+      `<span class="badge cat-badge ${c} clickable" onclick="setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+    ).join('');
     const ucTags = (repo.use_cases || []).slice(0, 3).map(uc =>
       `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
              onclick="toggleUC('${uc}')">${tUC(uc)}</span>`).join(' ');
@@ -889,7 +916,7 @@ function renderList() {
       </td>
       <td class="lt-stars">★ ${fmtNum(repo.stars)}</td>
       <td class="lt-ucs">${ucTags}</td>
-      <td class="lt-cat"><span class="badge cat-badge ${repo.category} clickable" onclick="setTab('${repo.category}')">${catIcon} ${catLbl}</span></td>
+      <td class="lt-cat">${catBadgesL}</td>
       <td class="lt-lang">${repo.language ? `<span class="clickable" onclick="setLang('${repo.language}')">${repo.language}</span>` : '—'}</td>
       <td class="lt-updated">${timeAgo(repo.created_at || repo.updated_at)}</td>
       <td class="lt-fav">

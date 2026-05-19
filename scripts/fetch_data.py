@@ -83,6 +83,13 @@ QUERIES      = {
         f"topic:openclaw stars:>{MIN_STARS}",
         f"topic:clawbot stars:>{MIN_STARS}",
     ],
+    "hermes":   [
+        f"hermes agent in:name stars:>{MIN_STARS}",
+        f"hermes agent in:description stars:>{MIN_STARS}",
+        f"topic:hermes-agent stars:>{MIN_STARS}",
+        f"topic:nousresearch stars:>{MIN_STARS}",
+        f"hermes function calling in:description stars:>{MIN_STARS}",
+    ],
     "other":    [
         f"topic:ai-skills stars:>{MIN_STARS}",
         f"topic:llm-tools stars:>{MIN_STARS}",
@@ -123,6 +130,7 @@ CATEGORY_RULES = [
     ("copilot",  r"copilot"),
     ("deepseek", r"deepseek"),
     ("openclaw", r"openclaw"),
+    ("hermes",   r"hermes.?agent|nousresearch.*hermes|hermes.*nousresearch"),
 ]
 
 CATEGORY_META = {
@@ -131,7 +139,8 @@ CATEGORY_META = {
     "cursor":   {"label": "Cursor",    "icon": "🎯", "color": "#a78bfa"},
     "copilot":  {"label": "Copilot",   "icon": "🚀", "color": "#22d3ee"},
     "deepseek": {"label": "DeepSeek",  "icon": "🐋", "color": "#4f86f7"},
-    "openclaw": {"label": "OpenClaw",  "icon": "🦞", "color": "#e879f9"},
+    "openclaw": {"label": "OpenClaw",   "icon": "🦞", "color": "#e879f9"},
+    "hermes":   {"label": "Hermes Agent", "icon": "🪽", "color": "#7C3AED"},
     "other":    {"label": "其他 AI",   "icon": "✨", "color": "#f59e0b"},
 }
 
@@ -148,18 +157,35 @@ def analyze_use_cases(repo: dict) -> list[str]:
             found.append(label)
     return found or ["通用工具"]
 
-def assign_category(repo: dict, hint_cat: str) -> str:
-    text = " ".join([
+def assign_categories(repo: dict, hint_cat: str) -> tuple[str, list[str]]:
+    # Name + topics are strong signals; description is supplementary
+    name_topics = " ".join([
         repo.get("full_name", ""),
-        repo.get("description", "") or "",
         " ".join(repo.get("topics", [])),
     ]).lower()
-    for cat, pattern in CATEGORY_RULES:
-        if re.search(pattern, text):
-            return cat
-    return hint_cat  # fall back to the search bucket
+    desc = (repo.get("description", "") or "").lower()
+
+    name_matched = [cat for cat, pat in CATEGORY_RULES if re.search(pat, name_topics)]
+    desc_matched  = [cat for cat, pat in CATEGORY_RULES if re.search(pat, desc)]
+
+    # Deduplicate while preserving order (name matches come first)
+    seen: dict[str, bool] = {}
+    for cat in name_matched + desc_matched:
+        seen.setdefault(cat, True)
+    all_cats = list(seen)
+
+    if not all_cats:
+        all_cats = [hint_cat]
+
+    # Primary: first name/topic match → first desc match → hint
+    primary = name_matched[0] if name_matched else (desc_matched[0] if desc_matched else hint_cat)
+    if all_cats[0] != primary:
+        all_cats = [primary] + [c for c in all_cats if c != primary]
+
+    return primary, all_cats
 
 def normalize_repo(raw: dict, hint_cat: str) -> dict:
+    primary, cats = assign_categories(raw, hint_cat)
     return {
         "id":          raw["id"],
         "full_name":   raw["full_name"],
@@ -171,7 +197,8 @@ def normalize_repo(raw: dict, hint_cat: str) -> dict:
         "url":         raw["html_url"],
         "created_at":  raw["created_at"],
         "updated_at":  raw["updated_at"],
-        "category":    assign_category(raw, hint_cat),
+        "category":    primary,
+        "categories":  cats,
         "use_cases":   analyze_use_cases(raw),
     }
 
@@ -227,10 +254,12 @@ def main():
 
     repos.sort(key=lambda r: r["stars"], reverse=True)
 
-    # 统计分类数量
+    # 统计分类数量：按 categories 数组计（多分类可重复，All 用 total 不重复）
     cat_counts: dict[str, int] = {k: 0 for k in CATEGORY_META}
     for r in repos:
-        cat_counts[r["category"]] = cat_counts.get(r["category"], 0) + 1
+        for cat in r.get("categories", [r["category"]]):
+            if cat in cat_counts:
+                cat_counts[cat] += 1
 
     categories_meta = {}
     for k, meta in CATEGORY_META.items():
