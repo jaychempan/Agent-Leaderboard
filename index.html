@@ -52,7 +52,10 @@
   <div id="noData" class="no-data" style="display:none"></div>
 
   <!-- Category tabs -->
-  <div class="tabs" id="tabs"></div>
+  <div class="tabs-wrap">
+    <div class="tabs" id="tabs"></div>
+    <button class="tabs-scroll-btn hidden" id="tabsScrollBtn" onclick="scrollTabsRight()" aria-label="Scroll right">›</button>
+  </div>
 
   <!-- Brand spotlight (shown when a specific agent tab is active) -->
   <div id="brandSpotlight"></div>

@@ -666,6 +666,22 @@ function renderTabs() {
             onclick="setTab('${it.id}')">
       ${getBrandIcon(it.id)} ${it.label} <span class="cnt">${it.count}</span>
     </button>`).join('');
+  syncTabsScrollBtn();
+  tabs.removeEventListener('scroll', syncTabsScrollBtn);
+  tabs.addEventListener('scroll', syncTabsScrollBtn, { passive: true });
+}
+
+function syncTabsScrollBtn() {
+  const tabs = document.getElementById('tabs');
+  const btn  = document.getElementById('tabsScrollBtn');
+  if (!tabs || !btn) return;
+  const atEnd = tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 8;
+  btn.classList.toggle('hidden', atEnd);
+}
+
+function scrollTabsRight() {
+  const tabs = document.getElementById('tabs');
+  if (tabs) tabs.scrollBy({ left: 240, behavior: 'smooth' });
 }
 
 function setTab(id) {

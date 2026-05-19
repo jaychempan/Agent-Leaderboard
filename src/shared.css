@@ -299,14 +299,41 @@ button, select, input { font: inherit; }
 .container { max-width: 1320px; margin: 0 auto; padding: 18px 16px 60px; }
 
 /* ── Tabs ───────────────────────────────────────────────────────── */
+.tabs-wrap {
+  position: relative;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
 .tabs {
   display: flex;
   gap: 3px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+  flex-wrap: nowrap;
+  overflow-x: auto;
   padding-bottom: 10px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs-scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 10px;
+  width: 48px;
+  border: none;
+  background: linear-gradient(to right, transparent, var(--bg) 55%);
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+  transition: opacity 0.2s;
+  pointer-events: auto;
+}
+.tabs-scroll-btn:hover { color: var(--text); }
+.tabs-scroll-btn.hidden { opacity: 0; pointer-events: none; }
 
 /* ── Brand spotlight ─────────────────────────────────────────────── */
 .brand-spotlight {
@@ -936,9 +963,6 @@ button, select, input { font: inherit; }
   .filter-bar { gap: 6px; }
   .filter-bar input[type=search] { min-width: 0; flex: 1 1 100%; }
 
-  /* Tabs: horizontal scroll, no wrap */
-  .tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-  .tabs::-webkit-scrollbar { display: none; }
   .tab { flex-shrink: 0; }
 
   /* UC chips: slightly larger touch target */
