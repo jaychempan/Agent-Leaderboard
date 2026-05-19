@@ -464,11 +464,11 @@ function updateFavBtn() {
 
 /* ── Favorites modal ────────────────────────────────────────────── */
 const FAV_SECTION_LABELS = {
-  skills:     { en: 'Skills',        zh: 'Skills' },
-  mcp:        { en: 'MCP Servers',   zh: 'MCP Servers' },
-  research:   { en: 'Auto Research', zh: 'Auto Research' },
-  prompts:    { en: 'Prompt Library',zh: 'Prompt Library' },
-  frameworks: { en: 'AI Frameworks', zh: 'AI Frameworks' },
+  skills:     { en: 'Skills',        zh: 'Skills 技能' },
+  mcp:        { en: 'MCP Servers',   zh: 'MCP 服务器' },
+  research:   { en: 'Auto Research', zh: '自动化研究' },
+  prompts:    { en: 'Prompt Library',zh: 'Prompt 库' },
+  frameworks: { en: 'AI Frameworks', zh: 'AI 框架' },
 };
 
 function openFavModal() {
@@ -504,10 +504,14 @@ function openFavModal() {
         ${s.label} <span class="cnt">${s.repos.length}</span>
       </button>`).join('');
 
-    const sectionsHtml = sections.map((s, i) => `
+    const sectionsHtml = sections.map((s, i) => {
+      const allForPage = window[ROUTES[s.page]?.dataKey]?.repos || [];
+      const rankMap = new Map(allForPage.map((r, idx) => [r.id, idx + 1]));
+      return `
       <div class="fav-modal-section${i === 0 ? '' : ' hidden'}" data-page="${s.page}">
-        <div class="fav-modal-grid">${s.repos.map(r => cardHTML(r, 999)).join('')}</div>
-      </div>`).join('');
+        <div class="fav-modal-grid">${s.repos.map(r => cardHTML(r, rankMap.get(r.id) ?? 999)).join('')}</div>
+      </div>`;
+    }).join('');
 
     modal.innerHTML = `
       <div class="fav-modal" onclick="event.stopPropagation()">
@@ -1047,7 +1051,7 @@ function cardHTML(repo, gr) {
         <div class="card-meta">
           ${lang}
           ${catBadges}
-          <span class="fork-info">🍴${fmtNum(repo.forks)} · 🗓️ ${timeAgo(repo.created_at || repo.updated_at)}</span>
+          <span class="fork-info"><svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm0 2.122a2.25 2.25 0 1 0-1.5 0v.878A2.25 2.25 0 0 0 5.75 8.5h1.5v2.128a2.251 2.251 0 1 0 1.5 0V8.5h1.5a2.25 2.25 0 0 0 2.25-2.25v-.878a2.25 2.25 0 1 0-1.5 0v.878a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 5 6.25v-.878zm3.75 7.378a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm3-8.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0z"/></svg>${fmtNum(repo.forks)} · <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5a.75.75 0 0 1 1.5 0Z"/></svg> ${timeAgo(repo.created_at || repo.updated_at)}</span>
         </div>
       </div>
     </a>`;

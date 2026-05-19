@@ -817,7 +817,7 @@ button, select, input { font: inherit; }
 .cat-badge.coding        { background:rgba(34,211,238,.15);  color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
 .cat-badge.writing       { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 
-.fork-info { font-size: 10px; color: var(--muted); margin-left: auto; }
+.fork-info { font-size: 10px; color: var(--muted); margin-left: auto; display: inline-flex; align-items: center; gap: 3px; }
 
 /* ── List View ──────────────────────────────────────────────────── */
 .list-view { margin-bottom: 20px; }
