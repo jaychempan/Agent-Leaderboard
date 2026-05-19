@@ -389,6 +389,8 @@ button, select, input { font: inherit; }
 .tab[data-id=cursor].active .cnt  { background:#a78bfa; }
 .tab[data-id=copilot].active { border-color:#22d3ee; }
 .tab[data-id=copilot].active .cnt { background:#22d3ee; color:#0d1117; }
+.tab[data-id=gemini].active  { border-color:#4285F4; }
+.tab[data-id=gemini].active .cnt  { background:#4285F4; }
 .tab[data-id=deepseek].active { border-color:#4D6BFE; }
 .tab[data-id=deepseek].active .cnt { background:#4D6BFE; }
 .tab[data-id=openclaw].active { border-color:#f43f5e; }
@@ -734,6 +736,7 @@ button, select, input { font: inherit; }
 .cat-badge.codex   { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }
 .cat-badge.cursor  { background:rgba(167,139,250,.15);color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
 .cat-badge.copilot  { background:rgba(34,211,238,.15); color:#67e8f9; border:1px solid rgba(34,211,238,.3); }
+.cat-badge.gemini   { background:rgba(66,133,244,.15); color:#8ab4f8; border:1px solid rgba(66,133,244,.3); }
 .cat-badge.deepseek { background:rgba(77,107,254,.15); color:#818cf8; border:1px solid rgba(77,107,254,.3); }
 .cat-badge.openclaw { background:rgba(239,68,68,.15);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
 .cat-badge.hermes   { background:rgba(124,58,237,.15); color:#a78bfa; border:1px solid rgba(124,58,237,.3); }

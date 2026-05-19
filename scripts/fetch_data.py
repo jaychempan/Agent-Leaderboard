@@ -58,6 +58,10 @@ QUERIES      = {
         f"openai codex in:description stars:>{MIN_STARS}",
         f"topic:openai-codex stars:>{MIN_STARS}",
         f"topic:codex stars:>{MIN_STARS}",
+        f"gpt-4 in:name stars:>{MIN_STARS}",
+        f"chatgpt in:name stars:>{MIN_STARS}",
+        f"topic:chatgpt stars:>{MIN_STARS}",
+        f"topic:gpt-4 stars:>{MIN_STARS}",
     ],
     "cursor":   [
         f"cursor in:name stars:>{MIN_STARS}",
@@ -77,6 +81,13 @@ QUERIES      = {
         f"topic:deepseek stars:>{MIN_STARS}",
         f"topic:deepseek-coder stars:>{MIN_STARS}",
     ],
+    "gemini":   [
+        f"gemini in:name stars:>{MIN_STARS}",
+        f"gemini in:description stars:>{MIN_STARS}",
+        f"topic:gemini stars:>{MIN_STARS}",
+        f"topic:google-gemini stars:>{MIN_STARS}",
+        f"topic:gemini-api stars:>{MIN_STARS}",
+    ],
     "openclaw": [
         f"openclaw in:name stars:>{MIN_STARS}",
         f"openclaw in:description stars:>{MIN_STARS}",
@@ -93,8 +104,12 @@ QUERIES      = {
     "other":    [
         f"topic:ai-skills stars:>{MIN_STARS}",
         f"topic:llm-tools stars:>{MIN_STARS}",
+        f"topic:agent-skills stars:>{MIN_STARS}",
         f"skill in:name llm stars:>{MIN_STARS}",
         f"ai skill in:name stars:>{MIN_STARS}",
+        f"agentic skills in:description stars:>{MIN_STARS}",
+        f"agent skills in:description stars:>{MIN_STARS}",
+        f"skills framework in:description stars:>{MIN_STARS}",
     ],
 }
 
@@ -125,7 +140,8 @@ USE_CASE_RULES = [
 # ── 分类规则 ─────────────────────────────────────────────────────────────────
 CATEGORY_RULES = [
     ("claude",   r"claude|anthropic"),
-    ("codex",    r"codex"),
+    ("codex",    r"codex|gpt.?4|chatgpt"),
+    ("gemini",   r"gemini"),
     ("cursor",   r"cursor"),
     ("copilot",  r"copilot"),
     ("deepseek", r"deepseek"),
@@ -138,6 +154,7 @@ CATEGORY_META = {
     "codex":    {"label": "Codex",     "icon": "⚡", "color": "#10b981"},
     "cursor":   {"label": "Cursor",    "icon": "🎯", "color": "#a78bfa"},
     "copilot":  {"label": "Copilot",   "icon": "🚀", "color": "#22d3ee"},
+    "gemini":   {"label": "Gemini",    "icon": "✦",  "color": "#1a73e8"},
     "deepseek": {"label": "DeepSeek",  "icon": "🐋", "color": "#4f86f7"},
     "openclaw": {"label": "OpenClaw",   "icon": "🦞", "color": "#e879f9"},
     "hermes":   {"label": "Hermes Agent", "icon": "🪽", "color": "#7C3AED"},

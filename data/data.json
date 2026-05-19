@@ -16,7 +16,13 @@
       "label": "Codex",
       "icon": "⚡",
       "color": "#10b981",
-      "count": 34
+      "count": 293
+    },
+    "gemini": {
+      "label": "Gemini",
+      "icon": "✦",
+      "color": "#1a73e8",
+      "count": 112
     },
     "cursor": {
       "label": "Cursor",
