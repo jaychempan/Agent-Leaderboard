@@ -9,7 +9,7 @@ const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
-    nav_skills:     'Skill 技能',
+    nav_skills:     'Skills 技能',
     nav_research:   '自动化研究',
     nav_mcp:        'MCP 服务器',
     nav_prompts:    'Prompt 库',
@@ -69,7 +69,7 @@ const I18N = {
     nav_prompts:    'Prompt Library',
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
-    skills_title:   'Agent Leaderboard',
+    skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
     research_title: 'Auto Research Leaderboard',
     research_sub:   'One-stop hub for top AI research tools — from deep research agents to literature review, all in one place.',
