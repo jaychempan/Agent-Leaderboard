@@ -104,6 +104,6 @@ def search_repos(query: str, token: str,
         if len(items) < per_page or len(results) >= total_count:
             break
 
-        time.sleep(0.6)   # gentle inter-page throttle
+        time.sleep(1.5)   # stay under 30 req/min Search API limit
 
     return results

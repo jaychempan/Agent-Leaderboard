@@ -69,7 +69,7 @@ const I18N = {
     nav_prompts:    'Prompt Library',
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
-    skills_title:   'Agent Skills Leaderboard',
+    skills_title:   'Agent Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
     research_title: 'Auto Research Leaderboard',
     research_sub:   'One-stop hub for top AI research tools — from deep research agents to literature review, all in one place.',
@@ -370,14 +370,15 @@ function init(config) {
   document.documentElement.dataset.theme = app.theme === 'light' ? 'light' : 'dark';
 
   // update page title
+  const _brand = app.lang === 'zh' ? 'Agent 排行榜' : 'Agent Leaderboard';
   const PAGE_TITLES = {
-    skills: 'Agent Skills Leaderboard',
-    mcp: 'MCP Servers — Agent Skills Leaderboard',
-    research: 'Auto Research — Agent Skills Leaderboard',
-    prompts: 'Prompt Library — Agent Skills Leaderboard',
-    frameworks: 'AI Frameworks — Agent Skills Leaderboard',
+    skills: _brand,
+    mcp: `MCP Servers — ${_brand}`,
+    research: `Auto Research — ${_brand}`,
+    prompts: `Prompt Library — ${_brand}`,
+    frameworks: `AI Frameworks — ${_brand}`,
   };
-  document.title = PAGE_TITLES[config.page] || 'Agent Skills Leaderboard';
+  document.title = PAGE_TITLES[config.page] || _brand;
 
   // load data
   const raw = window[config.dataKey];
@@ -559,7 +560,7 @@ function renderNav() {
   nav.innerHTML = `
     <a class="nav-brand" href="#" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
       <img src="favicon.svg" alt="logo" />
-      <span class="nav-brand-text">Agent Skills Leaderboard</span>
+      <span class="nav-brand-text">${app.lang === 'zh' ? 'Agent 排行榜' : 'Agent Leaderboard'}</span>
     </a>
     <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu" style="display:none">
       <span></span><span></span><span></span>

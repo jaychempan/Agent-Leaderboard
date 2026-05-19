@@ -39,11 +39,23 @@ def is_blocked(repo: dict) -> bool:
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
 
-_SKILL_RE = re.compile(r'\bskills?\b', re.I)
+_RELEVANT_RE = re.compile(
+    r'\bskills?\b'
+    r'|agent(?:ic)?'
+    r'|tool.?use|tool.?call|function.?call'
+    r'|\bmcp\b'
+    r'|copilot|cursor|claude|codex|gemini|deepseek|windsurf|cline'
+    r'|llm.?tool|ai.?assistant|coding.?assistant'
+    r'|prompt.?(?:lib|engineer|template|collection)'
+    r'|rules?(?:\.md|file)?',
+    re.I,
+)
 
 def is_skills_relevant(repo: dict) -> bool:
-    name_desc = repo.get("full_name", "") + " " + (repo.get("description", "") or "")
-    return bool(_SKILL_RE.search(name_desc))
+    text = (repo.get("full_name", "") + " "
+            + (repo.get("description", "") or "") + " "
+            + " ".join(repo.get("topics", [])))
+    return bool(_RELEVANT_RE.search(text))
 
 QUERIES      = {
     "claude":   [
@@ -248,10 +260,10 @@ def main():
                 print(f"    +{new} repos (total {len(repos)})")
             except Exception as e:
                 print(f"    ✗ 跳过: {e}", file=sys.stderr)
-            time.sleep(0.4)   # gentle throttle
+            time.sleep(2.2)   # stay under 30 req/min Search API limit
 
     # ── 增量合并：与现有数据合并，防止 API 限流导致数据丢失 ────────────────────
-    if os.path.exists("data.json"):
+    if os.path.exists("data/data.json"):
         try:
             with open("data/data.json", "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
