@@ -59,6 +59,10 @@
 }
 #pageLoader.fade-out { opacity: 0; pointer-events: none; }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @keyframes shimmer {
   0%   { background-position: -700px 0; }
   100% { background-position:  700px 0; }
@@ -302,6 +306,61 @@ button, select, input { font: inherit; }
   margin-bottom: 12px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 10px;
+}
+
+/* ── Brand spotlight ─────────────────────────────────────────────── */
+.brand-spotlight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  animation: fadeIn .18s ease;
+}
+.bs-logo {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.bs-logo .brand-logo, .bs-logo svg, .bs-logo img {
+  width: 40px !important; height: 40px !important;
+  min-width: 40px;
+  display: block;
+  object-fit: contain;
+}
+.bs-body { flex: 1; min-width: 0; }
+.bs-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.bs-count { font-weight: 400; color: var(--muted); font-size: 12px; }
+.bs-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.bs-links { display: flex; gap: 8px; flex-shrink: 0; }
+.bs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: var(--surface2);
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.bs-link:hover { color: var(--text); border-color: var(--accent); }
+.bs-primary {
+  background: var(--accent);
+  color: #fff !important;
+  border-color: transparent !important;
+}
+.bs-primary:hover { opacity: .88; }
+@media (max-width: 600px) {
+  .brand-spotlight { flex-wrap: wrap; }
+  .bs-links { width: 100%; }
 }
 .tab {
   align-items: center;
@@ -746,7 +805,7 @@ button, select, input { font: inherit; }
 .lt-stars { color: var(--gold); font-weight: 700; white-space: nowrap; }
 .lt-ucs { max-width: 220px; }
 .lt-ucs .uc-tag { display: inline-block; margin: 2px; }
-.lt-cat {}
+.lt-cat { display: flex; flex-wrap: wrap; gap: 4px; }
 .lt-lang { color: var(--muted); font-size: 12px; }
 .lt-updated { color: var(--muted); font-size: 11px; white-space: nowrap; }
 .lt-fav { width: 32px; text-align: center; }

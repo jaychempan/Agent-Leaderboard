@@ -9,11 +9,11 @@ const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
-    nav_skills:     'Skills',
-    nav_research:   'Auto Research',
-    nav_mcp:        'MCP Servers',
-    nav_prompts:    'Prompt Library',
-    nav_frameworks: 'AI Frameworks',
+    nav_skills:     'Skill 技能',
+    nav_research:   '自动化研究',
+    nav_mcp:        'MCP 服务器',
+    nav_prompts:    'Prompt 库',
+    nav_frameworks: 'AI 框架',
     nav_favorites:  '收藏',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
@@ -194,6 +194,66 @@ const ROUTES = {
   frameworks: { page: 'frameworks', dataKey: 'FRAMEWORKS_DATA', noDataHint: 'Run python3 fetch_frameworks.py' },
 };
 
+/* ── Official brand links (Skills page) ─────────────────────────── */
+const BRAND_LINKS = {
+  claude:   {
+    home: 'https://claude.ai',
+    homeLabel: 'claude.ai',
+    skills: 'https://docs.anthropic.com/en/docs/claude-code',
+    skillsLabel: 'Claude Code Docs',
+    desc_zh: 'Anthropic 出品的 AI 助手 · Claude Code 为开发者带来自主编码能力',
+    desc_en: "Anthropic's AI assistant — Claude Code brings agentic coding to your workflow",
+  },
+  codex:    {
+    home: 'https://platform.openai.com',
+    homeLabel: 'platform.openai.com',
+    skills: 'https://platform.openai.com/docs',
+    skillsLabel: 'OpenAI Docs',
+    desc_zh: 'OpenAI 代码生成模型 · 驱动众多开发者工具与自动补全',
+    desc_en: "OpenAI's code model — powering developer tools and AI completions",
+  },
+  cursor:   {
+    home: 'https://cursor.com',
+    homeLabel: 'cursor.com',
+    skills: 'https://cursor.com/features',
+    skillsLabel: 'Cursor Features',
+    desc_zh: 'AI 优先的代码编辑器 · 深度集成 LLM 的开发体验',
+    desc_en: 'AI-first code editor with deep LLM integration and inline chat',
+  },
+  copilot:  {
+    home: 'https://github.com/features/copilot',
+    homeLabel: 'github.com/copilot',
+    skills: 'https://github.com/marketplace',
+    skillsLabel: 'GitHub Marketplace',
+    desc_zh: 'GitHub AI 编程助手 · 无缝融入开发工作流的智能补全',
+    desc_en: "GitHub's AI coding assistant — seamlessly integrated into your dev workflow",
+  },
+  deepseek: {
+    home: 'https://deepseek.com',
+    homeLabel: 'deepseek.com',
+    skills: 'https://github.com/deepseek-ai',
+    skillsLabel: 'DeepSeek GitHub',
+    desc_zh: '开源 AI 模型 · 专为代码与推理优化，性能卓越',
+    desc_en: 'Open-source AI models — optimized for code generation and advanced reasoning',
+  },
+  openclaw: {
+    home: null,
+    homeLabel: null,
+    skills: null,
+    skillsLabel: null,
+    desc_zh: '开源 AI 编程工具与社区扩展生态',
+    desc_en: 'Open-source AI coding tools and community-built extensions',
+  },
+  hermes:   {
+    home: 'https://hermes-agent.nousresearch.com',
+    homeLabel: 'hermes-agent.nousresearch.com',
+    skills: 'https://nousresearch.com',
+    skillsLabel: 'NousResearch',
+    desc_zh: 'NousResearch 出品 · 专为函数调用与工具使用优化的 Agent 模型',
+    desc_en: "NousResearch's agent model — optimized for function calling and tool use",
+  },
+};
+
 /* ── Brand icon map (Skills page) ───────────────────────────────── */
 const _GH = 'https://raw.githubusercontent.com';
 const _SI = `${_GH}/simple-icons/simple-icons/develop/icons`;
@@ -323,10 +383,12 @@ function init(config) {
   if (noData) noData.style.display = 'none';
   app.data     = raw;
   app.allRepos = raw.repos;
+  enrichRepoCategories();
 
   renderNav();
   renderHero();
   renderTabs();
+  renderBrandSpotlight();
   renderFilterBar();
   renderUCChips();
   applyFilters();
@@ -599,7 +661,39 @@ function setTab(id) {
   app.activeTab  = id;
   app.currentPage = 1;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === id));
+  renderBrandSpotlight();
   applyFilters();
+}
+
+/* ── Brand spotlight ─────────────────────────────────────────────── */
+function renderBrandSpotlight() {
+  const el = document.getElementById('brandSpotlight');
+  if (!el) return;
+  const id = app.activeTab;
+  const info = BRAND_LINKS[id];
+  if (!info || id === 'all') { el.innerHTML = ''; return; }
+
+  const logo = BRAND_LOGOS[id] || '';
+  const desc = app.lang === 'zh' ? info.desc_zh : info.desc_en;
+  const cats = app.data?.categories || {};
+  const count = cats[id]?.count ?? '';
+
+  const homeBtn = info.home
+    ? `<a class="bs-link bs-primary" href="${info.home}" target="_blank" rel="noopener">↗ ${info.homeLabel}</a>`
+    : '';
+  const skillsBtn = info.skills
+    ? `<a class="bs-link" href="${info.skills}" target="_blank" rel="noopener">📖 ${info.skillsLabel}</a>`
+    : '';
+
+  el.innerHTML = `
+    <div class="brand-spotlight">
+      <div class="bs-logo">${logo}</div>
+      <div class="bs-body">
+        <div class="bs-name">${tCat(cats[id]?.label || id)}<span class="bs-count">${count ? ` · ${count} repos` : ''}</span></div>
+        <div class="bs-desc">${desc}</div>
+      </div>
+      <div class="bs-links">${homeBtn}${skillsBtn}</div>
+    </div>`;
 }
 
 /* ── Language select ─────────────────────────────────────────────── */
@@ -713,6 +807,38 @@ function clearFilters() {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === 'all'));
   const fb = document.getElementById('favBtn'); if (fb) fb.classList.remove('active');
   applyFilters();
+}
+
+/* ── Client-side multi-category computation (fallback for old data) ── */
+const _CAT_PATTERNS = [
+  ['claude',   /claude|anthropic/i],
+  ['codex',    /\bcodex\b/i],
+  ['cursor',   /\bcursor\b/i],
+  ['copilot',  /copilot/i],
+  ['deepseek', /deepseek/i],
+  ['openclaw', /openclaw/i],
+  ['hermes',   /hermes[\s-]?agent|nousresearch/i],
+];
+
+function enrichRepoCategories() {
+  (app.allRepos || []).forEach(repo => {
+    if (repo.categories) return;
+    const nameTopics = (repo.full_name + ' ' + (repo.topics || []).join(' ')).toLowerCase();
+    const desc       = (repo.description || '').toLowerCase();
+    const nameCats   = _CAT_PATTERNS.filter(([, re]) => re.test(nameTopics)).map(([c]) => c);
+    const descCats   = _CAT_PATTERNS.filter(([, re]) => re.test(desc)).map(([c]) => c);
+    const seen       = [...new Set([...nameCats, ...descCats])];
+    repo.categories  = seen.length ? seen : [repo.category];
+  });
+
+  // Recompute per-category counts based on multi-category assignments
+  const cats = app.data?.categories;
+  if (!cats) return;
+  const counts = {};
+  (app.allRepos || []).forEach(repo => {
+    repo.categories.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
+  });
+  Object.keys(cats).forEach(id => { cats[id].count = counts[id] || 0; });
 }
 
 /* ── Apply filters ──────────────────────────────────────────────── */
