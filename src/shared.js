@@ -343,8 +343,13 @@ function timeAgo(iso) {
 
 /* ── Router ─────────────────────────────────────────────────────── */
 function navigate(page) {
-  location.hash = page === 'skills' ? '' : page;
-  router();
+  const newHash = page === 'skills' ? '' : page;
+  const cur = location.hash.replace(/^#\/?/, '') || 'skills';
+  if (cur === page) {
+    router(); // hash won't change, so hashchange won't fire
+  } else {
+    location.hash = newHash; // hashchange will fire and call router()
+  }
 }
 
 function router() {
