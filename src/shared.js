@@ -370,15 +370,7 @@ function init(config) {
   document.documentElement.dataset.theme = app.theme === 'light' ? 'light' : 'dark';
 
   // update page title
-  const _brand = app.lang === 'zh' ? 'Agent 排行榜' : 'Agent Leaderboard';
-  const PAGE_TITLES = {
-    skills: _brand,
-    mcp: `MCP Servers — ${_brand}`,
-    research: `Auto Research — ${_brand}`,
-    prompts: `Prompt Library — ${_brand}`,
-    frameworks: `AI Frameworks — ${_brand}`,
-  };
-  document.title = PAGE_TITLES[config.page] || _brand;
+  updatePageTitle();
 
   // load data
   const raw = window[config.dataKey];
@@ -1162,6 +1154,10 @@ function goPage(n) {
 }
 
 /* ── Render all (used on lang toggle) ──────────────────────────── */
+function updatePageTitle() {
+  document.title = 'Agent Leaderboard';
+}
+
 function renderAll() {
   renderNav();
   renderHero();
@@ -1171,6 +1167,7 @@ function renderAll() {
   applyFilters();
   applyThemeBtn();
   applyLangBtn();
+  updatePageTitle();
 }
 
 /* ── Filter Bar (i18n-aware, rendered from JS) ──────────────────── */
@@ -1216,6 +1213,7 @@ function renderFilterBar() {
 /* ── Boot ───────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', router);
 window.addEventListener('hashchange', router);
+window.addEventListener('resize', () => { syncTabsScrollBtn(); syncUCScrollBtn(); });
 
 // Auto-follow system theme only if user hasn't manually set one
 window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {

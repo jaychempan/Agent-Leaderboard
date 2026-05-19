@@ -140,10 +140,12 @@ button, select, input { font: inherit; }
   z-index: 100;
   height: var(--nav-h);
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0;
   padding: 0 20px;
   backdrop-filter: blur(8px);
+  overflow: visible;
 }
 
 .nav-brand {
@@ -155,9 +157,10 @@ button, select, input { font: inherit; }
   color: var(--text);
   flex-shrink: 0;
   margin-right: 20px;
+  white-space: nowrap;
 }
 .nav-brand img { width: 26px; height: 26px; border-radius: 6px; }
-.nav-brand-text { color: var(--text); }
+.nav-brand-text { color: var(--text); white-space: nowrap; }
 
 .nav-links {
   display: flex;
@@ -173,6 +176,7 @@ button, select, input { font: inherit; }
   font-size: 13px;
   font-weight: 500;
   padding: 6px 12px;
+  white-space: nowrap;
   transition: background var(--transition), color var(--transition);
 }
 .nav-link:hover { background: var(--surface2); color: var(--text); }
@@ -205,6 +209,7 @@ button, select, input { font: inherit; }
   align-items: center;
   gap: 6px;
   margin-left: auto;
+  flex-shrink: 0;
 }
 .nav-btn {
   align-items: center;
@@ -397,6 +402,8 @@ button, select, input { font: inherit; }
   color: var(--muted);
   cursor: pointer;
   display: flex;
+  white-space: nowrap;
+  flex-shrink: 0;
   font-size: 13px;
   gap: 5px;
   padding: 5px 11px;
@@ -952,49 +959,32 @@ button, select, input { font: inherit; }
 .navbar.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ══════════════════════════════════════════════════════════════════
-   RESPONSIVE — tablet ≤768px
+   RESPONSIVE — laptop ≤1024px
 ══════════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  /* Navbar: hide friend links to save space */
-  .nav-friend { display: none; }
-  .nav-divider { display: none; }
-
-  /* Filter bar: wrap to two rows */
-  .filter-bar { gap: 6px; }
-  .filter-bar input[type=search] { min-width: 0; flex: 1 1 100%; }
-
-  .tab { flex-shrink: 0; }
-
-  /* UC chips: slightly larger touch target */
-  .uc-chip { padding: 5px 11px; font-size: 12px; }
-}
-
 /* ══════════════════════════════════════════════════════════════════
-   RESPONSIVE — phone ≤480px
+   RESPONSIVE — tablet ≤1024px  (hamburger nav kicks in here)
 ══════════════════════════════════════════════════════════════════ */
-@media (max-width: 480px) {
-  /* Navbar: single fixed-height row, allow dropdown to overflow */
+@media (max-width: 1024px) {
+  /* Navbar: collapse to hamburger */
   .navbar {
-    padding: 0 12px;
+    padding: 0 14px;
     flex-wrap: nowrap;
     align-items: center;
     height: var(--nav-h);
     overflow: visible;
   }
   .nav-brand { margin-right: 0; flex-shrink: 0; }
-  .nav-brand-text { display: none; }
+  .nav-friend { display: none; }
+  .nav-divider { display: none; }
 
-  /* Show hamburger, override inline display:none */
+  /* Show hamburger */
   .nav-hamburger { display: flex !important; margin-left: 8px; flex-shrink: 0; }
 
   /* Push actions to the right */
   .nav-actions { margin-left: auto; gap: 4px; }
-  .nav-btn { padding: 5px 7px; font-size: 11px; }
+  .nav-btn { padding: 5px 8px; font-size: 11px; }
 
-  /* Hide text labels on mobile, keep icons */
-  .nav-btn .full { display: none; }
-
-  /* Nav links: absolute overlay dropdown below navbar */
+  /* Nav links: dropdown overlay */
   .nav-links {
     display: none;
     position: absolute;
@@ -1013,6 +1003,37 @@ button, select, input { font: inherit; }
   .nav-link { padding: 10px 14px; font-size: 14px; border-radius: 8px; width: 100%; }
   .nav-link .full { display: inline; }
 
+  /* Filter bar: search takes own row, preset group scrolls */
+  .filter-bar { gap: 6px; flex-wrap: wrap; }
+  .filter-bar input[type=search] { min-width: 0; flex: 1 1 100%; order: -1; }
+  .filter-bar select { flex: 1; min-width: 0; }
+  .preset-group { overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
+  .preset-group::-webkit-scrollbar { display: none; }
+  .view-toggle { flex-shrink: 0; }
+
+  /* Hero */
+  .hero { padding: 22px 18px 18px; }
+  .hero-logo img { width: 40px; height: 40px; }
+
+  .tab { flex-shrink: 0; }
+
+  /* UC chips: slightly larger touch target */
+  .uc-chip { padding: 5px 11px; font-size: 12px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE — phone ≤480px
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* Navbar: tighter padding, hide brand text */
+  .navbar { padding: 0 12px; }
+  .nav-brand { margin-right: 0; }
+  .nav-brand-text { display: none; }
+  .nav-btn { padding: 5px 7px; font-size: 11px; }
+
+  /* Hide text labels on action buttons, keep icons */
+  .nav-btn .full { display: none; }
+
   /* Hero */
   .hero { padding: 18px 14px 16px; }
   .hero-logo img { width: 36px; height: 36px; }
@@ -1026,9 +1047,10 @@ button, select, input { font: inherit; }
 
   /* Filter bar: full-width elements, preset groups scroll */
   .filter-bar { gap: 5px; }
-  .filter-bar input[type=search] { flex: 1 1 100%; }
+  .filter-bar input[type=search] { flex: 1 1 100%; order: -1; }
   .filter-bar select { flex: 1; min-width: 0; }
-  .preset-group { overflow-x: auto; flex-shrink: 0; }
+  .preset-group { overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
+  .preset-group::-webkit-scrollbar { display: none; }
   .preset-btn { padding: 8px 8px; font-size: 11px; }
   .view-toggle { flex-shrink: 0; }
 
@@ -1063,6 +1085,21 @@ button, select, input { font: inherit; }
   .skel-grid { grid-template-columns: 1fr; padding: 0 10px; }
   .skel-hero-title { width: 220px; }
   .skel-pills { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE — small phone ≤360px
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 360px) {
+  .nav-btn { padding: 4px 6px; font-size: 10px; }
+  .hero h1 { font-size: 16px; }
+  .hero { padding: 14px 10px 12px; }
+  .container { padding: 10px 8px 40px; }
+  .tab { padding: 4px 8px; font-size: 12px; }
+  .preset-btn { padding: 6px 6px; font-size: 10px; }
+  .card { padding: 10px 10px; }
+  .card-name { font-size: 12px; }
+  .meta-pill { font-size: 10px; padding: 2px 7px; }
 }
 
 /* ── Favorites modal ──────────────────────────────────────────────── */
