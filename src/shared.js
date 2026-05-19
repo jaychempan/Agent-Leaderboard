@@ -1010,20 +1010,25 @@ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e 
 });
 
 /* ── Visit counter ──────────────────────────────────────────────── */
+let _visitLoaded = false;
 async function loadVisitCount() {
+  if (_visitLoaded) return;
+  _visitLoaded = true;
   const key   = app.pageConfig.page;
   const badge = document.getElementById('visitBadge');
   if (!badge) return;
   try {
     const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), 5000);
+    const tid  = setTimeout(() => ctrl.abort(), 8000);
     const res  = await fetch(
       `https://api.counterapi.dev/v1/agentskills/${key}/up`,
       { signal: ctrl.signal }
     );
     clearTimeout(tid);
     if (!res.ok) throw new Error('non-ok');
-    const { count } = await res.json();
+    const data  = await res.json();
+    const count = data?.count;
+    if (typeof count !== 'number') throw new Error('no count');
     badge.textContent = `👁 ${count.toLocaleString()} ${t('stat_visits')}`;
   } catch {
     badge.textContent = '';
