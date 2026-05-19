@@ -209,7 +209,7 @@ def main():
     # ── 增量合并：与现有数据合并，防止 API 限流导致数据丢失 ────────────────────
     if os.path.exists("data.json"):
         try:
-            with open("data.json", "r", encoding="utf-8") as f:
+            with open("data/data.json", "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
                             if not is_blocked(r) and is_skills_relevant(r)}
             if not repos:
@@ -256,13 +256,13 @@ def main():
     }
 
     # ── 写 data.json ─────────────────────────────────────────────────────────
-    with open("data.json", "w", encoding="utf-8") as f:
+    with open("data/data.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n✅ data.json 写入完成，共 {len(repos)} 个仓库")
 
     # ── 写 data.js (供浏览器 <script src> 加载) ──────────────────────────────
     js_payload = json.dumps(output, ensure_ascii=False, separators=(",", ":"))
-    with open("data.js", "w", encoding="utf-8") as f:
+    with open("data/data.js", "w", encoding="utf-8") as f:
         f.write(f"/* AUTO-GENERATED — run fetch_data.py to update */\n")
         f.write(f"window.SKILLS_DATA={js_payload};\n")
     print("✅ data.js 写入完成")
@@ -271,7 +271,7 @@ def main():
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
     with open("index.html", "r", encoding="utf-8") as f:
         html = f.read()
-    html = re.sub(r'data\.js\?v=\d+', f'data.js?v={version}', html)
+    html = re.sub(r'data/data.js?v=\d+', f'data.js?v={version}', html)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"✅ index.html 版本号更新为 {version}")

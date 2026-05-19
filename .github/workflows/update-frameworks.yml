@@ -20,7 +20,7 @@ jobs:
       - name: Fetch Frameworks data
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: python3 fetch_frameworks.py
+        run: python3 scripts/fetch_frameworks.py
 
       - name: Commit and push
         run: |

@@ -19,11 +19,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          python3 fetch_data.py
-          python3 fetch_frameworks.py
-          python3 fetch_mcp.py
-          python3 fetch_prompts.py
-          python3 fetch_auto_research.py
+          python3 scripts/fetch_data.py
+          python3 scripts/fetch_frameworks.py
+          python3 scripts/fetch_mcp.py
+          python3 scripts/fetch_prompts.py
+          python3 scripts/fetch_auto_research.py
 
       - name: Commit and push
         run: |

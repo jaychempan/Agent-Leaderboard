@@ -20,7 +20,7 @@ jobs:
       - name: Fetch Auto Research data
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: python3 fetch_auto_research.py
+        run: python3 scripts/fetch_auto_research.py
 
       - name: Commit and push
         run: |
