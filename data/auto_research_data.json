@@ -1,8 +1,8 @@
 {
   "meta": {
-    "updated_at": "2026-05-19T03:16:41.024952+00:00",
+    "updated_at": "2026-05-19T19:53:42.242363+00:00",
     "min_stars": 50,
-    "total": 555,
+    "total": 559,
     "type": "auto_research"
   },
   "categories": {
@@ -16,7 +16,7 @@
       "label": "网页研究",
       "icon": "🌐",
       "color": "#10b981",
-      "count": 20
+      "count": 21
     },
     "literature": {
       "label": "文献综述",
@@ -40,22 +40,22 @@
       "label": "通用研究",
       "icon": "🤖",
       "color": "#8b949e",
-      "count": 271
+      "count": 274
     }
   },
   "use_case_stats": {
-    "自主代理": 389,
-    "代码研究": 122,
-    "学术文献": 100,
-    "深度研究": 85,
+    "自主代理": 393,
+    "代码研究": 123,
+    "学术文献": 101,
+    "深度研究": 84,
     "通用研究": 84,
-    "资源列表": 75,
+    "资源列表": 78,
     "金融数据": 61,
     "实验自动化": 52,
-    "知识库": 46,
+    "知识库": 48,
     "AI 训练": 36,
     "竞争分析": 28,
-    "网页搜索": 25,
+    "网页搜索": 26,
     "睡眠/后台": 7
   },
   "repos": [
@@ -63,8 +63,8 @@
       "id": 1136590548,
       "full_name": "affaan-m/ECC",
       "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
-      "stars": 186641,
-      "forks": 28899,
+      "stars": 187121,
+      "forks": 28974,
       "language": "JavaScript",
       "topics": [
         "ai-agents",
@@ -78,7 +78,7 @@
       ],
       "url": "https://github.com/affaan-m/ECC",
       "created_at": "2026-01-18T00:51:51Z",
-      "updated_at": "2026-05-19T03:14:36Z",
+      "updated_at": "2026-05-19T19:46:12Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -89,13 +89,13 @@
       "id": 1174820787,
       "full_name": "karpathy/autoresearch",
       "description": "AI agents running research on single-GPU nanochat training automatically",
-      "stars": 81777,
-      "forks": 11883,
+      "stars": 81972,
+      "forks": 11906,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/karpathy/autoresearch",
       "created_at": "2026-03-06T22:00:43Z",
-      "updated_at": "2026-05-19T03:11:51Z",
+      "updated_at": "2026-05-19T19:51:29Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -106,8 +106,8 @@
       "id": 287463830,
       "full_name": "microsoft/qlib",
       "description": "Qlib is an AI-oriented Quant investment platform that aims to use AI tech to empower Quant Research, from exploring ideas to implementing productions. Qlib supports diverse ML modeling paradigms, including supervised learning, market dynamics modeling, and RL, and is now equipped with https://github.com/microsoft/RD-Agent to automate R&D process.",
-      "stars": 43188,
-      "forks": 6792,
+      "stars": 43230,
+      "forks": 6797,
       "language": "Python",
       "topics": [
         "algorithmic-trading",
@@ -131,7 +131,7 @@
       ],
       "url": "https://github.com/microsoft/qlib",
       "created_at": "2020-08-14T06:46:00Z",
-      "updated_at": "2026-05-19T03:01:37Z",
+      "updated_at": "2026-05-19T19:35:47Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -144,8 +144,8 @@
       "id": 396569538,
       "full_name": "khoj-ai/khoj",
       "description": "Your AI second brain. Self-hostable. Get answers from the web or your docs. Build custom agents, schedule automations, do deep research. Turn any online or local LLM into your personal, autonomous AI (gpt, claude, gemini, llama, qwen, mistral). Get started - free.",
-      "stars": 34606,
-      "forks": 2205,
+      "stars": 34614,
+      "forks": 2204,
       "language": "Python",
       "topics": [
         "agent",
@@ -171,7 +171,7 @@
       ],
       "url": "https://github.com/khoj-ai/khoj",
       "created_at": "2021-08-16T01:48:44Z",
-      "updated_at": "2026-05-19T01:20:50Z",
+      "updated_at": "2026-05-19T17:13:39Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -183,7 +183,7 @@
       "id": 639835356,
       "full_name": "assafelovic/gpt-researcher",
       "description": "An autonomous agent that conducts deep research on any data using any LLM providers",
-      "stars": 27136,
+      "stars": 27166,
       "forks": 3651,
       "language": "Python",
       "topics": [
@@ -201,7 +201,7 @@
       ],
       "url": "https://github.com/assafelovic/gpt-researcher",
       "created_at": "2023-05-12T10:33:54Z",
-      "updated_at": "2026-05-19T02:45:34Z",
+      "updated_at": "2026-05-19T18:17:00Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -212,13 +212,13 @@
       "id": 1076426995,
       "full_name": "virattt/dexter",
       "description": "An autonomous agent for deep financial research",
-      "stars": 25846,
-      "forks": 3163,
+      "stars": 25873,
+      "forks": 3165,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/virattt/dexter",
       "created_at": "2025-10-14T21:02:00Z",
-      "updated_at": "2026-05-19T03:02:06Z",
+      "updated_at": "2026-05-19T18:25:42Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -229,8 +229,8 @@
       "id": 1079456184,
       "full_name": "K-Dense-AI/scientific-agent-skills",
       "description": "A set of ready to use Agent Skills for research, science, engineering, analysis, finance and writing.",
-      "stars": 24477,
-      "forks": 2581,
+      "stars": 24767,
+      "forks": 2603,
       "language": "Python",
       "topics": [
         "agent-skills",
@@ -253,7 +253,7 @@
       ],
       "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
       "created_at": "2025-10-19T20:54:15Z",
-      "updated_at": "2026-05-19T03:15:13Z",
+      "updated_at": "2026-05-19T19:30:26Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -266,13 +266,13 @@
       "id": 1145786318,
       "full_name": "Leey21/awesome-ai-research-writing",
       "description": "Elevate your AI research writing, no more tedious polishing ✨ ",
-      "stars": 24103,
-      "forks": 1929,
+      "stars": 24288,
+      "forks": 1939,
       "language": "",
       "topics": [],
       "url": "https://github.com/Leey21/awesome-ai-research-writing",
       "created_at": "2026-01-30T07:59:30Z",
-      "updated_at": "2026-05-19T03:13:46Z",
+      "updated_at": "2026-05-19T19:39:24Z",
       "category": "general",
       "use_cases": [
         "资源列表"
@@ -282,13 +282,13 @@
       "id": 669727723,
       "full_name": "joonspk-research/generative_agents",
       "description": "Generative Agents: Interactive Simulacra of Human Behavior",
-      "stars": 21328,
-      "forks": 3003,
+      "stars": 21335,
+      "forks": 3005,
       "language": "",
       "topics": [],
       "url": "https://github.com/joonspk-research/generative_agents",
       "created_at": "2023-07-23T08:26:49Z",
-      "updated_at": "2026-05-19T01:30:08Z",
+      "updated_at": "2026-05-19T14:57:35Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -298,7 +298,7 @@
       "id": 926861272,
       "full_name": "dzhng/deep-research",
       "description": "An AI-powered research assistant that performs iterative, deep research on any topic by combining search engines, web scraping, and large language models.  The goal of this repo is to provide the simplest implementation of a deep research agent - e.g. an agent that can refine its research direction overtime and deep dive into a topic.",
-      "stars": 18936,
+      "stars": 18939,
       "forks": 1952,
       "language": "TypeScript",
       "topics": [
@@ -310,7 +310,7 @@
       ],
       "url": "https://github.com/dzhng/deep-research",
       "created_at": "2025-02-04T01:27:56Z",
-      "updated_at": "2026-05-19T02:47:23Z",
+      "updated_at": "2026-05-19T17:42:01Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -322,8 +322,8 @@
       "id": 914316754,
       "full_name": "Alibaba-NLP/DeepResearch",
       "description": "Tongyi Deep Research, the Leading Open-source Deep Research Agent",
-      "stars": 18894,
-      "forks": 1456,
+      "stars": 18898,
+      "forks": 1457,
       "language": "Python",
       "topics": [
         "agent",
@@ -338,7 +338,7 @@
       ],
       "url": "https://github.com/Alibaba-NLP/DeepResearch",
       "created_at": "2025-01-09T11:07:35Z",
-      "updated_at": "2026-05-19T03:01:49Z",
+      "updated_at": "2026-05-19T14:59:24Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -350,7 +350,7 @@
       "full_name": "arc53/DocsGPT",
       "description": "Private AI platform for agents, assistants and enterprise search. Built-in Agent Builder, Deep research, Document analysis, Multi-model support, and API connectivity for agents.",
       "stars": 17886,
-      "forks": 2043,
+      "forks": 2044,
       "language": "Python",
       "topics": [
         "agent-builder",
@@ -375,7 +375,7 @@
       ],
       "url": "https://github.com/arc53/DocsGPT",
       "created_at": "2023-02-02T11:03:23Z",
-      "updated_at": "2026-05-18T21:22:48Z",
+      "updated_at": "2026-05-19T14:26:00Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -386,9 +386,9 @@
     {
       "id": 1079084637,
       "full_name": "alirezarezvani/claude-skills",
-      "description": "313+ Claude Code skills & agent plugins for Claude Code, Codex, Gemini CLI, Cursor, and 8 more coding agents — engineering, marketing, product, compliance, C-level advisory, research and your daily productivity skills.",
-      "stars": 15395,
-      "forks": 2092,
+      "description": "313+ Claude Code skills & agent skills & plugins for Claude Code, Codex, Gemini CLI, Cursor, and 8 more coding agents — engineering, marketing, product, compliance, C-level advisory, research, business operations, commercial & finance, and your daily productivity skills.",
+      "stars": 15514,
+      "forks": 2117,
       "language": "Python",
       "topics": [
         "agent-plugins",
@@ -414,7 +414,7 @@
       ],
       "url": "https://github.com/alirezarezvani/claude-skills",
       "created_at": "2025-10-19T04:04:05Z",
-      "updated_at": "2026-05-19T03:15:25Z",
+      "updated_at": "2026-05-19T19:46:29Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -426,13 +426,13 @@
       "id": 165826654,
       "full_name": "google-deepmind/deepmind-research",
       "description": "This repository contains implementations and illustrative code to accompany DeepMind publications",
-      "stars": 14934,
-      "forks": 2877,
+      "stars": 14935,
+      "forks": 2878,
       "language": "Jupyter Notebook",
       "topics": [],
       "url": "https://github.com/google-deepmind/deepmind-research",
       "created_at": "2019-01-15T09:54:13Z",
-      "updated_at": "2026-05-19T02:46:30Z",
+      "updated_at": "2026-05-19T13:43:06Z",
       "category": "general",
       "use_cases": [
         "学术文献",
@@ -440,36 +440,11 @@
       ]
     },
     {
-      "id": 781261349,
-      "full_name": "microsoft/RD-Agent",
-      "description": "Research and development (R&D) is crucial for the enhancement of industrial productivity, especially in the AI era, where the core aspects of R&D are mainly focused on data and models. We are committed to automating these high-value generic R&D processes through R&D-Agent, which lets AI drive data-driven AI. 🔗https://aka.ms/RD-Agent-Tech-Report",
-      "stars": 13093,
-      "forks": 1613,
-      "language": "Python",
-      "topics": [
-        "agent",
-        "ai",
-        "automation",
-        "data-mining",
-        "data-science",
-        "development",
-        "llm",
-        "research"
-      ],
-      "url": "https://github.com/microsoft/RD-Agent",
-      "created_at": "2024-04-03T03:39:33Z",
-      "updated_at": "2026-05-19T03:09:12Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 1167300963,
       "full_name": "Imbad0202/academic-research-skills",
       "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
-      "stars": 12146,
-      "forks": 1221,
+      "stars": 13965,
+      "forks": 1323,
       "language": "Python",
       "topics": [
         "academic-pipeline",
@@ -483,7 +458,7 @@
       ],
       "url": "https://github.com/Imbad0202/academic-research-skills",
       "created_at": "2026-02-26T06:31:01Z",
-      "updated_at": "2026-05-19T03:16:34Z",
+      "updated_at": "2026-05-19T19:52:55Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -491,16 +466,41 @@
       ]
     },
     {
+      "id": 781261349,
+      "full_name": "microsoft/RD-Agent",
+      "description": "Research and development (R&D) is crucial for the enhancement of industrial productivity, especially in the AI era, where the core aspects of R&D are mainly focused on data and models. We are committed to automating these high-value generic R&D processes through R&D-Agent, which lets AI drive data-driven AI. 🔗https://aka.ms/RD-Agent-Tech-Report",
+      "stars": 13105,
+      "forks": 1615,
+      "language": "Python",
+      "topics": [
+        "agent",
+        "ai",
+        "automation",
+        "data-mining",
+        "data-science",
+        "development",
+        "llm",
+        "research"
+      ],
+      "url": "https://github.com/microsoft/RD-Agent",
+      "created_at": "2024-04-03T03:39:33Z",
+      "updated_at": "2026-05-19T17:46:29Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 1197029054,
       "full_name": "sanbuphy/learn-coding-agent",
       "description": "Research on Coding Agents",
-      "stars": 11882,
+      "stars": 11885,
       "forks": 19735,
       "language": "",
       "topics": [],
       "url": "https://github.com/sanbuphy/learn-coding-agent",
       "created_at": "2026-03-31T09:07:08Z",
-      "updated_at": "2026-05-18T18:22:55Z",
+      "updated_at": "2026-05-19T13:37:51Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -510,8 +510,8 @@
       "id": 1177608268,
       "full_name": "wanshuiyin/Auto-claude-code-research-in-sleep",
       "description": "ARIS ⚔️ (Auto-Research-In-Sleep) — Lightweight Markdown-only skills for autonomous ML research: cross-model review loops, idea discovery, and experiment automation. No framework, no lock-in — works with Claude Code, Codex, OpenClaw, or any LLM agent.",
-      "stars": 9928,
-      "forks": 952,
+      "stars": 10058,
+      "forks": 962,
       "language": "Python",
       "topics": [
         "ai-research",
@@ -537,7 +537,7 @@
       ],
       "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
       "created_at": "2026-03-10T07:31:45Z",
-      "updated_at": "2026-05-19T03:06:56Z",
+      "updated_at": "2026-05-19T18:39:32Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -551,7 +551,7 @@
       "id": 978331188,
       "full_name": "microsoft/magentic-ui",
       "description": "A research prototype of a human-centered web agent",
-      "stars": 9815,
+      "stars": 9818,
       "forks": 976,
       "language": "Python",
       "topics": [
@@ -566,7 +566,7 @@
       ],
       "url": "https://github.com/microsoft/magentic-ui",
       "created_at": "2025-05-05T20:24:30Z",
-      "updated_at": "2026-05-19T02:16:02Z",
+      "updated_at": "2026-05-19T16:06:37Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -577,13 +577,13 @@
       "id": 898736877,
       "full_name": "langchain-ai/local-deep-researcher",
       "description": "Fully local web research and report writing assistant",
-      "stars": 9182,
+      "stars": 9185,
       "forks": 955,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/langchain-ai/local-deep-researcher",
       "created_at": "2024-12-04T23:57:20Z",
-      "updated_at": "2026-05-19T02:20:56Z",
+      "updated_at": "2026-05-19T15:42:10Z",
       "category": "deep_research",
       "use_cases": [
         "网页搜索"
@@ -593,8 +593,8 @@
       "id": 1017550802,
       "full_name": "0x4m4/hexstrike-ai",
       "description": "HexStrike AI MCP Agents is an advanced MCP server that lets AI agents (Claude, GPT, Copilot, etc.) autonomously run 150+ cybersecurity tools for automated pentesting, vulnerability discovery, bug bounty automation, and security research. Seamlessly bridge LLMs with real-world offensive security capabilities.",
-      "stars": 8812,
-      "forks": 1896,
+      "stars": 8827,
+      "forks": 1899,
       "language": "Python",
       "topics": [
         "0x4m4",
@@ -620,7 +620,7 @@
       ],
       "url": "https://github.com/0x4m4/hexstrike-ai",
       "created_at": "2025-07-10T17:53:18Z",
-      "updated_at": "2026-05-19T03:10:58Z",
+      "updated_at": "2026-05-19T18:34:39Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -630,8 +630,8 @@
       "id": 1088558237,
       "full_name": "Orchestra-Research/AI-Research-SKILLs",
       "description": "Comprehensive open-source library of AI research and engineering skills for any AI model. Package the skills and your claude code/codex/gemini agent will be an AI research agent with full horsepower. Maintained by Orchestra Research.",
-      "stars": 8619,
-      "forks": 660,
+      "stars": 8667,
+      "forks": 663,
       "language": "TeX",
       "topics": [
         "ai",
@@ -651,7 +651,7 @@
       ],
       "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
       "created_at": "2025-11-03T06:13:06Z",
-      "updated_at": "2026-05-19T02:46:07Z",
+      "updated_at": "2026-05-19T19:37:57Z",
       "category": "deep_research",
       "use_cases": [
         "自主代理",
@@ -662,7 +662,7 @@
       "id": 1033873680,
       "full_name": "MiroMindAI/MiroThinker",
       "description": "MiroThinker is a deep research agent optimized for complex research and prediction tasks. Our latest models, MiroThinker-1.7, achieves 74.0 and 75.3 on the BrowseComp and BrowseComp Zh, respectively.",
-      "stars": 8165,
+      "stars": 8169,
       "forks": 630,
       "language": "Python",
       "topics": [
@@ -679,7 +679,7 @@
       ],
       "url": "https://github.com/MiroMindAI/MiroThinker",
       "created_at": "2025-08-07T13:32:12Z",
-      "updated_at": "2026-05-19T02:12:19Z",
+      "updated_at": "2026-05-19T18:04:07Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -688,47 +688,11 @@
       ]
     },
     {
-      "id": 929200745,
-      "full_name": "zilliztech/deep-searcher",
-      "description": "Open Source Deep Research Alternative to Reason and Search on Private Data. Written in Python.",
-      "stars": 7832,
-      "forks": 759,
-      "language": "Python",
-      "topics": [
-        "agent",
-        "agentic-rag",
-        "claude",
-        "deep-research",
-        "deepseek",
-        "deepseek-r1",
-        "grok",
-        "grok3",
-        "llama4",
-        "llm",
-        "milvus",
-        "openai",
-        "qwen3",
-        "rag",
-        "reasoning-models",
-        "vector-database",
-        "zilliz"
-      ],
-      "url": "https://github.com/zilliztech/deep-searcher",
-      "created_at": "2025-02-08T02:07:05Z",
-      "updated_at": "2026-05-18T14:15:05Z",
-      "category": "deep_research",
-      "use_cases": [
-        "深度研究",
-        "知识库",
-        "自主代理"
-      ]
-    },
-    {
       "id": 774497032,
       "full_name": "MervinPraison/PraisonAI",
       "description": "PraisonAI 🦞 — Hire a 24/7 AI Workforce. Stop writing boilerplate and start shipping autonomous self-improving agents that research, plan, code, and execute tasks. Deployed in 5 lines of code with built-in memory, RAG, and support for 100+ LLMs.",
-      "stars": 7826,
-      "forks": 1201,
+      "stars": 7844,
+      "forks": 1203,
       "language": "Python",
       "topics": [
         "agents",
@@ -754,7 +718,7 @@
       ],
       "url": "https://github.com/MervinPraison/PraisonAI",
       "created_at": "2024-03-19T16:45:25Z",
-      "updated_at": "2026-05-19T02:45:00Z",
+      "updated_at": "2026-05-19T19:27:12Z",
       "category": "general",
       "use_cases": [
         "知识库",
@@ -767,8 +731,8 @@
       "id": 929868765,
       "full_name": "LearningCircuit/local-deep-research",
       "description": " ~95% on SimpleQA (e.g. Qwen3.6-27B on a 3090). Supports all local and cloud LLMs (llama.cpp, Ollama, Google, ...). 10+ search engines - arXiv, PubMed, your private documents. Everything Local & Encrypted.",
-      "stars": 7806,
-      "forks": 675,
+      "stars": 7838,
+      "forks": 678,
       "language": "Python",
       "topics": [
         "academia",
@@ -794,7 +758,7 @@
       ],
       "url": "https://github.com/LearningCircuit/local-deep-research",
       "created_at": "2025-02-09T15:41:32Z",
-      "updated_at": "2026-05-19T02:59:06Z",
+      "updated_at": "2026-05-19T19:47:13Z",
       "category": "deep_research",
       "use_cases": [
         "学术文献",
@@ -802,10 +766,46 @@
       ]
     },
     {
+      "id": 929200745,
+      "full_name": "zilliztech/deep-searcher",
+      "description": "Open Source Deep Research Alternative to Reason and Search on Private Data. Written in Python.",
+      "stars": 7831,
+      "forks": 759,
+      "language": "Python",
+      "topics": [
+        "agent",
+        "agentic-rag",
+        "claude",
+        "deep-research",
+        "deepseek",
+        "deepseek-r1",
+        "grok",
+        "grok3",
+        "llama4",
+        "llm",
+        "milvus",
+        "openai",
+        "qwen3",
+        "rag",
+        "reasoning-models",
+        "vector-database",
+        "zilliz"
+      ],
+      "url": "https://github.com/zilliztech/deep-searcher",
+      "created_at": "2025-02-08T02:07:05Z",
+      "updated_at": "2026-05-19T11:53:41Z",
+      "category": "deep_research",
+      "use_cases": [
+        "深度研究",
+        "知识库",
+        "自主代理"
+      ]
+    },
+    {
       "id": 75190475,
       "full_name": "google-deepmind/lab",
       "description": "A customisable 3D platform for agent-based AI research",
-      "stars": 7356,
+      "stars": 7357,
       "forks": 1398,
       "language": "C",
       "topics": [
@@ -816,7 +816,7 @@
       ],
       "url": "https://github.com/google-deepmind/lab",
       "created_at": "2016-11-30T13:41:26Z",
-      "updated_at": "2026-05-18T15:03:49Z",
+      "updated_at": "2026-05-19T10:51:23Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -826,13 +826,13 @@
       "id": 754064451,
       "full_name": "VAST-AI-Research/TripoSR",
       "description": "TripoSR: Fast 3D Object Reconstruction from a Single Image",
-      "stars": 6505,
-      "forks": 822,
+      "stars": 6507,
+      "forks": 823,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/VAST-AI-Research/TripoSR",
       "created_at": "2024-02-07T10:31:04Z",
-      "updated_at": "2026-05-19T02:34:59Z",
+      "updated_at": "2026-05-19T09:51:36Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -842,13 +842,13 @@
       "id": 926639724,
       "full_name": "nickscamara/open-deep-research",
       "description": "An open source deep research clone. AI Agent that reasons large amounts of web data extracted with Firecrawl",
-      "stars": 6232,
-      "forks": 734,
+      "stars": 6233,
+      "forks": 735,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/nickscamara/open-deep-research",
       "created_at": "2025-02-03T16:02:40Z",
-      "updated_at": "2026-05-18T09:45:31Z",
+      "updated_at": "2026-05-19T18:40:10Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -859,8 +859,8 @@
       "id": 1124295269,
       "full_name": "brokermr810/QuantDinger",
       "description": "AI quantitative trading platform for crypto, stocks, and forex with backtesting, live trading, market data, and multi-agent research.vibe-trading ,trading-agents,ai-trader,ai-trading",
-      "stars": 5777,
-      "forks": 1264,
+      "stars": 5935,
+      "forks": 1299,
       "language": "Python",
       "topics": [
         "agent",
@@ -886,7 +886,7 @@
       ],
       "url": "https://github.com/brokermr810/QuantDinger",
       "created_at": "2025-12-28T18:39:26Z",
-      "updated_at": "2026-05-19T03:08:22Z",
+      "updated_at": "2026-05-19T19:36:42Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -914,7 +914,7 @@
       "id": 108945887,
       "full_name": "yanshengjia/ml-road",
       "description": "Machine Learning and Agentic AI Resources, Practice and Research",
-      "stars": 4784,
+      "stars": 4785,
       "forks": 1701,
       "language": "Python",
       "topics": [
@@ -929,7 +929,7 @@
       ],
       "url": "https://github.com/yanshengjia/ml-road",
       "created_at": "2017-10-31T04:36:37Z",
-      "updated_at": "2026-05-18T15:59:18Z",
+      "updated_at": "2026-05-19T04:14:35Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -957,7 +957,7 @@
       ],
       "url": "https://github.com/u14app/deep-research",
       "created_at": "2025-02-22T03:29:07Z",
-      "updated_at": "2026-05-19T02:53:59Z",
+      "updated_at": "2026-05-19T16:59:10Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究"
@@ -967,7 +967,7 @@
       "id": 616990533,
       "full_name": "Picsart-AI-Research/Text2Video-Zero",
       "description": "[ICCV 2023 Oral] Text-to-Image Diffusion Models are Zero-Shot Video Generators",
-      "stars": 4242,
+      "stars": 4243,
       "forks": 387,
       "language": "Python",
       "topics": [
@@ -976,7 +976,7 @@
       ],
       "url": "https://github.com/Picsart-AI-Research/Text2Video-Zero",
       "created_at": "2023-03-21T13:41:40Z",
-      "updated_at": "2026-05-16T05:59:30Z",
+      "updated_at": "2026-05-19T12:31:00Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -986,13 +986,13 @@
       "id": 1161025758,
       "full_name": "TraderAlice/OpenAlice",
       "description": "Your one-person Wall Street. An AI trading agent covering equities, crypto, commodities, forex, and macro — from research through position entry, ongoing management, to exit.",
-      "stars": 4099,
-      "forks": 624,
+      "stars": 4125,
+      "forks": 630,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/TraderAlice/OpenAlice",
       "created_at": "2026-02-18T16:42:55Z",
-      "updated_at": "2026-05-19T02:50:15Z",
+      "updated_at": "2026-05-19T19:38:35Z",
       "category": "general",
       "use_cases": [
         "金融数据",
@@ -1003,13 +1003,13 @@
       "id": 1204451436,
       "full_name": "alchaincyf/hermes-agent-orange-book",
       "description": "Hermes Agent 从入门到精通 · 橙皮书系列 · Nous Research 开源 AI Agent 框架实战指南",
-      "stars": 3777,
-      "forks": 392,
+      "stars": 3789,
+      "forks": 393,
       "language": "",
       "topics": [],
       "url": "https://github.com/alchaincyf/hermes-agent-orange-book",
       "created_at": "2026-04-08T02:49:02Z",
-      "updated_at": "2026-05-19T02:48:42Z",
+      "updated_at": "2026-05-19T17:53:30Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1019,7 +1019,7 @@
       "id": 986717063,
       "full_name": "SkyworkAI/DeepResearchAgent",
       "description": "DeepResearchAgent is a hierarchical multi-agent system designed not only for deep research tasks but also for general-purpose task solving. The framework leverages a top-level planning agent to coordinate multiple specialized lower-level agents, enabling automated task decomposition and efficient execution across diverse and complex domains.",
-      "stars": 3392,
+      "stars": 3393,
       "forks": 442,
       "language": "Python",
       "topics": [
@@ -1030,7 +1030,7 @@
       ],
       "url": "https://github.com/SkyworkAI/DeepResearchAgent",
       "created_at": "2025-05-20T03:02:15Z",
-      "updated_at": "2026-05-18T08:47:41Z",
+      "updated_at": "2026-05-19T08:54:43Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -1061,8 +1061,8 @@
       "id": 1189234446,
       "full_name": "0xNyk/awesome-hermes-agent",
       "description": "A curated list of awesome skills, tools, integrations, and resources for Hermes Agent by Nous Research",
-      "stars": 3158,
-      "forks": 213,
+      "stars": 3189,
+      "forks": 214,
       "language": "",
       "topics": [
         "ai-agents",
@@ -1074,7 +1074,7 @@
       ],
       "url": "https://github.com/0xNyk/awesome-hermes-agent",
       "created_at": "2026-03-23T05:34:37Z",
-      "updated_at": "2026-05-19T03:04:03Z",
+      "updated_at": "2026-05-19T19:39:22Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1085,7 +1085,7 @@
       "id": 180907813,
       "full_name": "bighuang624/AI-research-tools",
       "description": ":hammer:AI 方向好用的科研工具",
-      "stars": 3153,
+      "stars": 3154,
       "forks": 385,
       "language": "",
       "topics": [
@@ -1094,7 +1094,7 @@
       ],
       "url": "https://github.com/bighuang624/AI-research-tools",
       "created_at": "2019-04-12T01:39:00Z",
-      "updated_at": "2026-05-18T08:31:58Z",
+      "updated_at": "2026-05-19T07:10:22Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -1120,8 +1120,8 @@
       "id": 937280308,
       "full_name": "sahibzada-allahyar/YC-Killer",
       "description": "A library of enterprise-grade AI agents designed to democratize artificial intelligence and provide free, open-source alternatives to overvalued Y Combinator startups. If you are excited about democratizing AI access & AI agents, please star ⭐️ this repository and apply using the link in the readme to join our open source AI research team.",
-      "stars": 2761,
-      "forks": 123,
+      "stars": 2762,
+      "forks": 122,
       "language": "TypeScript",
       "topics": [
         "agora",
@@ -1147,7 +1147,7 @@
       ],
       "url": "https://github.com/sahibzada-allahyar/YC-Killer",
       "created_at": "2025-02-22T19:00:23Z",
-      "updated_at": "2026-05-17T18:26:32Z",
+      "updated_at": "2026-05-19T04:55:27Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -1159,8 +1159,8 @@
       "id": 1017049444,
       "full_name": "Y-Research-SBU/QuantAgent",
       "description": "Official Repository for QuantAgent",
-      "stars": 2673,
-      "forks": 582,
+      "stars": 2677,
+      "forks": 583,
       "language": "HTML",
       "topics": [
         "agentic-ai",
@@ -1168,7 +1168,7 @@
       ],
       "url": "https://github.com/Y-Research-SBU/QuantAgent",
       "created_at": "2025-07-10T00:26:45Z",
-      "updated_at": "2026-05-18T16:26:32Z",
+      "updated_at": "2026-05-19T19:37:39Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1178,13 +1178,13 @@
       "id": 1078171437,
       "full_name": "gadievron/raptor",
       "description": "Raptor turns Claude Code into a general-purpose AI offensive/defensive security agent. By using Claude.md and creating rules, sub-agents, and skills, and orchestrating security tool usage, we configure the agent for adversarial thinking, and perform research or attack/defense operations.",
-      "stars": 2619,
-      "forks": 408,
+      "stars": 2663,
+      "forks": 418,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/gadievron/raptor",
       "created_at": "2025-10-17T10:10:40Z",
-      "updated_at": "2026-05-19T03:14:58Z",
+      "updated_at": "2026-05-19T19:24:07Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1195,13 +1195,13 @@
       "id": 1077547100,
       "full_name": "PleasePrompto/notebooklm-mcp",
       "description": "MCP server for NotebookLM - Let your AI agents (Claude Code, Codex) research documentation directly with grounded, citation-backed answers from Gemini. Persistent auth, library management, cross-client sharing. Zero hallucinations, just your knowledge base.",
-      "stars": 2469,
-      "forks": 337,
+      "stars": 2479,
+      "forks": 338,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/PleasePrompto/notebooklm-mcp",
       "created_at": "2025-10-16T11:59:47Z",
-      "updated_at": "2026-05-19T02:29:35Z",
+      "updated_at": "2026-05-19T18:43:59Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库",
@@ -1213,8 +1213,8 @@
       "id": 1197183235,
       "full_name": "Leonxlnx/agentic-ai-prompt-research",
       "description": "Research into how agentic AI coding assistants work. Reconstructed prompt patterns, agent coordination, and security classification",
-      "stars": 2404,
-      "forks": 1063,
+      "stars": 2405,
+      "forks": 1064,
       "language": "",
       "topics": [
         "agentic-ai",
@@ -1225,7 +1225,7 @@
       ],
       "url": "https://github.com/Leonxlnx/agentic-ai-prompt-research",
       "created_at": "2026-03-31T11:47:04Z",
-      "updated_at": "2026-05-18T11:13:35Z",
+      "updated_at": "2026-05-19T07:47:24Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1278,7 +1278,7 @@
       "id": 930132430,
       "full_name": "AnotiaWang/deep-research-web-ui",
       "description": "(Supports DeepSeek R1) An AI-powered research assistant that performs iterative, deep research on any topic by combining search engines, web scraping, and large language models.",
-      "stars": 2182,
+      "stars": 2180,
       "forks": 298,
       "language": "TypeScript",
       "topics": [
@@ -1293,7 +1293,7 @@
       ],
       "url": "https://github.com/AnotiaWang/deep-research-web-ui",
       "created_at": "2025-02-10T05:56:43Z",
-      "updated_at": "2026-05-15T21:23:04Z",
+      "updated_at": "2026-05-19T15:41:34Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -1306,7 +1306,7 @@
       "full_name": "stepfun-ai/gelab-zero",
       "description": "STEP-GUI: The top GUI agent solution in the galaxy.  Developed by the StepFun-GELab team and powered by StepFun’s cutting-edge research capabilities.",
       "stars": 2168,
-      "forks": 192,
+      "forks": 193,
       "language": "Python",
       "topics": [
         "agent",
@@ -1316,7 +1316,7 @@
       ],
       "url": "https://github.com/stepfun-ai/gelab-zero",
       "created_at": "2025-11-28T14:42:44Z",
-      "updated_at": "2026-05-18T13:49:03Z",
+      "updated_at": "2026-05-19T11:58:47Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1342,8 +1342,8 @@
       "id": 1146664329,
       "full_name": "crshdn/mission-control",
       "description": "The world's first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode, crash recovery, cost tracking, 80+ API endpoints. Self-hosted via OpenClaw Gateway.",
-      "stars": 2036,
-      "forks": 435,
+      "stars": 2039,
+      "forks": 434,
       "language": "TypeScript",
       "topics": [
         "aiagent",
@@ -1352,7 +1352,7 @@
       ],
       "url": "https://github.com/crshdn/mission-control",
       "created_at": "2026-01-31T13:27:48Z",
-      "updated_at": "2026-05-18T17:27:50Z",
+      "updated_at": "2026-05-19T18:52:50Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -1396,13 +1396,13 @@
       "id": 906406820,
       "full_name": "virattt/ai-financial-agent",
       "description": "A financial agent for investment research",
-      "stars": 1967,
+      "stars": 1969,
       "forks": 396,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/virattt/ai-financial-agent",
       "created_at": "2024-12-20T20:50:46Z",
-      "updated_at": "2026-05-17T18:15:02Z",
+      "updated_at": "2026-05-19T11:29:58Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -1413,8 +1413,8 @@
       "id": 1187150337,
       "full_name": "alvinreal/awesome-autoresearch",
       "description": "A curated list of autonomous improvement loops, research agents, and autoresearch-style systems inspired by Karpathy's autoresearch.",
-      "stars": 1955,
-      "forks": 152,
+      "stars": 1967,
+      "forks": 153,
       "language": "",
       "topics": [
         "agentic-systems",
@@ -1435,7 +1435,7 @@
       ],
       "url": "https://github.com/alvinreal/awesome-autoresearch",
       "created_at": "2026-03-20T11:55:51Z",
-      "updated_at": "2026-05-19T02:46:31Z",
+      "updated_at": "2026-05-19T16:51:24Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1449,7 +1449,7 @@
       "full_name": "guy-hartstein/company-research-agent",
       "description": "An agentic company research tool powered by LangGraph and Tavily that conducts deep diligence on companies using a multi-agent framework. It leverages Google's Gemini 2.5 Flash and OpenAI's GPT-5.1 on the backend for inference.",
       "stars": 1890,
-      "forks": 274,
+      "forks": 275,
       "language": "Python",
       "topics": [
         "agents",
@@ -1482,7 +1482,7 @@
       "id": 420055307,
       "full_name": "LAB02-Research/HASS.Agent",
       "description": "Windows-based client for Home Assistant. Provides notifications, quick actions, commands, sensors and more.",
-      "stars": 1872,
+      "stars": 1873,
       "forks": 87,
       "language": "C#",
       "topics": [
@@ -1499,7 +1499,7 @@
       ],
       "url": "https://github.com/LAB02-Research/HASS.Agent",
       "created_at": "2021-10-22T10:22:30Z",
-      "updated_at": "2026-05-18T20:09:25Z",
+      "updated_at": "2026-05-19T17:05:09Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -1624,7 +1624,7 @@
       "id": 1118625972,
       "full_name": "aaron-he-zhu/seo-geo-claude-skills",
       "description": "20 SEO & GEO skills for Claude Code, Cursor, Codex, and 35+ AI agents. Keyword research, content writing, technical audits, rank tracking. CORE-EEAT + CITE frameworks.",
-      "stars": 1671,
+      "stars": 1687,
       "forks": 244,
       "language": "Shell",
       "topics": [
@@ -1642,7 +1642,7 @@
       ],
       "url": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
       "created_at": "2025-12-18T03:35:29Z",
-      "updated_at": "2026-05-18T21:00:14Z",
+      "updated_at": "2026-05-19T19:00:26Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -1701,7 +1701,7 @@
       "id": 773613693,
       "full_name": "Picsart-AI-Research/StreamingT2V",
       "description": "[CVPR 2025] StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text",
-      "stars": 1632,
+      "stars": 1631,
       "forks": 159,
       "language": "Python",
       "topics": [
@@ -1709,7 +1709,7 @@
       ],
       "url": "https://github.com/Picsart-AI-Research/StreamingT2V",
       "created_at": "2024-03-18T04:33:26Z",
-      "updated_at": "2026-05-18T15:07:45Z",
+      "updated_at": "2026-05-19T17:18:02Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -1719,7 +1719,7 @@
       "id": 954177450,
       "full_name": "VAST-AI-Research/TripoSG",
       "description": "TripoSG: High-Fidelity 3D Shape Synthesis using Large-Scale Rectified Flow Models",
-      "stars": 1629,
+      "stars": 1631,
       "forks": 170,
       "language": "Python",
       "topics": [
@@ -1730,7 +1730,7 @@
       ],
       "url": "https://github.com/VAST-AI-Research/TripoSG",
       "created_at": "2025-03-24T17:18:15Z",
-      "updated_at": "2026-05-18T07:09:24Z",
+      "updated_at": "2026-05-19T14:22:16Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -1807,8 +1807,8 @@
       "id": 1144694071,
       "full_name": "yilewang/llm-for-zotero",
       "description": "A research agent system deeply rooted in your own Zotero library.",
-      "stars": 1447,
-      "forks": 77,
+      "stars": 1470,
+      "forks": 78,
       "language": "TypeScript",
       "topics": [
         "academic-paper",
@@ -1823,7 +1823,7 @@
       ],
       "url": "https://github.com/yilewang/llm-for-zotero",
       "created_at": "2026-01-29T00:13:12Z",
-      "updated_at": "2026-05-19T02:42:58Z",
+      "updated_at": "2026-05-19T18:58:56Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -1907,8 +1907,8 @@
       "id": 1176808813,
       "full_name": "DeadWaveWave/opencove",
       "description": "Your infinite canvas workspace for agents, tasks, knowledge, and research. An infinite canvas for Claude Code, Codex, terminals, tasks, and notes.",
-      "stars": 1358,
-      "forks": 105,
+      "stars": 1364,
+      "forks": 106,
       "language": "TypeScript",
       "topics": [
         "agents",
@@ -1926,7 +1926,7 @@
       ],
       "url": "https://github.com/DeadWaveWave/opencove",
       "created_at": "2026-03-09T11:56:55Z",
-      "updated_at": "2026-05-19T01:02:48Z",
+      "updated_at": "2026-05-19T07:59:18Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -1937,7 +1937,7 @@
       "id": 863930645,
       "full_name": "NPC-Worldwide/npcpy",
       "description": "The python library for research and development in NLP, multimodal LLMs, Agents, ML, Knowledge Graphs, and more.",
-      "stars": 1357,
+      "stars": 1359,
       "forks": 101,
       "language": "Python",
       "topics": [
@@ -1955,7 +1955,7 @@
       ],
       "url": "https://github.com/NPC-Worldwide/npcpy",
       "created_at": "2024-09-27T07:18:20Z",
-      "updated_at": "2026-05-19T02:43:42Z",
+      "updated_at": "2026-05-19T11:36:53Z",
       "category": "web_research",
       "use_cases": [
         "自主代理"
@@ -1965,17 +1965,46 @@
       "id": 1175316550,
       "full_name": "Owl-Listener/designer-skills",
       "description": "Designer Skills Collection: agentic skills, commands, and plugins for design — from research to systems, UI, interaction, and delivery.",
-      "stars": 1312,
+      "stars": 1320,
       "forks": 231,
       "language": "Shell",
       "topics": [],
       "url": "https://github.com/Owl-Listener/designer-skills",
       "created_at": "2026-03-07T14:45:45Z",
-      "updated_at": "2026-05-19T02:39:16Z",
+      "updated_at": "2026-05-19T19:38:49Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "资源列表"
+      ]
+    },
+    {
+      "id": 1168912251,
+      "full_name": "Eronred/aso-skills",
+      "description": "AI agent skills for App Store Optimization (ASO) and app marketing. Built for indie developers, app marketers, and growth teams who want Cursor, Claude Code, or any Agent Skills-compatible AI assistant to help with keyword research, metadata optimization, competitor analysis, and app growth.",
+      "stars": 1295,
+      "forks": 86,
+      "language": "Shell",
+      "topics": [
+        "app-store-analytics",
+        "app-store-connect",
+        "app-store-live",
+        "app-store-optimization",
+        "aso",
+        "marketing",
+        "mcp",
+        "mobile-app",
+        "skills"
+      ],
+      "url": "https://github.com/Eronred/aso-skills",
+      "created_at": "2026-02-27T23:56:44Z",
+      "updated_at": "2026-05-19T19:51:45Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
+        "代码研究",
+        "竞争分析"
       ]
     },
     {
@@ -2018,40 +2047,11 @@
       ]
     },
     {
-      "id": 1168912251,
-      "full_name": "Eronred/aso-skills",
-      "description": "AI agent skills for App Store Optimization (ASO) and app marketing. Built for indie developers, app marketers, and growth teams who want Cursor, Claude Code, or any Agent Skills-compatible AI assistant to help with keyword research, metadata optimization, competitor analysis, and app growth.",
-      "stars": 1256,
-      "forks": 86,
-      "language": "Shell",
-      "topics": [
-        "app-store-analytics",
-        "app-store-connect",
-        "app-store-live",
-        "app-store-optimization",
-        "aso",
-        "marketing",
-        "mcp",
-        "mobile-app",
-        "skills"
-      ],
-      "url": "https://github.com/Eronred/aso-skills",
-      "created_at": "2026-02-27T23:56:44Z",
-      "updated_at": "2026-05-18T21:04:10Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "代码研究",
-        "竞争分析"
-      ]
-    },
-    {
       "id": 1190557545,
       "full_name": "eugeniughelbur/obsidian-second-brain",
       "description": "Cross-CLI skill for Obsidian. Turns your vault into a living AI-first second brain across Claude Code, Codex CLI, Gemini CLI, and OpenCode. 32 commands, vault-first research, scheduled agents, write-time AI-first validator.",
-      "stars": 1193,
-      "forks": 128,
+      "stars": 1201,
+      "forks": 133,
       "language": "Python",
       "topics": [
         "ai-agent",
@@ -2077,7 +2077,7 @@
       ],
       "url": "https://github.com/eugeniughelbur/obsidian-second-brain",
       "created_at": "2026-03-24T11:58:12Z",
-      "updated_at": "2026-05-19T03:08:51Z",
+      "updated_at": "2026-05-19T18:59:49Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库",
@@ -2091,7 +2091,7 @@
       "full_name": "SalesforceAIResearch/enterprise-deep-research",
       "description": "Salesforce Enterprise Deep Research",
       "stars": 1170,
-      "forks": 185,
+      "forks": 186,
       "language": "Python",
       "topics": [
         "deep-research-agent",
@@ -2106,7 +2106,7 @@
       ],
       "url": "https://github.com/SalesforceAIResearch/enterprise-deep-research",
       "created_at": "2025-09-16T17:27:44Z",
-      "updated_at": "2026-05-18T15:49:26Z",
+      "updated_at": "2026-05-19T06:08:21Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2167,13 +2167,13 @@
       "id": 1194045032,
       "full_name": "firecrawl/web-agent",
       "description": "🔥 Open-source web data agent optimized for structured web research",
-      "stars": 1093,
+      "stars": 1095,
       "forks": 150,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/firecrawl/web-agent",
       "created_at": "2026-03-27T21:25:42Z",
-      "updated_at": "2026-05-18T10:34:35Z",
+      "updated_at": "2026-05-19T07:09:12Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -2194,6 +2194,42 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ]
+    },
+    {
+      "id": 1200204014,
+      "full_name": "brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
+      "description": "🔬 A curated collection of 23,000+ agent skills for empirical research across 8 social science disciplines. | 精选 23,000+ AI Agent 技能库，覆盖8大社会科学学科的实证研究。CoPaper.AI 20分钟完成一篇可复现的规范实证论文，并支持用户上传 Skills。-- Maintained by CoPaper.AI from Stanford REAP.",
+      "stars": 1061,
+      "forks": 180,
+      "language": "Stata",
+      "topics": [
+        "academic-research",
+        "agent-skills",
+        "ai-agent",
+        "awesome-list",
+        "communication",
+        "copaper",
+        "economics",
+        "education",
+        "empirical-research",
+        "international-relations",
+        "political-science",
+        "psychology",
+        "public-administration",
+        "reproducible-research",
+        "skills-library",
+        "social-science",
+        "sociology"
+      ],
+      "url": "https://github.com/brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
+      "created_at": "2026-04-03T06:31:20Z",
+      "updated_at": "2026-05-19T15:33:45Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "自主代理",
+        "资源列表"
       ]
     },
     {
@@ -2218,42 +2254,6 @@
         "学术文献",
         "自主代理",
         "实验自动化",
-        "资源列表"
-      ]
-    },
-    {
-      "id": 1200204014,
-      "full_name": "brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
-      "description": "🔬 A curated collection of 23,000+ agent skills for empirical research across 8 social science disciplines. | 精选 23,000+ AI Agent 技能库，覆盖8大社会科学学科的实证研究。CoPaper.AI 20分钟完成一篇可复现的规范实证论文，并支持用户上传 Skills。-- Maintained by CoPaper.AI from Stanford REAP.",
-      "stars": 1034,
-      "forks": 176,
-      "language": "Stata",
-      "topics": [
-        "academic-research",
-        "agent-skills",
-        "ai-agent",
-        "awesome-list",
-        "communication",
-        "copaper",
-        "economics",
-        "education",
-        "empirical-research",
-        "international-relations",
-        "political-science",
-        "psychology",
-        "public-administration",
-        "reproducible-research",
-        "skills-library",
-        "social-science",
-        "sociology"
-      ],
-      "url": "https://github.com/brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research",
-      "created_at": "2026-04-03T06:31:20Z",
-      "updated_at": "2026-05-19T01:29:18Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "自主代理",
         "资源列表"
       ]
     },
@@ -2308,7 +2308,7 @@
       "id": 985477441,
       "full_name": "shyamsaktawat/OpenAlpha_Evolve",
       "description": "OpenAlpha_Evolve is an open-source Python framework inspired by the groundbreaking research on autonomous coding agents like DeepMind's AlphaEvolve.",
-      "stars": 1015,
+      "stars": 1016,
       "forks": 150,
       "language": "Python",
       "topics": [
@@ -2332,7 +2332,7 @@
       ],
       "url": "https://github.com/shyamsaktawat/OpenAlpha_Evolve",
       "created_at": "2025-05-17T21:04:30Z",
-      "updated_at": "2026-05-16T05:52:25Z",
+      "updated_at": "2026-05-19T06:38:54Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -2344,7 +2344,7 @@
       "id": 928122380,
       "full_name": "tsinghua-fib-lab/AgentSociety",
       "description": "AgentSociety 2 is a modern, LLM-native agent simulation platform designed for social science research and experimental design. It provides a flexible framework for creating and managing intelligent agents in simulated environments.",
-      "stars": 991,
+      "stars": 992,
       "forks": 172,
       "language": "Python",
       "topics": [
@@ -2356,7 +2356,7 @@
       ],
       "url": "https://github.com/tsinghua-fib-lab/AgentSociety",
       "created_at": "2025-02-06T05:09:18Z",
-      "updated_at": "2026-05-19T01:57:58Z",
+      "updated_at": "2026-05-19T14:53:03Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -2391,7 +2391,7 @@
       "id": 1145269520,
       "full_name": "RefoundAI/lenny-skills",
       "description": "86 product management skills from Lenny's Podcast for Claude Code and AI agents. Hiring, user research, strategy, shipping, and more.",
-      "stars": 929,
+      "stars": 934,
       "forks": 118,
       "language": "",
       "topics": [
@@ -2408,7 +2408,7 @@
       ],
       "url": "https://github.com/RefoundAI/lenny-skills",
       "created_at": "2026-01-29T16:14:48Z",
-      "updated_at": "2026-05-18T11:01:13Z",
+      "updated_at": "2026-05-19T16:14:05Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -2456,7 +2456,7 @@
       "id": 352983353,
       "full_name": "instadeepai/Mava",
       "description": "🦁 A research-friendly codebase for fast experimentation of multi-agent reinforcement learning in JAX",
-      "stars": 910,
+      "stars": 911,
       "forks": 121,
       "language": "Python",
       "topics": [
@@ -2470,7 +2470,7 @@
       ],
       "url": "https://github.com/instadeepai/Mava",
       "created_at": "2021-03-30T11:53:41Z",
-      "updated_at": "2026-05-11T14:01:24Z",
+      "updated_at": "2026-05-19T03:20:23Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -2483,8 +2483,8 @@
       "id": 946168154,
       "full_name": "souvikmajumder26/Multi-Agent-Medical-Assistant",
       "description": "⚕️GenAI powered multi-agentic medical diagnostics and healthcare research assistance chatbot. 🏥 Designed for healthcare professionals, researchers and patients.",
-      "stars": 884,
-      "forks": 194,
+      "stars": 887,
+      "forks": 195,
       "language": "Python",
       "topics": [
         "agent",
@@ -2510,7 +2510,7 @@
       ],
       "url": "https://github.com/souvikmajumder26/Multi-Agent-Medical-Assistant",
       "created_at": "2025-03-10T18:05:28Z",
-      "updated_at": "2026-05-17T13:38:09Z",
+      "updated_at": "2026-05-19T14:27:48Z",
       "category": "general",
       "use_cases": [
         "知识库",
@@ -2567,8 +2567,8 @@
       "id": 1205135320,
       "full_name": "ksimback/hermes-ecosystem",
       "description": "🗺️ Hermes Atlas — the community map of every tool, skill, and integration for Hermes Agent by Nous Research. Live at hermesatlas.com",
-      "stars": 851,
-      "forks": 67,
+      "stars": 857,
+      "forks": 68,
       "language": "HTML",
       "topics": [
         "ai-agents",
@@ -2579,7 +2579,7 @@
       ],
       "url": "https://github.com/ksimback/hermes-ecosystem",
       "created_at": "2026-04-08T17:07:13Z",
-      "updated_at": "2026-05-19T02:39:36Z",
+      "updated_at": "2026-05-19T18:57:41Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -2617,6 +2617,34 @@
         "学术文献",
         "资源列表",
         "代码研究"
+      ]
+    },
+    {
+      "id": 1154407752,
+      "full_name": "VoltAgent/awesome-ai-agent-papers",
+      "description": "A curated collection of AI agent research papers released in 2026, covering agent engineering, memory, evaluation, workflows, and autonomous systems.",
+      "stars": 844,
+      "forks": 111,
+      "language": "",
+      "topics": [
+        "ai-agents",
+        "awesome",
+        "awesome-list",
+        "llm",
+        "llm-agents",
+        "memory",
+        "rag",
+        "research-paper"
+      ],
+      "url": "https://github.com/VoltAgent/awesome-ai-agent-papers",
+      "created_at": "2026-02-10T10:58:31Z",
+      "updated_at": "2026-05-19T15:45:31Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "知识库",
+        "自主代理",
+        "资源列表"
       ]
     },
     {
@@ -2658,34 +2686,6 @@
       ]
     },
     {
-      "id": 1154407752,
-      "full_name": "VoltAgent/awesome-ai-agent-papers",
-      "description": "A curated collection of AI agent research papers released in 2026, covering agent engineering, memory, evaluation, workflows, and autonomous systems.",
-      "stars": 835,
-      "forks": 110,
-      "language": "",
-      "topics": [
-        "ai-agents",
-        "awesome",
-        "awesome-list",
-        "llm",
-        "llm-agents",
-        "memory",
-        "rag",
-        "research-paper"
-      ],
-      "url": "https://github.com/VoltAgent/awesome-ai-agent-papers",
-      "created_at": "2026-02-10T10:58:31Z",
-      "updated_at": "2026-05-19T02:27:29Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "知识库",
-        "自主代理",
-        "资源列表"
-      ]
-    },
-    {
       "id": 897068154,
       "full_name": "heurist-network/heurist-agent-framework",
       "description": "A flexible multi-interface AI agent framework for building agents with reasoning, tool use, memory, deep research, blockchain interaction, MCP, and agents-as-a-service.",
@@ -2724,10 +2724,39 @@
       ]
     },
     {
+      "id": 1220899692,
+      "full_name": "Imbad0202/academic-research-skills-codex",
+      "description": "Codex-native Academic Research Skills suite for human-in-the-loop academic research workflows",
+      "stars": 790,
+      "forks": 56,
+      "language": "Python",
+      "topics": [
+        "academic-pipeline",
+        "academic-research",
+        "academic-writing",
+        "ai-research",
+        "codex",
+        "literature-review",
+        "openai-codex",
+        "peer-review",
+        "prompt-engineering",
+        "research-assistant"
+      ],
+      "url": "https://github.com/Imbad0202/academic-research-skills-codex",
+      "created_at": "2026-04-25T13:39:58Z",
+      "updated_at": "2026-05-19T19:04:32Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "实验自动化",
+        "代码研究"
+      ]
+    },
+    {
       "id": 1124477911,
       "full_name": "Weizhena/Deep-Research-skills",
       "description": "Structured deep research skill for Claude Code/Open Code/Codex with human-in-the-loop control",
-      "stars": 767,
+      "stars": 776,
       "forks": 70,
       "language": "Python",
       "topics": [
@@ -2742,7 +2771,7 @@
       ],
       "url": "https://github.com/Weizhena/Deep-Research-skills",
       "created_at": "2025-12-29T05:00:00Z",
-      "updated_at": "2026-05-19T02:07:21Z",
+      "updated_at": "2026-05-19T15:28:58Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2754,7 +2783,7 @@
       "id": 950839330,
       "full_name": "qx-labs/agents-deep-research",
       "description": "An implementation of iterative deep research using the OpenAI Agents SDK",
-      "stars": 764,
+      "stars": 765,
       "forks": 88,
       "language": "Python",
       "topics": [
@@ -2767,7 +2796,7 @@
       ],
       "url": "https://github.com/qx-labs/agents-deep-research",
       "created_at": "2025-03-18T19:00:49Z",
-      "updated_at": "2026-05-18T08:35:09Z",
+      "updated_at": "2026-05-19T05:41:00Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2778,7 +2807,7 @@
       "id": 1148429262,
       "full_name": "TIGER-AI-Lab/OpenResearcher",
       "description": "OpenResearcher: A Fully Open Pipeline for Long-Horizon Deep Research Trajectory Synthesis",
-      "stars": 754,
+      "stars": 755,
       "forks": 74,
       "language": "Python",
       "topics": [
@@ -2788,7 +2817,7 @@
       ],
       "url": "https://github.com/TIGER-AI-Lab/OpenResearcher",
       "created_at": "2026-02-03T00:34:05Z",
-      "updated_at": "2026-05-15T11:39:38Z",
+      "updated_at": "2026-05-19T09:51:00Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2810,6 +2839,44 @@
       "use_cases": [
         "深度研究",
         "AI 训练"
+      ]
+    },
+    {
+      "id": 1149517037,
+      "full_name": "aipoch/medical-research-skills",
+      "description": "Hundreds of agent skills for medical research, including protocol design, data analysis, evidence insights, and academic writing.",
+      "stars": 753,
+      "forks": 49,
+      "language": "Python",
+      "topics": [
+        "academic-writing",
+        "agent-skills",
+        "ai",
+        "bioinformatics",
+        "biology",
+        "cancer-genomics",
+        "clinical-research",
+        "computational-biology",
+        "data-analysis",
+        "data-visualization",
+        "differential-expression",
+        "genomics",
+        "medical",
+        "medical-research",
+        "protocol-design",
+        "rna-seq-data",
+        "science",
+        "scrna-seq-data",
+        "single-cell",
+        "spatial-transcriptomics"
+      ],
+      "url": "https://github.com/aipoch/medical-research-skills",
+      "created_at": "2026-02-04T07:50:06Z",
+      "updated_at": "2026-05-19T18:19:30Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "自主代理"
       ]
     },
     {
@@ -2843,44 +2910,6 @@
       ]
     },
     {
-      "id": 1149517037,
-      "full_name": "aipoch/medical-research-skills",
-      "description": "Hundreds of agent skills for medical research, including protocol design, data analysis, evidence insights, and academic writing.",
-      "stars": 742,
-      "forks": 50,
-      "language": "Python",
-      "topics": [
-        "academic-writing",
-        "agent-skills",
-        "ai",
-        "bioinformatics",
-        "biology",
-        "cancer-genomics",
-        "clinical-research",
-        "computational-biology",
-        "data-analysis",
-        "data-visualization",
-        "differential-expression",
-        "genomics",
-        "medical",
-        "medical-research",
-        "protocol-design",
-        "rna-seq-data",
-        "science",
-        "scrna-seq-data",
-        "single-cell",
-        "spatial-transcriptomics"
-      ],
-      "url": "https://github.com/aipoch/medical-research-skills",
-      "created_at": "2026-02-04T07:50:06Z",
-      "updated_at": "2026-05-19T02:53:41Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "自主代理"
-      ]
-    },
-    {
       "id": 954486597,
       "full_name": "VAST-AI-Research/TripoSF",
       "description": "SparseFlex: High-Resolution and Arbitrary-Topology 3D Shape Modeling",
@@ -2905,7 +2934,7 @@
       "id": 1001385046,
       "full_name": "Ayanami0730/deep_research_bench",
       "description": "DeepResearch Bench: A Comprehensive Benchmark for Deep Research Agents",
-      "stars": 726,
+      "stars": 727,
       "forks": 76,
       "language": "Python",
       "topics": [
@@ -2916,7 +2945,7 @@
       ],
       "url": "https://github.com/Ayanami0730/deep_research_bench",
       "created_at": "2025-06-13T09:36:49Z",
-      "updated_at": "2026-05-16T16:03:38Z",
+      "updated_at": "2026-05-19T07:26:19Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2928,7 +2957,7 @@
       "id": 885877865,
       "full_name": "Haervwe/open-webui-tools",
       "description": "Open‑WebUI Tools is a modular toolkit designed to extend and enrich your Open WebUI instance, turning it into a powerful AI workstation. With a suite of over 15 specialized tools, function pipelines, and filters, this project supports academic research, agentic autonomy, multimodal creativity, workflows, and more",
-      "stars": 716,
+      "stars": 720,
       "forks": 66,
       "language": "Python",
       "topics": [
@@ -2952,7 +2981,7 @@
       ],
       "url": "https://github.com/Haervwe/open-webui-tools",
       "created_at": "2024-11-09T16:21:51Z",
-      "updated_at": "2026-05-19T00:17:38Z",
+      "updated_at": "2026-05-19T14:01:19Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -2963,13 +2992,13 @@
       "id": 1089628716,
       "full_name": "199-biotechnologies/claude-deep-research-skill",
       "description": "Enterprise-grade deep research skill for Claude Code with 8-phase pipeline, source credibility scoring, and automated validation. Outperforms OpenAI, Gemini, and Claude Desktop in quality and verification.",
-      "stars": 694,
+      "stars": 701,
       "forks": 78,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/199-biotechnologies/claude-deep-research-skill",
       "created_at": "2025-11-04T15:45:07Z",
-      "updated_at": "2026-05-18T11:57:58Z",
+      "updated_at": "2026-05-19T15:09:23Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -2997,7 +3026,7 @@
       "full_name": "dCaples/AutoDidact",
       "description": "Autonomously train research-agent LLMs on custom data using reinforcement learning and self-verification.",
       "stars": 689,
-      "forks": 63,
+      "forks": 64,
       "language": "Jupyter Notebook",
       "topics": [],
       "url": "https://github.com/dCaples/AutoDidact",
@@ -3029,13 +3058,13 @@
       "id": 1152520306,
       "full_name": "DeepXiv/deepxiv_sdk",
       "description": "Talk to research papers like talking to authors - Python package with AI agent for arXiv papers",
-      "stars": 675,
+      "stars": 680,
       "forks": 38,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/DeepXiv/deepxiv_sdk",
       "created_at": "2026-02-08T01:54:34Z",
-      "updated_at": "2026-05-18T15:34:45Z",
+      "updated_at": "2026-05-19T15:25:47Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -3070,13 +3099,13 @@
       "id": 1192900590,
       "full_name": "andrehuang/research-companion",
       "description": "Strategic research thinking agents for Claude Code — idea evaluation, project triage, and structured brainstorming. Helps you decide which papers to write, not just how to write them.",
-      "stars": 655,
+      "stars": 656,
       "forks": 56,
       "language": "",
       "topics": [],
       "url": "https://github.com/andrehuang/research-companion",
       "created_at": "2026-03-26T17:11:13Z",
-      "updated_at": "2026-05-18T17:34:47Z",
+      "updated_at": "2026-05-19T11:18:04Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -3102,35 +3131,6 @@
       ]
     },
     {
-      "id": 1220899692,
-      "full_name": "Imbad0202/academic-research-skills-codex",
-      "description": "Codex-native Academic Research Skills suite for human-in-the-loop academic research workflows",
-      "stars": 648,
-      "forks": 50,
-      "language": "Python",
-      "topics": [
-        "academic-pipeline",
-        "academic-research",
-        "academic-writing",
-        "ai-research",
-        "codex",
-        "literature-review",
-        "openai-codex",
-        "peer-review",
-        "prompt-engineering",
-        "research-assistant"
-      ],
-      "url": "https://github.com/Imbad0202/academic-research-skills-codex",
-      "created_at": "2026-04-25T13:39:58Z",
-      "updated_at": "2026-05-19T03:16:31Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "实验自动化",
-        "代码研究"
-      ]
-    },
-    {
       "id": 1145134556,
       "full_name": "Osilly/Vision-DeepResearch",
       "description": "[ICML 2026] Multimodal deep-research MLLM and benchmark. The first long-horizon multimodal deep-research MLLM, extending the number of reasoning turns to dozens and the number of search-engine interactions to hundreds.",
@@ -3150,13 +3150,13 @@
       "id": 1133189020,
       "full_name": "luwill/research-skills",
       "description": "Some commonly used research experiences and processes are encapsulated into Agent skills.",
-      "stars": 615,
+      "stars": 618,
       "forks": 78,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/luwill/research-skills",
       "created_at": "2026-01-13T02:17:01Z",
-      "updated_at": "2026-05-19T01:34:14Z",
+      "updated_at": "2026-05-19T13:24:52Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -3166,13 +3166,13 @@
       "id": 1177352914,
       "full_name": "zubair-trabzada/ai-sales-team-claude",
       "description": "AI-powered sales team for Claude Code. Research prospects, qualify leads (BANT + MEDDIC), find decision makers, generate outreach sequences, prepare for meetings, write proposals, and produce PDF pipeline reports — 14 skills, 5 parallel agents.",
-      "stars": 613,
-      "forks": 224,
+      "stars": 618,
+      "forks": 227,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/zubair-trabzada/ai-sales-team-claude",
       "created_at": "2026-03-10T00:18:25Z",
-      "updated_at": "2026-05-18T21:43:22Z",
+      "updated_at": "2026-05-19T18:51:32Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -3200,7 +3200,7 @@
       "id": 474520350,
       "full_name": "Picsart-AI-Research/LIVE-Layerwise-Image-Vectorization",
       "description": "[CVPR 2022 Oral] Towards Layer-wise Image Vectorization",
-      "stars": 608,
+      "stars": 610,
       "forks": 65,
       "language": "Python",
       "topics": [
@@ -3208,7 +3208,7 @@
       ],
       "url": "https://github.com/Picsart-AI-Research/LIVE-Layerwise-Image-Vectorization",
       "created_at": "2022-03-27T03:00:21Z",
-      "updated_at": "2026-05-05T14:32:55Z",
+      "updated_at": "2026-05-19T12:14:21Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -3284,13 +3284,13 @@
       "id": 961648315,
       "full_name": "AstroPilot-AI/Denario",
       "description": "Modular Multi-Agent System for Scientific Research Assistance",
-      "stars": 562,
+      "stars": 563,
       "forks": 85,
       "language": "TeX",
       "topics": [],
       "url": "https://github.com/AstroPilot-AI/Denario",
       "created_at": "2025-04-06T23:51:57Z",
-      "updated_at": "2026-05-16T01:52:51Z",
+      "updated_at": "2026-05-19T07:37:42Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -3342,7 +3342,7 @@
       "id": 997410148,
       "full_name": "vanzan01/claude-code-sub-agent-collective",
       "description": "  🧠 Context Engineering Research - Not just another agent collection, but using research and context engineering to function as a collective. Hub-and-spoke coordination through Claude   Code.",
-      "stars": 523,
+      "stars": 524,
       "forks": 60,
       "language": "JavaScript",
       "topics": [
@@ -3361,7 +3361,7 @@
       ],
       "url": "https://github.com/vanzan01/claude-code-sub-agent-collective",
       "created_at": "2025-06-06T13:34:09Z",
-      "updated_at": "2026-05-16T00:19:49Z",
+      "updated_at": "2026-05-19T11:18:27Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -3386,31 +3386,10 @@
       ]
     },
     {
-      "id": 1030036185,
-      "full_name": "Tencent/CognitiveKernel-Pro",
-      "description": "Deep Research Agent CognitiveKernel-Pro from Tencent AI Lab. Paper: https://arxiv.org/pdf/2508.00414",
-      "stars": 517,
-      "forks": 55,
-      "language": "Python",
-      "topics": [
-        "agent",
-        "llm"
-      ],
-      "url": "https://github.com/Tencent/CognitiveKernel-Pro",
-      "created_at": "2025-08-01T01:49:18Z",
-      "updated_at": "2026-05-18T12:33:55Z",
-      "category": "deep_research",
-      "use_cases": [
-        "深度研究",
-        "学术文献",
-        "自主代理"
-      ]
-    },
-    {
       "id": 1053779296,
       "full_name": "quant-sentiment-ai/claude-equity-research",
       "description": "🔌 Claude Code Plugin for institutional-grade equity research.   Install with /plugin marketplace add. Generates professional   buy/sell recommendations with comprehensive fundamental   analysis, technical indicators, and risk assessment. Educational    use only - not financial advice.",
-      "stars": 517,
+      "stars": 518,
       "forks": 60,
       "language": "",
       "topics": [
@@ -3430,11 +3409,32 @@
       ],
       "url": "https://github.com/quant-sentiment-ai/claude-equity-research",
       "created_at": "2025-09-09T23:26:25Z",
-      "updated_at": "2026-05-18T13:57:26Z",
+      "updated_at": "2026-05-19T05:12:54Z",
       "category": "deep_research",
       "use_cases": [
         "金融数据",
         "代码研究"
+      ]
+    },
+    {
+      "id": 1030036185,
+      "full_name": "Tencent/CognitiveKernel-Pro",
+      "description": "Deep Research Agent CognitiveKernel-Pro from Tencent AI Lab. Paper: https://arxiv.org/pdf/2508.00414",
+      "stars": 516,
+      "forks": 55,
+      "language": "Python",
+      "topics": [
+        "agent",
+        "llm"
+      ],
+      "url": "https://github.com/Tencent/CognitiveKernel-Pro",
+      "created_at": "2025-08-01T01:49:18Z",
+      "updated_at": "2026-05-19T11:21:02Z",
+      "category": "deep_research",
+      "use_cases": [
+        "深度研究",
+        "学术文献",
+        "自主代理"
       ]
     },
     {
@@ -3478,27 +3478,11 @@
       ]
     },
     {
-      "id": 991206747,
-      "full_name": "Westlake-AGI-Lab/Auto-Slides",
-      "description": "[ICME 2026] Official implementation of Auto-Slides: An Interactive Multi-Agent System for Creating and Customizing Research Presentations",
-      "stars": 500,
-      "forks": 55,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/Westlake-AGI-Lab/Auto-Slides",
-      "created_at": "2025-05-27T09:30:35Z",
-      "updated_at": "2026-05-18T08:31:26Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 1206101159,
       "full_name": "Ar9av/PaperOrchestra",
       "description": "An automated AI research-paper writer based off Google's PaperOrchestra paper's implementation through a skills -  benchmark + autoraters using any coding agent (Claude Code, Cursor, Antigravity, Cline, Aider). No API keys, no LLM SDKs.",
-      "stars": 497,
-      "forks": 70,
+      "stars": 501,
+      "forks": 71,
       "language": "Python",
       "topics": [
         "agentic-ai",
@@ -3523,13 +3507,29 @@
       ],
       "url": "https://github.com/Ar9av/PaperOrchestra",
       "created_at": "2026-04-09T15:20:37Z",
-      "updated_at": "2026-05-19T02:06:03Z",
+      "updated_at": "2026-05-19T19:22:04Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
         "自主代理",
         "代码研究",
         "竞争分析"
+      ]
+    },
+    {
+      "id": 991206747,
+      "full_name": "Westlake-AGI-Lab/Auto-Slides",
+      "description": "[ICME 2026] Official implementation of Auto-Slides: An Interactive Multi-Agent System for Creating and Customizing Research Presentations",
+      "stars": 500,
+      "forks": 55,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/Westlake-AGI-Lab/Auto-Slides",
+      "created_at": "2025-05-27T09:30:35Z",
+      "updated_at": "2026-05-19T09:11:24Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
       ]
     },
     {
@@ -3633,7 +3633,7 @@
       "id": 668917472,
       "full_name": "ImKKingshuk/LockKnife",
       "description": "LockKnife: The Ultimate Android Security Research Tool. A unified TUI workspace and headless CLI for deep Android security research, built for researchers and hackers. Powered by Python orchestration and a Rust-accelerated core, enabling AI agent–driven hacking, credential recovery/cracking, APK analysis, intelligence gathering, runtime inspection.",
-      "stars": 486,
+      "stars": 487,
       "forks": 102,
       "language": "Python",
       "topics": [
@@ -3660,7 +3660,7 @@
       ],
       "url": "https://github.com/ImKKingshuk/LockKnife",
       "created_at": "2023-07-20T23:01:55Z",
-      "updated_at": "2026-05-19T03:14:48Z",
+      "updated_at": "2026-05-19T14:59:58Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -3740,8 +3740,8 @@
       "id": 1177129875,
       "full_name": "ZimoLiao/scholaraio",
       "description": "Scholar All-In-One: A research infrastructure for AI agents",
-      "stars": 464,
-      "forks": 66,
+      "stars": 465,
+      "forks": 67,
       "language": "Python",
       "topics": [
         "agentic-science",
@@ -3758,7 +3758,7 @@
       ],
       "url": "https://github.com/ZimoLiao/scholaraio",
       "created_at": "2026-03-09T18:14:03Z",
-      "updated_at": "2026-05-18T06:51:09Z",
+      "updated_at": "2026-05-19T13:48:27Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -3859,30 +3859,10 @@
       ]
     },
     {
-      "id": 312348119,
-      "full_name": "google-deepmind/lab2d",
-      "description": "A customisable 2D platform for agent-based AI research",
-      "stars": 439,
-      "forks": 58,
-      "language": "C++",
-      "topics": [
-        "artificial-intelligence",
-        "deep-learning",
-        "machine-learning"
-      ],
-      "url": "https://github.com/google-deepmind/lab2d",
-      "created_at": "2020-11-12T17:26:19Z",
-      "updated_at": "2026-03-21T05:04:07Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 1203380576,
       "full_name": "416rehman/DeepZero",
       "description": "Find zero-days while you sleep. DeepZero is an automated vulnerability research framework that parses, decompiles, and analyzes thousands of Windows kernel drivers for exploitable IOCTLs natively using AI agents.",
-      "stars": 439,
+      "stars": 440,
       "forks": 56,
       "language": "Python",
       "topics": [
@@ -3908,11 +3888,31 @@
       ],
       "url": "https://github.com/416rehman/DeepZero",
       "created_at": "2026-04-07T01:51:34Z",
-      "updated_at": "2026-05-18T23:21:24Z",
+      "updated_at": "2026-05-19T12:08:57Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "睡眠/后台"
+      ]
+    },
+    {
+      "id": 312348119,
+      "full_name": "google-deepmind/lab2d",
+      "description": "A customisable 2D platform for agent-based AI research",
+      "stars": 439,
+      "forks": 58,
+      "language": "C++",
+      "topics": [
+        "artificial-intelligence",
+        "deep-learning",
+        "machine-learning"
+      ],
+      "url": "https://github.com/google-deepmind/lab2d",
+      "created_at": "2020-11-12T17:26:19Z",
+      "updated_at": "2026-03-21T05:04:07Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
       ]
     },
     {
@@ -3935,7 +3935,7 @@
       "id": 1201628267,
       "full_name": "nvk/llm-wiki",
       "description": "LLM-compiled knowledge bases for any AI agent. Parallel multi-agent research, thesis-driven investigation, source ingestion, wiki compilation, querying, and artifact generation. ",
-      "stars": 437,
+      "stars": 439,
       "forks": 58,
       "language": "Shell",
       "topics": [
@@ -3950,7 +3950,7 @@
       ],
       "url": "https://github.com/nvk/llm-wiki",
       "created_at": "2026-04-04T23:52:25Z",
-      "updated_at": "2026-05-19T00:43:19Z",
+      "updated_at": "2026-05-19T09:18:46Z",
       "category": "knowledge_base",
       "use_cases": [
         "知识库",
@@ -4116,11 +4116,37 @@
       ]
     },
     {
+      "id": 1193465306,
+      "full_name": "iusztinpaul/designing-real-world-ai-agents-workshop",
+      "description": "Hands-on workshop: Build a multi-agent AI system from scratch — Deep Research Agent + Writing Workflow served as MCP servers. Includes code, slides, and video",
+      "stars": 416,
+      "forks": 113,
+      "language": "Python",
+      "topics": [
+        "ai-agent",
+        "ai-skills",
+        "ai-workflow",
+        "deep-research",
+        "mcp",
+        "multi-agent-systems",
+        "workshop"
+      ],
+      "url": "https://github.com/iusztinpaul/designing-real-world-ai-agents-workshop",
+      "created_at": "2026-03-27T08:55:20Z",
+      "updated_at": "2026-05-19T12:36:55Z",
+      "category": "deep_research",
+      "use_cases": [
+        "深度研究",
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
       "id": 1026850533,
       "full_name": "ryanfrigo/kalshi-ai-trading-bot",
       "description": "🤖 Advanced AI-powered trading system for Kalshi prediction markets. Features Grok-4 integration, multi-agent decision making, portfolio optimization, and real-time market analysis. Educational/research purposes only.",
       "stars": 414,
-      "forks": 157,
+      "forks": 158,
       "language": "Python",
       "topics": [
         "ai-trading",
@@ -4141,32 +4167,6 @@
       "use_cases": [
         "金融数据",
         "自主代理"
-      ]
-    },
-    {
-      "id": 1193465306,
-      "full_name": "iusztinpaul/designing-real-world-ai-agents-workshop",
-      "description": "Hands-on workshop: Build a multi-agent AI system from scratch — Deep Research Agent + Writing Workflow served as MCP servers. Includes code, slides, and video",
-      "stars": 413,
-      "forks": 113,
-      "language": "Python",
-      "topics": [
-        "ai-agent",
-        "ai-skills",
-        "ai-workflow",
-        "deep-research",
-        "mcp",
-        "multi-agent-systems",
-        "workshop"
-      ],
-      "url": "https://github.com/iusztinpaul/designing-real-world-ai-agents-workshop",
-      "created_at": "2026-03-27T08:55:20Z",
-      "updated_at": "2026-05-19T02:31:50Z",
-      "category": "deep_research",
-      "use_cases": [
-        "深度研究",
-        "自主代理",
-        "代码研究"
       ]
     },
     {
@@ -4275,8 +4275,8 @@
       "id": 1182683603,
       "full_name": "Affitor/affiliate-skills",
       "description": "50 AI agent skills for affiliate marketing. Research trending content, write data-backed posts, generate infographics, build landing pages, deploy — full flywheel with social intelligence. Works with Claude Code, Pi, ChatGPT, Gemini, Cursor, Windsurf, any AI.",
-      "stars": 405,
-      "forks": 154,
+      "stars": 408,
+      "forks": 155,
       "language": "HTML",
       "topics": [
         "affiliate-marketing",
@@ -4302,7 +4302,7 @@
       ],
       "url": "https://github.com/Affitor/affiliate-skills",
       "created_at": "2026-03-15T20:51:26Z",
-      "updated_at": "2026-05-18T23:21:56Z",
+      "updated_at": "2026-05-19T17:26:22Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -4325,6 +4325,23 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ]
+    },
+    {
+      "id": 1237174940,
+      "full_name": "simonlin1212/TradingAgents-astock",
+      "description": "A股多Agent投研框架 — 适配A股数据源(龙虎榜/游资/解禁等)，7位分析师基于A股规则的辩论决策，基于TradingAgents深度改造，适配大A。A-share multi-agent investment research framework — 7 AI analysts, bull/bear debate, risk assessment。",
+      "stars": 396,
+      "forks": 114,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/simonlin1212/TradingAgents-astock",
+      "created_at": "2026-05-13T00:22:30Z",
+      "updated_at": "2026-05-19T18:52:39Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理"
       ]
     },
     {
@@ -4401,8 +4418,8 @@
       "id": 1171290857,
       "full_name": "InternScience/Awesome-Scientific-Skills",
       "description": "An open, curated collection of Agent Skills for scientific research — clone it, use it, extend it!",
-      "stars": 381,
-      "forks": 19,
+      "stars": 383,
+      "forks": 20,
       "language": "",
       "topics": [
         "agent-skills",
@@ -4414,7 +4431,7 @@
       ],
       "url": "https://github.com/InternScience/Awesome-Scientific-Skills",
       "created_at": "2026-03-03T04:14:39Z",
-      "updated_at": "2026-05-18T16:41:05Z",
+      "updated_at": "2026-05-19T09:18:34Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -4446,7 +4463,7 @@
       "id": 1168764387,
       "full_name": "VAST-AI-Research/AniGen",
       "description": "[SIGGRAPH 2026] AniGen: Unified S^3 Fields for Animatable 3D Asset Generation",
-      "stars": 378,
+      "stars": 379,
       "forks": 28,
       "language": "Python",
       "topics": [
@@ -4457,7 +4474,7 @@
       ],
       "url": "https://github.com/VAST-AI-Research/AniGen",
       "created_at": "2026-02-27T19:13:50Z",
-      "updated_at": "2026-05-18T08:28:59Z",
+      "updated_at": "2026-05-19T11:43:40Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -4467,7 +4484,7 @@
       "id": 1192211679,
       "full_name": "ant-research/Awesome-AIGC-Image-Video-Detection",
       "description": "A curated collection of the latest research and resources on AI-Generated Image and Video Detection.",
-      "stars": 374,
+      "stars": 377,
       "forks": 8,
       "language": "",
       "topics": [
@@ -4479,7 +4496,7 @@
       ],
       "url": "https://github.com/ant-research/Awesome-AIGC-Image-Video-Detection",
       "created_at": "2026-03-26T02:00:25Z",
-      "updated_at": "2026-05-18T13:06:06Z",
+      "updated_at": "2026-05-19T15:50:50Z",
       "category": "general",
       "use_cases": [
         "资源列表"
@@ -4528,13 +4545,13 @@
       "id": 733656923,
       "full_name": "Picsart-AI-Research/HD-Painter",
       "description": "[ICLR 2025] HD-Painter: High-Resolution and Prompt-Faithful Text-Guided Image Inpainting with Diffusion Models",
-      "stars": 360,
+      "stars": 361,
       "forks": 23,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/Picsart-AI-Research/HD-Painter",
       "created_at": "2023-12-19T20:34:10Z",
-      "updated_at": "2026-05-08T06:38:26Z",
+      "updated_at": "2026-05-19T12:12:25Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -4557,20 +4574,21 @@
       ]
     },
     {
-      "id": 1237174940,
-      "full_name": "simonlin1212/TradingAgents-astock",
-      "description": "A股多Agent投研框架 — 适配A股数据源(龙虎榜/游资/解禁等)，7位分析师基于A股规则的辩论决策，基于TradingAgents深度改造，适配大A。A-share multi-agent investment research framework — 7 AI analysts, bull/bear debate, risk assessment。",
-      "stars": 352,
-      "forks": 99,
-      "language": "Python",
+      "id": 1169890710,
+      "full_name": "claesbackman/AI-research-feedback",
+      "description": "A collection of Claude Code skills for academic research review. These tools were developed by Claes Bäckman.",
+      "stars": 347,
+      "forks": 64,
+      "language": "",
       "topics": [],
-      "url": "https://github.com/simonlin1212/TradingAgents-astock",
-      "created_at": "2026-05-13T00:22:30Z",
-      "updated_at": "2026-05-19T01:14:37Z",
-      "category": "data_research",
+      "url": "https://github.com/claesbackman/AI-research-feedback",
+      "created_at": "2026-03-01T11:37:44Z",
+      "updated_at": "2026-05-19T11:19:34Z",
+      "category": "literature",
       "use_cases": [
-        "金融数据",
-        "自主代理"
+        "学术文献",
+        "资源列表",
+        "代码研究"
       ]
     },
     {
@@ -4594,24 +4612,6 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
-      ]
-    },
-    {
-      "id": 1169890710,
-      "full_name": "claesbackman/AI-research-feedback",
-      "description": "A collection of Claude Code skills for academic research review. These tools were developed by Claes Bäckman.",
-      "stars": 345,
-      "forks": 64,
-      "language": "",
-      "topics": [],
-      "url": "https://github.com/claesbackman/AI-research-feedback",
-      "created_at": "2026-03-01T11:37:44Z",
-      "updated_at": "2026-05-19T02:07:58Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "资源列表",
-        "代码研究"
       ]
     },
     {
@@ -4704,7 +4704,7 @@
       "id": 1156146412,
       "full_name": "oliver-kriska/claude-elixir-phoenix",
       "description": "Claude Code plugin for Elixir/Phoenix/LiveView — 20 specialist agents, Iron Laws enforcement, and Tidewave MCP integration. Plan features with parallel research agents, execute with automatic verification, review with 4-agent parallel audits, and capture learnings as reusable knowledge.",
-      "stars": 329,
+      "stars": 333,
       "forks": 24,
       "language": "Python",
       "topics": [
@@ -4723,9 +4723,34 @@
       ],
       "url": "https://github.com/oliver-kriska/claude-elixir-phoenix",
       "created_at": "2026-02-12T10:09:18Z",
-      "updated_at": "2026-05-18T23:18:28Z",
+      "updated_at": "2026-05-19T16:34:27Z",
       "category": "general",
       "use_cases": [
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1206357666,
+      "full_name": "jordan-gibbs/hyperresearch",
+      "description": "Agent-driven research knowledge base. Agents collect, search, and synthesize web research into a persistent, searchable wiki.",
+      "stars": 331,
+      "forks": 22,
+      "language": "Python",
+      "topics": [
+        "agents",
+        "agentskills",
+        "claude-code",
+        "deep-research",
+        "deep-research-agent"
+      ],
+      "url": "https://github.com/jordan-gibbs/hyperresearch",
+      "created_at": "2026-04-09T20:46:46Z",
+      "updated_at": "2026-05-19T18:32:22Z",
+      "category": "deep_research",
+      "use_cases": [
+        "网页搜索",
+        "知识库",
         "自主代理",
         "代码研究"
       ]
@@ -4767,31 +4792,6 @@
       "category": "general",
       "use_cases": [
         "自主代理"
-      ]
-    },
-    {
-      "id": 1206357666,
-      "full_name": "jordan-gibbs/hyperresearch",
-      "description": "Agent-driven research knowledge base. Agents collect, search, and synthesize web research into a persistent, searchable wiki.",
-      "stars": 318,
-      "forks": 22,
-      "language": "Python",
-      "topics": [
-        "agents",
-        "agentskills",
-        "claude-code",
-        "deep-research",
-        "deep-research-agent"
-      ],
-      "url": "https://github.com/jordan-gibbs/hyperresearch",
-      "created_at": "2026-04-09T20:46:46Z",
-      "updated_at": "2026-05-19T01:56:45Z",
-      "category": "deep_research",
-      "use_cases": [
-        "网页搜索",
-        "知识库",
-        "自主代理",
-        "代码研究"
       ]
     },
     {
@@ -4837,13 +4837,13 @@
       "id": 1185283077,
       "full_name": "Romanescu11/hermes-skill-factory",
       "description": " A meta-skill plugin for Nous Research's Hermes AI agent that watches your workflows and automatically turns them into reusable skills.  Every time you work with Hermes and solve something — setting up a project, debugging code, creating a PR — that   workflow disappears at the end of the session. You have to explain it again next time.",
-      "stars": 309,
+      "stars": 312,
       "forks": 36,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/Romanescu11/hermes-skill-factory",
       "created_at": "2026-03-18T12:28:01Z",
-      "updated_at": "2026-05-19T03:09:28Z",
+      "updated_at": "2026-05-19T18:51:49Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -4870,15 +4870,15 @@
       "id": 1123012166,
       "full_name": "liangdabiao/Claude-Code-Stock-Deep-Research-Agent",
       "description": "本研究基于 Claude Code Deep Research 系统：  方法论: 8阶段股票投资尽调框架 智能体: 28个并行研究智能体 工具: WebSearch、WebFetch、综合分析 质量: 多空平衡、明确风险、数据验证。简单使用：/stock-research AAPL, I want a quick overview",
-      "stars": 308,
-      "forks": 69,
+      "stars": 309,
+      "forks": 70,
       "language": "",
       "topics": [
         "claude-code"
       ],
       "url": "https://github.com/liangdabiao/Claude-Code-Stock-Deep-Research-Agent",
       "created_at": "2025-12-26T02:54:35Z",
-      "updated_at": "2026-05-17T08:08:49Z",
+      "updated_at": "2026-05-19T06:16:52Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -4910,7 +4910,7 @@
       ],
       "url": "https://github.com/Sri-Krishna-V/awesome-adk-agents",
       "created_at": "2025-05-27T11:48:53Z",
-      "updated_at": "2026-05-14T02:39:25Z",
+      "updated_at": "2026-05-19T11:21:44Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -4999,6 +4999,33 @@
       ]
     },
     {
+      "id": 836899473,
+      "full_name": "kaymen99/sales-outreach-automation-langgraph",
+      "description": "Automate lead research, qualification, and outreach with AI agents and Langgraph, creating personalized messaging and connecting with your CRMs (HubSpot, Airtable, Google Sheets)",
+      "stars": 290,
+      "forks": 79,
+      "language": "Python",
+      "topics": [
+        "ai-agents",
+        "ai-automation",
+        "automation",
+        "crm-connections",
+        "hubspot",
+        "langchain",
+        "langgraph",
+        "lead-generation",
+        "leads-management",
+        "sales-automation"
+      ],
+      "url": "https://github.com/kaymen99/sales-outreach-automation-langgraph",
+      "created_at": "2024-08-01T19:41:48Z",
+      "updated_at": "2026-05-19T13:01:47Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 1171660818,
       "full_name": "ymx10086/ResearchClaw",
       "description": "ResearchClaw is a personal AI assistant built for research: fast to set up, easy to run locally or in the cloud, and ready to integrate with the chat apps you already use. With extensible skills, it helps you streamline literature review, note-taking, experiment tracking, and paper writing—end to end.",
@@ -5024,38 +5051,11 @@
       ]
     },
     {
-      "id": 836899473,
-      "full_name": "kaymen99/sales-outreach-automation-langgraph",
-      "description": "Automate lead research, qualification, and outreach with AI agents and Langgraph, creating personalized messaging and connecting with your CRMs (HubSpot, Airtable, Google Sheets)",
-      "stars": 289,
-      "forks": 79,
-      "language": "Python",
-      "topics": [
-        "ai-agents",
-        "ai-automation",
-        "automation",
-        "crm-connections",
-        "hubspot",
-        "langchain",
-        "langgraph",
-        "lead-generation",
-        "leads-management",
-        "sales-automation"
-      ],
-      "url": "https://github.com/kaymen99/sales-outreach-automation-langgraph",
-      "created_at": "2024-08-01T19:41:48Z",
-      "updated_at": "2026-05-14T20:28:55Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 1102281968,
       "full_name": "athola/claude-night-market",
       "description": "23 Claude Code plugins: TDD enforcement hooks, git/PR workflows, spec-driven development, code review, project lifecycle, fix-from-error, maintenance automation, context optimization, research, and multi-LLM delegation. 186 skills, 128 commands, 54 agents.",
-      "stars": 285,
-      "forks": 24,
+      "stars": 288,
+      "forks": 25,
       "language": "Python",
       "topics": [
         "ai-agents",
@@ -5081,7 +5081,7 @@
       ],
       "url": "https://github.com/athola/claude-night-market",
       "created_at": "2025-11-23T06:45:40Z",
-      "updated_at": "2026-05-18T21:30:38Z",
+      "updated_at": "2026-05-19T15:46:29Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -5094,7 +5094,7 @@
       "id": 1174234577,
       "full_name": "cnfjlhj/ai-collab-playbook",
       "description": "Practical AI collaboration playbook for research, writing, reading, and coding: article, prompts, agent rules, and reusable skills.",
-      "stars": 284,
+      "stars": 286,
       "forks": 21,
       "language": "Python",
       "topics": [
@@ -5113,7 +5113,7 @@
       ],
       "url": "https://github.com/cnfjlhj/ai-collab-playbook",
       "created_at": "2026-03-06T08:01:46Z",
-      "updated_at": "2026-05-18T21:16:08Z",
+      "updated_at": "2026-05-19T13:40:43Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -5125,7 +5125,7 @@
       "id": 1101609416,
       "full_name": "transilienceai/communitytools",
       "description": "Open-source Claude Code skills, agents, and slash commands for AI-powered penetration testing, bug bounty hunting, and security research",
-      "stars": 280,
+      "stars": 281,
       "forks": 51,
       "language": "Python",
       "topics": [
@@ -5139,7 +5139,7 @@
       ],
       "url": "https://github.com/transilienceai/communitytools",
       "created_at": "2025-11-21T23:34:26Z",
-      "updated_at": "2026-05-18T20:48:45Z",
+      "updated_at": "2026-05-19T18:09:30Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -5205,7 +5205,7 @@
       "id": 1170833156,
       "full_name": "liangdabiao/amazon-sorftime-research-MCP-skill",
       "description": "亚马逊选品 之 Listing全维度穿透分析报告  加上 全品类分析 ，关键词分析，差评分析 ，市场调研 等等。OpenClaw /claude code agent skill, amazon sorftime research MCP 智能体skill.基于 Sorftime MCP 服务和 Claude Skills 的亚马逊竞品分析工具集。",
-      "stars": 269,
+      "stars": 270,
       "forks": 50,
       "language": "HTML",
       "topics": [
@@ -5213,7 +5213,7 @@
       ],
       "url": "https://github.com/liangdabiao/amazon-sorftime-research-MCP-skill",
       "created_at": "2026-03-02T15:17:23Z",
-      "updated_at": "2026-05-18T17:23:55Z",
+      "updated_at": "2026-05-19T08:53:40Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -5245,8 +5245,8 @@
       "id": 1041853788,
       "full_name": "jarrycyx/openlens-ai",
       "description": "OpenLens AI: A Fully Autonomous Multimodal Research Agent｜ OpenLens AI：全自主多模态科研智能体",
-      "stars": 264,
-      "forks": 23,
+      "stars": 266,
+      "forks": 24,
       "language": "Python",
       "topics": [
         "agent",
@@ -5255,7 +5255,7 @@
       ],
       "url": "https://github.com/jarrycyx/openlens-ai",
       "created_at": "2025-08-21T05:37:16Z",
-      "updated_at": "2026-05-18T06:01:39Z",
+      "updated_at": "2026-05-19T11:01:34Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -5265,7 +5265,7 @@
       "id": 580232465,
       "full_name": "IDEA-Research/deepdataspace",
       "description": "The Go-To Choice for CV Data Visualization, Annotation, and Model Analysis.",
-      "stars": 262,
+      "stars": 263,
       "forks": 25,
       "language": "TypeScript",
       "topics": [
@@ -5278,7 +5278,7 @@
       ],
       "url": "https://github.com/IDEA-Research/deepdataspace",
       "created_at": "2022-12-20T03:27:52Z",
-      "updated_at": "2026-05-06T03:13:08Z",
+      "updated_at": "2026-05-19T06:06:18Z",
       "category": "data_research",
       "use_cases": [
         "实验自动化"
@@ -5312,7 +5312,7 @@
       "id": 441219933,
       "full_name": "Picsart-AI-Research/SeMask-Segmentation",
       "description": "[NIVT Workshop @ ICCV 2023] SeMask: Semantically Masked Transformers for Semantic Segmentation",
-      "stars": 253,
+      "stars": 254,
       "forks": 36,
       "language": "Python",
       "topics": [
@@ -5326,7 +5326,7 @@
       ],
       "url": "https://github.com/Picsart-AI-Research/SeMask-Segmentation",
       "created_at": "2021-12-23T15:22:24Z",
-      "updated_at": "2026-04-10T20:49:31Z",
+      "updated_at": "2026-05-19T12:14:22Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -5336,7 +5336,7 @@
       "id": 1192710260,
       "full_name": "edinetdb/dexter-jp",
       "description": "日本株の自律型リサーチAIエージェント｜AI agent for deep financial research on Japanese listed companies. Powered by EDINET DB + J-Quants.",
-      "stars": 251,
+      "stars": 253,
       "forks": 29,
       "language": "TypeScript",
       "topics": [
@@ -5350,7 +5350,7 @@
       ],
       "url": "https://github.com/edinetdb/dexter-jp",
       "created_at": "2026-03-26T13:41:12Z",
-      "updated_at": "2026-05-17T07:24:13Z",
+      "updated_at": "2026-05-19T08:21:40Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -5413,7 +5413,7 @@
       "id": 1122775283,
       "full_name": "liangdabiao/Claude-Code-Deep-Research-main",
       "description": "利用claude code agent框架一步一步实现deep research！很强大很简单的skills。我一步一步介绍实现deep research，因为deep research就是agent框架第一应用，对比一下各个框架实现这个deep research，就知道哪个框架才是真厉害。",
-      "stars": 249,
+      "stars": 250,
       "forks": 41,
       "language": "",
       "topics": [
@@ -5421,7 +5421,7 @@
       ],
       "url": "https://github.com/liangdabiao/Claude-Code-Deep-Research-main",
       "created_at": "2025-12-25T13:34:37Z",
-      "updated_at": "2026-05-18T03:25:16Z",
+      "updated_at": "2026-05-19T03:28:55Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -5477,6 +5477,22 @@
       ]
     },
     {
+      "id": 1150579862,
+      "full_name": "smhanov/laconic",
+      "description": "An agentic research orchestrator for Go that is optimized to use free search & low-cost limited context window llms.",
+      "stars": 247,
+      "forks": 9,
+      "language": "Go",
+      "topics": [],
+      "url": "https://github.com/smhanov/laconic",
+      "created_at": "2026-02-05T12:55:46Z",
+      "updated_at": "2026-05-19T16:38:17Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 826714013,
       "full_name": "MODSetter/gpt-instagram",
       "description": "A GPT-based autonomous multi-agent AI in Next.js that research & recommends Instagram Viral Posts reflecting your personality.",
@@ -5499,22 +5515,6 @@
       "url": "https://github.com/MODSetter/gpt-instagram",
       "created_at": "2024-07-10T08:31:11Z",
       "updated_at": "2026-04-04T14:26:27Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
-      "id": 1150579862,
-      "full_name": "smhanov/laconic",
-      "description": "An agentic research orchestrator for Go that is optimized to use free search & low-cost limited context window llms.",
-      "stars": 244,
-      "forks": 9,
-      "language": "Go",
-      "topics": [],
-      "url": "https://github.com/smhanov/laconic",
-      "created_at": "2026-02-05T12:55:46Z",
-      "updated_at": "2026-05-18T16:01:37Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -5646,37 +5646,38 @@
     },
     {
       "id": 1154200345,
-      "full_name": "Pthahnix/De-Anthropocentric-Research-Engine",
-      "description": "De-Anthropocentric Research Engine — AI-powered academic research automation with deep literature survey, gap analysis, idea generation, experiment design & execution. Combines iterative deep research, adversarial debate, evolutionary generation, and distributed GPU execution.",
+      "full_name": "yogsoth-ai/de-anthropocentric-research-engine",
+      "description": "800+ pure-markdown skills for autonomous AI research. Non-linear orchestration with backtracking, 4-layer military hierarchy (Campaign → Strategy → Tactic → SOP), 5 MCP integrations. The AI is the researcher — you set the direction.",
       "stars": 230,
-      "forks": 16,
-      "language": "TypeScript",
+      "forks": 17,
+      "language": "",
       "topics": [
         "academic-research",
         "ai-agent",
         "ai-scientist",
         "arxiv",
         "auto-research",
+        "autonomous-research",
         "claude-code",
-        "codex",
         "deep-research",
-        "idea-generator",
+        "hypothesis-generation",
         "literature-review",
         "llm",
+        "llm-wiki",
+        "markdown-skills",
         "mcp",
-        "openclaw",
-        "paper-reading",
         "research-agent",
         "research-automation",
+        "research-orchestration",
         "scientific-discovery",
+        "semantic-scholar",
         "skill"
       ],
-      "url": "https://github.com/Pthahnix/De-Anthropocentric-Research-Engine",
+      "url": "https://github.com/yogsoth-ai/de-anthropocentric-research-engine",
       "created_at": "2026-02-10T05:47:00Z",
-      "updated_at": "2026-05-17T12:19:27Z",
+      "updated_at": "2026-05-19T10:18:35Z",
       "category": "deep_research",
       "use_cases": [
-        "深度研究",
         "学术文献",
         "自主代理",
         "实验自动化",
@@ -5720,7 +5721,7 @@
       "id": 814878405,
       "full_name": "openags/auto-research",
       "description": "Auto Research with UI. Autonomous Generalist Scientist / AI Scientist / Agent Scientist / Robot Scientist, across all Scientific Fields.",
-      "stars": 222,
+      "stars": 226,
       "forks": 15,
       "language": "TypeScript",
       "topics": [
@@ -5730,7 +5731,7 @@
       ],
       "url": "https://github.com/openags/auto-research",
       "created_at": "2024-06-13T22:47:38Z",
-      "updated_at": "2026-05-19T01:07:13Z",
+      "updated_at": "2026-05-19T13:56:05Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -5794,13 +5795,13 @@
       "id": 1176911757,
       "full_name": "wentorai/research-plugins",
       "description": "350+ academic research skills, MCP configs, and plugins for Research-Claw and AI agents",
-      "stars": 219,
-      "forks": 35,
+      "stars": 220,
+      "forks": 36,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/wentorai/research-plugins",
       "created_at": "2026-03-09T14:01:59Z",
-      "updated_at": "2026-05-18T12:18:37Z",
+      "updated_at": "2026-05-19T16:47:16Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -5878,7 +5879,7 @@
       "id": 1181147940,
       "full_name": "claude-world/notebooklm-skill",
       "description": "NotebookLM does the research, Claude writes the content. Research → Synthesis → Content Creation → Publishing. Claude Code Skill + MCP Server.",
-      "stars": 212,
+      "stars": 214,
       "forks": 28,
       "language": "Python",
       "topics": [
@@ -5893,7 +5894,7 @@
       ],
       "url": "https://github.com/claude-world/notebooklm-skill",
       "created_at": "2026-03-13T19:57:38Z",
-      "updated_at": "2026-05-18T22:33:28Z",
+      "updated_at": "2026-05-19T10:42:45Z",
       "category": "general",
       "use_cases": [
         "代码研究"
@@ -5976,13 +5977,13 @@
       "id": 312251216,
       "full_name": "dair-ai/awesome-research-proposals-guide",
       "description": "A guide to improve your research proposals.",
-      "stars": 208,
+      "stars": 209,
       "forks": 22,
       "language": "",
       "topics": [],
       "url": "https://github.com/dair-ai/awesome-research-proposals-guide",
       "created_at": "2020-11-12T11:06:13Z",
-      "updated_at": "2026-05-11T16:22:33Z",
+      "updated_at": "2026-05-19T12:24:32Z",
       "category": "general",
       "use_cases": [
         "资源列表"
@@ -6050,6 +6051,23 @@
       ]
     },
     {
+      "id": 1176593706,
+      "full_name": "kaminocorp/hermes-alpha",
+      "description": "Cloud deployed version of the Nous Research Hermes agent",
+      "stars": 205,
+      "forks": 27,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/kaminocorp/hermes-alpha",
+      "created_at": "2026-03-09T07:12:33Z",
+      "updated_at": "2026-05-19T18:55:39Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理"
+      ]
+    },
+    {
       "id": 906038475,
       "full_name": "VAST-AI-Research/Deformable-Radial-Kernel-Splatting",
       "description": "[CVPR 2025] Code for Deformable Radial Kernel Splatting",
@@ -6082,23 +6100,6 @@
       ]
     },
     {
-      "id": 1176593706,
-      "full_name": "kaminocorp/hermes-alpha",
-      "description": "Cloud deployed version of the Nous Research Hermes agent",
-      "stars": 204,
-      "forks": 27,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/kaminocorp/hermes-alpha",
-      "created_at": "2026-03-09T07:12:33Z",
-      "updated_at": "2026-05-16T02:54:36Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理"
-      ]
-    },
-    {
       "id": 906874283,
       "full_name": "ask-the-hive/the-hive",
       "description": "Multi-agent DeFi swarm for Solana research and execution.",
@@ -6118,7 +6119,7 @@
       "id": 1093205441,
       "full_name": "Mountchicken/Resophy",
       "description": "🎯 Read research papers faster with AI. Resophy is an HTML-based AI paper reader with:  🤖 AI Translation & Analysis — instantly understand structure, contributions, and results  🚀 Daily arXiv Recommendations — discover relevant papers with less noise  🛠️ Vibe Coding Oriented — agent-friendly and easy to customize",
-      "stars": 201,
+      "stars": 202,
       "forks": 17,
       "language": "Python",
       "topics": [
@@ -6128,7 +6129,7 @@
       ],
       "url": "https://github.com/Mountchicken/Resophy",
       "created_at": "2025-11-10T03:52:56Z",
-      "updated_at": "2026-05-18T08:54:35Z",
+      "updated_at": "2026-05-19T08:44:35Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -6200,6 +6201,33 @@
       ]
     },
     {
+      "id": 1231025761,
+      "full_name": "TQ-trade-agent/tq-trading-agent",
+      "description": "🌮 Traidng agent, AI-powered multi-agent stock research & trading strategy orchestration, trading agent - TypeScript, LangGraph, OpenAI-compatible APIs",
+      "stars": 197,
+      "forks": 1902,
+      "language": "PowerShell",
+      "topics": [
+        "algorithmic-trading",
+        "financial-analysis",
+        "langchain",
+        "langgraph",
+        "openai",
+        "stock-research",
+        "trading-agent",
+        "trading-bot",
+        "typescript"
+      ],
+      "url": "https://github.com/TQ-trade-agent/tq-trading-agent",
+      "created_at": "2026-05-06T14:52:16Z",
+      "updated_at": "2026-05-19T19:28:10Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理"
+      ]
+    },
+    {
       "id": 1057372809,
       "full_name": "duartecaldascardoso/article-explainer",
       "description": "Agentic AI team to simplify research article reading",
@@ -6224,7 +6252,7 @@
       "id": 810363572,
       "full_name": "mikelma/craftium",
       "description": "A framework for creating rich, 3D, Minecraft-like single and multi-agent environments for AI research. (Accepted at ICML 2025).",
-      "stars": 191,
+      "stars": 192,
       "forks": 18,
       "language": "C++",
       "topics": [
@@ -6243,11 +6271,27 @@
       ],
       "url": "https://github.com/mikelma/craftium",
       "created_at": "2024-06-04T14:48:25Z",
-      "updated_at": "2026-04-26T09:59:08Z",
+      "updated_at": "2026-05-19T18:54:23Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ]
+    },
+    {
+      "id": 1107706534,
+      "full_name": "Insta360-Research-Team/AirSim360",
+      "description": "Official implementation of \"AirSim360: A Panoramic Simulation Platform within Drone View\"",
+      "stars": 191,
+      "forks": 14,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/Insta360-Research-Team/AirSim360",
+      "created_at": "2025-12-01T14:01:32Z",
+      "updated_at": "2026-05-19T18:46:20Z",
+      "category": "general",
+      "use_cases": [
+        "通用研究"
       ]
     },
     {
@@ -6281,7 +6325,7 @@
       "id": 1025981460,
       "full_name": "VAMFI/claude-user-memory",
       "description": " Autonomous agent substrate for Claude Code CLI. Research→Plan→Implement workflows with quality gates, TDD   enforcement, and multi-agent coordination. 4.8-5.5x faster development. Built on Anthropic's engineering research.",
-      "stars": 187,
+      "stars": 188,
       "forks": 27,
       "language": "Shell",
       "topics": [
@@ -6299,27 +6343,11 @@
       ],
       "url": "https://github.com/VAMFI/claude-user-memory",
       "created_at": "2025-07-25T05:57:39Z",
-      "updated_at": "2026-05-19T00:08:44Z",
+      "updated_at": "2026-05-19T12:05:26Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "代码研究"
-      ]
-    },
-    {
-      "id": 1107706534,
-      "full_name": "Insta360-Research-Team/AirSim360",
-      "description": "Official implementation of \"AirSim360: A Panoramic Simulation Platform within Drone View\"",
-      "stars": 186,
-      "forks": 14,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/Insta360-Research-Team/AirSim360",
-      "created_at": "2025-12-01T14:01:32Z",
-      "updated_at": "2026-05-19T02:06:51Z",
-      "category": "general",
-      "use_cases": [
-        "通用研究"
       ]
     },
     {
@@ -6375,7 +6403,7 @@
       "topics": [],
       "url": "https://github.com/robbyczgw-cla/hermes-web-search-plus",
       "created_at": "2026-03-17T13:25:07Z",
-      "updated_at": "2026-05-19T03:15:00Z",
+      "updated_at": "2026-05-19T18:30:18Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -6387,12 +6415,12 @@
       "full_name": "amanning3390/hermeshub",
       "description": "HermesHub - The Skills Hub for Hermes Agent by Nous Research. Browse, share, and install community skills.",
       "stars": 183,
-      "forks": 56,
+      "forks": 58,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/amanning3390/hermeshub",
       "created_at": "2026-03-17T16:07:40Z",
-      "updated_at": "2026-05-18T23:30:30Z",
+      "updated_at": "2026-05-19T07:45:59Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -6437,16 +6465,37 @@
       "id": 1214764451,
       "full_name": "actionbook/ascent-research",
       "description": "research cli for agent",
-      "stars": 179,
-      "forks": 12,
+      "stars": 180,
+      "forks": 11,
       "language": "Rust",
       "topics": [],
       "url": "https://github.com/actionbook/ascent-research",
       "created_at": "2026-04-19T02:39:21Z",
-      "updated_at": "2026-05-18T17:08:56Z",
+      "updated_at": "2026-05-19T17:01:28Z",
       "category": "general",
       "use_cases": [
         "自主代理"
+      ]
+    },
+    {
+      "id": 1172012416,
+      "full_name": "get-zeked/perplexity-super-skills",
+      "description": "Complete collection of 12 Perplexity Computer Super-Skills merging Perplexity + Claude Code capabilities across AI agents, dev, marketing, sales, finance, legal, PM, ops, research, content, security, and token efficiency.",
+      "stars": 180,
+      "forks": 20,
+      "language": "",
+      "topics": [
+        "perplexity-super-skill"
+      ],
+      "url": "https://github.com/get-zeked/perplexity-super-skills",
+      "created_at": "2026-03-03T21:17:56Z",
+      "updated_at": "2026-05-19T18:53:21Z",
+      "category": "web_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
+        "资源列表",
+        "代码研究"
       ]
     },
     {
@@ -6479,27 +6528,6 @@
       "category": "general",
       "use_cases": [
         "自主代理"
-      ]
-    },
-    {
-      "id": 1172012416,
-      "full_name": "get-zeked/perplexity-super-skills",
-      "description": "Complete collection of 12 Perplexity Computer Super-Skills merging Perplexity + Claude Code capabilities across AI agents, dev, marketing, sales, finance, legal, PM, ops, research, content, security, and token efficiency.",
-      "stars": 177,
-      "forks": 20,
-      "language": "",
-      "topics": [
-        "perplexity-super-skill"
-      ],
-      "url": "https://github.com/get-zeked/perplexity-super-skills",
-      "created_at": "2026-03-03T21:17:56Z",
-      "updated_at": "2026-05-19T02:09:20Z",
-      "category": "web_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "资源列表",
-        "代码研究"
       ]
     },
     {
@@ -6577,7 +6605,7 @@
       "id": 1185016972,
       "full_name": "nexscope-ai/eCommerce-Skills",
       "description": "E-commerce skills for AI agents — product research, marketing automation, supply chain optimization, and business analytics for online sellers across Amazon, Shopify, Etsy, TikTok Shop, and all platforms.",
-      "stars": 170,
+      "stars": 171,
       "forks": 28,
       "language": "Python",
       "topics": [
@@ -6595,7 +6623,7 @@
       ],
       "url": "https://github.com/nexscope-ai/eCommerce-Skills",
       "created_at": "2026-03-18T06:42:32Z",
-      "updated_at": "2026-05-18T06:30:45Z",
+      "updated_at": "2026-05-19T09:22:25Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -6643,6 +6671,35 @@
       ]
     },
     {
+      "id": 1177556025,
+      "full_name": "nexscope-ai/Amazon-Skills",
+      "description": "Free AI agent skills for Amazon sellers—  keyword research, competitor analysis, listing audit & more. Works with OpenClaw, Claude Code, Cursor, Windsurf, Codex and any agent that supports the Skills format.",
+      "stars": 168,
+      "forks": 25,
+      "language": "Python",
+      "topics": [
+        "ai-agents",
+        "amazon",
+        "amazon-seller-automation",
+        "amazon-seller-tools",
+        "claude-code",
+        "claude-skills",
+        "ecommerce",
+        "openclaw",
+        "openclaw-skills",
+        "skills"
+      ],
+      "url": "https://github.com/nexscope-ai/Amazon-Skills",
+      "created_at": "2026-03-10T06:17:05Z",
+      "updated_at": "2026-05-19T11:19:05Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "代码研究",
+        "竞争分析"
+      ]
+    },
+    {
       "id": 169462207,
       "full_name": "SouravDutta91/AI-Residency-List",
       "description": "List of AI Residency & Research programs, Ph.D Fellowships, Research Internships",
@@ -6670,35 +6727,6 @@
       "category": "general",
       "use_cases": [
         "通用研究"
-      ]
-    },
-    {
-      "id": 1177556025,
-      "full_name": "nexscope-ai/Amazon-Skills",
-      "description": "Free AI agent skills for Amazon sellers—  keyword research, competitor analysis, listing audit & more. Works with OpenClaw, Claude Code, Cursor, Windsurf, Codex and any agent that supports the Skills format.",
-      "stars": 166,
-      "forks": 24,
-      "language": "Python",
-      "topics": [
-        "ai-agents",
-        "amazon",
-        "amazon-seller-automation",
-        "amazon-seller-tools",
-        "claude-code",
-        "claude-skills",
-        "ecommerce",
-        "openclaw",
-        "openclaw-skills",
-        "skills"
-      ],
-      "url": "https://github.com/nexscope-ai/Amazon-Skills",
-      "created_at": "2026-03-10T06:17:05Z",
-      "updated_at": "2026-05-18T22:25:38Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "代码研究",
-        "竞争分析"
       ]
     },
     {
@@ -6788,6 +6816,22 @@
       ]
     },
     {
+      "id": 1194033261,
+      "full_name": "AmberLJC/Agent-Native-Research-Artifact",
+      "description": "A protocol that recasts the primary research object from narrative document to machine-executable knowledge package — so AI agents can navigate, reproduce, and extend published research without re-discovering every dead end.",
+      "stars": 161,
+      "forks": 20,
+      "language": "JavaScript",
+      "topics": [],
+      "url": "https://github.com/AmberLJC/Agent-Native-Research-Artifact",
+      "created_at": "2026-03-27T21:03:40Z",
+      "updated_at": "2026-05-19T17:28:18Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 82996759,
       "full_name": "baidu-research/deep-voice",
       "description": "Deep Voice Real-time Neural TTS System",
@@ -6801,6 +6845,30 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ]
+    },
+    {
+      "id": 1238471434,
+      "full_name": "Siva-Chidambaram12/kalshi-trading-bot",
+      "description": "🏗 AI trading system for Kalshi prediction markets. kalshi trading bot kalshi trading bot kalshi botFeatures Grok-4 integration, multi-agent decision making, portfolio optimization, and real-time market analysis. Educational/research purposes only kalshi trading bot kalshi bot",
+      "stars": 158,
+      "forks": 554,
+      "language": "TypeScript",
+      "topics": [
+        "bot",
+        "kalshi",
+        "kalshi-bot",
+        "kalshi-trading",
+        "prediction-market",
+        "trading"
+      ],
+      "url": "https://github.com/Siva-Chidambaram12/kalshi-trading-bot",
+      "created_at": "2026-05-14T06:40:24Z",
+      "updated_at": "2026-05-19T19:30:31Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理"
       ]
     },
     {
@@ -6825,22 +6893,6 @@
         "学术文献",
         "自主代理",
         "实验自动化"
-      ]
-    },
-    {
-      "id": 1194033261,
-      "full_name": "AmberLJC/Agent-Native-Research-Artifact",
-      "description": "A protocol that recasts the primary research object from narrative document to machine-executable knowledge package — so AI agents can navigate, reproduce, and extend published research without re-discovering every dead end.",
-      "stars": 156,
-      "forks": 19,
-      "language": "JavaScript",
-      "topics": [],
-      "url": "https://github.com/AmberLJC/Agent-Native-Research-Artifact",
-      "created_at": "2026-03-27T21:03:40Z",
-      "updated_at": "2026-05-18T14:38:51Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -6877,33 +6929,6 @@
       "category": "general",
       "use_cases": [
         "知识库",
-        "自主代理"
-      ]
-    },
-    {
-      "id": 1231025761,
-      "full_name": "TQ-trade-agent/tq-trading-agent",
-      "description": "🌮 Traidng agent, AI-powered multi-agent stock research & trading strategy orchestration, trading agent - TypeScript, LangGraph, OpenAI-compatible APIs",
-      "stars": 153,
-      "forks": 1858,
-      "language": "PowerShell",
-      "topics": [
-        "algorithmic-trading",
-        "financial-analysis",
-        "langchain",
-        "langgraph",
-        "openai",
-        "stock-research",
-        "trading-agent",
-        "trading-bot",
-        "typescript"
-      ],
-      "url": "https://github.com/TQ-trade-agent/tq-trading-agent",
-      "created_at": "2026-05-06T14:52:16Z",
-      "updated_at": "2026-05-18T12:05:42Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
         "自主代理"
       ]
     },
@@ -6971,7 +6996,7 @@
       "full_name": "OctagonAI/skills",
       "description": "A collection of Claude skills for agentic financial research by Octagon",
       "stars": 151,
-      "forks": 8,
+      "forks": 9,
       "language": "",
       "topics": [],
       "url": "https://github.com/OctagonAI/skills",
@@ -7023,16 +7048,35 @@
       "id": 1003075563,
       "full_name": "facebookresearch/aira-dojo",
       "description": "AIRA-dojo: a framework for developing and evaluating AI research agents",
-      "stars": 146,
+      "stars": 147,
       "forks": 29,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/facebookresearch/aira-dojo",
       "created_at": "2025-06-16T15:27:10Z",
-      "updated_at": "2026-05-19T02:51:01Z",
+      "updated_at": "2026-05-19T11:23:17Z",
       "category": "general",
       "use_cases": [
         "自主代理"
+      ]
+    },
+    {
+      "id": 1079446936,
+      "full_name": "ajobi-uhc/seer",
+      "description": "This was designed for interp  researchers who want to do research on or with interp agents to give quality of life  improvements and fix some of the annoying things you get from only using Claude code out of the box",
+      "stars": 146,
+      "forks": 9,
+      "language": "Jupyter Notebook",
+      "topics": [
+        "interpretability"
+      ],
+      "url": "https://github.com/ajobi-uhc/seer",
+      "created_at": "2025-10-19T20:26:02Z",
+      "updated_at": "2026-05-19T09:16:16Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "代码研究"
       ]
     },
     {
@@ -7051,25 +7095,6 @@
         "学术文献",
         "自主代理",
         "资源列表"
-      ]
-    },
-    {
-      "id": 1079446936,
-      "full_name": "ajobi-uhc/seer",
-      "description": "This was designed for interp  researchers who want to do research on or with interp agents to give quality of life  improvements and fix some of the annoying things you get from only using Claude code out of the box",
-      "stars": 145,
-      "forks": 9,
-      "language": "Jupyter Notebook",
-      "topics": [
-        "interpretability"
-      ],
-      "url": "https://github.com/ajobi-uhc/seer",
-      "created_at": "2025-10-19T20:26:02Z",
-      "updated_at": "2026-05-18T16:29:33Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "代码研究"
       ]
     },
     {
@@ -7092,6 +7117,38 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ]
+    },
+    {
+      "id": 1218493681,
+      "full_name": "LLMQuant/awesome-trading-agents",
+      "description": "Curated list of LLM-driven trading agents, MCP servers, and agent skills for market research, strategy, and execution.",
+      "stars": 143,
+      "forks": 10,
+      "language": "",
+      "topics": [
+        "agent-skills",
+        "agentic-ai",
+        "ai-trading",
+        "awesome",
+        "awesome-list",
+        "claude-skills",
+        "financial-ai",
+        "fintech",
+        "llm-agents",
+        "mcp",
+        "mcp-servers",
+        "prediction-markets",
+        "trading-agents"
+      ],
+      "url": "https://github.com/LLMQuant/awesome-trading-agents",
+      "created_at": "2026-04-22T23:52:32Z",
+      "updated_at": "2026-05-19T19:50:22Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
+        "资源列表"
       ]
     },
     {
@@ -7178,7 +7235,7 @@
       "id": 1189858168,
       "full_name": "jameslemon2002/research-idea-explorer",
       "description": "Literature-grounded research idea exploration for CLI agents. 文献驱动的研究选题与方向探索工具。",
-      "stars": 139,
+      "stars": 140,
       "forks": 9,
       "language": "Python",
       "topics": [
@@ -7189,7 +7246,7 @@
       ],
       "url": "https://github.com/jameslemon2002/research-idea-explorer",
       "created_at": "2026-03-23T18:29:52Z",
-      "updated_at": "2026-05-17T07:39:46Z",
+      "updated_at": "2026-05-19T03:40:10Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -7232,38 +7289,6 @@
       "use_cases": [
         "深度研究",
         "自主代理"
-      ]
-    },
-    {
-      "id": 1218493681,
-      "full_name": "LLMQuant/awesome-trading-agents",
-      "description": "Curated list of LLM-driven trading agents, MCP servers, and agent skills for market research, strategy, and execution.",
-      "stars": 137,
-      "forks": 9,
-      "language": "",
-      "topics": [
-        "agent-skills",
-        "agentic-ai",
-        "ai-trading",
-        "awesome",
-        "awesome-list",
-        "claude-skills",
-        "financial-ai",
-        "fintech",
-        "llm-agents",
-        "mcp",
-        "mcp-servers",
-        "prediction-markets",
-        "trading-agents"
-      ],
-      "url": "https://github.com/LLMQuant/awesome-trading-agents",
-      "created_at": "2026-04-22T23:52:32Z",
-      "updated_at": "2026-05-19T02:14:11Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "资源列表"
       ]
     },
     {
@@ -7316,22 +7341,6 @@
       ]
     },
     {
-      "id": 1023752870,
-      "full_name": "coleam00/PydanticAI-Research-Agent",
-      "description": "Pydantic AI Research Agent Built with the PRP Framework Template",
-      "stars": 135,
-      "forks": 51,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/coleam00/PydanticAI-Research-Agent",
-      "created_at": "2025-07-21T16:31:48Z",
-      "updated_at": "2026-05-08T12:13:07Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 926359826,
       "full_name": "grapeot/deep_research_agent",
       "description": "An Agentic Deep Research Assistant similar to Gemini and OpenAI Deep Research",
@@ -7345,6 +7354,22 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究",
+        "自主代理"
+      ]
+    },
+    {
+      "id": 1023752870,
+      "full_name": "coleam00/PydanticAI-Research-Agent",
+      "description": "Pydantic AI Research Agent Built with the PRP Framework Template",
+      "stars": 134,
+      "forks": 51,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/coleam00/PydanticAI-Research-Agent",
+      "created_at": "2025-07-21T16:31:48Z",
+      "updated_at": "2026-05-19T03:25:03Z",
+      "category": "general",
+      "use_cases": [
         "自主代理"
       ]
     },
@@ -7409,7 +7434,7 @@
       "full_name": "AnkitClassicVision/Claude-Code-Deep-Research",
       "description": "I created a claude code deep researcher that seems to work better than the current deep research models",
       "stars": 132,
-      "forks": 23,
+      "forks": 24,
       "language": "",
       "topics": [],
       "url": "https://github.com/AnkitClassicVision/Claude-Code-Deep-Research",
@@ -7418,6 +7443,24 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1204224535,
+      "full_name": "zubair-trabzada/ai-trading-claude",
+      "description": "AI trading research engine for Claude Code. Analyze stocks (technical, fundamental, sentiment, risk, thesis), options strategies, sector rotation, portfolio analysis, and PDF reports. 16 skills, 5 parallel agents. Research tool only — not financial advice.",
+      "stars": 132,
+      "forks": 82,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/zubair-trabzada/ai-trading-claude",
+      "created_at": "2026-04-07T20:08:19Z",
+      "updated_at": "2026-05-19T18:51:08Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
         "代码研究"
       ]
     },
@@ -7506,24 +7549,6 @@
       ]
     },
     {
-      "id": 1204224535,
-      "full_name": "zubair-trabzada/ai-trading-claude",
-      "description": "AI trading research engine for Claude Code. Analyze stocks (technical, fundamental, sentiment, risk, thesis), options strategies, sector rotation, portfolio analysis, and PDF reports. 16 skills, 5 parallel agents. Research tool only — not financial advice.",
-      "stars": 130,
-      "forks": 81,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/zubair-trabzada/ai-trading-claude",
-      "created_at": "2026-04-07T20:08:19Z",
-      "updated_at": "2026-05-18T21:18:58Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 952406345,
       "full_name": "mahmoudrabie/agentic-ai",
       "description": "This repository serves as a comprehensive knowledge hub, curating cutting-edge research papers and developments across 24 specialized domains",
@@ -7554,7 +7579,7 @@
       ],
       "url": "https://github.com/mahmoudrabie/agentic-ai",
       "created_at": "2025-03-21T08:23:49Z",
-      "updated_at": "2026-05-18T05:15:43Z",
+      "updated_at": "2026-05-19T11:31:31Z",
       "category": "deep_research",
       "use_cases": [
         "学术文献",
@@ -7614,6 +7639,36 @@
       ]
     },
     {
+      "id": 1207006614,
+      "full_name": "cookiy-ai/user-research-skill",
+      "description": "Cookiy AI Skill for AI agents (Claude, Codex, Cursor, OpenClaw) — end-to-end user research: AI interviews, synthetic users, quant surveys, participant recruitment.",
+      "stars": 129,
+      "forks": 12,
+      "language": "Shell",
+      "topics": [
+        "ai-agent",
+        "ai-skill",
+        "claude-code",
+        "cli",
+        "codex",
+        "cursor",
+        "openclaw",
+        "quantitative-research",
+        "skill",
+        "skills",
+        "user-research",
+        "ux-research"
+      ],
+      "url": "https://github.com/cookiy-ai/user-research-skill",
+      "created_at": "2026-04-10T13:29:47Z",
+      "updated_at": "2026-05-19T15:24:32Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
       "id": 403280272,
       "full_name": "AthenaCore/AwesomeResponsibleAI",
       "description": "A curated list of awesome academic research, books, code of ethics, courses, databases,  data sets, frameworks, institutes, maturity models, newsletters, principles, podcasts, regulations, reports, responsible scale policies, tools and standards related to Responsible, Trustworthy, and Human-Centered AI.",
@@ -7662,36 +7717,6 @@
       "use_cases": [
         "学术文献",
         "资源列表"
-      ]
-    },
-    {
-      "id": 1207006614,
-      "full_name": "cookiy-ai/user-research-skill",
-      "description": "Cookiy AI Skill for AI agents (Claude, Codex, Cursor, OpenClaw) — end-to-end user research: AI interviews, synthetic users, quant surveys, participant recruitment.",
-      "stars": 125,
-      "forks": 11,
-      "language": "Shell",
-      "topics": [
-        "ai-agent",
-        "ai-skill",
-        "claude-code",
-        "cli",
-        "codex",
-        "cursor",
-        "openclaw",
-        "quantitative-research",
-        "skill",
-        "skills",
-        "user-research",
-        "ux-research"
-      ],
-      "url": "https://github.com/cookiy-ai/user-research-skill",
-      "created_at": "2026-04-10T13:29:47Z",
-      "updated_at": "2026-05-18T20:13:15Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "代码研究"
       ]
     },
     {
@@ -7997,7 +8022,7 @@
       "id": 1185162676,
       "full_name": "InternScience/ResearchClawBench",
       "description": "🦞 ResearchClawBench: Evaluating AI Agents for Automated Research from Re-Discovery to New-Discovery",
-      "stars": 114,
+      "stars": 115,
       "forks": 9,
       "language": "Jupyter Notebook",
       "topics": [
@@ -8023,7 +8048,7 @@
       ],
       "url": "https://github.com/InternScience/ResearchClawBench",
       "created_at": "2026-03-18T09:53:11Z",
-      "updated_at": "2026-05-19T01:57:40Z",
+      "updated_at": "2026-05-19T06:56:21Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -8113,6 +8138,69 @@
       "category": "literature",
       "use_cases": [
         "学术文献"
+      ]
+    },
+    {
+      "id": 1188009186,
+      "full_name": "917Dhj/DeepPaperNote",
+      "description": "DeepPaperNote is an agent skill for deep-reading a single paper and generating high-quality Obsidian-style research notes. Works with Claude Code, Codex, Cursor, Copilot, Gemini CLI, and more.",
+      "stars": 108,
+      "forks": 8,
+      "language": "Python",
+      "topics": [
+        "agent-skills",
+        "claude-code",
+        "codex",
+        "copilot",
+        "cursor",
+        "gemini-cli",
+        "markdown",
+        "obsidian",
+        "paper-reading",
+        "research-notes",
+        "zotero"
+      ],
+      "url": "https://github.com/917Dhj/DeepPaperNote",
+      "created_at": "2026-03-21T13:50:42Z",
+      "updated_at": "2026-05-19T14:44:00Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "知识库",
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1230831838,
+      "full_name": "OpenOSINT/OpenOSINT",
+      "description": "AI-powered OSINT agent with interactive REPL, MCP server, and CLI. 9 tools. Works with Claude, GPT-4, or local models. For authorized security research only.",
+      "stars": 107,
+      "forks": 29,
+      "language": "Python",
+      "topics": [
+        "ai-agent",
+        "anthropic",
+        "claude",
+        "cli",
+        "cybersecurity",
+        "holehe",
+        "information-gathering",
+        "mcp",
+        "open-source",
+        "osint",
+        "python",
+        "recon",
+        "security",
+        "sherlock",
+        "terminal"
+      ],
+      "url": "https://github.com/OpenOSINT/OpenOSINT",
+      "created_at": "2026-05-06T11:12:42Z",
+      "updated_at": "2026-05-19T19:31:32Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
       ]
     },
     {
@@ -8291,30 +8379,6 @@
         "金融数据",
         "自主代理",
         "代码研究"
-      ]
-    },
-    {
-      "id": 1238471434,
-      "full_name": "Siva-Chidambaram12/kalshi-trading-bot",
-      "description": "🏗 AI trading system for Kalshi prediction markets. kalshi trading bot kalshi trading bot kalshi botFeatures Grok-4 integration, multi-agent decision making, portfolio optimization, and real-time market analysis. Educational/research purposes only kalshi trading bot kalshi bot",
-      "stars": 104,
-      "forks": 508,
-      "language": "TypeScript",
-      "topics": [
-        "bot",
-        "kalshi",
-        "kalshi-bot",
-        "kalshi-trading",
-        "prediction-market",
-        "trading"
-      ],
-      "url": "https://github.com/Siva-Chidambaram12/kalshi-trading-bot",
-      "created_at": "2026-05-14T06:40:24Z",
-      "updated_at": "2026-05-18T12:05:43Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理"
       ]
     },
     {
@@ -8563,37 +8627,6 @@
       ]
     },
     {
-      "id": 1188009186,
-      "full_name": "917Dhj/DeepPaperNote",
-      "description": "DeepPaperNote is an agent skill for deep-reading a single paper and generating high-quality Obsidian-style research notes. Works with Claude Code, Codex, Cursor, Copilot, Gemini CLI, and more.",
-      "stars": 101,
-      "forks": 8,
-      "language": "Python",
-      "topics": [
-        "agent-skills",
-        "claude-code",
-        "codex",
-        "copilot",
-        "cursor",
-        "gemini-cli",
-        "markdown",
-        "obsidian",
-        "paper-reading",
-        "research-notes",
-        "zotero"
-      ],
-      "url": "https://github.com/917Dhj/DeepPaperNote",
-      "created_at": "2026-03-21T13:50:42Z",
-      "updated_at": "2026-05-19T02:54:28Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "知识库",
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 1070840924,
       "full_name": "EuniAI/awesome-code-agents",
       "description": "A curated list of products, benchmarks, and research papers on autonomous code agents. Beyond coding — they're redefining how software changes the world.",
@@ -8603,7 +8636,7 @@
       "topics": [],
       "url": "https://github.com/EuniAI/awesome-code-agents",
       "created_at": "2025-10-06T14:03:18Z",
-      "updated_at": "2026-05-18T10:03:52Z",
+      "updated_at": "2026-05-19T09:42:27Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
@@ -8692,38 +8725,6 @@
       ]
     },
     {
-      "id": 1230831838,
-      "full_name": "OpenOSINT/OpenOSINT",
-      "description": "AI-powered OSINT agent with interactive REPL, MCP server, and CLI. 9 tools. Works with Claude, GPT-4, or local models. For authorized security research only.",
-      "stars": 99,
-      "forks": 27,
-      "language": "Python",
-      "topics": [
-        "ai-agent",
-        "anthropic",
-        "claude",
-        "cli",
-        "cybersecurity",
-        "holehe",
-        "information-gathering",
-        "mcp",
-        "open-source",
-        "osint",
-        "python",
-        "recon",
-        "security",
-        "sherlock",
-        "terminal"
-      ],
-      "url": "https://github.com/OpenOSINT/OpenOSINT",
-      "created_at": "2026-05-06T11:12:42Z",
-      "updated_at": "2026-05-19T00:04:24Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 760286620,
       "full_name": "Kobaayyy/Awesome-AIGC-Research-Groups",
       "description": "A Collection of AIGC Research Groups",
@@ -8786,6 +8787,46 @@
       ]
     },
     {
+      "id": 1125878323,
+      "full_name": "1ilkhamov/opencode-hermes-multiagent",
+      "description": "Hermes — a multi-agent system for OpenCode AI. 17 specialized agents for research, planning, implementation, quality, and infrastructure.",
+      "stars": 98,
+      "forks": 10,
+      "language": "",
+      "topics": [],
+      "url": "https://github.com/1ilkhamov/opencode-hermes-multiagent",
+      "created_at": "2025-12-31T14:54:39Z",
+      "updated_at": "2026-05-19T16:44:45Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1153128230,
+      "full_name": "VAST-AI-Research/SkinTokens",
+      "description": "SkinTokens: A Learned Compact Representation for Unified Autoregressive Rigging",
+      "stars": 98,
+      "forks": 15,
+      "language": "Python",
+      "topics": [
+        "3d",
+        "animation",
+        "auto-rigging",
+        "autoregressive",
+        "skeleton",
+        "skinning"
+      ],
+      "url": "https://github.com/VAST-AI-Research/SkinTokens",
+      "created_at": "2026-02-08T23:39:58Z",
+      "updated_at": "2026-05-19T15:51:33Z",
+      "category": "general",
+      "use_cases": [
+        "通用研究"
+      ]
+    },
+    {
       "id": 1214427253,
       "full_name": "Nigmat-future/bioagent",
       "description": "Autonomous multi-agent system for end-to-end bioinformatics research",
@@ -8818,23 +8859,6 @@
       ]
     },
     {
-      "id": 1125878323,
-      "full_name": "1ilkhamov/opencode-hermes-multiagent",
-      "description": "Hermes — a multi-agent system for OpenCode AI. 17 specialized agents for research, planning, implementation, quality, and infrastructure.",
-      "stars": 97,
-      "forks": 10,
-      "language": "",
-      "topics": [],
-      "url": "https://github.com/1ilkhamov/opencode-hermes-multiagent",
-      "created_at": "2025-12-31T14:54:39Z",
-      "updated_at": "2026-05-18T19:34:20Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 826652477,
       "full_name": "dswh/ai-research-program",
       "description": "An independent AI research program created by Harshit.",
@@ -8853,6 +8877,24 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ]
+    },
+    {
+      "id": 1124416073,
+      "full_name": "poemswe/co-researcher",
+      "description": "A professional research suite for conducting rigorous academic research using specialized agents and multi-platform CLI commands. Compatible with Claude Code, Gemini CLI, OpenAI Codex, and OpenCode.",
+      "stars": 97,
+      "forks": 11,
+      "language": "HTML",
+      "topics": [],
+      "url": "https://github.com/poemswe/co-researcher",
+      "created_at": "2025-12-29T01:39:54Z",
+      "updated_at": "2026-05-19T15:24:23Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "自主代理",
+        "代码研究"
       ]
     },
     {
@@ -8915,24 +8957,6 @@
       ]
     },
     {
-      "id": 1124416073,
-      "full_name": "poemswe/co-researcher",
-      "description": "A professional research suite for conducting rigorous academic research using specialized agents and multi-platform CLI commands. Compatible with Claude Code, Gemini CLI, OpenAI Codex, and OpenCode.",
-      "stars": 96,
-      "forks": 10,
-      "language": "HTML",
-      "topics": [],
-      "url": "https://github.com/poemswe/co-researcher",
-      "created_at": "2025-12-29T01:39:54Z",
-      "updated_at": "2026-05-18T14:02:23Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 457871581,
       "full_name": "skytells-research/DeepInfant",
       "description": "DeepInfant® is a Neural network system designed to predict whether and why your baby is crying.",
@@ -8950,29 +8974,6 @@
       "url": "https://github.com/skytells-research/DeepInfant",
       "created_at": "2022-02-10T17:05:04Z",
       "updated_at": "2026-05-12T13:31:57Z",
-      "category": "general",
-      "use_cases": [
-        "通用研究"
-      ]
-    },
-    {
-      "id": 1153128230,
-      "full_name": "VAST-AI-Research/SkinTokens",
-      "description": "SkinTokens: A Learned Compact Representation for Unified Autoregressive Rigging",
-      "stars": 94,
-      "forks": 15,
-      "language": "Python",
-      "topics": [
-        "3d",
-        "animation",
-        "auto-rigging",
-        "autoregressive",
-        "skeleton",
-        "skinning"
-      ],
-      "url": "https://github.com/VAST-AI-Research/SkinTokens",
-      "created_at": "2026-02-08T23:39:58Z",
-      "updated_at": "2026-05-19T03:15:19Z",
       "category": "general",
       "use_cases": [
         "通用研究"
@@ -9065,6 +9066,22 @@
       ]
     },
     {
+      "id": 1185487222,
+      "full_name": "evelyyyyynnnnn/1.0-Secure-Ai-Agent-Infrastructure",
+      "description": "Research prototypes and infrastructure tools for building secure AI agent systems using large language models, blockchain technologies, and distributed architectures.",
+      "stars": 93,
+      "forks": 16,
+      "language": "Jupyter Notebook",
+      "topics": [],
+      "url": "https://github.com/evelyyyyynnnnn/1.0-Secure-Ai-Agent-Infrastructure",
+      "created_at": "2026-03-18T16:26:23Z",
+      "updated_at": "2026-05-19T19:30:49Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 944956186,
       "full_name": "bwz96sco/or_llm_agent",
       "description": "OR-LLM-Agent: Automating Modeling and Solving of Operations Research Optimization Problems with Reasoning LLM",
@@ -9074,7 +9091,7 @@
       "topics": [],
       "url": "https://github.com/bwz96sco/or_llm_agent",
       "created_at": "2025-03-08T10:15:33Z",
-      "updated_at": "2026-05-15T19:06:37Z",
+      "updated_at": "2026-05-19T03:56:34Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -9130,22 +9147,6 @@
         "知识库",
         "自主代理",
         "资源列表"
-      ]
-    },
-    {
-      "id": 1185487222,
-      "full_name": "evelyyyyynnnnn/1.0-Secure-Ai-Agent-Infrastructure",
-      "description": "Research prototypes and infrastructure tools for building secure AI agent systems using large language models, blockchain technologies, and distributed architectures.",
-      "stars": 91,
-      "forks": 16,
-      "language": "Jupyter Notebook",
-      "topics": [],
-      "url": "https://github.com/evelyyyyynnnnn/1.0-Secure-Ai-Agent-Infrastructure",
-      "created_at": "2026-03-18T16:26:23Z",
-      "updated_at": "2026-05-18T06:29:27Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -9253,6 +9254,23 @@
       ]
     },
     {
+      "id": 1102928125,
+      "full_name": "MAXNORM8650/papercircle",
+      "description": "PaperCircle: An Open-source Multi-agent Research Discovery and Analysis Framework (ACL Oral)",
+      "stars": 89,
+      "forks": 8,
+      "language": "TeX",
+      "topics": [],
+      "url": "https://github.com/MAXNORM8650/papercircle",
+      "created_at": "2025-11-24T08:11:55Z",
+      "updated_at": "2026-05-19T16:43:57Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "自主代理"
+      ]
+    },
+    {
       "id": 1181409661,
       "full_name": "nanoAgentTeam/research-claw",
       "description": "A self-hosted AI assistant for academic research — manages your papers, searches literature, tracks deadlines, and answers you on the channels you already use.",
@@ -9295,7 +9313,7 @@
       "topics": [],
       "url": "https://github.com/Agents2AgentsAI/ata",
       "created_at": "2026-02-17T23:39:27Z",
-      "updated_at": "2026-05-16T01:27:34Z",
+      "updated_at": "2026-05-19T15:01:38Z",
       "category": "general",
       "use_cases": [
         "自主代理"
@@ -9356,6 +9374,39 @@
       ]
     },
     {
+      "id": 1133654031,
+      "full_name": "facebookresearch/airs-bench",
+      "description": "AIRS-Bench: an AI Research Science benchmark for quantifying the end-to-end AI research abilities of LLM agents",
+      "stars": 88,
+      "forks": 8,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/facebookresearch/airs-bench",
+      "created_at": "2026-01-13T16:33:39Z",
+      "updated_at": "2026-05-19T19:21:12Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "竞争分析"
+      ]
+    },
+    {
+      "id": 1196260048,
+      "full_name": "THU-KEG/Awesome-AI-for-Research",
+      "description": "",
+      "stars": 88,
+      "forks": 8,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/THU-KEG/Awesome-AI-for-Research",
+      "created_at": "2026-03-30T14:23:39Z",
+      "updated_at": "2026-05-19T08:16:42Z",
+      "category": "general",
+      "use_cases": [
+        "资源列表"
+      ]
+    },
+    {
       "id": 600707623,
       "full_name": "LAION-AI/Open-GIA",
       "description": "O-GIA is an umbrella for research, infrastructure and projects ecosystem that should provide open source, reproducible datasets, models, applications & safety tools for Open Generalist Interactive Agents (O-GIA). O-GIA systems will act in collaboration with human or autonomously, supporting various kind of validated decision making and assistance.",
@@ -9370,39 +9421,6 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
-      ]
-    },
-    {
-      "id": 1133654031,
-      "full_name": "facebookresearch/airs-bench",
-      "description": "AIRS-Bench: an AI Research Science benchmark for quantifying the end-to-end AI research abilities of LLM agents",
-      "stars": 87,
-      "forks": 8,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/facebookresearch/airs-bench",
-      "created_at": "2026-01-13T16:33:39Z",
-      "updated_at": "2026-05-19T02:51:51Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "竞争分析"
-      ]
-    },
-    {
-      "id": 1196260048,
-      "full_name": "THU-KEG/Awesome-AI-for-Research",
-      "description": "",
-      "stars": 87,
-      "forks": 8,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/THU-KEG/Awesome-AI-for-Research",
-      "created_at": "2026-03-30T14:23:39Z",
-      "updated_at": "2026-05-15T17:12:20Z",
-      "category": "general",
-      "use_cases": [
-        "资源列表"
       ]
     },
     {
@@ -9427,27 +9445,10 @@
       ]
     },
     {
-      "id": 1102928125,
-      "full_name": "MAXNORM8650/papercircle",
-      "description": "PaperCircle: An Open-source Multi-agent Research Discovery and Analysis Framework (ACL Oral)",
-      "stars": 87,
-      "forks": 8,
-      "language": "TeX",
-      "topics": [],
-      "url": "https://github.com/MAXNORM8650/papercircle",
-      "created_at": "2025-11-24T08:11:55Z",
-      "updated_at": "2026-05-18T09:26:09Z",
-      "category": "literature",
-      "use_cases": [
-        "学术文献",
-        "自主代理"
-      ]
-    },
-    {
       "id": 816435366,
       "full_name": "aymenfurter/smartrag",
       "description": "Deep Research through Multi-Agents, using GraphRAG ",
-      "stars": 86,
+      "stars": 87,
       "forks": 13,
       "language": "JavaScript",
       "topics": [
@@ -9464,7 +9465,7 @@
       ],
       "url": "https://github.com/aymenfurter/smartrag",
       "created_at": "2024-06-17T18:42:24Z",
-      "updated_at": "2026-04-23T09:45:16Z",
+      "updated_at": "2026-05-19T08:28:50Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -9561,17 +9562,33 @@
       "id": 1197838507,
       "full_name": "GRIND-Lab-Core/night_owl_research_agent",
       "description": "Fully automatic AI research agent for Geoscientists, Remote Sensing researchers, and GIScientists. Features harness engineering, GeoBenchmark (OLS/GWR/MGWR), journal templates, and MCP servers.",
-      "stars": 84,
+      "stars": 85,
       "forks": 21,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/GRIND-Lab-Core/night_owl_research_agent",
       "created_at": "2026-03-31T23:47:18Z",
-      "updated_at": "2026-05-17T10:54:11Z",
+      "updated_at": "2026-05-19T16:54:13Z",
       "category": "general",
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ]
+    },
+    {
+      "id": 1222307895,
+      "full_name": "wangnengdejiamao/Astro_Agent",
+      "description": "End-to-end astronomy research agent: a LangGraph state machine that resolves a target, fetches multi-survey data via    a 20+ archive toolbox, runs three mandatory modeling iterations with supervisor-issued repair actions, and drafts an    ApJ-style manuscript only after an evidence-gated QA pass",
+      "stars": 85,
+      "forks": 6,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/wangnengdejiamao/Astro_Agent",
+      "created_at": "2026-04-27T08:34:42Z",
+      "updated_at": "2026-05-19T15:51:05Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
       ]
     },
     {
@@ -9599,6 +9616,53 @@
       "updated_at": "2026-05-01T21:44:39Z",
       "category": "general",
       "use_cases": [
+        "自主代理",
+        "实验自动化",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1181305279,
+      "full_name": "Hainrixz/maia-skill",
+      "description": "A Claude Code skill that spawns 5 specialized AI research agents to analyze investment opportunities across crypto, stocks, forex, and commodities. Adapts to your risk profile, tracks historical accuracy, and generates an interactive Next.js dashboard with full Spanish/English support.",
+      "stars": 84,
+      "forks": 26,
+      "language": "TypeScript",
+      "topics": [],
+      "url": "https://github.com/Hainrixz/maia-skill",
+      "created_at": "2026-03-14T01:14:49Z",
+      "updated_at": "2026-05-19T11:47:34Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 1188077170,
+      "full_name": "versperai/VersperClaw",
+      "description": " VersperClaw: An Agentic Research Workspace that combines search, browser control, coding, and long-session continuity to      support end-to-end scientific workflows.",
+      "stars": 84,
+      "forks": 4,
+      "language": "TypeScript",
+      "topics": [
+        "agent",
+        "ai",
+        "autonomous-research",
+        "claudecode-subagents",
+        "codeagent",
+        "llms",
+        "openclaw",
+        "scientific-workflow",
+        "self-evolving"
+      ],
+      "url": "https://github.com/versperai/VersperClaw",
+      "created_at": "2026-03-21T15:33:32Z",
+      "updated_at": "2026-05-19T19:45:27Z",
+      "category": "web_research",
+      "use_cases": [
+        "网页搜索",
         "自主代理",
         "实验自动化",
         "代码研究"
@@ -9704,24 +9768,6 @@
       ]
     },
     {
-      "id": 1181305279,
-      "full_name": "Hainrixz/maia-skill",
-      "description": "A Claude Code skill that spawns 5 specialized AI research agents to analyze investment opportunities across crypto, stocks, forex, and commodities. Adapts to your risk profile, tracks historical accuracy, and generates an interactive Next.js dashboard with full Spanish/English support.",
-      "stars": 82,
-      "forks": 25,
-      "language": "TypeScript",
-      "topics": [],
-      "url": "https://github.com/Hainrixz/maia-skill",
-      "created_at": "2026-03-14T01:14:49Z",
-      "updated_at": "2026-05-14T09:39:22Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 503933791,
       "full_name": "Qualcomm-AI-research/oscillations-qat",
       "description": "",
@@ -9790,35 +9836,6 @@
       ]
     },
     {
-      "id": 1188077170,
-      "full_name": "versperai/VersperClaw",
-      "description": " VersperClaw: An Agentic Research Workspace that combines search, browser control, coding, and long-session continuity to      support end-to-end scientific workflows.",
-      "stars": 80,
-      "forks": 4,
-      "language": "TypeScript",
-      "topics": [
-        "agent",
-        "ai",
-        "autonomous-research",
-        "claudecode-subagents",
-        "codeagent",
-        "llms",
-        "openclaw",
-        "scientific-workflow",
-        "self-evolving"
-      ],
-      "url": "https://github.com/versperai/VersperClaw",
-      "created_at": "2026-03-21T15:33:32Z",
-      "updated_at": "2026-05-18T17:58:19Z",
-      "category": "web_research",
-      "use_cases": [
-        "网页搜索",
-        "自主代理",
-        "实验自动化",
-        "代码研究"
-      ]
-    },
-    {
       "id": 406919508,
       "full_name": "cogment/cogment-verse",
       "description": "Research platform for Human-in-the-loop learning (HILL) & Multi-Agent Reinforcement Learning (MARL)",
@@ -9873,27 +9890,11 @@
       ]
     },
     {
-      "id": 157107277,
-      "full_name": "ayush1997/Robust-Lane-Detection-and-Tracking",
-      "description": ":mortar_board: RESEARCH [:car: + :eyes:] Robust framework for Lane Detection and Tracking  using Deep CNN, Extended Hough Transform and Kalman Filter for autonomous vehicle applications.",
-      "stars": 78,
-      "forks": 20,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/ayush1997/Robust-Lane-Detection-and-Tracking",
-      "created_at": "2018-11-11T18:16:01Z",
-      "updated_at": "2025-12-20T15:43:36Z",
-      "category": "deep_research",
-      "use_cases": [
-        "自主代理"
-      ]
-    },
-    {
       "id": 1218896483,
       "full_name": "vishalmdi/ai-native-pm-os",
       "description": "The exhaustive guide to mastering Claude for Product Managers. Build your AI-native PM OS from scratch — PRDs, research synthesis, stakeholder decks, and autonomous agents. 11 modules, 40+ hours, real deliverables.",
-      "stars": 78,
-      "forks": 10,
+      "stars": 79,
+      "forks": 11,
       "language": "Shell",
       "topics": [
         "ai-agents",
@@ -9913,7 +9914,7 @@
       ],
       "url": "https://github.com/vishalmdi/ai-native-pm-os",
       "created_at": "2026-04-23T10:19:36Z",
-      "updated_at": "2026-05-16T14:42:41Z",
+      "updated_at": "2026-05-19T18:17:42Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -9921,16 +9922,52 @@
       ]
     },
     {
+      "id": 1192629876,
+      "full_name": "ALAGENT-HKU/x2strategy",
+      "description": "Extract structured strategy specifications from quantitative finance research papers — Agent Skill for GitHub Copilot & Claude Code",
+      "stars": 79,
+      "forks": 10,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/ALAGENT-HKU/x2strategy",
+      "created_at": "2026-03-26T12:06:18Z",
+      "updated_at": "2026-05-19T18:15:23Z",
+      "category": "literature",
+      "use_cases": [
+        "学术文献",
+        "金融数据",
+        "自主代理",
+        "资源列表",
+        "代码研究"
+      ]
+    },
+    {
+      "id": 157107277,
+      "full_name": "ayush1997/Robust-Lane-Detection-and-Tracking",
+      "description": ":mortar_board: RESEARCH [:car: + :eyes:] Robust framework for Lane Detection and Tracking  using Deep CNN, Extended Hough Transform and Kalman Filter for autonomous vehicle applications.",
+      "stars": 78,
+      "forks": 20,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/ayush1997/Robust-Lane-Detection-and-Tracking",
+      "created_at": "2018-11-11T18:16:01Z",
+      "updated_at": "2025-12-20T15:43:36Z",
+      "category": "deep_research",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 1198405690,
       "full_name": "autolabhq/autolab",
       "description": "A benchmark for evaluating AI agents on frontier research tasks including system optimization and model development.",
-      "stars": 77,
+      "stars": 78,
       "forks": 11,
       "language": "C",
       "topics": [],
       "url": "https://github.com/autolabhq/autolab",
       "created_at": "2026-04-01T11:52:20Z",
-      "updated_at": "2026-05-17T23:17:59Z",
+      "updated_at": "2026-05-19T18:56:36Z",
       "category": "general",
       "use_cases": [
         "自主代理",
@@ -10157,7 +10194,7 @@
       "full_name": "lingzhi227/agent-research-skills",
       "description": "Skills for Claude Code — deep-research: systematic academic literature review",
       "stars": 73,
-      "forks": 13,
+      "forks": 14,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/lingzhi227/agent-research-skills",
@@ -10265,7 +10302,7 @@
       "full_name": "sandijean90/AgentStack-HealthcareAgent",
       "description": "An healthcare based example of how to build and deploy an A2A Agent that calls other A2A Agents on the open source platform Agent Stack by IBM Research.",
       "stars": 73,
-      "forks": 54,
+      "forks": 55,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/sandijean90/AgentStack-HealthcareAgent",
@@ -10300,6 +10337,22 @@
       ]
     },
     {
+      "id": 1185410249,
+      "full_name": "sqliteai/adam",
+      "description": "An embeddable cross-platform AI agent library written in C. Cloud and local LLMs, tool calling, long-term memory, voice, sessions, research mode, self-evolving loops. The SQLite of agent frameworks: small, portable, just works.",
+      "stars": 73,
+      "forks": 10,
+      "language": "C",
+      "topics": [],
+      "url": "https://github.com/sqliteai/adam",
+      "created_at": "2026-03-18T14:55:55Z",
+      "updated_at": "2026-05-19T05:30:16Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 1065152599,
       "full_name": "jhfnetboy/DSR-Research-Flow-Template",
       "description": "Open-source DSR research workflow template, work with Claude or other AI agents.",
@@ -10314,22 +10367,6 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
-      ]
-    },
-    {
-      "id": 1185410249,
-      "full_name": "sqliteai/adam",
-      "description": "An embeddable cross-platform AI agent library written in C. Cloud and local LLMs, tool calling, long-term memory, voice, sessions, research mode, self-evolving loops. The SQLite of agent frameworks: small, portable, just works.",
-      "stars": 72,
-      "forks": 10,
-      "language": "C",
-      "topics": [],
-      "url": "https://github.com/sqliteai/adam",
-      "created_at": "2026-03-18T14:55:55Z",
-      "updated_at": "2026-05-15T21:42:11Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -10499,23 +10536,30 @@
       ]
     },
     {
-      "id": 1192629876,
-      "full_name": "ALAGENT-HKU/x2strategy",
-      "description": "Extract structured strategy specifications from quantitative finance research papers — Agent Skill for GitHub Copilot & Claude Code",
+      "id": 1150376554,
+      "full_name": "referodesign/refero_skill",
+      "description": "Research-first design skill for AI agents. 150K+ real app screens and flows via Refero MCP.",
       "stars": 69,
-      "forks": 10,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/ALAGENT-HKU/x2strategy",
-      "created_at": "2026-03-26T12:06:18Z",
-      "updated_at": "2026-05-19T01:44:06Z",
-      "category": "literature",
+      "forks": 4,
+      "language": "",
+      "topics": [
+        "agent",
+        "agent-skills",
+        "claude",
+        "cursor",
+        "design",
+        "figma",
+        "mcp",
+        "refero",
+        "skill",
+        "ui-design"
+      ],
+      "url": "https://github.com/referodesign/refero_skill",
+      "created_at": "2026-02-05T07:51:31Z",
+      "updated_at": "2026-05-19T09:30:44Z",
+      "category": "general",
       "use_cases": [
-        "学术文献",
-        "金融数据",
-        "自主代理",
-        "资源列表",
-        "代码研究"
+        "自主代理"
       ]
     },
     {
@@ -10534,7 +10578,7 @@
       ],
       "url": "https://github.com/guiyinan/agomTradePro",
       "created_at": "2025-12-29T06:07:52Z",
-      "updated_at": "2026-05-15T12:55:07Z",
+      "updated_at": "2026-05-19T09:40:35Z",
       "category": "data_research",
       "use_cases": [
         "金融数据",
@@ -10604,6 +10648,36 @@
       ]
     },
     {
+      "id": 994061888,
+      "full_name": "ARUNAGIRINATHAN-K/awesome-ai-agents-2026",
+      "description": "Awesome AI Agents for 2026 - 300+ AI Agents, Frameworks & Coding • Creative • Voice • Research • Enterprise. Comparison guides, benchmarks & deep dives",
+      "stars": 68,
+      "forks": 34,
+      "language": "",
+      "topics": [
+        "2026",
+        "agent-frameworks",
+        "ai-agents",
+        "ai-tools",
+        "autonomous-agents",
+        "awesome",
+        "awesome-list",
+        "crewai",
+        "langchain",
+        "llm",
+        "llm-agents"
+      ],
+      "url": "https://github.com/ARUNAGIRINATHAN-K/awesome-ai-agents-2026",
+      "created_at": "2025-06-01T05:40:33Z",
+      "updated_at": "2026-05-19T12:30:52Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "资源列表",
+        "竞争分析"
+      ]
+    },
+    {
       "id": 1129152377,
       "full_name": "Agent-Field/af-deep-research",
       "description": "Autonomous AI backend for deep research AI applications.",
@@ -10635,33 +10709,6 @@
         "深度研究",
         "自主代理",
         "代码研究"
-      ]
-    },
-    {
-      "id": 1150376554,
-      "full_name": "referodesign/refero_skill",
-      "description": "Research-first design skill for AI agents. 150K+ real app screens and flows via Refero MCP.",
-      "stars": 67,
-      "forks": 3,
-      "language": "",
-      "topics": [
-        "agent",
-        "agent-skills",
-        "claude",
-        "cursor",
-        "design",
-        "figma",
-        "mcp",
-        "refero",
-        "skill",
-        "ui-design"
-      ],
-      "url": "https://github.com/referodesign/refero_skill",
-      "created_at": "2026-02-05T07:51:31Z",
-      "updated_at": "2026-05-18T14:08:25Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -10715,36 +10762,6 @@
       ]
     },
     {
-      "id": 994061888,
-      "full_name": "ARUNAGIRINATHAN-K/awesome-ai-agents-2026",
-      "description": "Awesome AI Agents for 2026 - 300+ AI Agents, Frameworks & Coding • Creative • Voice • Research • Enterprise. Comparison guides, benchmarks & deep dives",
-      "stars": 66,
-      "forks": 32,
-      "language": "",
-      "topics": [
-        "2026",
-        "agent-frameworks",
-        "ai-agents",
-        "ai-tools",
-        "autonomous-agents",
-        "awesome",
-        "awesome-list",
-        "crewai",
-        "langchain",
-        "llm",
-        "llm-agents"
-      ],
-      "url": "https://github.com/ARUNAGIRINATHAN-K/awesome-ai-agents-2026",
-      "created_at": "2025-06-01T05:40:33Z",
-      "updated_at": "2026-05-18T06:46:52Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "资源列表",
-        "竞争分析"
-      ]
-    },
-    {
       "id": 645871108,
       "full_name": "sandner-art/ai-research",
       "description": "Settings for AI Training",
@@ -10780,22 +10797,6 @@
       "category": "general",
       "use_cases": [
         "通用研究"
-      ]
-    },
-    {
-      "id": 1222307895,
-      "full_name": "wangnengdejiamao/Astro_Agent",
-      "description": "End-to-end astronomy research agent: a LangGraph state machine that resolves a target, fetches multi-survey data via    a 20+ archive toolbox, runs three mandatory modeling iterations with supervisor-issued repair actions, and drafts an    ApJ-style manuscript only after an evidence-gated QA pass",
-      "stars": 66,
-      "forks": 4,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/wangnengdejiamao/Astro_Agent",
-      "created_at": "2026-04-27T08:34:42Z",
-      "updated_at": "2026-05-19T03:04:58Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -11076,13 +11077,13 @@
       "id": 1181268512,
       "full_name": "lucasgelfond/autoresearch-webgpu",
       "description": "Let AI agents run research experiments + train small language models (in your browser!)",
-      "stars": 63,
+      "stars": 64,
       "forks": 12,
       "language": "TypeScript",
       "topics": [],
       "url": "https://github.com/lucasgelfond/autoresearch-webgpu",
       "created_at": "2026-03-13T23:46:13Z",
-      "updated_at": "2026-05-18T15:21:45Z",
+      "updated_at": "2026-05-19T18:33:24Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -11144,7 +11145,7 @@
       "id": 1162504337,
       "full_name": "flonat/claude-research",
       "description": "Shareable Claude Code infrastructure for PhD researchers — skills, agents, hooks, and rules for academic workflows",
-      "stars": 62,
+      "stars": 63,
       "forks": 10,
       "language": "Python",
       "topics": [
@@ -11158,12 +11159,44 @@
       ],
       "url": "https://github.com/flonat/claude-research",
       "created_at": "2026-02-20T10:45:59Z",
-      "updated_at": "2026-05-18T11:21:48Z",
+      "updated_at": "2026-05-19T06:25:23Z",
       "category": "literature",
       "use_cases": [
         "学术文献",
         "自主代理",
         "代码研究"
+      ]
+    },
+    {
+      "id": 964118564,
+      "full_name": "ziatdinovmax/SciLink",
+      "description": "LLM-powered agents for scientific research automation",
+      "stars": 62,
+      "forks": 13,
+      "language": "Python",
+      "topics": [
+        "agentic-ai",
+        "agentic-framework",
+        "agentic-workflow",
+        "density-functional-theory",
+        "experiments",
+        "generative-ai",
+        "large-language-models",
+        "materials",
+        "materials-discovery",
+        "materials-science",
+        "microscopy",
+        "molecular-dynamics",
+        "simulations",
+        "spectroscopy"
+      ],
+      "url": "https://github.com/ziatdinovmax/SciLink",
+      "created_at": "2025-04-10T18:04:29Z",
+      "updated_at": "2026-05-19T19:06:16Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "实验自动化"
       ]
     },
     {
@@ -11253,38 +11286,6 @@
       "category": "general",
       "use_cases": [
         "自主代理"
-      ]
-    },
-    {
-      "id": 964118564,
-      "full_name": "ziatdinovmax/SciLink",
-      "description": "LLM-powered agents for scientific research automation",
-      "stars": 61,
-      "forks": 13,
-      "language": "Python",
-      "topics": [
-        "agentic-ai",
-        "agentic-framework",
-        "agentic-workflow",
-        "density-functional-theory",
-        "experiments",
-        "generative-ai",
-        "large-language-models",
-        "materials",
-        "materials-discovery",
-        "materials-science",
-        "microscopy",
-        "molecular-dynamics",
-        "simulations",
-        "spectroscopy"
-      ],
-      "url": "https://github.com/ziatdinovmax/SciLink",
-      "created_at": "2025-04-10T18:04:29Z",
-      "updated_at": "2026-05-19T03:09:45Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理",
-        "实验自动化"
       ]
     },
     {
@@ -11398,6 +11399,40 @@
       ]
     },
     {
+      "id": 1181797680,
+      "full_name": "Owl-Listener/inclusive-design-skills",
+      "description": "Inclusive design skills for AI coding agents — from cognitive accessibility to adaptive interfaces, inclusive research, and accessibility decision-making.",
+      "stars": 60,
+      "forks": 16,
+      "language": "",
+      "topics": [],
+      "url": "https://github.com/Owl-Listener/inclusive-design-skills",
+      "created_at": "2026-03-14T16:32:17Z",
+      "updated_at": "2026-05-19T19:47:59Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
+      "id": 1225049374,
+      "full_name": "zubair-trabzada/ai-realestate-claude",
+      "description": "AI real estate research engine for Claude Code. Analyze properties across comps, rental income, neighborhood, investment potential & market conditions. Residential, commercial, flip, BRRRR analysis + PDF reports. 15 skills, 5 agents. Not investment advice.",
+      "stars": 60,
+      "forks": 38,
+      "language": "Python",
+      "topics": [],
+      "url": "https://github.com/zubair-trabzada/ai-realestate-claude",
+      "created_at": "2026-04-29T22:33:50Z",
+      "updated_at": "2026-05-19T18:46:16Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理",
+        "代码研究"
+      ]
+    },
+    {
       "id": 1177217366,
       "full_name": "retomeier/MoMoA-Researcher",
       "description": "Coordinate multiple AI agents to iteratively investigate complex research questions by proposing hypotheses, executing local Python or Rust experiments, evaluating outcomes, and generating academic reports.",
@@ -11437,7 +11472,7 @@
       "full_name": "claude-world/claude-world-studio",
       "description": "AI-powered content pipeline: trend discovery → research → social publishing. Built with Claude Agent SDK + MCP.",
       "stars": 59,
-      "forks": 8,
+      "forks": 7,
       "language": "TypeScript",
       "topics": [
         "ai-agent",
@@ -11486,22 +11521,6 @@
         "自主代理",
         "资源列表",
         "AI 训练"
-      ]
-    },
-    {
-      "id": 1181797680,
-      "full_name": "Owl-Listener/inclusive-design-skills",
-      "description": "Inclusive design skills for AI coding agents — from cognitive accessibility to adaptive interfaces, inclusive research, and accessibility decision-making.",
-      "stars": 59,
-      "forks": 16,
-      "language": "",
-      "topics": [],
-      "url": "https://github.com/Owl-Listener/inclusive-design-skills",
-      "created_at": "2026-03-14T16:32:17Z",
-      "updated_at": "2026-05-18T07:48:45Z",
-      "category": "general",
-      "use_cases": [
-        "自主代理"
       ]
     },
     {
@@ -11573,15 +11592,15 @@
     },
     {
       "id": 1173620570,
-      "full_name": "MitchellkellerLG/research-process-builder",
+      "full_name": "LeadGrowGTM/research-process-builder",
       "description": "Build validated web research processes through self-annealing loops. 138 patterns tested, 90%+ accuracy. Works with Claude Code, Clay, any AI agent.",
       "stars": 58,
       "forks": 14,
       "language": "Python",
       "topics": [],
-      "url": "https://github.com/MitchellkellerLG/research-process-builder",
+      "url": "https://github.com/LeadGrowGTM/research-process-builder",
       "created_at": "2026-03-05T15:12:31Z",
-      "updated_at": "2026-05-13T21:00:28Z",
+      "updated_at": "2026-05-19T18:01:15Z",
       "category": "web_research",
       "use_cases": [
         "网页搜索",
@@ -11704,24 +11723,6 @@
       ]
     },
     {
-      "id": 1225049374,
-      "full_name": "zubair-trabzada/ai-realestate-claude",
-      "description": "AI real estate research engine for Claude Code. Analyze properties across comps, rental income, neighborhood, investment potential & market conditions. Residential, commercial, flip, BRRRR analysis + PDF reports. 15 skills, 5 agents. Not investment advice.",
-      "stars": 57,
-      "forks": 37,
-      "language": "Python",
-      "topics": [],
-      "url": "https://github.com/zubair-trabzada/ai-realestate-claude",
-      "created_at": "2026-04-29T22:33:50Z",
-      "updated_at": "2026-05-18T15:35:28Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理",
-        "代码研究"
-      ]
-    },
-    {
       "id": 453625474,
       "full_name": "bio-ontology-research-group/deepgo2",
       "description": "",
@@ -11758,7 +11759,7 @@
       "full_name": "cooragent/ClarityFinance",
       "description": "Clarity is a financial analysis agent framework built on native Claude-skill architecture. Adopting a Planning-with-Files approach, it coordinates specialized sub-agents via persistent task plans, research findings, and progress logs to tackle complex financial analysis workflows.",
       "stars": 57,
-      "forks": 11,
+      "forks": 12,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/cooragent/ClarityFinance",
@@ -11775,7 +11776,7 @@
       "full_name": "jdhruv1503/Brainiac",
       "description": "Agentic AI-driven Quantitative Alpha Builder. Streamline alpha generation with autonomous research navigation and backtesting.",
       "stars": 56,
-      "forks": 19,
+      "forks": 18,
       "language": "Python",
       "topics": [
         "agentic",
@@ -11889,13 +11890,13 @@
       "id": 1171201549,
       "full_name": "texttron/AgentIR",
       "description": "AgentIR is a retriever specialized for Deep Research agents.",
-      "stars": 56,
-      "forks": 4,
+      "stars": 55,
+      "forks": 5,
       "language": "Python",
       "topics": [],
       "url": "https://github.com/texttron/AgentIR",
       "created_at": "2026-03-03T01:17:55Z",
-      "updated_at": "2026-04-29T06:35:18Z",
+      "updated_at": "2026-05-19T19:22:24Z",
       "category": "deep_research",
       "use_cases": [
         "深度研究",
@@ -12018,6 +12019,59 @@
       ]
     },
     {
+      "id": 1203338557,
+      "full_name": "iamsashank09/llm-wiki-kit",
+      "description": "Stop re-explaining your research to your AI agent. Persistent, LLM-maintained wikis that compound over time. Drop PDFs, URLs, YouTube - your agent remembers forever. Based on Karpathy's LLM Wiki pattern.",
+      "stars": 55,
+      "forks": 14,
+      "language": "Python",
+      "topics": [
+        "ai-agent",
+        "knowledge-base",
+        "llm",
+        "llm-tools",
+        "mcp",
+        "mcp-server"
+      ],
+      "url": "https://github.com/iamsashank09/llm-wiki-kit",
+      "created_at": "2026-04-07T00:31:37Z",
+      "updated_at": "2026-05-19T05:53:26Z",
+      "category": "knowledge_base",
+      "use_cases": [
+        "知识库",
+        "自主代理"
+      ]
+    },
+    {
+      "id": 1194915762,
+      "full_name": "worldbench/awesome-ai-auto-research",
+      "description": "🔥 A Survey on AI Auto-Research",
+      "stars": 55,
+      "forks": 2,
+      "language": "HTML",
+      "topics": [
+        "agent",
+        "agentic-ai",
+        "ai",
+        "ai-research",
+        "ai-scientist",
+        "auto-research",
+        "large-language-models",
+        "llm",
+        "multi-agent-system",
+        "rag"
+      ],
+      "url": "https://github.com/worldbench/awesome-ai-auto-research",
+      "created_at": "2026-03-29T01:21:59Z",
+      "updated_at": "2026-05-19T19:40:09Z",
+      "category": "general",
+      "use_cases": [
+        "知识库",
+        "自主代理",
+        "资源列表"
+      ]
+    },
+    {
       "id": 1196872335,
       "full_name": "SUSTech-GenAI/awesome-researchclaw",
       "description": "🦞 A curated list of ResearchClaw ecosystem projects, AI research agents, autonomous paper-writing tools, and scientific workflow resources.",
@@ -12034,30 +12088,6 @@
         "自主代理",
         "实验自动化",
         "资源列表"
-      ]
-    },
-    {
-      "id": 1203338557,
-      "full_name": "iamsashank09/llm-wiki-kit",
-      "description": "Stop re-explaining your research to your AI agent. Persistent, LLM-maintained wikis that compound over time. Drop PDFs, URLs, YouTube - your agent remembers forever. Based on Karpathy's LLM Wiki pattern.",
-      "stars": 54,
-      "forks": 14,
-      "language": "Python",
-      "topics": [
-        "ai-agent",
-        "knowledge-base",
-        "llm",
-        "llm-tools",
-        "mcp",
-        "mcp-server"
-      ],
-      "url": "https://github.com/iamsashank09/llm-wiki-kit",
-      "created_at": "2026-04-07T00:31:37Z",
-      "updated_at": "2026-05-12T15:13:05Z",
-      "category": "knowledge_base",
-      "use_cases": [
-        "知识库",
-        "自主代理"
       ]
     },
     {
@@ -12198,6 +12228,80 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ]
+    },
+    {
+      "id": 1217603969,
+      "full_name": "aliaihub/awesome-hermes-usecases",
+      "description": "Curated real-world use cases for Hermes Agent — the self-improving AI agent from Nous Research. Backed by primary sources.",
+      "stars": 53,
+      "forks": 6,
+      "language": "Python",
+      "topics": [
+        "agentic-ai",
+        "ai-agent",
+        "automation",
+        "awesome-list",
+        "cron-jobs",
+        "developer-tools",
+        "developer-workflow",
+        "discord-bot",
+        "hermes-agent",
+        "llm-agents",
+        "local-llm",
+        "mcp",
+        "memory-storage",
+        "model-context-protocol",
+        "nous-research",
+        "open-source",
+        "productivity",
+        "self-improving-ai",
+        "telegram-bot",
+        "workflow-automation"
+      ],
+      "url": "https://github.com/aliaihub/awesome-hermes-usecases",
+      "created_at": "2026-04-22T03:38:17Z",
+      "updated_at": "2026-05-19T18:50:21Z",
+      "category": "general",
+      "use_cases": [
+        "知识库",
+        "自主代理",
+        "资源列表"
+      ]
+    },
+    {
+      "id": 1223099228,
+      "full_name": "jaccen/Awesome-Gaussian-Skills",
+      "description": "AI Agent Skills for 3D Gaussian Splatting, NeRF & Computer Graphics Research. 531+ methods, 23 categories, 10 skills. OpenClaw / Claude Code compatible.",
+      "stars": 53,
+      "forks": 4,
+      "language": "HTML",
+      "topics": [
+        "3d-gaussian-splatting",
+        "3d-reconstruction",
+        "3dgs",
+        "ai-agent",
+        "ai-skills",
+        "claude-code",
+        "computer-graphics",
+        "cvpr",
+        "gaussian-splatting",
+        "nerf",
+        "neural-rendering",
+        "novel-view-synthesis",
+        "openclaw",
+        "point-cloud",
+        "research-tools",
+        "siggraph"
+      ],
+      "url": "https://github.com/jaccen/Awesome-Gaussian-Skills",
+      "created_at": "2026-04-28T02:22:27Z",
+      "updated_at": "2026-05-19T15:55:57Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理",
+        "资源列表",
+        "代码研究"
       ]
     },
     {
@@ -12378,6 +12482,56 @@
       ]
     },
     {
+      "id": 1203053476,
+      "full_name": "arteemg/AutoHypothesis",
+      "description": "Open-source framework for agentic quantitative finance research.",
+      "stars": 52,
+      "forks": 14,
+      "language": "Python",
+      "topics": [
+        "agent-trade-kit",
+        "finance",
+        "quant",
+        "quantitative",
+        "trading"
+      ],
+      "url": "https://github.com/arteemg/AutoHypothesis",
+      "created_at": "2026-04-06T17:13:40Z",
+      "updated_at": "2026-05-19T19:22:14Z",
+      "category": "data_research",
+      "use_cases": [
+        "金融数据",
+        "自主代理"
+      ]
+    },
+    {
+      "id": 1160112766,
+      "full_name": "Scottcjn/silicon-archaeology-skill",
+      "description": "Digital archaeology skill for cataloging rare hardware, archiving software assets, and bridging to Beacon agent identities and RustChain Proof-of-Antiquity attestations. Based on Echoes of the Silicon Age research.",
+      "stars": 52,
+      "forks": 10,
+      "language": "Python",
+      "topics": [
+        "ai-agents",
+        "beacon-protocol",
+        "digital-archaeology",
+        "hardware-cataloging",
+        "proof-of-antiquity",
+        "retro-computing",
+        "rustchain",
+        "silicon-stratigraphy",
+        "software-preservation",
+        "vintage-computing"
+      ],
+      "url": "https://github.com/Scottcjn/silicon-archaeology-skill",
+      "created_at": "2026-02-17T15:01:47Z",
+      "updated_at": "2026-05-19T08:18:21Z",
+      "category": "general",
+      "use_cases": [
+        "自主代理"
+      ]
+    },
+    {
       "id": 1034288670,
       "full_name": "ByteDance-BandAI/ReportBench",
       "description": "A comprehensive benchmark for evaluating deep research agents on academic survey tasks",
@@ -12437,29 +12591,6 @@
       ]
     },
     {
-      "id": 1203053476,
-      "full_name": "arteemg/AutoHypothesis",
-      "description": "Open-source framework for agentic quantitative finance research.",
-      "stars": 51,
-      "forks": 14,
-      "language": "Python",
-      "topics": [
-        "agent-trade-kit",
-        "finance",
-        "quant",
-        "quantitative",
-        "trading"
-      ],
-      "url": "https://github.com/arteemg/AutoHypothesis",
-      "created_at": "2026-04-06T17:13:40Z",
-      "updated_at": "2026-05-18T17:30:08Z",
-      "category": "data_research",
-      "use_cases": [
-        "金融数据",
-        "自主代理"
-      ]
-    },
-    {
       "id": 1147600975,
       "full_name": "gtm-skills/gtm",
       "description": "GTM toolkit for AI agents. Research, intel, outreach, CRM.",
@@ -12476,29 +12607,37 @@
       ]
     },
     {
-      "id": 1160112766,
-      "full_name": "Scottcjn/silicon-archaeology-skill",
-      "description": "Digital archaeology skill for cataloging rare hardware, archiving software assets, and bridging to Beacon agent identities and RustChain Proof-of-Antiquity attestations. Based on Echoes of the Silicon Age research.",
+      "id": 1113991120,
+      "full_name": "dralkh/seerai",
+      "description": "Zotero AI plugin, research framework, assistant, with MCP, agent capabilities, OCR, table extraction, semantic scholar, and firecrawl/tavily web search",
       "stars": 51,
-      "forks": 10,
-      "language": "Python",
+      "forks": 3,
+      "language": "TypeScript",
       "topics": [
-        "ai-agents",
-        "beacon-protocol",
-        "digital-archaeology",
-        "hardware-cataloging",
-        "proof-of-antiquity",
-        "retro-computing",
-        "rustchain",
-        "silicon-stratigraphy",
-        "software-preservation",
-        "vintage-computing"
+        "agent",
+        "agentic",
+        "ai",
+        "mcp",
+        "openai",
+        "openai-api",
+        "plugin",
+        "research-tool",
+        "research-tools",
+        "scholar",
+        "semantic-search",
+        "tavily",
+        "zotero",
+        "zotero-api",
+        "zotero-plugin",
+        "zotero7"
       ],
-      "url": "https://github.com/Scottcjn/silicon-archaeology-skill",
-      "created_at": "2026-02-17T15:01:47Z",
-      "updated_at": "2026-05-18T17:27:43Z",
-      "category": "general",
+      "url": "https://github.com/dralkh/seerai",
+      "created_at": "2025-12-10T18:38:02Z",
+      "updated_at": "2026-05-19T16:49:52Z",
+      "category": "web_research",
       "use_cases": [
+        "网页搜索",
+        "学术文献",
         "自主代理"
       ]
     }

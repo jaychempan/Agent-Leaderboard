@@ -11,6 +11,11 @@ import json, os, time, sys, argparse, re
 from datetime import datetime, timezone
 from fetch_utils import load_token, gh_get, search_repos
 
+_ROOT       = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_DATA_JSON  = os.path.join(_ROOT, "data", "frameworks_data.json")
+_DATA_JS    = os.path.join(_ROOT, "data", "frameworks_data.js")
+_INDEX_HTML = os.path.join(_ROOT, "index.html")
+
 MIN_STARS = 50
 PER_PAGE  = 100
 
@@ -145,12 +150,12 @@ def main():
                 print(f"    +{new} repos (total {len(repos)})")
             except Exception as e:
                 print(f"    ✗ 跳过: {e}", file=sys.stderr)
-            time.sleep(0.4)
+            time.sleep(2.2)
 
     # ── 增量合并：与现有数据合并，防止 API 限流导致数据丢失 ────────────────────
-    if os.path.exists("frameworks_data.json"):
+    if os.path.exists(_DATA_JSON):
         try:
-            with open("data/frameworks_data.json", "r", encoding="utf-8") as f:
+            with open(_DATA_JSON, "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
                             if not is_blocked(r) and is_relevant(r)}
             if not repos:
@@ -191,22 +196,22 @@ def main():
         "repos":          repos,
     }
 
-    with open("data/frameworks_data.json", "w", encoding="utf-8") as f:
+    with open(_DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n✅ frameworks_data.json 写入完成，共 {len(repos)} 个仓库")
 
     js = json.dumps(output, ensure_ascii=False, separators=(",", ":"))
-    with open("data/frameworks_data.js", "w", encoding="utf-8") as f:
+    with open(_DATA_JS, "w", encoding="utf-8") as f:
         f.write("/* AUTO-GENERATED — run fetch_frameworks.py to update */\n")
         f.write(f"window.FRAMEWORKS_DATA={js};\n")
     print("✅ frameworks_data.js 写入完成")
 
     # ── 更新 frameworks.html 中的版本号 (防缓存) ─────────────────────────────
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-    with open("index.html", "r", encoding="utf-8") as f:
+    with open(_INDEX_HTML, "r", encoding="utf-8") as f:
         html = f.read()
     html = re.sub(r'data/frameworks_data.js?v=\d+', f'frameworks_data.js?v={version}', html)
-    with open("index.html", "w", encoding="utf-8") as f:
+    with open(_INDEX_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"✅ index.html 版本号更新为 {version}")
 
