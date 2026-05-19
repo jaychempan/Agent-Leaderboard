@@ -11,6 +11,13 @@ import json, os, time, sys, argparse, re
 from datetime import datetime, timezone
 from fetch_utils import load_token, gh_get, search_repos
 
+# ── 路径（脚本可从任意目录运行）────────────────────────────────────────────────
+_SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+_ROOT        = os.path.dirname(_SCRIPTS_DIR)
+_DATA_JSON   = os.path.join(_ROOT, "data", "data.json")
+_DATA_JS     = os.path.join(_ROOT, "data", "data.js")
+_INDEX_HTML  = os.path.join(_ROOT, "index.html")
+
 # ── 配置 ─────────────────────────────────────────────────────────────────────
 MIN_STARS    = 50
 PER_PAGE     = 100
@@ -39,23 +46,13 @@ def is_blocked(repo: dict) -> bool:
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
 
-_RELEVANT_RE = re.compile(
-    r'\bskills?\b'
-    r'|agent(?:ic)?'
-    r'|tool.?use|tool.?call|function.?call'
-    r'|\bmcp\b'
-    r'|copilot|cursor|claude|codex|gemini|deepseek|windsurf|cline'
-    r'|llm.?tool|ai.?assistant|coding.?assistant'
-    r'|prompt.?(?:lib|engineer|template|collection)'
-    r'|rules?(?:\.md|file)?',
-    re.I,
-)
+_SKILL_RE = re.compile(r'\bskills?\b', re.I)
 
 def is_skills_relevant(repo: dict) -> bool:
     text = (repo.get("full_name", "") + " "
             + (repo.get("description", "") or "") + " "
             + " ".join(repo.get("topics", [])))
-    return bool(_RELEVANT_RE.search(text))
+    return bool(_SKILL_RE.search(text))
 
 QUERIES      = {
     "claude":   [
@@ -263,9 +260,9 @@ def main():
             time.sleep(2.2)   # stay under 30 req/min Search API limit
 
     # ── 增量合并：与现有数据合并，防止 API 限流导致数据丢失 ────────────────────
-    if os.path.exists("data/data.json"):
+    if os.path.exists(_DATA_JSON):
         try:
-            with open("data/data.json", "r", encoding="utf-8") as f:
+            with open(_DATA_JSON, "r", encoding="utf-8") as f:
                 existing = {r["id"]: r for r in json.load(f).get("repos", [])
                             if not is_blocked(r) and is_skills_relevant(r)}
             if not repos:
@@ -314,23 +311,23 @@ def main():
     }
 
     # ── 写 data.json ─────────────────────────────────────────────────────────
-    with open("data/data.json", "w", encoding="utf-8") as f:
+    with open(_DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n✅ data.json 写入完成，共 {len(repos)} 个仓库")
 
     # ── 写 data.js (供浏览器 <script src> 加载) ──────────────────────────────
     js_payload = json.dumps(output, ensure_ascii=False, separators=(",", ":"))
-    with open("data/data.js", "w", encoding="utf-8") as f:
+    with open(_DATA_JS, "w", encoding="utf-8") as f:
         f.write(f"/* AUTO-GENERATED — run fetch_data.py to update */\n")
         f.write(f"window.SKILLS_DATA={js_payload};\n")
     print("✅ data.js 写入完成")
 
     # ── 更新 index.html 中的 data.js 版本号 (防缓存) ─────────────────────────
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-    with open("index.html", "r", encoding="utf-8") as f:
+    with open(_INDEX_HTML, "r", encoding="utf-8") as f:
         html = f.read()
-    html = re.sub(r'data/data.js?v=\d+', f'data.js?v={version}', html)
-    with open("index.html", "w", encoding="utf-8") as f:
+    html = re.sub(r'data/data\.js\?v=\d+', f'data/data.js?v={version}', html)
+    with open(_INDEX_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"✅ index.html 版本号更新为 {version}")
 
