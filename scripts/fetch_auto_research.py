@@ -42,21 +42,28 @@ def is_blocked(repo: dict) -> bool:
                      " ".join(repo.get("topics",[]))])
     return bool(_SENSITIVE_RE.search(text))
 
-_RELEVANT_RE = re.compile(r'\bresearch\b', re.I)
+_RELEVANT_RE = re.compile(r'research', re.I)
 def is_relevant(repo: dict) -> bool:
-    name_desc = repo.get("full_name","") + " " + (repo.get("description","") or "")
-    return bool(_RELEVANT_RE.search(name_desc))
+    text = " ".join([
+        repo.get("full_name", ""),
+        repo.get("description", "") or "",
+        " ".join(repo.get("topics", [])),
+    ])
+    return bool(_RELEVANT_RE.search(text))
 
 QUERIES = {
     "general": [
         f"research agent in:name stars:>{MIN_STARS}",
         f"ai research in:name stars:>{MIN_STARS}",
         f"deep research in:name stars:>{MIN_STARS}",
+        f"autoresearch in:name stars:>{MIN_STARS}",
         f"research agent in:description stars:>{MIN_STARS}",
         f"ai research agent in:description stars:>{MIN_STARS}",
+        f"autoresearch in:description stars:>{MIN_STARS}",
         f"topic:deep-research stars:>{MIN_STARS}",
         f"topic:research-agent stars:>{MIN_STARS}",
         f"topic:ai-research stars:>{MIN_STARS}",
+        f"topic:autoresearch stars:>{MIN_STARS}",
     ],
 }
 

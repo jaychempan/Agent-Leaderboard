@@ -144,12 +144,13 @@ python3 scripts/fetch_auto_research.py  # Auto Research
 # Optional: supply a GitHub Token to raise the API rate limit (60 → 5000 req/hr)
 python3 scripts/fetch_data.py --token ghp_xxxxxxxxxxxx
 
-# 3. Serve locally (recommended to avoid CORS issues)
+# 3. Serve locally
+# Option A — with live reload (auto-refreshes browser on file change, requires Node)
+npx live-server --port=8080
+
+# Option B — basic static server (no live reload, no extra dependencies)
 python3 -m http.server 8080
 # then open http://localhost:8080
-
-# Or open index.html directly in most browsers
-open index.html
 ```
 
 ## File Structure

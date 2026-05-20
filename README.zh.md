@@ -144,12 +144,13 @@ python3 scripts/fetch_auto_research.py   # Auto Research
 # 可选：使用 GitHub Token 提高 API 限额（60 → 5000 次/小时）
 python3 scripts/fetch_data.py --token ghp_xxxxxxxxxxxx
 
-# 3. 启动本地服务器（推荐，避免 CORS 问题）
+# 3. 启动本地服务器
+# 方式 A — 带实时刷新（文件变更自动刷新浏览器，需要 Node）
+npx live-server --port=8080
+
+# 方式 B — 基础静态服务器（无需额外依赖）
 python3 -m http.server 8080
 # 然后打开 http://localhost:8080
-
-# 或直接用浏览器打开 index.html（大多数浏览器支持）
-open index.html
 ```
 
 ## 文件结构
