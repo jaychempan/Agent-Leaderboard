@@ -16,25 +16,25 @@
       "label": "网页研究",
       "icon": "🌐",
       "color": "#10b981",
-      "count": 21
+      "count": 34
     },
     "literature": {
       "label": "文献综述",
       "icon": "📚",
       "color": "#a78bfa",
-      "count": 83
+      "count": 99
     },
     "data_research": {
       "label": "数据分析",
       "icon": "📊",
       "color": "#22d3ee",
-      "count": 47
+      "count": 62
     },
     "knowledge_base": {
       "label": "知识管理",
       "icon": "🧠",
       "color": "#f59e0b",
-      "count": 8
+      "count": 15
     },
     "general": {
       "label": "通用研究",
@@ -83,6 +83,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -100,6 +103,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -138,6 +144,10 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -177,6 +187,10 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "knowledge_base"
       ]
     },
     {
@@ -206,6 +220,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -223,6 +240,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -260,6 +280,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -276,6 +299,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -292,6 +318,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -316,6 +345,9 @@
         "深度研究",
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -343,6 +375,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -381,6 +416,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -420,6 +458,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -437,6 +478,9 @@
       "use_cases": [
         "学术文献",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -463,6 +507,9 @@
       "use_cases": [
         "学术文献",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -488,6 +535,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -504,6 +554,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -545,6 +598,9 @@
         "实验自动化",
         "代码研究",
         "睡眠/后台"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -571,6 +627,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -587,6 +646,10 @@
       "category": "deep_research",
       "use_cases": [
         "网页搜索"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -624,6 +687,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -656,6 +722,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -685,6 +754,10 @@
         "深度研究",
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -725,6 +798,9 @@
         "自主代理",
         "代码研究",
         "睡眠/后台"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -763,6 +839,10 @@
       "use_cases": [
         "学术文献",
         "知识库"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -799,6 +879,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -820,6 +903,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -836,6 +922,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -853,6 +942,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -891,6 +983,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -908,6 +1003,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -934,6 +1032,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -961,6 +1062,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -980,6 +1084,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -997,6 +1104,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1013,6 +1123,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1036,6 +1149,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -1055,6 +1171,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1079,6 +1198,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1098,6 +1220,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1114,6 +1239,9 @@
       "category": "web_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -1153,6 +1281,9 @@
         "金融数据",
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1172,6 +1303,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1189,6 +1323,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1207,6 +1344,9 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -1229,6 +1369,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1254,6 +1397,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1272,6 +1418,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1299,6 +1448,9 @@
         "深度研究",
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -1320,6 +1472,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1336,6 +1491,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -1359,6 +1517,9 @@
         "自主代理",
         "AI 训练",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1390,6 +1551,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -1407,6 +1571,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1442,6 +1609,9 @@
         "实验自动化",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1476,6 +1646,9 @@
         "金融数据",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1503,6 +1676,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1530,6 +1706,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1547,6 +1726,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1580,6 +1762,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1596,6 +1781,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1618,6 +1806,9 @@
       "category": "literature",
       "use_cases": [
         "学术文献"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1648,6 +1839,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -1674,6 +1868,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1695,6 +1892,9 @@
       "category": "general",
       "use_cases": [
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1713,6 +1913,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1734,6 +1937,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1755,6 +1961,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1781,6 +1990,9 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1801,6 +2013,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -1830,6 +2045,9 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -1865,6 +2083,9 @@
         "知识库",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -1901,6 +2122,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1931,6 +2155,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1959,6 +2186,9 @@
       "category": "web_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -1976,6 +2206,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2005,6 +2238,9 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -2044,6 +2280,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2084,6 +2323,9 @@
         "自主代理",
         "代码研究",
         "睡眠/后台"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -2112,6 +2354,9 @@
         "深度研究",
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2129,6 +2374,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2145,6 +2393,9 @@
       "category": "general",
       "use_cases": [
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2161,6 +2412,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2178,6 +2432,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -2194,6 +2451,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2230,6 +2490,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2255,6 +2518,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2271,6 +2537,9 @@
       "category": "general",
       "use_cases": [
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2302,6 +2571,9 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2338,6 +2610,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -2361,6 +2636,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2385,6 +2663,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2413,6 +2694,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2429,6 +2713,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2450,6 +2737,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2477,6 +2767,9 @@
         "实验自动化",
         "AI 训练",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2515,6 +2808,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2531,6 +2827,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2561,6 +2860,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2583,6 +2885,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2599,6 +2904,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2617,6 +2925,9 @@
         "学术文献",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2645,6 +2956,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2683,6 +2997,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -2705,6 +3022,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2721,6 +3041,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2750,6 +3073,9 @@
         "学术文献",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -2777,6 +3103,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2801,6 +3130,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2822,6 +3154,9 @@
       "use_cases": [
         "深度研究",
         "知识库"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2839,6 +3174,9 @@
       "use_cases": [
         "深度研究",
         "AI 训练"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2877,6 +3215,10 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -2907,6 +3249,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2928,6 +3273,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2951,6 +3299,9 @@
         "深度研究",
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -2986,6 +3337,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3003,6 +3357,9 @@
       "use_cases": [
         "深度研究",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3019,6 +3376,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3036,6 +3396,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3052,6 +3415,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3070,6 +3436,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3093,6 +3462,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3112,6 +3484,9 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3128,6 +3503,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3144,6 +3522,9 @@
       "category": "deep_research",
       "use_cases": [
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3160,6 +3541,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3177,6 +3561,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3194,6 +3581,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3212,6 +3602,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3228,6 +3621,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3245,6 +3641,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3262,6 +3661,9 @@
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3278,6 +3680,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3295,6 +3700,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3311,6 +3719,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3336,6 +3747,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3367,6 +3781,9 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3383,6 +3800,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3414,6 +3834,10 @@
       "use_cases": [
         "金融数据",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "data_research"
       ]
     },
     {
@@ -3435,6 +3859,10 @@
         "深度研究",
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -3453,6 +3881,9 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3475,6 +3906,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3514,6 +3948,9 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3530,6 +3967,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3553,6 +3993,9 @@
       "category": "web_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -3585,6 +4028,9 @@
         "自主代理",
         "AI 训练",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3602,6 +4048,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3627,6 +4076,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3664,6 +4116,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3680,6 +4135,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3709,6 +4167,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3734,6 +4195,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -3764,6 +4228,9 @@
         "学术文献",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -3787,6 +4254,10 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -3824,6 +4295,9 @@
         "金融数据",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -3840,6 +4314,9 @@
       "category": "deep_research",
       "use_cases": [
         "网页搜索"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -3856,6 +4333,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3893,6 +4373,9 @@
       "use_cases": [
         "自主代理",
         "睡眠/后台"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3913,6 +4396,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3929,6 +4415,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3956,6 +4445,9 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -3980,6 +4472,10 @@
         "学术文献",
         "知识库",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "knowledge_base"
       ]
     },
     {
@@ -4000,6 +4496,10 @@
         "深度研究",
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -4033,6 +4533,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4050,6 +4553,9 @@
       "use_cases": [
         "深度研究",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4075,6 +4581,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4113,6 +4622,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4139,6 +4651,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4167,6 +4682,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -4189,6 +4707,9 @@
         "深度研究",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4219,6 +4740,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4235,6 +4759,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4269,6 +4796,9 @@
         "实验自动化",
         "AI 训练",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4309,6 +4839,9 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -4325,6 +4858,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4342,6 +4878,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -4359,6 +4898,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -4391,6 +4933,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4412,6 +4957,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4437,6 +4985,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4457,6 +5008,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4478,6 +5032,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4500,6 +5057,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4516,6 +5076,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4539,6 +5102,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4555,6 +5121,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4571,6 +5140,9 @@
       "category": "general",
       "use_cases": [
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4589,6 +5161,9 @@
         "学术文献",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -4612,6 +5187,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4632,6 +5210,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4665,6 +5246,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4681,6 +5265,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4698,6 +5285,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -4728,6 +5318,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4753,6 +5346,11 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research",
+        "knowledge_base"
       ]
     },
     {
@@ -4769,6 +5367,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4792,6 +5393,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4815,6 +5419,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4831,6 +5438,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4848,6 +5458,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4864,6 +5477,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -4885,6 +5501,10 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "data_research"
       ]
     },
     {
@@ -4915,6 +5535,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4932,6 +5555,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4948,6 +5574,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4970,6 +5599,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4996,6 +5628,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5023,6 +5658,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5048,6 +5686,9 @@
         "学术文献",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5088,6 +5729,9 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -5119,6 +5763,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5144,6 +5791,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5160,6 +5810,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5181,6 +5834,9 @@
         "AI 训练",
         "代码研究",
         "睡眠/后台"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5199,6 +5855,10 @@
         "网页搜索",
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -5218,6 +5878,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5239,6 +5902,9 @@
         "AI 训练",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5259,6 +5925,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5282,6 +5951,9 @@
       "category": "data_research",
       "use_cases": [
         "实验自动化"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -5306,6 +5978,10 @@
       "category": "deep_research",
       "use_cases": [
         "金融数据"
+      ],
+      "categories": [
+        "deep_research",
+        "data_research"
       ]
     },
     {
@@ -5330,6 +6006,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5355,6 +6034,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -5391,6 +6073,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5407,6 +6092,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5427,6 +6115,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5445,6 +6136,9 @@
         "深度研究",
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5474,6 +6168,9 @@
         "知识库",
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5490,6 +6187,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5518,6 +6218,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5542,6 +6245,9 @@
       "category": "data_research",
       "use_cases": [
         "金融数据"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -5558,6 +6264,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5582,6 +6291,10 @@
         "深度研究",
         "学术文献",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -5598,6 +6311,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5621,6 +6337,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5642,6 +6361,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -5682,6 +6404,10 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -5699,6 +6425,9 @@
       "use_cases": [
         "深度研究",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5715,6 +6444,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5736,6 +6468,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5756,6 +6491,9 @@
       "category": "general",
       "use_cases": [
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5772,6 +6510,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5789,6 +6530,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5806,6 +6550,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5822,6 +6569,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5838,6 +6588,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5873,6 +6626,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -5898,6 +6654,9 @@
       "category": "general",
       "use_cases": [
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5914,6 +6673,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5938,6 +6700,9 @@
         "金融数据",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -5955,6 +6720,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5971,6 +6739,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -5987,6 +6758,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6009,6 +6783,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6030,6 +6807,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6048,6 +6828,9 @@
         "自主代理",
         "AI 训练",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6065,6 +6848,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6081,6 +6867,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6097,6 +6886,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6113,6 +6905,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6135,6 +6930,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -6160,6 +6958,9 @@
       "use_cases": [
         "学术文献",
         "知识库"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -6182,6 +6983,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6198,6 +7002,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6225,6 +7032,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6246,6 +7056,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -6276,6 +7089,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6292,6 +7108,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6319,6 +7138,9 @@
         "金融数据",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6348,6 +7170,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6375,6 +7200,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6391,6 +7219,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -6408,6 +7239,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -6425,6 +7259,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -6443,6 +7280,9 @@
         "学术文献",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -6459,6 +7299,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6475,6 +7318,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6496,6 +7342,10 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "web_research",
+        "data_research"
       ]
     },
     {
@@ -6512,6 +7362,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -6528,6 +7381,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6544,6 +7400,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -6561,6 +7420,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -6583,6 +7445,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6599,6 +7464,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6629,6 +7497,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6652,6 +7523,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6668,6 +7542,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6697,6 +7574,9 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6727,6 +7607,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6752,6 +7635,10 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -6780,6 +7667,9 @@
         "知识库",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6813,6 +7703,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -6829,6 +7722,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6845,6 +7741,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6869,6 +7768,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -6893,6 +7795,10 @@
         "学术文献",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -6909,6 +7815,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6930,6 +7839,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6956,6 +7868,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6989,6 +7904,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7007,6 +7925,9 @@
         "金融数据",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -7025,6 +7946,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7042,6 +7966,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7058,6 +7985,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7077,6 +8007,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7095,6 +8028,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7117,6 +8053,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7149,6 +8088,9 @@
         "金融数据",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -7166,6 +8108,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7196,6 +8141,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7212,6 +8160,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7229,6 +8180,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7251,6 +8205,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7272,6 +8229,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7289,6 +8249,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -7305,6 +8268,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7321,6 +8287,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7338,6 +8307,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7355,6 +8327,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -7371,6 +8346,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7399,6 +8377,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7427,6 +8408,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7444,6 +8428,9 @@
       "use_cases": [
         "深度研究",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -7462,6 +8449,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -7488,6 +8478,10 @@
         "深度研究",
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "data_research"
       ]
     },
     {
@@ -7522,6 +8516,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7546,6 +8543,9 @@
       "category": "knowledge_base",
       "use_cases": [
         "知识库"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -7587,6 +8587,10 @@
         "自主代理",
         "资源列表",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -7604,6 +8608,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7620,6 +8627,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7636,6 +8646,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7666,6 +8679,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7700,6 +8716,9 @@
         "学术文献",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7717,6 +8736,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7733,6 +8755,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7749,6 +8774,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7775,6 +8803,9 @@
         "金融数据",
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -7804,6 +8835,10 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -7821,6 +8856,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7852,6 +8890,9 @@
         "自主代理",
         "实验自动化",
         "AI 训练"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -7874,6 +8915,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7898,6 +8942,9 @@
         "深度研究",
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -7915,6 +8962,9 @@
       "use_cases": [
         "深度研究",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -7932,6 +8982,9 @@
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7948,6 +9001,9 @@
       "category": "data_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -7977,6 +9033,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8016,6 +9075,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8054,6 +9116,9 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8077,6 +9142,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8100,6 +9168,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8122,6 +9193,9 @@
       "category": "knowledge_base",
       "use_cases": [
         "知识库"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -8138,6 +9212,9 @@
       "category": "literature",
       "use_cases": [
         "学术文献"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8169,6 +9246,10 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "knowledge_base"
       ]
     },
     {
@@ -8201,6 +9282,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8219,6 +9303,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8235,6 +9322,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8273,6 +9363,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8299,6 +9392,10 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -8327,6 +9424,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8349,6 +9449,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8379,6 +9482,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8396,6 +9502,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8414,6 +9523,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8430,6 +9542,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8451,6 +9566,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8467,6 +9585,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8483,6 +9604,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8502,6 +9626,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8540,6 +9667,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -8566,6 +9696,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8582,6 +9715,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8599,6 +9735,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8624,6 +9763,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -8644,6 +9786,9 @@
         "资源列表",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8660,6 +9805,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8677,6 +9825,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -8694,6 +9845,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -8722,6 +9876,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8757,6 +9914,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8784,6 +9944,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -8801,6 +9964,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8824,6 +9990,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8840,6 +10009,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8856,6 +10028,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8877,6 +10052,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8895,6 +10073,9 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8916,6 +10097,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8933,6 +10117,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -8954,6 +10141,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8977,6 +10167,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8993,6 +10186,9 @@
       "category": "general",
       "use_cases": [
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9009,6 +10205,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9029,6 +10228,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9047,6 +10249,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9063,6 +10268,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9079,6 +10287,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9095,6 +10306,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9112,6 +10326,10 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -9147,6 +10365,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9163,6 +10384,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9186,6 +10410,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9228,6 +10455,11 @@
         "自主代理",
         "代码研究",
         "竞争分析"
+      ],
+      "categories": [
+        "web_research",
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -9251,6 +10483,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9268,6 +10503,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9301,6 +10539,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9317,6 +10558,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9333,6 +10577,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9349,6 +10596,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9371,6 +10621,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9388,6 +10641,9 @@
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9404,6 +10660,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9421,6 +10680,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9442,6 +10704,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9471,6 +10736,9 @@
         "深度研究",
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9488,6 +10756,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9505,6 +10776,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9521,6 +10795,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9538,6 +10815,9 @@
       "use_cases": [
         "学术文献",
         "AI 训练"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9556,6 +10836,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -9573,6 +10856,9 @@
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9589,6 +10875,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9619,6 +10908,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9637,6 +10929,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -9666,6 +10961,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -9683,6 +10981,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9700,6 +11001,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -9720,6 +11024,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9737,6 +11044,9 @@
       "use_cases": [
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9765,6 +11075,10 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "web_research",
+        "data_research"
       ]
     },
     {
@@ -9781,6 +11095,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9798,6 +11115,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9817,6 +11137,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9833,6 +11156,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9855,6 +11181,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9871,6 +11200,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9887,6 +11219,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9919,6 +11254,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9939,6 +11277,10 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -9955,6 +11297,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -9972,6 +11317,9 @@
       "use_cases": [
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9988,6 +11336,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10005,6 +11356,9 @@
       "use_cases": [
         "深度研究",
         "AI 训练"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10021,6 +11375,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10038,6 +11395,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10054,6 +11414,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10070,6 +11433,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10088,6 +11454,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10104,6 +11473,9 @@
       "category": "web_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -10136,6 +11508,9 @@
         "知识库",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10152,6 +11527,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10170,6 +11548,9 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -10187,6 +11568,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10205,6 +11589,10 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -10233,6 +11621,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -10249,6 +11640,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10279,6 +11673,11 @@
         "金融数据",
         "知识库",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "data_research",
+        "knowledge_base"
       ]
     },
     {
@@ -10295,6 +11694,11 @@
       "category": "deep_research",
       "use_cases": [
         "网页搜索"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research",
+        "data_research"
       ]
     },
     {
@@ -10311,6 +11715,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10334,6 +11741,9 @@
         "自主代理",
         "AI 训练",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10350,6 +11760,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10367,6 +11780,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10396,6 +11812,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -10430,6 +11849,10 @@
         "深度研究",
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -10449,6 +11872,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -10470,6 +11896,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10508,6 +11937,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10533,6 +11965,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -10560,6 +11995,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10583,6 +12021,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -10604,6 +12045,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10620,6 +12064,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10645,6 +12092,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10675,6 +12125,9 @@
         "自主代理",
         "资源列表",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10709,6 +12162,9 @@
         "深度研究",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10725,6 +12181,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10741,6 +12200,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10759,6 +12221,10 @@
         "网页搜索",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -10781,6 +12247,9 @@
       "category": "general",
       "use_cases": [
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10797,6 +12266,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10836,6 +12308,10 @@
         "网页搜索",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -10874,6 +12350,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10890,6 +12369,9 @@
       "category": "general",
       "use_cases": [
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10913,6 +12395,9 @@
         "自主代理",
         "AI 训练",
         "竞争分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10931,6 +12416,10 @@
         "深度研究",
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -10948,6 +12437,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -10978,6 +12470,11 @@
         "网页搜索",
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research",
+        "literature"
       ]
     },
     {
@@ -11008,6 +12505,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11040,6 +12540,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11071,6 +12574,9 @@
       "use_cases": [
         "金融数据",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11090,6 +12596,9 @@
         "自主代理",
         "实验自动化",
         "AI 训练"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -11106,6 +12615,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11122,6 +12634,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11139,6 +12654,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11165,6 +12683,9 @@
         "学术文献",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11197,6 +12718,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11221,6 +12745,11 @@
         "AI 训练",
         "代码研究",
         "睡眠/后台"
+      ],
+      "categories": [
+        "literature",
+        "data_research",
+        "knowledge_base"
       ]
     },
     {
@@ -11260,6 +12789,10 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -11286,6 +12819,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11316,6 +12852,9 @@
       "use_cases": [
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11332,6 +12871,9 @@
       "category": "general",
       "use_cases": [
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11358,6 +12900,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11380,6 +12925,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11396,6 +12944,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11412,6 +12963,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11430,6 +12984,9 @@
         "金融数据",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -11448,6 +13005,9 @@
         "学术文献",
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11465,6 +13025,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11492,6 +13055,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11521,6 +13087,9 @@
         "自主代理",
         "资源列表",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11545,6 +13114,9 @@
       "category": "literature",
       "use_cases": [
         "学术文献"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11561,6 +13133,9 @@
       "category": "deep_research",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -11588,6 +13163,10 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "knowledge_base"
       ]
     },
     {
@@ -11606,6 +13185,9 @@
         "网页搜索",
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -11622,6 +13204,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11638,6 +13223,9 @@
       "category": "deep_research",
       "use_cases": [
         "深度研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -11654,6 +13242,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11677,6 +13268,10 @@
         "学术文献",
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "literature",
+        "data_research"
       ]
     },
     {
@@ -11694,6 +13289,9 @@
       "use_cases": [
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11720,6 +13318,9 @@
       "use_cases": [
         "网页搜索",
         "自主代理"
+      ],
+      "categories": [
+        "web_research"
       ]
     },
     {
@@ -11736,6 +13337,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11752,6 +13356,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -11769,6 +13376,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -11796,6 +13406,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -11820,6 +13433,9 @@
         "自主代理",
         "资源列表",
         "竞争分析"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11836,6 +13452,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11861,6 +13480,9 @@
         "学术文献",
         "资源列表",
         "AI 训练"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11884,6 +13506,10 @@
       "use_cases": [
         "深度研究",
         "网页搜索"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -11901,6 +13527,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -11918,6 +13547,9 @@
       "use_cases": [
         "学术文献",
         "实验自动化"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -11944,6 +13576,9 @@
         "金融数据",
         "自主代理",
         "AI 训练"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -11960,6 +13595,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11977,6 +13615,9 @@
       "use_cases": [
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11999,6 +13640,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12016,6 +13660,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -12040,6 +13687,9 @@
       "use_cases": [
         "知识库",
         "自主代理"
+      ],
+      "categories": [
+        "knowledge_base"
       ]
     },
     {
@@ -12069,6 +13719,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12088,6 +13741,9 @@
         "自主代理",
         "实验自动化",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -12111,6 +13767,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -12127,6 +13786,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -12143,6 +13805,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12170,6 +13835,9 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -12188,6 +13856,9 @@
         "自主代理",
         "实验自动化",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12205,6 +13876,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12228,6 +13902,9 @@
         "学术文献",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -12267,6 +13944,9 @@
         "知识库",
         "自主代理",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12302,6 +13982,9 @@
         "自主代理",
         "资源列表",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12340,6 +14023,10 @@
       "use_cases": [
         "深度研究",
         "自主代理"
+      ],
+      "categories": [
+        "deep_research",
+        "web_research"
       ]
     },
     {
@@ -12366,6 +14053,9 @@
       "use_cases": [
         "学术文献",
         "资源列表"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -12393,6 +14083,9 @@
       "use_cases": [
         "自主代理",
         "代码研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12429,6 +14122,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12447,6 +14143,9 @@
         "学术文献",
         "自主代理",
         "睡眠/后台"
+      ],
+      "categories": [
+        "literature"
       ]
     },
     {
@@ -12463,6 +14162,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12479,6 +14181,9 @@
       "category": "deep_research",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "deep_research"
       ]
     },
     {
@@ -12502,6 +14207,9 @@
       "use_cases": [
         "金融数据",
         "自主代理"
+      ],
+      "categories": [
+        "data_research"
       ]
     },
     {
@@ -12529,6 +14237,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12552,6 +14263,10 @@
         "学术文献",
         "自主代理",
         "竞争分析"
+      ],
+      "categories": [
+        "deep_research",
+        "literature"
       ]
     },
     {
@@ -12569,6 +14284,9 @@
       "use_cases": [
         "自主代理",
         "实验自动化"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12588,6 +14306,9 @@
       "category": "general",
       "use_cases": [
         "通用研究"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12604,6 +14325,9 @@
       "category": "general",
       "use_cases": [
         "自主代理"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12639,6 +14363,10 @@
         "网页搜索",
         "学术文献",
         "自主代理"
+      ],
+      "categories": [
+        "web_research",
+        "literature"
       ]
     }
   ]

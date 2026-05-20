@@ -80,11 +80,12 @@ CAT_META = {
 }
 
 CAT_RULES = [
-    ("official",   r"official|anthropic|reference"),
-    ("database",   r"database|postgres|mysql|sqlite|redis|mongo"),
-    ("filesystem", r"filesystem|file.?system"),
-    ("web",        r"browser|web.search|scraping|playwright"),
-    ("dev_tools",  r"github|docker|git|terminal|code|develop"),
+    ("official",     r"official|anthropic|reference"),
+    ("database",     r"database|postgres|mysql|sqlite|redis|mongo"),
+    ("filesystem",   r"filesystem|file.?system"),
+    ("web",          r"browser|web.search|scraping|playwright"),
+    ("dev_tools",    r"github|docker|git|terminal|code|develop"),
+    ("productivity", r"calendar|email|notion|slack|jira|trello|todo|task|meeting|linear|asana"),
 ]
 
 def analyze_use_cases(repo):
@@ -92,13 +93,13 @@ def analyze_use_cases(repo):
     found = [label for label, pat in USE_CASE_RULES if re.search(pat, text)]
     return found or ["通用MCP"]
 
-def assign_category(repo, hint):
+def assign_categories(repo, hint):
     text = " ".join([repo.get("full_name",""), repo.get("description","") or "", " ".join(repo.get("topics",[]))]).lower()
-    for cat, pat in CAT_RULES:
-        if re.search(pat, text): return cat
-    return hint
+    matched = [cat for cat, pat in CAT_RULES if re.search(pat, text)]
+    return matched if matched else [hint]
 
 def normalize(raw, hint):
+    cats = assign_categories(raw, hint)
     return {
         "id":          raw["id"],
         "full_name":   raw["full_name"],
@@ -110,7 +111,8 @@ def normalize(raw, hint):
         "url":         raw["html_url"],
         "created_at":  raw["created_at"],
         "updated_at":  raw["updated_at"],
-        "category":    assign_category(raw, hint),
+        "category":    cats[0],
+        "categories":  cats,
         "use_cases":   analyze_use_cases(raw),
     }
 
@@ -165,7 +167,8 @@ def main():
 
     cat_counts = {k: 0 for k in CAT_META}
     for r in repos:
-        cat_counts[r["category"]] = cat_counts.get(r["category"], 0) + 1
+        for cat in r.get("categories", [r["category"]]):
+            cat_counts[cat] = cat_counts.get(cat, 0) + 1
     categories_meta = {k: {**v, "count": cat_counts.get(k,0)} for k,v in CAT_META.items()}
 
     uc_dist = {}
@@ -200,7 +203,7 @@ def main():
     version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
     with open(_INDEX_HTML, "r", encoding="utf-8") as f:
         html = f.read()
-    html = re.sub(r'data/mcp_data.js?v=\d+', f'mcp_data.js?v={version}', html)
+    html = re.sub(r'data/mcp_data\.js\?v=\d+', f'data/mcp_data.js?v={version}', html)
     with open(_INDEX_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"✅ index.html 版本号更新为 {version}")

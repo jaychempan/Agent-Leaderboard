@@ -1076,6 +1076,7 @@ button, select, input { font: inherit; }
   .card-desc { font-size: 12px; -webkit-line-clamp: 2; }
   .card-footer { flex-direction: column; gap: 6px; align-items: flex-start; }
   .card-meta { flex-wrap: wrap; gap: 4px; }
+  .fork-info { flex-basis: 100%; justify-content: flex-end; margin-left: 0; }
 
   /* List view: horizontal scroll */
   .list-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }

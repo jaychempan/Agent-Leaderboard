@@ -16,25 +16,25 @@
       "label": "系统提示",
       "icon": "⚙️",
       "color": "#10b981",
-      "count": 71
+      "count": 85
     },
     "engineering": {
       "label": "提示工程",
       "icon": "🔧",
       "color": "#a78bfa",
-      "count": 228
+      "count": 315
     },
     "coding": {
       "label": "代码生成",
       "icon": "💻",
       "color": "#22d3ee",
-      "count": 160
+      "count": 309
     },
     "writing": {
       "label": "写作助手",
       "icon": "✍️",
       "color": "#f59e0b",
-      "count": 20
+      "count": 57
     },
     "general": {
       "label": "通用提示",
@@ -90,6 +90,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -128,6 +132,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -158,6 +166,9 @@
         "提示工程",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -180,6 +191,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -209,6 +223,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -231,6 +248,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -269,6 +289,11 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -285,6 +310,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -301,6 +329,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -322,6 +353,9 @@
       "category": "general",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -349,6 +383,10 @@
       "category": "engineering",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -386,6 +424,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -423,6 +464,10 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -444,6 +489,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -478,6 +526,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -513,6 +564,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -540,6 +594,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -574,6 +631,9 @@
       "category": "general",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -601,6 +661,9 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -622,6 +685,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -656,6 +722,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -672,6 +741,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -699,6 +771,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -720,6 +795,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -742,6 +820,10 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -769,6 +851,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -806,6 +891,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -841,6 +930,10 @@
         "资源列表",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -872,6 +965,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -895,6 +991,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -916,6 +1015,11 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "engineering"
       ]
     },
     {
@@ -932,6 +1036,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -954,6 +1061,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -975,6 +1085,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -1004,6 +1118,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1024,6 +1141,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1052,6 +1172,10 @@
         "写作助手",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -1068,6 +1192,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1084,6 +1211,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1121,6 +1251,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -1146,6 +1279,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1180,6 +1316,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1196,6 +1335,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1226,6 +1368,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1254,6 +1399,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1270,6 +1418,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1300,6 +1451,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -1332,6 +1487,10 @@
         "提示工程",
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -1355,6 +1514,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1388,6 +1550,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -1409,6 +1575,10 @@
       "category": "engineering",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -1446,6 +1616,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1474,6 +1647,10 @@
         "提示工程",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -1503,6 +1680,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1533,6 +1713,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -1567,6 +1751,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1583,6 +1770,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1599,6 +1789,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1623,6 +1816,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1644,6 +1840,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1660,6 +1859,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1683,6 +1885,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1705,6 +1910,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1727,6 +1935,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1762,6 +1973,10 @@
         "资源列表",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -1788,6 +2003,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1804,6 +2022,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1841,6 +2062,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -1867,6 +2091,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1905,6 +2132,10 @@
         "提示工程",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -1924,6 +2155,12 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -1940,6 +2177,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -1969,6 +2209,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -1997,6 +2240,11 @@
         "代码生成",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -2020,6 +2268,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2036,6 +2287,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2058,6 +2312,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2079,6 +2336,9 @@
       "use_cases": [
         "提示工程",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -2108,6 +2368,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2141,6 +2404,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -2158,6 +2424,10 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -2178,6 +2448,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -2204,6 +2477,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -2238,6 +2514,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2260,6 +2539,9 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -2295,6 +2577,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -2317,6 +2602,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2348,6 +2636,11 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -2374,6 +2667,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2414,6 +2710,9 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -2430,6 +2729,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -2462,6 +2764,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -2489,6 +2794,9 @@
       "use_cases": [
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2513,6 +2821,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2548,6 +2859,11 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "engineering"
       ]
     },
     {
@@ -2580,6 +2896,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -2596,6 +2915,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2620,6 +2942,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2641,6 +2966,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2665,6 +2993,10 @@
         "提示工程",
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -2681,6 +3013,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2706,6 +3041,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2722,6 +3060,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2749,6 +3090,10 @@
       "use_cases": [
         "写作助手",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -2774,6 +3119,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2801,6 +3149,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2817,6 +3168,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2833,6 +3187,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2849,6 +3206,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -2876,6 +3236,10 @@
       "use_cases": [
         "写作助手",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -2913,6 +3277,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -2929,6 +3297,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -2955,6 +3326,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -2992,6 +3367,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3019,6 +3397,10 @@
         "提示工程",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -3040,6 +3422,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3056,6 +3441,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -3084,6 +3473,10 @@
         "代码生成",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -3104,6 +3497,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3129,6 +3525,10 @@
         "代码生成",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -3145,6 +3545,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3165,6 +3568,9 @@
       "category": "engineering",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3184,6 +3590,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3208,6 +3617,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3234,6 +3646,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3264,6 +3679,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3291,6 +3709,10 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -3316,6 +3738,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3337,6 +3762,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3353,6 +3781,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3371,6 +3802,9 @@
         "代码生成",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3399,6 +3833,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3415,6 +3852,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3431,6 +3871,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3447,6 +3890,9 @@
       "category": "general",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3471,6 +3917,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3494,6 +3943,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3525,6 +3977,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3541,6 +3996,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3566,6 +4024,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3590,6 +4051,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3606,6 +4070,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3632,6 +4099,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3669,6 +4139,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3706,6 +4179,9 @@
       "use_cases": [
         "资源列表",
         "角色扮演"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -3742,6 +4218,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3765,6 +4244,11 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -3788,6 +4272,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -3823,6 +4310,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3847,6 +4337,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3863,6 +4356,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -3897,6 +4393,10 @@
         "提示工程",
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -3917,6 +4417,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -3933,6 +4436,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -3949,6 +4455,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -3972,6 +4481,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4001,6 +4514,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4018,6 +4534,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4054,6 +4573,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4088,6 +4610,10 @@
         "提示工程",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4104,6 +4630,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4125,6 +4654,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -4161,6 +4693,9 @@
         "资源列表",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -4188,6 +4723,10 @@
         "代码生成",
         "资源列表",
         "角色扮演"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -4209,6 +4748,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -4229,6 +4771,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4251,6 +4796,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -4267,6 +4815,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4283,6 +4834,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4320,6 +4874,9 @@
       "use_cases": [
         "提示工程",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -4344,6 +4901,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -4362,6 +4923,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -4384,6 +4948,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4414,6 +4981,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4437,6 +5007,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4476,6 +5049,10 @@
         "代码生成",
         "系统提示",
         "角色扮演"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -4515,6 +5092,10 @@
         "资源列表",
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4551,6 +5132,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4573,6 +5157,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -4589,6 +5176,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4611,6 +5201,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4634,6 +5227,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4671,6 +5267,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4688,6 +5287,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -4704,6 +5307,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4720,6 +5326,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4742,6 +5351,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4758,6 +5370,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -4778,6 +5393,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4794,6 +5412,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4815,6 +5436,10 @@
         "资源列表",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4831,6 +5456,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4854,6 +5482,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4870,6 +5502,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4886,6 +5521,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4913,6 +5551,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -4935,6 +5577,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -4956,6 +5601,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -4972,6 +5620,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -4988,6 +5639,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5004,6 +5658,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5020,6 +5677,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5036,6 +5696,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5052,6 +5715,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5084,6 +5750,11 @@
         "写作助手",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -5122,6 +5793,10 @@
         "提示工程",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -5150,6 +5825,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5187,6 +5865,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5211,6 +5892,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5227,6 +5911,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5255,6 +5942,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5271,6 +5961,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5294,6 +5987,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5315,6 +6011,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -5331,6 +6030,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5353,6 +6055,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -5389,6 +6095,9 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -5411,6 +6120,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5434,6 +6146,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5455,6 +6170,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5476,6 +6194,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5492,6 +6213,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5513,6 +6237,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -5531,6 +6258,9 @@
         "代码生成",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5547,6 +6277,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5574,6 +6307,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5590,6 +6326,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5627,6 +6366,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5643,6 +6385,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -5664,6 +6409,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5680,6 +6428,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5696,6 +6447,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -5716,6 +6470,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5747,6 +6504,9 @@
         "提示工程",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5771,6 +6531,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5787,6 +6550,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5810,6 +6576,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5831,6 +6600,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -5859,6 +6631,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5881,6 +6656,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -5902,6 +6680,11 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "coding"
       ]
     },
     {
@@ -5918,6 +6701,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5934,6 +6720,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5971,6 +6760,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -5990,6 +6782,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6015,6 +6811,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -6031,6 +6830,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6055,6 +6857,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6071,6 +6876,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6094,6 +6902,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6120,6 +6931,9 @@
       "use_cases": [
         "系统提示",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -6149,6 +6963,10 @@
         "代码生成",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6165,6 +6983,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6193,6 +7014,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6213,6 +7037,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6237,6 +7064,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6259,6 +7090,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -6276,6 +7110,10 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -6304,6 +7142,10 @@
       "use_cases": [
         "资源列表",
         "角色扮演"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -6326,6 +7168,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6343,6 +7188,10 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6381,6 +7230,9 @@
         "资源列表",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6402,6 +7254,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6423,6 +7278,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6460,6 +7318,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6476,6 +7337,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -6497,6 +7361,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6514,6 +7381,9 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -6530,6 +7400,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6546,6 +7419,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6566,6 +7443,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6582,6 +7462,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6610,6 +7493,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -6640,6 +7526,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6672,6 +7561,11 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -6700,6 +7594,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -6716,6 +7613,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -6732,6 +7632,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -6755,6 +7658,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -6790,6 +7696,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6806,6 +7715,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6828,6 +7740,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6853,6 +7768,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -6871,6 +7789,9 @@
         "系统提示",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6899,6 +7820,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6924,6 +7848,9 @@
       "use_cases": [
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -6962,6 +7889,9 @@
         "提示工程",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -6992,6 +7922,10 @@
         "写作助手",
         "学术写作",
         "数据分析"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -7008,6 +7942,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7024,6 +7961,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7040,6 +7980,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7056,6 +7999,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7082,6 +8028,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -7098,6 +8047,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7114,6 +8066,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7142,6 +8097,9 @@
         "学术写作",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -7163,6 +8121,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7194,6 +8155,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7210,6 +8174,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -7228,6 +8195,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7260,6 +8230,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7280,6 +8253,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7300,6 +8276,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7320,6 +8299,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -7336,6 +8319,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7370,6 +8356,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -7386,6 +8375,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7402,6 +8394,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7425,6 +8420,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7441,6 +8439,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7464,6 +8465,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7480,6 +8484,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7496,6 +8503,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7519,6 +8529,10 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -7535,6 +8549,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7569,6 +8586,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7589,6 +8609,9 @@
       "category": "general",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7605,6 +8628,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7641,6 +8667,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7657,6 +8686,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7678,6 +8710,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7701,6 +8736,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -7717,6 +8755,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7737,6 +8778,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7757,6 +8801,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7773,6 +8820,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7793,6 +8843,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7818,6 +8871,10 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -7849,6 +8906,9 @@
       "category": "engineering",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -7873,6 +8933,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7894,6 +8957,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7924,6 +8990,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -7940,6 +9009,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7956,6 +9028,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7972,6 +9047,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -7988,6 +9066,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8011,6 +9092,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -8028,6 +9112,9 @@
       "use_cases": [
         "写作助手",
         "学术写作"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -8055,6 +9142,9 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -8072,6 +9162,9 @@
       "use_cases": [
         "提示工程",
         "数据分析"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8093,6 +9186,9 @@
         "提示工程",
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8109,6 +9205,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8132,6 +9231,9 @@
       "category": "engineering",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8148,6 +9250,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8169,6 +9274,9 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8190,6 +9298,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -8206,6 +9317,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -8222,6 +9336,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8261,6 +9378,9 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -8287,6 +9407,9 @@
         "系统提示",
         "资源列表",
         "数据分析"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -8312,6 +9435,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -8328,6 +9454,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8344,6 +9473,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8378,6 +9510,9 @@
       "use_cases": [
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8394,6 +9529,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8410,6 +9548,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8445,6 +9586,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8465,6 +9609,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8481,6 +9628,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8506,6 +9656,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -8523,6 +9677,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -8539,6 +9697,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8576,6 +9737,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8609,6 +9773,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -8625,6 +9792,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8663,6 +9833,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -8686,6 +9860,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8723,6 +9900,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8751,6 +9931,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -8767,6 +9951,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8797,6 +9984,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -8813,6 +10004,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8834,6 +10028,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8850,6 +10047,9 @@
       "category": "engineering",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8866,6 +10066,9 @@
       "category": "engineering",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -8883,6 +10086,10 @@
       "use_cases": [
         "提示工程",
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -8909,6 +10116,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -8937,6 +10147,11 @@
         "提示工程",
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -8958,6 +10173,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -8974,6 +10192,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -8994,6 +10215,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9011,6 +10235,9 @@
       "use_cases": [
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9043,6 +10270,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9059,6 +10289,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9091,6 +10324,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9115,6 +10351,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9131,6 +10370,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9151,6 +10393,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9167,6 +10412,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9193,6 +10441,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9209,6 +10460,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9225,6 +10479,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9241,6 +10498,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9257,6 +10517,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9273,6 +10536,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9295,6 +10561,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9322,6 +10591,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -9359,6 +10632,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9375,6 +10651,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9391,6 +10670,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -9413,6 +10695,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9438,6 +10723,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -9459,6 +10748,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9475,6 +10767,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9491,6 +10786,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9507,6 +10805,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9523,6 +10824,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9539,6 +10843,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9561,6 +10868,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9577,6 +10887,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9599,6 +10912,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9615,6 +10931,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9647,6 +10966,9 @@
         "写作助手",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9663,6 +10985,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9682,6 +11007,9 @@
         "角色扮演",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9698,6 +11026,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9714,6 +11045,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9742,6 +11076,9 @@
       "use_cases": [
         "角色扮演",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9769,6 +11106,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -9785,6 +11126,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9805,6 +11149,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9841,6 +11188,9 @@
       "use_cases": [
         "写作助手",
         "数据分析"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -9869,6 +11219,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -9894,6 +11248,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9917,6 +11274,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9933,6 +11293,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -9949,6 +11312,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -9965,6 +11331,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -9981,6 +11350,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10018,6 +11390,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -10054,6 +11429,9 @@
       "use_cases": [
         "提示工程",
         "系统提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10070,6 +11448,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10087,6 +11468,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -10103,6 +11488,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -10119,6 +11507,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10139,6 +11530,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10155,6 +11549,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10178,6 +11575,9 @@
       "use_cases": [
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10208,6 +11608,11 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -10224,6 +11629,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -10240,6 +11648,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10263,6 +11674,10 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -10279,6 +11694,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -10311,6 +11729,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10332,6 +11753,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -10351,6 +11775,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10373,6 +11800,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -10389,6 +11820,9 @@
       "category": "general",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10415,6 +11849,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10452,6 +11889,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -10484,6 +11924,9 @@
         "学术写作",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10500,6 +11943,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10519,6 +11965,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -10535,6 +11984,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10551,6 +12003,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10574,6 +12029,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10598,6 +12056,10 @@
         "资源列表",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -10615,6 +12077,9 @@
       "use_cases": [
         "系统提示",
         "多语言"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -10632,6 +12097,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -10657,6 +12125,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10677,6 +12148,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10697,6 +12171,10 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -10713,6 +12191,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10740,6 +12221,9 @@
       "use_cases": [
         "系统提示",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10756,6 +12240,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10779,6 +12266,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10804,6 +12294,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10820,6 +12313,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10856,6 +12352,9 @@
       "use_cases": [
         "系统提示",
         "数据分析"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -10872,6 +12371,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10912,6 +12414,11 @@
         "写作助手",
         "系统提示",
         "角色扮演"
+      ],
+      "categories": [
+        "system",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -10936,6 +12443,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -10954,6 +12464,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -10979,6 +12492,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -11001,6 +12518,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11024,6 +12544,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11044,6 +12567,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11060,6 +12586,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11077,6 +12606,9 @@
       "use_cases": [
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11100,6 +12632,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11135,6 +12670,10 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -11151,6 +12690,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -11170,6 +12712,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11187,6 +12732,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -11203,6 +12752,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -11222,6 +12774,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11247,6 +12802,11 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -11264,6 +12824,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11299,6 +12862,9 @@
       "category": "coding",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11322,6 +12888,9 @@
       "use_cases": [
         "学术写作",
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11339,6 +12908,9 @@
       "use_cases": [
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -11355,6 +12927,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11379,6 +12954,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11402,6 +12980,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11418,6 +12999,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11434,6 +13018,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11450,6 +13037,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -11466,6 +13056,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11482,6 +13075,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11498,6 +13094,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11537,6 +13136,11 @@
         "代码生成",
         "写作助手",
         "角色扮演"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -11565,6 +13169,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -11581,6 +13188,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -11606,6 +13217,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -11622,6 +13237,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11639,6 +13257,10 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -11667,6 +13289,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -11695,6 +13320,9 @@
         "资源列表",
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -11723,6 +13351,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11739,6 +13370,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11755,6 +13389,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11771,6 +13408,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11800,6 +13440,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -11826,6 +13469,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -11842,6 +13489,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11865,6 +13515,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -11887,6 +13541,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -11903,6 +13560,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11919,6 +13579,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -11937,6 +13600,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -11953,6 +13619,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -11991,6 +13660,10 @@
         "写作助手",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -12007,6 +13680,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12027,6 +13703,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12043,6 +13722,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12059,6 +13741,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12075,6 +13760,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12113,6 +13801,9 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12142,6 +13833,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -12159,6 +13854,9 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12180,6 +13878,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12199,6 +13900,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12231,6 +13935,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12247,6 +13954,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12263,6 +13973,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12287,6 +14000,9 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12320,6 +14036,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12338,6 +14057,10 @@
         "代码生成",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -12354,6 +14077,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12380,6 +14106,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12396,6 +14125,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12412,6 +14144,9 @@
       "category": "general",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12436,6 +14171,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12452,6 +14190,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12473,6 +14214,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12489,6 +14233,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12506,6 +14253,9 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12522,6 +14272,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12544,6 +14297,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -12578,6 +14335,9 @@
         "资源列表",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12594,6 +14354,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12610,6 +14373,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12632,6 +14398,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12648,6 +14417,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12668,6 +14440,9 @@
       "category": "general",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12684,6 +14459,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -12700,6 +14478,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12716,6 +14497,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12732,6 +14516,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12748,6 +14535,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12764,6 +14554,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12781,6 +14574,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -12797,6 +14593,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12813,6 +14612,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12837,6 +14639,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -12860,6 +14666,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -12876,6 +14685,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12892,6 +14704,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12916,6 +14731,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12934,6 +14752,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -12951,6 +14772,9 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -12973,6 +14797,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -12996,6 +14823,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -13012,6 +14842,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13052,6 +14885,10 @@
         "角色扮演",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -13068,6 +14905,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13090,6 +14930,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13106,6 +14949,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13122,6 +14968,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13138,6 +14987,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13154,6 +15006,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13171,6 +15026,10 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -13202,6 +15061,10 @@
         "代码生成",
         "写作助手",
         "学术写作"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -13235,6 +15098,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -13257,6 +15124,12 @@
         "数据分析",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -13284,6 +15157,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -13300,6 +15176,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13316,6 +15195,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -13332,6 +15214,10 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -13361,6 +15247,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13399,6 +15288,9 @@
         "学术写作",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -13415,6 +15307,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13452,6 +15347,10 @@
       "category": "engineering",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -13474,6 +15373,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -13497,6 +15400,9 @@
         "代码生成",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -13513,6 +15419,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13531,6 +15440,10 @@
         "代码生成",
         "系统提示",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -13560,6 +15473,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -13596,6 +15512,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -13620,6 +15540,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13646,6 +15569,10 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -13662,6 +15589,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -13678,6 +15608,10 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -13698,6 +15632,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -13714,6 +15651,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13734,6 +15674,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13751,6 +15694,9 @@
       "use_cases": [
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13767,6 +15713,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13800,6 +15749,10 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -13827,6 +15780,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -13844,6 +15801,9 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -13863,6 +15823,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -13879,6 +15842,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13914,6 +15880,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -13934,6 +15904,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -13950,6 +15923,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -13972,6 +15948,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -13988,6 +15968,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14006,6 +15989,9 @@
         "写作助手",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -14024,6 +16010,10 @@
         "代码生成",
         "写作助手",
         "数据分析"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -14041,6 +16031,9 @@
       "use_cases": [
         "写作助手",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14060,6 +16053,9 @@
         "代码生成",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14083,6 +16079,9 @@
       "category": "general",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14114,6 +16113,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -14136,6 +16138,10 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -14155,6 +16161,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14171,6 +16180,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14204,6 +16216,11 @@
         "写作助手",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -14220,6 +16237,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14239,6 +16259,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14255,6 +16278,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14271,6 +16297,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14295,6 +16324,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14311,6 +16343,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14334,6 +16369,9 @@
       "category": "coding",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14359,6 +16397,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14384,6 +16425,10 @@
         "资源列表",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -14401,6 +16446,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14418,6 +16466,9 @@
       "use_cases": [
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14450,6 +16501,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14475,6 +16529,10 @@
         "代码生成",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -14491,6 +16549,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14515,6 +16576,12 @@
         "数据分析",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -14552,6 +16619,9 @@
       "category": "system",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -14568,6 +16638,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14584,6 +16657,10 @@
       "category": "coding",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -14600,6 +16677,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14616,6 +16696,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14653,6 +16736,12 @@
         "写作助手",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -14687,6 +16776,9 @@
       "use_cases": [
         "写作助手",
         "数据分析"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -14703,6 +16795,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14719,6 +16814,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14735,6 +16833,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14751,6 +16852,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -14767,6 +16871,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -14783,6 +16890,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14812,6 +16922,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -14830,6 +16943,9 @@
         "代码生成",
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14846,6 +16962,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14862,6 +16981,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -14900,6 +17022,9 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14916,6 +17041,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -14932,6 +17060,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -14955,6 +17086,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -14971,6 +17105,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -14992,6 +17129,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -15026,6 +17166,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15057,6 +17200,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -15073,6 +17219,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15089,6 +17238,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15105,6 +17257,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15121,6 +17276,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15137,6 +17295,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15157,6 +17318,9 @@
       "category": "general",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15189,6 +17353,9 @@
       "use_cases": [
         "提示工程",
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15205,6 +17372,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15228,6 +17398,11 @@
         "写作助手",
         "系统提示",
         "多语言"
+      ],
+      "categories": [
+        "system",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -15244,6 +17419,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15266,6 +17444,10 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -15282,6 +17464,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15320,6 +17505,10 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -15336,6 +17525,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15372,6 +17564,10 @@
         "系统提示",
         "资源列表",
         "数据分析"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -15389,6 +17585,9 @@
       "use_cases": [
         "写作助手",
         "图像生成"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -15405,6 +17604,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -15421,6 +17623,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15445,6 +17650,9 @@
       "use_cases": [
         "系统提示",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15482,6 +17690,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15514,6 +17725,10 @@
         "资源列表",
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -15530,6 +17745,9 @@
       "category": "coding",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -15550,6 +17768,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15579,6 +17800,11 @@
         "代码生成",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -15595,6 +17821,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15615,6 +17844,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15637,6 +17869,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15658,6 +17893,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15674,6 +17912,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15690,6 +17931,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15706,6 +17950,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15736,6 +17983,11 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "coding"
       ]
     },
     {
@@ -15752,6 +18004,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15773,6 +18028,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -15796,6 +18055,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15816,6 +18078,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15832,6 +18097,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15849,6 +18117,9 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -15865,6 +18136,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15886,6 +18160,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15917,6 +18194,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -15946,6 +18226,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -15984,6 +18267,10 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -16000,6 +18287,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16016,6 +18306,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -16032,6 +18325,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16048,6 +18344,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16064,6 +18363,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16080,6 +18382,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16096,6 +18401,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16122,6 +18430,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16154,6 +18465,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -16171,6 +18486,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -16187,6 +18505,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16203,6 +18524,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16231,6 +18555,10 @@
       "use_cases": [
         "写作助手",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -16254,6 +18582,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -16277,6 +18608,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16306,6 +18640,11 @@
         "代码生成",
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -16340,6 +18679,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16356,6 +18698,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16372,6 +18717,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16388,6 +18736,9 @@
       "category": "general",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16404,6 +18755,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16440,6 +18794,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16456,6 +18813,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -16476,6 +18836,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -16492,6 +18855,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16515,6 +18881,12 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -16531,6 +18903,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16555,6 +18930,9 @@
       "use_cases": [
         "提示工程",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16571,6 +18949,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16601,6 +18982,10 @@
         "资源列表",
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -16617,6 +19002,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -16655,6 +19043,10 @@
         "提示工程",
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -16671,6 +19063,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16687,6 +19082,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16704,6 +19102,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16726,6 +19127,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16742,6 +19146,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16760,6 +19167,9 @@
         "代码生成",
         "学术写作",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16792,6 +19202,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16820,6 +19233,10 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -16837,6 +19254,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -16860,6 +19280,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -16884,6 +19308,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -16901,6 +19328,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16917,6 +19347,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16933,6 +19366,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -16958,6 +19394,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -16974,6 +19413,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -17000,6 +19443,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17017,6 +19463,9 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17037,6 +19486,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17062,6 +19514,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17078,6 +19533,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17104,6 +19562,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17125,6 +19586,9 @@
       "category": "engineering",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -17151,6 +19615,10 @@
         "提示工程",
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -17167,6 +19635,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17187,6 +19658,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -17207,6 +19682,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17223,6 +19701,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17239,6 +19720,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17255,6 +19739,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17282,6 +19769,11 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -17298,6 +19790,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -17324,6 +19819,10 @@
       "use_cases": [
         "系统提示",
         "学术写作"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -17340,6 +19839,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17369,6 +19871,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -17385,6 +19890,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17402,6 +19910,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -17430,6 +19941,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -17447,6 +19962,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -17463,6 +19982,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17482,6 +20004,11 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -17498,6 +20025,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17514,6 +20044,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -17531,6 +20064,10 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -17561,6 +20098,10 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -17585,6 +20126,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -17601,6 +20145,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17618,6 +20165,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17638,6 +20188,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17666,6 +20219,12 @@
         "写作助手",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -17696,6 +20255,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17713,6 +20275,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -17729,6 +20295,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -17749,6 +20318,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17770,6 +20342,12 @@
         "资源列表",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -17787,6 +20365,10 @@
       "use_cases": [
         "资源列表",
         "角色扮演"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -17806,6 +20388,10 @@
         "资源列表",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -17825,6 +20411,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17846,6 +20435,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -17862,6 +20455,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17896,6 +20492,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17912,6 +20511,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -17928,6 +20530,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -17958,6 +20563,9 @@
       "use_cases": [
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -17984,6 +20592,10 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -18013,6 +20625,9 @@
       "category": "engineering",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18030,6 +20645,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -18046,6 +20664,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18072,6 +20693,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -18102,6 +20727,10 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -18122,6 +20751,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18138,6 +20770,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18154,6 +20789,10 @@
       "category": "collection",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -18170,6 +20809,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -18193,6 +20836,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -18220,6 +20866,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -18236,6 +20885,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18262,6 +20914,10 @@
         "系统提示",
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "system",
+        "writing"
       ]
     },
     {
@@ -18295,6 +20951,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -18312,6 +20972,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -18328,6 +20991,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -18352,6 +21018,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18369,6 +21038,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -18385,6 +21058,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18414,6 +21090,12 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -18435,6 +21117,9 @@
       "use_cases": [
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18460,6 +21145,9 @@
       "use_cases": [
         "提示工程",
         "学术写作"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18476,6 +21164,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18492,6 +21183,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -18515,6 +21209,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18541,6 +21238,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18564,6 +21264,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18590,6 +21293,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -18609,6 +21316,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -18625,6 +21336,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -18649,6 +21363,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18671,6 +21388,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18695,6 +21415,10 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -18711,6 +21435,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18729,6 +21456,9 @@
         "代码生成",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -18755,6 +21485,9 @@
       "use_cases": [
         "提示工程",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18775,6 +21508,10 @@
       "use_cases": [
         "写作助手",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "writing"
       ]
     },
     {
@@ -18801,6 +21538,9 @@
       "category": "engineering",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -18823,6 +21563,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -18853,6 +21596,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18869,6 +21615,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -18892,6 +21641,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -18910,6 +21663,10 @@
         "代码生成",
         "系统提示",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -18945,6 +21702,10 @@
         "系统提示",
         "学术写作",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -18975,6 +21736,10 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -18991,6 +21756,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19017,6 +21785,10 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -19046,6 +21818,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19062,6 +21837,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19078,6 +21856,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19095,6 +21876,9 @@
       "use_cases": [
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19112,6 +21896,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19149,6 +21936,10 @@
         "资源列表",
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -19166,6 +21957,10 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -19191,6 +21986,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -19207,6 +22006,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19224,6 +22026,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -19251,6 +22057,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19275,6 +22084,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -19291,6 +22103,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19307,6 +22122,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19340,6 +22158,10 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -19377,6 +22199,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19393,6 +22218,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19409,6 +22237,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19431,6 +22262,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19447,6 +22281,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19478,6 +22315,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -19503,6 +22344,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19519,6 +22363,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -19535,6 +22382,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19561,6 +22411,10 @@
         "代码生成",
         "资源列表",
         "学术写作"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -19582,6 +22436,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19598,6 +22455,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19621,6 +22481,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19637,6 +22500,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19656,6 +22522,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19678,6 +22547,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -19694,6 +22567,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -19718,6 +22594,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -19748,6 +22627,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19764,6 +22646,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19780,6 +22665,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19796,6 +22684,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19826,6 +22717,9 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -19864,6 +22758,10 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -19890,6 +22788,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19914,6 +22815,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -19931,6 +22835,9 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -19947,6 +22854,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -19963,6 +22873,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -19986,6 +22899,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -20016,6 +22933,9 @@
       "use_cases": [
         "图像生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20043,6 +22963,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -20060,6 +22984,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -20076,6 +23004,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20094,6 +23025,11 @@
         "代码生成",
         "写作助手",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -20118,6 +23054,9 @@
       "category": "engineering",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20142,6 +23081,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -20158,6 +23101,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20175,6 +23121,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -20193,6 +23143,10 @@
         "代码生成",
         "写作助手",
         "数据分析"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -20209,6 +23163,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -20236,6 +23193,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20258,6 +23218,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -20284,6 +23248,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20300,6 +23267,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -20337,6 +23307,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20366,6 +23339,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20384,6 +23360,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -20408,6 +23387,10 @@
       "use_cases": [
         "提示工程",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -20425,6 +23408,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -20457,6 +23444,9 @@
         "代码生成",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20478,6 +23468,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20499,6 +23492,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20520,6 +23516,10 @@
         "提示工程",
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -20536,6 +23536,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20556,6 +23559,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20583,6 +23589,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20599,6 +23608,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20637,6 +23649,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20653,6 +23668,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -20688,6 +23706,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20710,6 +23731,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20732,6 +23756,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20755,6 +23782,9 @@
       "use_cases": [
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20785,6 +23815,9 @@
       "category": "general",
       "use_cases": [
         "学术写作"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20810,6 +23843,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -20827,6 +23863,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -20851,6 +23890,10 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -20867,6 +23910,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -20906,6 +23952,11 @@
         "代码生成",
         "写作助手",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -20931,6 +23982,9 @@
       "use_cases": [
         "提示工程",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20957,6 +24011,10 @@
         "资源列表",
         "角色扮演",
         "数据分析"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -20978,6 +24036,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -20994,6 +24055,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21010,6 +24074,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21026,6 +24093,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21042,6 +24112,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21058,6 +24131,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -21074,6 +24150,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -21090,6 +24169,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -21106,6 +24188,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21129,6 +24214,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21151,6 +24240,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21175,6 +24267,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21210,6 +24305,9 @@
       "category": "writing",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "writing"
       ]
     },
     {
@@ -21226,6 +24324,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21242,6 +24343,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21260,6 +24364,9 @@
         "代码生成",
         "学术写作",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21277,6 +24384,9 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21293,6 +24403,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21309,6 +24422,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21326,6 +24442,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21349,6 +24469,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21367,6 +24490,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -21383,6 +24509,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21413,6 +24542,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21450,6 +24582,11 @@
       "category": "system",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21467,6 +24604,9 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -21505,6 +24645,9 @@
       "use_cases": [
         "系统提示",
         "图像生成"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -21536,6 +24679,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21562,6 +24708,9 @@
       "use_cases": [
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21596,6 +24745,9 @@
         "代码生成",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21624,6 +24776,9 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -21645,6 +24800,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -21670,6 +24828,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21686,6 +24847,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21722,6 +24886,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21741,6 +24908,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21758,6 +24928,10 @@
       "use_cases": [
         "提示工程",
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21781,6 +24955,9 @@
       "category": "engineering",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21805,6 +24982,11 @@
         "代码生成",
         "资源列表",
         "数据分析"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21829,6 +25011,10 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -21850,6 +25036,12 @@
         "资源列表",
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -21883,6 +25075,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -21905,6 +25100,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -21926,6 +25124,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -21956,6 +25157,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -21972,6 +25177,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -21988,6 +25196,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22012,6 +25223,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22029,6 +25243,11 @@
       "use_cases": [
         "代码生成",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -22054,6 +25273,9 @@
       "category": "engineering",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22090,6 +25312,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22112,6 +25337,9 @@
       "category": "engineering",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22133,6 +25361,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22154,6 +25385,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -22173,6 +25408,9 @@
         "角色扮演",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22209,6 +25447,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22243,6 +25484,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22259,6 +25503,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22277,6 +25524,10 @@
         "系统提示",
         "资源列表",
         "数据分析"
+      ],
+      "categories": [
+        "collection",
+        "system"
       ]
     },
     {
@@ -22300,6 +25551,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22317,6 +25571,9 @@
       "use_cases": [
         "系统提示",
         "数据分析"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -22333,6 +25590,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22349,6 +25609,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22365,6 +25628,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22386,6 +25652,11 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -22416,6 +25687,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22450,6 +25724,9 @@
         "系统提示",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22476,6 +25753,10 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -22493,6 +25774,10 @@
       "use_cases": [
         "提示工程",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -22511,6 +25796,11 @@
         "代码生成",
         "写作助手",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -22537,6 +25827,10 @@
         "代码生成",
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -22575,6 +25869,10 @@
       "use_cases": [
         "代码生成",
         "角色扮演"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -22598,6 +25896,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -22614,6 +25915,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22650,6 +25954,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22666,6 +25973,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22682,6 +25992,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22698,6 +26011,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22728,6 +26044,9 @@
       "category": "general",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22750,6 +26069,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22766,6 +26088,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22782,6 +26107,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -22798,6 +26126,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22814,6 +26145,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -22843,6 +26177,10 @@
         "提示工程",
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -22859,6 +26197,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22875,6 +26216,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -22891,6 +26235,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -22907,6 +26254,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -22944,6 +26294,10 @@
         "写作助手",
         "角色扮演",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -22975,6 +26329,9 @@
         "学术写作",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -22995,6 +26352,9 @@
       "category": "engineering",
       "use_cases": [
         "提示工程"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23011,6 +26371,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23036,6 +26399,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23052,6 +26418,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23086,6 +26455,10 @@
         "代码生成",
         "写作助手",
         "图像生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -23122,6 +26495,9 @@
       "category": "engineering",
       "use_cases": [
         "角色扮演"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23147,6 +26523,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -23163,6 +26542,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23179,6 +26561,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23195,6 +26580,9 @@
       "category": "general",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23211,6 +26599,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23228,6 +26619,9 @@
       "use_cases": [
         "写作助手",
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -23252,6 +26646,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -23268,6 +26665,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23284,6 +26684,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23306,6 +26709,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23327,6 +26733,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -23345,6 +26755,9 @@
         "代码生成",
         "学术写作",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23369,6 +26782,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -23386,6 +26802,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23420,6 +26839,12 @@
         "代码生成",
         "写作助手",
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering",
+        "coding",
+        "writing"
       ]
     },
     {
@@ -23436,6 +26861,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23465,6 +26893,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -23490,6 +26922,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23511,6 +26946,9 @@
         "代码生成",
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23535,6 +26973,10 @@
       "use_cases": [
         "系统提示",
         "学术写作"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -23551,6 +26993,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23578,6 +27023,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23594,6 +27042,9 @@
       "category": "system",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -23617,6 +27068,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23647,6 +27101,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23677,6 +27134,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23693,6 +27153,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23709,6 +27172,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23726,6 +27192,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -23766,6 +27236,10 @@
         "资源列表",
         "数据分析",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -23783,6 +27257,9 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -23806,6 +27283,9 @@
       "use_cases": [
         "学术写作",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23831,6 +27311,10 @@
       "use_cases": [
         "代码生成",
         "多语言"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -23847,6 +27331,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23869,6 +27356,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23892,6 +27382,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -23908,6 +27401,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23924,6 +27420,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23948,6 +27447,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -23971,6 +27473,10 @@
       "category": "engineering",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -24005,6 +27511,11 @@
         "代码生成",
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -24036,6 +27547,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24068,6 +27582,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24089,6 +27606,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -24106,6 +27627,10 @@
       "use_cases": [
         "代码生成",
         "写作助手"
+      ],
+      "categories": [
+        "coding",
+        "writing"
       ]
     },
     {
@@ -24123,6 +27648,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -24144,6 +27673,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24160,6 +27692,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24180,6 +27715,10 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system",
+        "engineering"
       ]
     },
     {
@@ -24212,6 +27751,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24228,6 +27770,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24258,6 +27803,9 @@
       "category": "engineering",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24274,6 +27822,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24304,6 +27855,10 @@
         "代码生成",
         "资源列表",
         "角色扮演"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -24326,6 +27881,9 @@
       "use_cases": [
         "系统提示",
         "资源列表"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -24348,6 +27906,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24364,6 +27925,10 @@
       "category": "engineering",
       "use_cases": [
         "写作助手"
+      ],
+      "categories": [
+        "engineering",
+        "writing"
       ]
     },
     {
@@ -24380,6 +27945,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24402,6 +27970,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -24418,6 +27990,9 @@
       "category": "general",
       "use_cases": [
         "数据分析"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24434,6 +28009,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24455,6 +28033,10 @@
       "use_cases": [
         "代码生成",
         "学术写作"
+      ],
+      "categories": [
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -24477,6 +28059,9 @@
       "category": "engineering",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24497,6 +28082,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24513,6 +28101,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24529,6 +28120,9 @@
       "category": "general",
       "use_cases": [
         "多语言"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24545,6 +28139,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24563,6 +28160,9 @@
         "资源列表",
         "数据分析",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24586,6 +28186,11 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering",
+        "coding"
       ]
     },
     {
@@ -24604,6 +28209,9 @@
         "提示工程",
         "写作助手",
         "图像生成"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24638,6 +28246,9 @@
         "提示工程",
         "角色扮演",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24654,6 +28265,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24676,6 +28290,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24702,6 +28319,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24719,6 +28339,9 @@
       "use_cases": [
         "资源列表",
         "多语言"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24735,6 +28358,9 @@
       "category": "coding",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24757,6 +28383,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24773,6 +28402,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24798,6 +28430,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -24825,6 +28461,9 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24847,6 +28486,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24867,6 +28509,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -24895,6 +28540,9 @@
       "use_cases": [
         "提示工程",
         "多语言"
+      ],
+      "categories": [
+        "engineering"
       ]
     },
     {
@@ -24911,6 +28559,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -24927,6 +28578,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -24943,6 +28597,9 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24960,6 +28617,9 @@
       "use_cases": [
         "资源列表",
         "数据分析"
+      ],
+      "categories": [
+        "collection"
       ]
     },
     {
@@ -24983,6 +28643,10 @@
         "代码生成",
         "系统提示",
         "学术写作"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -25014,6 +28678,10 @@
       "use_cases": [
         "代码生成",
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "coding"
       ]
     },
     {
@@ -25032,6 +28700,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -25066,6 +28737,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -25082,6 +28756,9 @@
       "category": "system",
       "use_cases": [
         "系统提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -25098,6 +28775,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -25126,6 +28806,10 @@
       "use_cases": [
         "资源列表",
         "图像生成"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -25155,6 +28839,10 @@
         "代码生成",
         "系统提示",
         "数据分析"
+      ],
+      "categories": [
+        "system",
+        "coding"
       ]
     },
     {
@@ -25171,6 +28859,9 @@
       "category": "coding",
       "use_cases": [
         "代码生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -25187,6 +28878,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -25203,6 +28897,9 @@
       "category": "general",
       "use_cases": [
         "图像生成"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -25219,6 +28916,9 @@
       "category": "system",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "system"
       ]
     },
     {
@@ -25253,6 +28953,9 @@
       "use_cases": [
         "代码生成",
         "数据分析"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -25283,6 +28986,9 @@
       "use_cases": [
         "代码生成",
         "图像生成"
+      ],
+      "categories": [
+        "coding"
       ]
     },
     {
@@ -25299,6 +29005,9 @@
       "category": "general",
       "use_cases": [
         "通用提示"
+      ],
+      "categories": [
+        "general"
       ]
     },
     {
@@ -25323,6 +29032,10 @@
       "category": "collection",
       "use_cases": [
         "资源列表"
+      ],
+      "categories": [
+        "collection",
+        "engineering"
       ]
     },
     {
@@ -25340,6 +29053,9 @@
       "use_cases": [
         "写作助手",
         "资源列表"
+      ],
+      "categories": [
+        "general"
       ]
     }
   ]
