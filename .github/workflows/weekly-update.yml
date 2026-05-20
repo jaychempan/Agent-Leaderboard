@@ -29,19 +29,20 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json data.js auto_research_data.json auto_research_data.js \
-                  mcp_data.json mcp_data.js \
-                  prompts_data.json prompts_data.js \
-                  frameworks_data.json frameworks_data.js \
-                  index.html auto-research.html mcp.html prompts.html frameworks.html
+          git add data/data.json data/data.js \
+                  data/auto_research_data.json data/auto_research_data.js \
+                  data/mcp_data.json data/mcp_data.js \
+                  data/prompts_data.json data/prompts_data.js \
+                  data/frameworks_data.json data/frameworks_data.js \
+                  index.html
           if git diff --cached --quiet; then
             echo "No changes — skipping commit"
           else
-            S=$(python3 -c "import json; print(json.load(open('data.json'))['meta']['total'])")
-            R=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
-            M=$(python3 -c "import json; print(json.load(open('mcp_data.json'))['meta']['total'])")
-            P=$(python3 -c "import json; print(json.load(open('prompts_data.json'))['meta']['total'])")
-            F=$(python3 -c "import json; print(json.load(open('frameworks_data.json'))['meta']['total'])")
+            S=$(python3 -c "import json; print(json.load(open('data/data.json'))['meta']['total'])")
+            R=$(python3 -c "import json; print(json.load(open('data/auto_research_data.json'))['meta']['total'])")
+            M=$(python3 -c "import json; print(json.load(open('data/mcp_data.json'))['meta']['total'])")
+            P=$(python3 -c "import json; print(json.load(open('data/prompts_data.json'))['meta']['total'])")
+            F=$(python3 -c "import json; print(json.load(open('data/frameworks_data.json'))['meta']['total'])")
             git commit -m "chore: full data update [skills=${S}, research=${R}, mcp=${M}, prompts=${P}, frameworks=${F}]"
             git push
           fi

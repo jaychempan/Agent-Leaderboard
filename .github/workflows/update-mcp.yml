@@ -26,11 +26,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mcp_data.json mcp_data.js mcp.html
+          git add data/mcp_data.json data/mcp_data.js index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            N=$(python3 -c "import json; print(json.load(open('mcp_data.json'))['meta']['total'])")
+            N=$(python3 -c "import json; print(json.load(open('data/mcp_data.json'))['meta']['total'])")
             git commit -m "chore: update mcp data [total=${N}]"
             git push
           fi

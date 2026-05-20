@@ -26,11 +26,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add auto_research_data.json auto_research_data.js auto-research.html
+          git add data/auto_research_data.json data/auto_research_data.js index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            N=$(python3 -c "import json; print(json.load(open('auto_research_data.json'))['meta']['total'])")
+            N=$(python3 -c "import json; print(json.load(open('data/auto_research_data.json'))['meta']['total'])")
             git commit -m "chore: update research data [total=${N}]"
             git push
           fi

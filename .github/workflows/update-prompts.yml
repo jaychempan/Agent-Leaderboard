@@ -26,11 +26,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add prompts_data.json prompts_data.js prompts.html
+          git add data/prompts_data.json data/prompts_data.js index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            N=$(python3 -c "import json; print(json.load(open('prompts_data.json'))['meta']['total'])")
+            N=$(python3 -c "import json; print(json.load(open('data/prompts_data.json'))['meta']['total'])")
             git commit -m "chore: update prompts data [total=${N}]"
             git push
           fi

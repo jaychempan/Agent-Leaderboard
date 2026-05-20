@@ -26,11 +26,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add frameworks_data.json frameworks_data.js frameworks.html
+          git add data/frameworks_data.json data/frameworks_data.js index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            N=$(python3 -c "import json; print(json.load(open('frameworks_data.json'))['meta']['total'])")
+            N=$(python3 -c "import json; print(json.load(open('data/frameworks_data.json'))['meta']['total'])")
             git commit -m "chore: update frameworks data [total=${N}]"
             git push
           fi
