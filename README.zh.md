@@ -5,7 +5,7 @@
 一站式发现 GitHub 上最热门的 AI Agent 生态仓库 —— 涵盖 **Agent Skills**、**MCP 服务器**、**Prompt 库**、**AI 框架** 和 **Auto Research** 工具，全部按 GitHub star 数排名，自动每日更新。
 
 [![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Skills-Leaderboard)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Leaderboard)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **[English](README.md)**
@@ -131,8 +131,8 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/jaychempan/Agent-Skills-Leaderboard.git
-cd Agent-Skills-Leaderboard
+git clone https://github.com/jaychempan/Agent-Leaderboard.git
+cd Agent-Leaderboard
 
 # 2. 爬取数据（需要 Python 3.8+，无需额外依赖）
 python3 scripts/fetch_data.py            # Agent Skills
@@ -155,7 +155,7 @@ open index.html
 ## 文件结构
 
 ```
-agent-skills-leaderboard/
+agent-leaderboard/
 ├── index.html                            # 单页应用（包含五大榜单）
 ├── favicon.svg                           # 网站图标
 │

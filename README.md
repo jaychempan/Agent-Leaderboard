@@ -5,7 +5,7 @@
 The go-to leaderboard for discovering trending AI agent ecosystem repositories on GitHub — covering **Agent Skills**, **MCP Servers**, **Prompt Libraries**, **AI Frameworks**, and **Auto Research** tools, all ranked by GitHub stars and updated automatically.
 
 [![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Skills-Leaderboard)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Leaderboard)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **[中文文档](README.zh.md)**
@@ -131,8 +131,8 @@ The go-to leaderboard for discovering trending AI agent ecosystem repositories o
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/jaychempan/Agent-Skills-Leaderboard.git
-cd Agent-Skills-Leaderboard
+git clone https://github.com/jaychempan/Agent-Leaderboard.git
+cd Agent-Leaderboard
 
 # 2. Fetch data (Python 3.8+, no extra dependencies)
 python3 scripts/fetch_data.py           # Agent Skills
@@ -155,7 +155,7 @@ open index.html
 ## File Structure
 
 ```
-agent-skills-leaderboard/
+agent-leaderboard/
 ├── index.html                       # Single-page app (all five boards)
 ├── favicon.svg                      # Site logo / favicon
 │

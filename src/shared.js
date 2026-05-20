@@ -4,7 +4,7 @@
 ================================================================ */
 
 /* ── Config ─────────────────────────────────────────────────────── */
-const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Skills-Leaderboard';
+const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Leaderboard';
 
 /* ── i18n ──────────────────────────────────────────────────────── */
 const I18N = {
