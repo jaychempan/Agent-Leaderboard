@@ -51,6 +51,10 @@ def gh_get(url: str, token: str, retries: int = 4) -> dict:
 
         except HTTPError as e:
             body = e.read().decode(errors='replace')
+            if e.code == 401:
+                print(f'❌ GitHub token 无效或已过期 (401 Unauthorized)。'
+                      f'\n   请检查 GH_TOKEN secret 是否过期并重新生成。', file=sys.stderr)
+                sys.exit(1)
             if e.code in (403, 429):
                 reset_at = int(e.headers.get('X-RateLimit-Reset', time.time() + 60))
                 wait = max(reset_at - time.time() + 3, 10)
