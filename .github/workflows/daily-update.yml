@@ -1,7 +1,9 @@
-name: Update All (Manual)
+name: Daily Data Update
 
 on:
-  workflow_dispatch:   # Manual trigger only — daily updates are handled by per-section workflows
+  schedule:
+    - cron: '0 2 * * *'   # Every day 02:00 UTC
+  workflow_dispatch:
 
 jobs:
   update:
@@ -38,11 +40,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes — skipping commit"
           else
-            S=$(python3 -c "import json; print(json.load(open('data/data.json'))['meta']['total'])")
-            R=$(python3 -c "import json; print(json.load(open('data/auto_research_data.json'))['meta']['total'])")
-            M=$(python3 -c "import json; print(json.load(open('data/mcp_data.json'))['meta']['total'])")
-            P=$(python3 -c "import json; print(json.load(open('data/prompts_data.json'))['meta']['total'])")
-            F=$(python3 -c "import json; print(json.load(open('data/frameworks_data.json'))['meta']['total'])")
-            git commit -m "chore: full data update [skills=${S}, research=${R}, mcp=${M}, prompts=${P}, frameworks=${F}]"
+            DATE=$(date -u +%Y-%m-%d)
+            git commit -m "chore: daily incremental update ${DATE}"
             git push
           fi

@@ -3,8 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_run:                        # Re-deploy after weekly data update
-    workflows: ["Weekly Data Update"]
+  workflow_run:                        # Re-deploy after daily data update
+    workflows: ["Daily Data Update"]
     types: [completed]
   workflow_dispatch:
 
