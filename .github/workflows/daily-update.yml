@@ -26,6 +26,7 @@ jobs:
           python3 scripts/fetch_mcp.py
           python3 scripts/fetch_prompts.py
           python3 scripts/fetch_auto_research.py
+          python3 scripts/build_discovery_index.py
 
       - name: Commit and push
         run: |
@@ -36,6 +37,7 @@ jobs:
                   data/mcp_data.json data/mcp_data.js \
                   data/prompts_data.json data/prompts_data.js \
                   data/frameworks_data.json data/frameworks_data.js \
+                  data/discovery_index.json data/discovery_index.js \
                   index.html
           if git diff --cached --quiet; then
             echo "No changes — skipping commit"
