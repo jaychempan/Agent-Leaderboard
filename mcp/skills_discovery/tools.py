@@ -178,12 +178,10 @@ def _int_arg(args: dict[str, Any], name: str, default: int) -> int:
     if name not in args:
         return default
     value = args[name]
-    if type(value) is int:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be an integer")
+    if isinstance(value, int):
         return value
-    if isinstance(value, str):
-        stripped = value.strip()
-        if stripped and stripped.lstrip("-").isdigit():
-            return int(stripped)
     raise ValueError(f"{name} must be an integer")
 
 

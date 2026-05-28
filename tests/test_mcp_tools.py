@@ -78,7 +78,7 @@ class McpToolsTests(unittest.TestCase):
         self.assertEqual(payload["meta"]["item_count"], 1)
 
     def test_get_top_rankings_text_is_json_with_summary_and_items(self):
-        payload = self._payload(call_tool(FakeCache(), "get_top_rankings", {"limit": "1"}))
+        payload = self._payload(call_tool(FakeCache(), "get_top_rankings", {"limit": 1}))
 
         self.assertIn("answer_summary", payload)
         self.assertIn("items", payload)
@@ -116,6 +116,30 @@ class McpToolsTests(unittest.TestCase):
     def test_unknown_tool_raises_value_error(self):
         with self.assertRaises(ValueError):
             call_tool(FakeCache(), "missing_tool")
+
+    def test_limit_out_of_range_raises_value_error(self):
+        for limit in (-1, 0, 51):
+            with self.subTest(limit=limit):
+                with self.assertRaisesRegex(ValueError, "limit"):
+                    call_tool(FakeCache(), "search_catalog", {"limit": limit})
+
+    def test_limit_rejects_non_int_types(self):
+        for limit in ("1", 1.5, True, [], {}):
+            with self.subTest(limit=limit):
+                with self.assertRaisesRegex(ValueError, "limit"):
+                    call_tool(FakeCache(), "search_catalog", {"limit": limit})
+
+    def test_min_stars_rejects_negative_and_non_int_types(self):
+        for min_stars in (-1, "100", 1.5, True, [], {}):
+            with self.subTest(min_stars=min_stars):
+                with self.assertRaisesRegex(ValueError, "min_stars"):
+                    call_tool(FakeCache(), "search_catalog", {"min_stars": min_stars})
+
+    def test_string_args_reject_non_strings(self):
+        for value in (123, 1.5, True, [], {}):
+            with self.subTest(query=value):
+                with self.assertRaisesRegex(ValueError, "query"):
+                    call_tool(FakeCache(), "search_catalog", {"query": value})
 
 
 if __name__ == "__main__":
