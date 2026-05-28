@@ -44,7 +44,12 @@ def validate_tool_arguments(name: str, arguments: dict[str, Any]) -> None:
     if tool is None:
         raise ValueError(f"Unknown tool: {name}")
 
-    properties = tool.get("inputSchema", {}).get("properties", {})
+    input_schema = tool.get("inputSchema", {})
+    for argument_name in input_schema.get("required", []):
+        if argument_name not in arguments:
+            raise ValueError(f"Missing required argument: {argument_name}")
+
+    properties = input_schema.get("properties", {})
     for argument_name, value in arguments.items():
         schema = properties.get(argument_name)
         if schema is None:

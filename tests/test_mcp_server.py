@@ -87,6 +87,41 @@ class McpServerTests(unittest.TestCase):
         self.assertIn("Catalog cache", payload["answer_summary"])
         self.assertEqual(payload["meta"]["item_count"], 1)
 
+    def test_tools_call_get_install_instructions_missing_repo_full_name_returns_error_code_minus_32602(self):
+        for arguments in ({}, {"client": "codex"}):
+            with self.subTest(arguments=arguments):
+                response = handle_request(
+                    FakeCache(),
+                    {
+                        "jsonrpc": "2.0",
+                        "id": 11,
+                        "method": "tools/call",
+                        "params": {"name": "get_install_instructions", "arguments": arguments},
+                    },
+                )
+
+                self.assertEqual(response["id"], 11)
+                self.assertEqual(response["error"]["code"], -32602)
+
+    def test_tools_call_get_install_instructions_valid_args_succeeds(self):
+        response = handle_request(
+            FakeCache(),
+            {
+                "jsonrpc": "2.0",
+                "id": 12,
+                "method": "tools/call",
+                "params": {
+                    "name": "get_install_instructions",
+                    "arguments": {"repo_full_name": "acme/codex-tdd", "client": "codex"},
+                },
+            },
+        )
+
+        content = response["result"]["content"]
+        self.assertEqual(content[0]["type"], "text")
+        payload = json.loads(content[0]["text"])
+        self.assertIn("acme/codex-tdd", payload["answer_summary"])
+
     def test_tools_call_none_arguments_returns_error_code_minus_32602(self):
         response = handle_request(
             FakeCache(),
