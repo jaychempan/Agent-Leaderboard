@@ -98,6 +98,34 @@ class McpServerTests(unittest.TestCase):
 
         self.assertEqual(response["error"]["code"], -32602)
 
+    def test_falsy_non_object_tool_arguments_return_error_code_minus_32602(self):
+        for arguments in ([], "", 0, False):
+            with self.subTest(arguments=arguments):
+                response = handle_request(
+                    FakeCache(),
+                    {
+                        "jsonrpc": "2.0",
+                        "id": 6,
+                        "method": "tools/call",
+                        "params": {"name": "get_catalog_status", "arguments": arguments},
+                    },
+                )
+
+                self.assertEqual(response["error"]["code"], -32602)
+
+    def test_non_object_tools_call_params_return_error_code_minus_32602(self):
+        response = handle_request(
+            FakeCache(),
+            {
+                "jsonrpc": "2.0",
+                "id": 7,
+                "method": "tools/call",
+                "params": [],
+            },
+        )
+
+        self.assertEqual(response["error"]["code"], -32602)
+
 
 if __name__ == "__main__":
     unittest.main()

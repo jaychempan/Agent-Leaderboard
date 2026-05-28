@@ -57,13 +57,16 @@ def handle_request(cache: CatalogCache, request: dict[str, Any]) -> Optional[dic
 
     if method == "tools/call":
         try:
-            params = request.get("params") or {}
+            params = request.get("params", {})
+            if params is None:
+                params = {}
             if not isinstance(params, dict):
                 raise ValueError("params must be an object")
             name = params["name"]
             if not isinstance(name, str):
                 raise ValueError("name must be a string")
-            result = call_tool(cache, name, params.get("arguments") or {})
+            arguments = params["arguments"] if "arguments" in params else {}
+            result = call_tool(cache, name, arguments)
         except (KeyError, TypeError, ValueError) as error:
             return jsonrpc_error(request_id, INVALID_PARAMS, str(error))
         return jsonrpc_result(request_id, result)
