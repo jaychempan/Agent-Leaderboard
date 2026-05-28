@@ -303,6 +303,130 @@ button, select, input { font: inherit; }
 /* ── Container ──────────────────────────────────────────────────── */
 .container { max-width: 1320px; margin: 0 auto; padding: 18px 16px 60px; }
 
+/* ── MCP usage ──────────────────────────────────────────────────── */
+.mcp-usage {
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+  margin-bottom: 18px;
+  padding: 18px;
+}
+.mcp-usage-main,
+.mcp-usage-side {
+  min-width: 0;
+}
+.mcp-usage-kicker {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.mcp-usage h2 {
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1.25;
+  margin-bottom: 7px;
+}
+.mcp-usage p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.mcp-command {
+  align-items: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  min-width: 0;
+  padding: 10px 12px;
+}
+.mcp-command span {
+  color: var(--muted);
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.mcp-command code {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, SFMono, Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.mcp-examples-label {
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+.mcp-examples {
+  display: grid;
+  gap: 5px;
+  list-style: none;
+}
+.mcp-examples li {
+  color: var(--text2);
+  font-size: 13px;
+  line-height: 1.35;
+  padding-left: 14px;
+  position: relative;
+}
+.mcp-examples li::before {
+  background: var(--accent);
+  border-radius: 50%;
+  content: '';
+  height: 4px;
+  left: 2px;
+  position: absolute;
+  top: .62em;
+  width: 4px;
+}
+.mcp-safety {
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 10px;
+}
+.mcp-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.mcp-link {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 8px 11px;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.mcp-link:hover {
+  background: var(--surface3);
+  border-color: var(--border2);
+  color: var(--text);
+}
+.mcp-link-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.mcp-link-primary:hover {
+  background: var(--accent-h);
+  border-color: var(--accent-h);
+  color: #fff;
+}
+
 /* ── Tabs ───────────────────────────────────────────────────────── */
 .tabs-wrap {
   position: relative;
@@ -1031,6 +1155,11 @@ button, select, input { font: inherit; }
   .hero { padding: 22px 18px 18px; }
   .hero-logo img { width: 40px; height: 40px; }
 
+  .mcp-usage {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .tab { flex-shrink: 0; }
 
   /* UC chips: slightly larger touch target */
@@ -1060,6 +1189,16 @@ button, select, input { font: inherit; }
 
   /* Container */
   .container { padding: 12px 10px 48px; }
+
+  .mcp-usage { padding: 14px; }
+  .mcp-usage h2 { font-size: 17px; }
+  .mcp-command {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mcp-links { display: grid; grid-template-columns: 1fr 1fr; }
+  .mcp-link { text-align: center; }
 
   /* Filter bar: full-width elements, preset groups scroll */
   .filter-bar { gap: 5px; }

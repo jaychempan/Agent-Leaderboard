@@ -395,6 +395,7 @@ function init(config) {
 
   renderNav();
   renderHero();
+  renderMcpUsage();
   renderTabs();
   renderBrandSpotlight();
   renderFilterBar();
@@ -641,6 +642,65 @@ function renderHero() {
       <span class="meta-pill"><strong>★${m.min_stars}+</strong> ${t('stat_min')}</span>
       <span class="meta-pill">${t('stat_updated')} <strong>${updated}</strong></span>
       <span class="meta-pill">${t('stat_top')} <strong>★${fmtNum(top)}</strong></span>
+    </div>`;
+}
+
+/* ── MCP usage render ───────────────────────────────────────────── */
+function renderMcpUsage() {
+  const el = document.getElementById('mcpUsage');
+  if (!el) return;
+
+  const isZh = app.lang === 'zh';
+  const copy = isZh ? {
+    title: '在 AI 聊天工具里使用这个目录',
+    desc: '启动 MCP 技能发现助手，让聊天工具基于每日更新的目录推荐 Skills、MCP 服务器、Prompt 和框架。',
+    commandLabel: '启动命令',
+    examplesLabel: '示例提问',
+    examples: [
+      '帮我找适合 Codex 的测试技能',
+      '推荐 Claude 可用的 UI/UX 技能',
+      '列出最热门的 MCP 浏览器自动化服务器',
+    ],
+    safety: '只返回建议、说明和链接；不会执行安装命令。',
+    repo: 'GitHub 仓库',
+    index: '每日索引',
+  } : {
+    title: 'Use this catalog in your AI chat',
+    desc: 'Run the MCP Skill Discovery server so your chat tool can recommend Skills, MCP servers, prompts, and frameworks from the daily catalog.',
+    commandLabel: 'Server command',
+    examplesLabel: 'Example queries',
+    examples: [
+      'Find Codex testing skills',
+      'Recommend Claude UI/UX skills',
+      'Top MCP browser automation servers',
+    ],
+    safety: 'Returns guidance and links only; it does not execute install commands.',
+    repo: 'GitHub repo',
+    index: 'Daily index',
+  };
+
+  el.innerHTML = `
+    <div class="mcp-usage">
+      <div class="mcp-usage-main">
+        <div class="mcp-usage-kicker">MCP Skill Discovery</div>
+        <h2>${copy.title}</h2>
+        <p>${copy.desc}</p>
+        <div class="mcp-command" aria-label="${copy.commandLabel}">
+          <span>${copy.commandLabel}</span>
+          <code>python3 -m mcp.skills_discovery.server</code>
+        </div>
+      </div>
+      <div class="mcp-usage-side">
+        <div class="mcp-examples-label">${copy.examplesLabel}</div>
+        <ul class="mcp-examples">
+          ${copy.examples.map(example => `<li>${example}</li>`).join('')}
+        </ul>
+        <p class="mcp-safety">${copy.safety}</p>
+        <div class="mcp-links">
+          <a class="mcp-link mcp-link-primary" href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer">${copy.repo}</a>
+          <a class="mcp-link" href="data/discovery_index.json" target="_blank" rel="noopener noreferrer">${copy.index}</a>
+        </div>
+      </div>
     </div>`;
 }
 
@@ -1186,6 +1246,7 @@ function updatePageTitle() {
 function renderAll() {
   renderNav();
   renderHero();
+  renderMcpUsage();
   renderTabs();
   renderFilterBar();
   renderUCChips();
@@ -1274,4 +1335,3 @@ async function loadVisitCount() {
     badge.textContent = '';
   }
 }
-

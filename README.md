@@ -153,6 +153,29 @@ python3 -m http.server 8080
 # then open http://localhost:8080
 ```
 
+## MCP Skill Discovery
+
+Use the catalog directly from any AI chat client that supports MCP by running the local discovery server:
+
+```bash
+python3 -m mcp.skills_discovery.server
+```
+
+By default the server reads the daily `data/discovery_index.json` generated from the leaderboard data. To test a local or custom index, point it at an absolute file URL:
+
+```bash
+SKILLS_DISCOVERY_INDEX_URL=file:///absolute/path/to/data/discovery_index.json \
+python3 -m mcp.skills_discovery.server
+```
+
+Example chat queries:
+
+- Find Codex testing skills
+- Recommend Claude UI/UX skills
+- Top MCP browser automation servers
+
+The server returns guidance, matching repositories, and links only. It does not execute install commands or modify your environment.
+
 ## File Structure
 
 ```
@@ -170,6 +193,7 @@ agent-leaderboard/
 │   ├── fetch_prompts.py             # Crawl Prompt repos → data/prompts_data.js
 │   ├── fetch_frameworks.py         # Crawl Framework repos → data/frameworks_data.js
 │   ├── fetch_auto_research.py       # Crawl Research repos → data/auto_research_data.js
+│   ├── build_discovery_index.py     # Build MCP discovery index → data/discovery_index.js
 │   └── fetch_utils.py               # Shared fetch utilities
 │
 └── data/
@@ -177,7 +201,8 @@ agent-leaderboard/
     ├── mcp_data.json / mcp_data.js               # MCP Servers data
     ├── prompts_data.json / prompts_data.js        # Prompt Library data
     ├── frameworks_data.json / frameworks_data.js  # AI Frameworks data
-    └── auto_research_data.json / auto_research_data.js  # Auto Research data
+    ├── auto_research_data.json / auto_research_data.js  # Auto Research data
+    └── discovery_index.json / discovery_index.js  # Daily MCP discovery index
 ```
 
 ## Automated Updates (GitHub Actions)

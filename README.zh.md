@@ -153,6 +153,29 @@ python3 -m http.server 8080
 # 然后打开 http://localhost:8080
 ```
 
+## MCP 技能发现助手
+
+在任何支持 MCP 的 AI 聊天工具里，可以启动本地发现服务器，直接使用这个目录：
+
+```bash
+python3 -m mcp.skills_discovery.server
+```
+
+默认会读取每日生成的 `data/discovery_index.json`。如果要测试本地或自定义索引，可以用绝对路径的 file URL 覆盖：
+
+```bash
+SKILLS_DISCOVERY_INDEX_URL=file:///absolute/path/to/data/discovery_index.json \
+python3 -m mcp.skills_discovery.server
+```
+
+示例提问：
+
+- 帮我找适合 Codex 的测试技能
+- 推荐 Claude 可用的 UI/UX 技能
+- 列出最热门的 MCP 浏览器自动化服务器
+
+这个服务器只返回建议、匹配仓库和链接；不会执行安装命令，也不会修改你的环境。
+
 ## 文件结构
 
 ```
@@ -170,6 +193,7 @@ agent-leaderboard/
 │   ├── fetch_prompts.py                  # 爬取 Prompt 数据 → data/prompts_data.js
 │   ├── fetch_frameworks.py              # 爬取 Framework 数据 → data/frameworks_data.js
 │   ├── fetch_auto_research.py            # 爬取 Research 数据 → data/auto_research_data.js
+│   ├── build_discovery_index.py          # 构建 MCP 发现索引 → data/discovery_index.js
 │   └── fetch_utils.py                    # 公共爬取工具
 │
 └── data/
@@ -177,7 +201,8 @@ agent-leaderboard/
     ├── mcp_data.json / mcp_data.js       # MCP 服务器数据
     ├── prompts_data.json / prompts_data.js      # Prompt 库数据
     ├── frameworks_data.json / frameworks_data.js # AI 框架数据
-    └── auto_research_data.json / auto_research_data.js # Auto Research 数据
+    ├── auto_research_data.json / auto_research_data.js # Auto Research 数据
+    └── discovery_index.json / discovery_index.js # 每日 MCP 发现索引
 ```
 
 ## 自动更新（GitHub Actions）
