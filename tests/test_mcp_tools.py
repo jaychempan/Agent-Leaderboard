@@ -59,6 +59,9 @@ class McpToolsTests(unittest.TestCase):
                 "get_catalog_status",
             ],
         )
+        for tool in tools:
+            self.assertTrue(tool["description"])
+            self.assertIsInstance(tool["inputSchema"], dict)
 
     def test_search_catalog_returns_text_content_with_known_repo(self):
         result = call_tool(FakeCache(), "search_catalog", {"query": "codex testing"})
@@ -78,6 +81,34 @@ class McpToolsTests(unittest.TestCase):
         self.assertIn("items", payload)
         self.assertEqual(payload["items"][0]["full_name"], "acme/codex-tdd")
         self.assertEqual(payload["meta"]["filters"]["limit"], 1)
+
+    def test_recommend_for_task_returns_recommendation_reason_and_summary(self):
+        payload = self._payload(
+            call_tool(
+                FakeCache(),
+                "recommend_for_task",
+                {"task": "Codex testing", "platform": "codex"},
+            )
+        )
+
+        self.assertIn("Recommended", payload["answer_summary"])
+        self.assertEqual(payload["items"][0]["full_name"], "acme/codex-tdd")
+        self.assertIn("why", payload["items"][0])
+        self.assertIn("Recommended because", payload["items"][0]["why"])
+
+    def test_get_install_instructions_returns_repo_client_and_manual_guidance(self):
+        payload = self._payload(
+            call_tool(
+                FakeCache(),
+                "get_install_instructions",
+                {"repo_full_name": "acme/codex-tdd", "client": "codex"},
+            )
+        )
+
+        self.assertEqual(payload["items"][0]["repo_full_name"], "acme/codex-tdd")
+        self.assertEqual(payload["items"][0]["client"], "codex")
+        self.assertEqual(payload["items"][0]["status"], "manual_review")
+        self.assertIn("manual review", payload["answer_summary"])
 
     def test_unknown_tool_raises_value_error(self):
         with self.assertRaises(ValueError):
