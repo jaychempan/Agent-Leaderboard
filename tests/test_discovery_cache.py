@@ -9,6 +9,7 @@ from mcp.skills_discovery.cache import (
     ENV_CACHE_DIR,
     ENV_INDEX_URL,
     CatalogCache,
+    _write_json_atomic,
     default_cache_dir,
 )
 
@@ -52,6 +53,26 @@ class DiscoveryCacheTests(unittest.TestCase):
             self.assertEqual(catalog["items"][0]["id"], "skill:1")
             self.assertEqual(cache.items(), PAYLOAD["items"])
             self.assertTrue(any("offline" in warning for warning in cache.status()["warnings"]))
+
+    def test_load_returns_remote_catalog_when_cache_write_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = CatalogCache(cache_dir=tmp, source_url="https://example.test/index.json")
+
+            with patch("mcp.skills_discovery.cache.fetch_json", return_value=PAYLOAD):
+                with patch.object(Path, "replace", side_effect=OSError("readonly")):
+                    catalog = cache.load()
+
+            self.assertEqual(catalog, PAYLOAD)
+            self.assertEqual(cache.items(), PAYLOAD["items"])
+            self.assertTrue(any("readonly" in warning for warning in cache.status()["warnings"]))
+
+    def test_write_json_atomic_writes_valid_json_to_cache_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_path = Path(tmp) / "discovery_index.json"
+
+            _write_json_atomic(cache_path, PAYLOAD)
+
+            self.assertEqual(json.loads(cache_path.read_text(encoding="utf-8")), PAYLOAD)
 
     def test_env_overrides_source_url_and_cache_dir(self):
         with tempfile.TemporaryDirectory() as tmp:

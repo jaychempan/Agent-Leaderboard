@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import tempfile
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,6 +33,31 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w",
+            delete=False,
+            dir=str(path.parent),
+            encoding="utf-8",
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+        ) as handle:
+            tmp_path = Path(handle.name)
+            json.dump(payload, handle, ensure_ascii=False, indent=2, sort_keys=True)
+            handle.write("\n")
+        tmp_path.replace(path)
+    except OSError:
+        if tmp_path is not None:
+            try:
+                tmp_path.unlink()
+            except OSError:
+                pass
+        raise
+
+
 class CatalogCache:
     def __init__(self, cache_dir: Optional[Union[os.PathLike[str], str]] = None, source_url: Optional[str] = None):
         self.source_url = source_url or os.environ.get(ENV_INDEX_URL) or DEFAULT_INDEX_URL
@@ -51,12 +77,11 @@ class CatalogCache:
             self.warnings.append(f"Remote catalog fetch failed; using cached catalog: {error}")
             catalog = self._read_cache()
         else:
-            self.cache_dir.mkdir(parents=True, exist_ok=True)
-            self.cache_path.write_text(
-                json.dumps(catalog, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-                encoding="utf-8",
-            )
             self.last_refresh = _now_iso()
+            try:
+                _write_json_atomic(self.cache_path, catalog)
+            except OSError as error:
+                self.warnings.append(f"Cache write failure; using remote catalog without updating cache: {error}")
 
         self._catalog = catalog
         return catalog
