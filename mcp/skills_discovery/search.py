@@ -67,6 +67,8 @@ def _score_item(
         if token in search_text:
             score += 2
             token_matched = True
+            if token not in full_name and token not in description:
+                reasons.append(f"catalog metadata matches {token}")
         query_matched = query_matched or token_matched
 
     if platform and platform in platforms:

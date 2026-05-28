@@ -90,6 +90,12 @@ class DiscoverySearchTests(unittest.TestCase):
         self.assertIn("codex", result["items"][0]["match_reason"].lower())
         self.assertEqual(result["meta"]["count"], 1)
 
+    def test_search_catalog_explains_search_text_only_matches(self):
+        result = search_catalog(ITEMS, query="代码审查", limit=5)
+
+        self.assertEqual(result["items"][0]["full_name"], "acme/codex-tdd")
+        self.assertIn("代码审查", result["items"][0]["match_reason"])
+
     def test_recommend_for_task_returns_reasons(self):
         result = recommend_for_task(ITEMS, task="I need TDD tests in Codex", platform="codex", limit=2)
 
