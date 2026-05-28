@@ -76,6 +76,8 @@ def handle_request(cache: CatalogCache, request: Any) -> Optional[dict[str, Any]
             result = call_tool(cache, name, arguments)
         except (KeyError, TypeError, ValueError) as error:
             return jsonrpc_error(request_id, INVALID_PARAMS, str(error))
+        except Exception as error:
+            return jsonrpc_error(request_id, INTERNAL_ERROR, str(error))
         return jsonrpc_result(request_id, result)
 
     return jsonrpc_error(request_id, METHOD_NOT_FOUND, f"Method not found: {method}")
