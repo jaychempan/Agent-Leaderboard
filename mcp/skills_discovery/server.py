@@ -12,6 +12,7 @@ PROTOCOL_VERSION = "2024-11-05"
 
 JSONRPC_VERSION = "2.0"
 METHOD_NOT_FOUND = -32601
+INVALID_REQUEST = -32600
 INVALID_PARAMS = -32602
 PARSE_ERROR = -32700
 INTERNAL_ERROR = -32603
@@ -32,11 +33,17 @@ def jsonrpc_error(request_id: Any, code: int, message: str) -> dict[str, Any]:
     }
 
 
-def handle_request(cache: CatalogCache, request: dict[str, Any]) -> Optional[dict[str, Any]]:
+def handle_request(cache: CatalogCache, request: Any) -> Optional[dict[str, Any]]:
+    if not isinstance(request, dict):
+        return jsonrpc_error(None, INVALID_REQUEST, "Invalid Request")
+
     method = request.get("method")
     request_id = request.get("id")
 
     if method == "notifications/initialized":
+        return None
+
+    if "id" not in request:
         return None
 
     if method == "initialize":
@@ -74,6 +81,15 @@ def handle_request(cache: CatalogCache, request: dict[str, Any]) -> Optional[dic
     return jsonrpc_error(request_id, METHOD_NOT_FOUND, f"Method not found: {method}")
 
 
+def handle_line(cache: CatalogCache, line: str) -> Optional[dict[str, Any]]:
+    try:
+        request = json.loads(line)
+    except json.JSONDecodeError as error:
+        return jsonrpc_error(None, PARSE_ERROR, str(error))
+
+    return handle_request(cache, request)
+
+
 def main() -> int:
     cache = CatalogCache()
     try:
@@ -86,16 +102,9 @@ def main() -> int:
         if not line:
             continue
         try:
-            request = json.loads(line)
-            if not isinstance(request, dict):
-                raise ValueError("request must be an object")
-        except (json.JSONDecodeError, ValueError) as error:
-            response = jsonrpc_error(None, PARSE_ERROR, str(error))
-        else:
-            try:
-                response = handle_request(cache, request)
-            except Exception as error:
-                response = jsonrpc_error(request.get("id"), INTERNAL_ERROR, str(error))
+            response = handle_line(cache, line)
+        except Exception as error:
+            response = jsonrpc_error(None, INTERNAL_ERROR, str(error))
 
         if response is not None:
             print(json.dumps(response, ensure_ascii=False), flush=True)

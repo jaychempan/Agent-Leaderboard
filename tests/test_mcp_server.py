@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from mcp.skills_discovery.server import PROTOCOL_VERSION, handle_request
+from mcp.skills_discovery.server import PROTOCOL_VERSION, handle_line, handle_request
 
 
 class FakeCache:
@@ -75,6 +75,19 @@ class McpServerTests(unittest.TestCase):
         self.assertIn("Catalog cache", payload["answer_summary"])
         self.assertEqual(payload["meta"]["item_count"], 1)
 
+    def test_tools_call_none_arguments_are_treated_as_empty_object(self):
+        response = handle_request(
+            FakeCache(),
+            {
+                "jsonrpc": "2.0",
+                "id": 8,
+                "method": "tools/call",
+                "params": {"name": "get_catalog_status", "arguments": None},
+            },
+        )
+
+        self.assertIn("result", response)
+
     def test_unknown_method_returns_error_code_minus_32601(self):
         response = handle_request(FakeCache(), {"jsonrpc": "2.0", "id": 4, "method": "missing"})
 
@@ -84,6 +97,23 @@ class McpServerTests(unittest.TestCase):
         response = handle_request(FakeCache(), {"jsonrpc": "2.0", "method": "notifications/initialized"})
 
         self.assertIsNone(response)
+
+    def test_request_without_id_is_notification_and_returns_none(self):
+        response = handle_request(FakeCache(), {"jsonrpc": "2.0", "method": "tools/list"})
+
+        self.assertIsNone(response)
+
+    def test_unknown_method_without_id_is_notification_and_returns_none(self):
+        response = handle_request(FakeCache(), {"jsonrpc": "2.0", "method": "missing"})
+
+        self.assertIsNone(response)
+
+    def test_valid_non_object_json_returns_invalid_request_error(self):
+        for line in ("[]", "42", '"request"', "true"):
+            with self.subTest(line=line):
+                response = handle_line(FakeCache(), line)
+
+                self.assertEqual(response["error"]["code"], -32600)
 
     def test_invalid_tool_args_return_error_code_minus_32602(self):
         response = handle_request(
