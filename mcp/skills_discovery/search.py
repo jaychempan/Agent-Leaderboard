@@ -34,6 +34,10 @@ STOPWORDS = {
     "with",
 }
 
+SOURCE_TYPE_ALIASES = {
+    "research": "auto_research",
+}
+
 
 def tokenize(text: str) -> list[str]:
     tokens = []
@@ -80,6 +84,7 @@ def _matches_filter(
     use_case: str = "",
     min_stars: int = 0,
 ) -> bool:
+    source_type = SOURCE_TYPE_ALIASES.get(source_type, source_type)
     if source_type and item.get("source_type") != source_type:
         return False
     if platform and platform not in _list_value(item.get("platforms")):

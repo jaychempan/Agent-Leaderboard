@@ -14,6 +14,7 @@ ENV_INDEX_URL = "SKILLS_DISCOVERY_INDEX_URL"
 ENV_CACHE_DIR = "SKILLS_DISCOVERY_CACHE_DIR"
 CACHE_FILE_NAME = "discovery_index.json"
 USER_AGENT = "skills-discovery-mcp/0.1"
+FETCH_TIMEOUT_SECONDS = 10
 
 
 def default_cache_dir() -> Path:
@@ -25,7 +26,7 @@ def default_cache_dir() -> Path:
 
 def fetch_json(url: str) -> dict[str, Any]:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request) as response:
+    with urllib.request.urlopen(request, timeout=FETCH_TIMEOUT_SECONDS) as response:
         return json.loads(response.read().decode("utf-8"))
 
 

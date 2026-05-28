@@ -161,7 +161,7 @@ Use the catalog directly from any AI chat client that supports MCP by running th
 python3 -m mcp.skills_discovery.server
 ```
 
-By default the server reads the daily `data/discovery_index.json` generated from the leaderboard data. To test a local or custom index, point it at an absolute file URL:
+By default the server reads the daily remote catalog at `https://agentskills.media/data/discovery_index.json`, generated from the leaderboard data. To test a local or custom index, point it at an absolute file URL:
 
 ```bash
 SKILLS_DISCOVERY_INDEX_URL=file:///absolute/path/to/data/discovery_index.json \

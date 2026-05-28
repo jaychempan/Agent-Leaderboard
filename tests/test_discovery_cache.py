@@ -3,14 +3,16 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from mcp.skills_discovery.cache import (
     ENV_CACHE_DIR,
     ENV_INDEX_URL,
+    FETCH_TIMEOUT_SECONDS,
     CatalogCache,
     _write_json_atomic,
     default_cache_dir,
+    fetch_json,
 )
 
 
@@ -89,6 +91,16 @@ class DiscoveryCacheTests(unittest.TestCase):
                 self.assertEqual(default_cache_dir(), Path(tmp))
                 self.assertEqual(cache.source_url, "https://example.test/env-index.json")
                 self.assertEqual(cache.cache_path, Path(tmp) / "discovery_index.json")
+
+    def test_fetch_json_uses_bounded_timeout(self):
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = json.dumps(PAYLOAD).encode("utf-8")
+
+        with patch("mcp.skills_discovery.cache.urllib.request.urlopen", return_value=response) as urlopen:
+            catalog = fetch_json("https://example.test/index.json")
+
+        self.assertEqual(catalog, PAYLOAD)
+        self.assertEqual(urlopen.call_args.kwargs["timeout"], FETCH_TIMEOUT_SECONDS)
 
 
 if __name__ == "__main__":

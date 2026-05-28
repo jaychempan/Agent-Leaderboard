@@ -161,7 +161,7 @@ python3 -m http.server 8080
 python3 -m mcp.skills_discovery.server
 ```
 
-默认会读取每日生成的 `data/discovery_index.json`。如果要测试本地或自定义索引，可以用绝对路径的 file URL 覆盖：
+默认会读取每日生成的远程目录 `https://agentskills.media/data/discovery_index.json`。如果要测试本地或自定义索引，可以用绝对路径的 file URL 覆盖：
 
 ```bash
 SKILLS_DISCOVERY_INDEX_URL=file:///absolute/path/to/data/discovery_index.json \

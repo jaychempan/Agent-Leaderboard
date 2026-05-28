@@ -102,6 +102,30 @@ class DiscoverySearchTests(unittest.TestCase):
         self.assertIn("codex", result["items"][0]["match_reason"].lower())
         self.assertEqual(result["meta"]["count"], 1)
 
+    def test_search_catalog_accepts_research_source_alias(self):
+        items = [
+            {
+                "id": "auto_research:1",
+                "full_name": "acme/research-agent",
+                "name": "research-agent",
+                "description": "Deep research agent",
+                "source_type": "auto_research",
+                "platforms": ["other"],
+                "use_cases": ["深度研究"],
+                "categories": ["deep_research"],
+                "topics": ["research"],
+                "language": "Python",
+                "stars": 1200,
+                "updated_at": "2026-05-28T00:00:00Z",
+                "url": "https://github.com/acme/research-agent",
+                "search_text": "auto_research acme/research-agent deep research agent",
+            }
+        ]
+
+        result = search_catalog(items, query="deep research", source_type="research", limit=5)
+
+        self.assertEqual(result["items"][0]["full_name"], "acme/research-agent")
+
     def test_search_catalog_explains_search_text_only_matches(self):
         result = search_catalog(ITEMS, query="代码审查", limit=5)
 
