@@ -45,6 +45,13 @@ class UnavailableCatalogCache:
         raise RuntimeError("catalog unavailable")
 
 
+class BadCatalogCache:
+    def items(self):
+        item = FakeCache().items()[0].copy()
+        item["stars"] = object()
+        return [item]
+
+
 class McpServerTests(unittest.TestCase):
     def test_initialize_response(self):
         response = handle_request(FakeCache(), {"jsonrpc": "2.0", "id": 1, "method": "initialize"})
@@ -139,6 +146,19 @@ class McpServerTests(unittest.TestCase):
 
         self.assertEqual(response["error"]["code"], -32602)
 
+    def test_unknown_tool_returns_error_code_minus_32602(self):
+        response = handle_request(
+            FakeCache(),
+            {
+                "jsonrpc": "2.0",
+                "id": 10,
+                "method": "tools/call",
+                "params": {"name": "missing_tool"},
+            },
+        )
+
+        self.assertEqual(response["error"]["code"], -32602)
+
     def test_unexpected_tools_call_error_preserves_request_id(self):
         response = handle_request(
             UnavailableCatalogCache(),
@@ -153,6 +173,20 @@ class McpServerTests(unittest.TestCase):
         self.assertEqual(response["id"], 99)
         self.assertEqual(response["error"]["code"], -32603)
         self.assertEqual(response["error"]["message"], "catalog unavailable")
+
+    def test_internal_type_error_during_tool_execution_returns_internal_error_with_request_id(self):
+        response = handle_request(
+            BadCatalogCache(),
+            {
+                "jsonrpc": "2.0",
+                "id": 123,
+                "method": "tools/call",
+                "params": {"name": "search_catalog"},
+            },
+        )
+
+        self.assertEqual(response["id"], 123)
+        self.assertEqual(response["error"]["code"], -32603)
 
     def test_falsy_non_object_tool_arguments_return_error_code_minus_32602(self):
         for arguments in ([], "", 0, False, None):
