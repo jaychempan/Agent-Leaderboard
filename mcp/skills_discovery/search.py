@@ -6,10 +6,63 @@ from typing import Any, Optional
 
 
 TOKEN_RE = re.compile(r"[\w\u4e00-\u9fff/+#.-]+", re.UNICODE)
+LATIN_WORD_RE = re.compile(r"[a-z0-9]+")
+CJK_RE = re.compile(r"[\u4e00-\u9fff]")
+
+STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "for",
+    "from",
+    "i",
+    "in",
+    "is",
+    "it",
+    "me",
+    "my",
+    "need",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "with",
+}
 
 
 def tokenize(text: str) -> list[str]:
-    return [token.lower() for token in TOKEN_RE.findall(text or "")]
+    tokens = []
+    for token in TOKEN_RE.findall(text or ""):
+        normalized = token.lower()
+        if _is_weak_token(normalized):
+            continue
+        tokens.append(normalized)
+    return tokens
+
+
+def _is_weak_token(token: str) -> bool:
+    if token in STOPWORDS:
+        return True
+    return len(token) == 1 and token.isascii() and token.isalnum()
+
+
+def _latin_terms(text: str) -> set[str]:
+    return set(LATIN_WORD_RE.findall(text.lower()))
+
+
+def _matches_text(token: str, text: str, latin_terms: set[str]) -> bool:
+    if not token:
+        return False
+    if CJK_RE.search(token) or any(marker in token for marker in ("/", "+", "#", ".", "-")):
+        return token in text
+    if token.isascii() and token.replace("_", "").isalnum():
+        return token in latin_terms
+    return token in text
 
 
 def _list_value(value: Any) -> list[str]:
@@ -48,26 +101,32 @@ def _score_item(
     full_name = str(item.get("full_name") or "").lower()
     description = str(item.get("description") or "").lower()
     search_text = str(item.get("search_text") or "").lower()
+    full_name_terms = _latin_terms(full_name)
+    description_terms = _latin_terms(description)
+    search_terms = _latin_terms(search_text)
     platforms = _list_value(item.get("platforms"))
     use_cases = _list_value(item.get("use_cases"))
     score = min(int(item.get("stars") or 0) // 1000, 20)
     reasons: list[str] = []
-    query_matched = not tokens
+    query_matched = not query.strip()
 
     for token in tokens:
         token_matched = False
-        if token in full_name:
+        name_matched = _matches_text(token, full_name, full_name_terms)
+        description_matched = _matches_text(token, description, description_terms)
+        search_matched = _matches_text(token, search_text, search_terms)
+        if name_matched:
             score += 8
             token_matched = True
             reasons.append(f"name matches {token}")
-        if token in description:
+        if description_matched:
             score += 5
             token_matched = True
             reasons.append(f"description matches {token}")
-        if token in search_text:
+        if search_matched:
             score += 2
             token_matched = True
-            if token not in full_name and token not in description:
+            if not name_matched and not description_matched:
                 reasons.append(f"catalog metadata matches {token}")
         query_matched = query_matched or token_matched
 

@@ -83,6 +83,18 @@ class DiscoverySearchTests(unittest.TestCase):
     def test_tokenize_normalizes_words_and_repo_tokens(self):
         self.assertEqual(tokenize("Codex TDD + acme/codex-tdd"), ["codex", "tdd", "+", "acme/codex-tdd"])
 
+    def test_search_catalog_ignores_stopword_only_queries(self):
+        result = search_catalog(ITEMS, query="I a the", source_type="skill", limit=5)
+
+        self.assertEqual(result["items"], [])
+        self.assertEqual(result["meta"]["count"], 0)
+
+    def test_search_catalog_keeps_meaningful_terms_from_natural_language(self):
+        result = search_catalog(ITEMS, query="I need TDD tests", source_type="skill", limit=5)
+
+        self.assertEqual(result["items"][0]["full_name"], "acme/codex-tdd")
+        self.assertIn("tdd", result["items"][0]["match_reason"].lower())
+
     def test_search_catalog_filters_and_scores(self):
         result = search_catalog(ITEMS, query="codex testing", platform="codex", source_type="skill", limit=5)
 
