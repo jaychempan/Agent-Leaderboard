@@ -13,6 +13,7 @@ TOOL_NAMES = [
     "get_install_instructions",
     "get_catalog_status",
 ]
+_MISSING_ARGUMENTS = object()
 
 
 def list_tools() -> list[dict[str, Any]]:
@@ -106,10 +107,13 @@ def list_tools() -> list[dict[str, Any]]:
     ]
 
 
-def call_tool(cache: Any, name: str, arguments: dict[str, Any] | None = None) -> dict[str, list[dict[str, str]]]:
-    if arguments is not None and not isinstance(arguments, dict):
+def call_tool(cache: Any, name: str, arguments: Any = _MISSING_ARGUMENTS) -> dict[str, list[dict[str, str]]]:
+    if arguments is _MISSING_ARGUMENTS:
+        args = {}
+    elif not isinstance(arguments, dict):
         raise ValueError("arguments must be an object")
-    args = arguments or {}
+    else:
+        args = arguments
 
     if name == "search_catalog":
         payload = search.search_catalog(

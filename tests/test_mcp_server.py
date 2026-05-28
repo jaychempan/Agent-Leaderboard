@@ -75,7 +75,7 @@ class McpServerTests(unittest.TestCase):
         self.assertIn("Catalog cache", payload["answer_summary"])
         self.assertEqual(payload["meta"]["item_count"], 1)
 
-    def test_tools_call_none_arguments_are_treated_as_empty_object(self):
+    def test_tools_call_none_arguments_returns_error_code_minus_32602(self):
         response = handle_request(
             FakeCache(),
             {
@@ -86,7 +86,7 @@ class McpServerTests(unittest.TestCase):
             },
         )
 
-        self.assertIn("result", response)
+        self.assertEqual(response["error"]["code"], -32602)
 
     def test_unknown_method_returns_error_code_minus_32601(self):
         response = handle_request(FakeCache(), {"jsonrpc": "2.0", "id": 4, "method": "missing"})
@@ -129,7 +129,7 @@ class McpServerTests(unittest.TestCase):
         self.assertEqual(response["error"]["code"], -32602)
 
     def test_falsy_non_object_tool_arguments_return_error_code_minus_32602(self):
-        for arguments in ([], "", 0, False):
+        for arguments in ([], "", 0, False, None):
             with self.subTest(arguments=arguments):
                 response = handle_request(
                     FakeCache(),
