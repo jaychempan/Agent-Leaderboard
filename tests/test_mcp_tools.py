@@ -117,6 +117,12 @@ class McpToolsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             call_tool(FakeCache(), "missing_tool")
 
+    def test_non_object_arguments_raise_value_error(self):
+        for arguments in ([], "query=codex", 123):
+            with self.subTest(arguments=arguments):
+                with self.assertRaisesRegex(ValueError, "arguments"):
+                    call_tool(FakeCache(), "get_catalog_status", arguments)
+
     def test_limit_out_of_range_raises_value_error(self):
         for limit in (-1, 0, 51):
             with self.subTest(limit=limit):

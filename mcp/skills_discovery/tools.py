@@ -107,6 +107,8 @@ def list_tools() -> list[dict[str, Any]]:
 
 
 def call_tool(cache: Any, name: str, arguments: dict[str, Any] | None = None) -> dict[str, list[dict[str, str]]]:
+    if arguments is not None and not isinstance(arguments, dict):
+        raise ValueError("arguments must be an object")
     args = arguments or {}
 
     if name == "search_catalog":
