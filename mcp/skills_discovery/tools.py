@@ -30,8 +30,13 @@ def list_tools() -> list[dict[str, Any]]:
                     },
                     "platform": {"type": "string", "description": "Optional platform filter such as codex."},
                     "use_case": {"type": "string", "description": "Optional use case filter."},
-                    "min_stars": {"type": "integer", "description": "Minimum GitHub stars."},
-                    "limit": {"type": "integer", "description": "Maximum number of results."},
+                    "min_stars": {"type": "integer", "description": "Minimum GitHub stars.", "minimum": 0},
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum number of results.",
+                        "minimum": 1,
+                        "maximum": 50,
+                    },
                 },
             },
         },
@@ -43,7 +48,12 @@ def list_tools() -> list[dict[str, Any]]:
                 "properties": {
                     "task": {"type": "string", "description": "Task or workflow to find skills for."},
                     "platform": {"type": "string", "description": "Optional platform filter such as codex."},
-                    "limit": {"type": "integer", "description": "Maximum number of recommendations."},
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum number of recommendations.",
+                        "minimum": 1,
+                        "maximum": 50,
+                    },
                 },
             },
         },
@@ -64,7 +74,12 @@ def list_tools() -> list[dict[str, Any]]:
                         "description": "Ranking sort. Use stars or recently_updated.",
                         "enum": ["stars", "recently_updated"],
                     },
-                    "limit": {"type": "integer", "description": "Maximum number of results."},
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum number of results.",
+                        "minimum": 1,
+                        "maximum": 50,
+                    },
                 },
             },
         },
@@ -101,15 +116,15 @@ def call_tool(cache: Any, name: str, arguments: dict[str, Any] | None = None) ->
             source_type=_str_arg(args, "source_type"),
             platform=_str_arg(args, "platform"),
             use_case=_str_arg(args, "use_case"),
-            min_stars=_int_arg(args, "min_stars", 0),
-            limit=_int_arg(args, "limit", 10),
+            min_stars=_min_stars_arg(args, "min_stars", 0),
+            limit=_limit_arg(args, "limit", 10),
         )
     elif name == "recommend_for_task":
         payload = search.recommend_for_task(
             cache.items(),
             task=_str_arg(args, "task"),
             platform=_str_arg(args, "platform"),
-            limit=_int_arg(args, "limit", 5),
+            limit=_limit_arg(args, "limit", 5),
         )
     elif name == "get_top_rankings":
         payload = search.top_rankings(
@@ -118,7 +133,7 @@ def call_tool(cache: Any, name: str, arguments: dict[str, Any] | None = None) ->
             platform=_str_arg(args, "platform"),
             use_case=_str_arg(args, "use_case"),
             sort=_str_arg(args, "sort", "stars"),
-            limit=_int_arg(args, "limit", 10),
+            limit=_limit_arg(args, "limit", 10),
         )
     elif name == "get_install_instructions":
         payload = search.get_install_instructions(
@@ -151,14 +166,36 @@ def _text_result(payload: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
 
 
 def _str_arg(args: dict[str, Any], name: str, default: str = "") -> str:
-    value = args.get(name, default)
-    if value is None:
+    if name not in args:
         return default
+    value = args[name]
+    if not isinstance(value, str):
+        raise ValueError(f"{name} must be a string")
     return str(value)
 
 
 def _int_arg(args: dict[str, Any], name: str, default: int) -> int:
-    try:
-        return int(args.get(name, default))
-    except (TypeError, ValueError):
+    if name not in args:
         return default
+    value = args[name]
+    if type(value) is int:
+        return value
+    if isinstance(value, str):
+        stripped = value.strip()
+        if stripped and stripped.lstrip("-").isdigit():
+            return int(stripped)
+    raise ValueError(f"{name} must be an integer")
+
+
+def _limit_arg(args: dict[str, Any], name: str, default: int) -> int:
+    value = _int_arg(args, name, default)
+    if value < 1 or value > 50:
+        raise ValueError(f"{name} must be between 1 and 50")
+    return value
+
+
+def _min_stars_arg(args: dict[str, Any], name: str, default: int) -> int:
+    value = _int_arg(args, name, default)
+    if value < 0:
+        raise ValueError(f"{name} must be greater than or equal to 0")
+    return value

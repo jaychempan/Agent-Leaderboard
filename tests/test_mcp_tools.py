@@ -64,15 +64,30 @@ class McpToolsTests(unittest.TestCase):
             self.assertIsInstance(tool["inputSchema"], dict)
 
     def test_search_catalog_returns_text_content_with_known_repo(self):
-        result = call_tool(FakeCache(), "search_catalog", {"query": "codex testing"})
+        payload = self._payload(call_tool(FakeCache(), "search_catalog", {"query": "codex testing"}))
 
-        text = result["content"][0]["text"]
-        self.assertIn("acme/codex-tdd", text)
+        self.assertIn("Found", payload["answer_summary"])
+        self.assertEqual(payload["items"][0]["full_name"], "acme/codex-tdd")
+        self.assertEqual(payload["meta"]["filters"]["query"], "codex testing")
 
     def test_get_catalog_status_returns_item_count(self):
-        result = call_tool(FakeCache(), "get_catalog_status")
+        payload = self._payload(call_tool(FakeCache(), "get_catalog_status"))
 
-        self.assertIn("item_count", result["content"][0]["text"])
+        self.assertIn("Catalog cache", payload["answer_summary"])
+        self.assertEqual(payload["items"], [])
+        self.assertEqual(payload["meta"]["item_count"], 1)
+
+    def test_tool_schemas_include_integer_bounds(self):
+        tools = {tool["name"]: tool for tool in list_tools()}
+
+        search_properties = tools["search_catalog"]["inputSchema"]["properties"]
+        self.assertEqual(search_properties["limit"]["minimum"], 1)
+        self.assertEqual(search_properties["limit"]["maximum"], 50)
+        self.assertEqual(search_properties["min_stars"]["minimum"], 0)
+
+        ranking_limit = tools["get_top_rankings"]["inputSchema"]["properties"]["limit"]
+        self.assertEqual(ranking_limit["minimum"], 1)
+        self.assertEqual(ranking_limit["maximum"], 50)
 
     def test_get_top_rankings_text_is_json_with_summary_and_items(self):
         payload = self._payload(call_tool(FakeCache(), "get_top_rankings", {"limit": "1"}))
@@ -113,6 +128,22 @@ class McpToolsTests(unittest.TestCase):
     def test_unknown_tool_raises_value_error(self):
         with self.assertRaises(ValueError):
             call_tool(FakeCache(), "missing_tool")
+
+    def test_negative_limit_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, "limit"):
+            call_tool(FakeCache(), "search_catalog", {"limit": -1})
+
+    def test_invalid_limit_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, "limit"):
+            call_tool(FakeCache(), "search_catalog", {"limit": "many"})
+
+    def test_negative_min_stars_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, "min_stars"):
+            call_tool(FakeCache(), "search_catalog", {"min_stars": -1})
+
+    def test_non_string_query_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, "query"):
+            call_tool(FakeCache(), "search_catalog", {"query": 123})
 
 
 if __name__ == "__main__":
