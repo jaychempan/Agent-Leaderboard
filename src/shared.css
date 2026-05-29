@@ -361,6 +361,29 @@ button, select, input { font: inherit; }
   font-size: 12px;
   overflow-wrap: anywhere;
 }
+.mcp-config {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+}
+.mcp-config span {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.mcp-config pre {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, SFMono, Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-x: auto;
+  white-space: pre;
+}
 .mcp-examples-label {
   color: var(--text2);
   font-size: 12px;

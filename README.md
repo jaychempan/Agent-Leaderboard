@@ -155,7 +155,31 @@ python3 -m http.server 8080
 
 ## MCP Skill Discovery
 
-Use the catalog directly from any AI chat client that supports MCP by running the local discovery server:
+Use the catalog directly from any AI chat client that supports MCP. The fastest install path creates an isolated venv under `~/.local/share/skills-discovery-mcp` and exposes a `skills-discovery-mcp` command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
+```
+
+Add the command to your MCP client configuration:
+
+```json
+{
+  "mcpServers": {
+    "skills-discovery": {
+      "command": "skills-discovery-mcp"
+    }
+  }
+}
+```
+
+Re-run `scripts/install.sh` to update an existing install. To uninstall:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/uninstall.sh | bash
+```
+
+You can also run the server directly from a cloned checkout:
 
 ```bash
 python3 -m mcp.skills_discovery.server

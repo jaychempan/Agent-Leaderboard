@@ -155,7 +155,31 @@ python3 -m http.server 8080
 
 ## MCP 技能发现助手
 
-在任何支持 MCP 的 AI 聊天工具里，可以启动本地发现服务器，直接使用这个目录：
+在任何支持 MCP 的 AI 聊天工具里，都可以直接使用这个目录。最快的安装方式会在 `~/.local/share/skills-discovery-mcp` 下创建独立 venv，并提供 `skills-discovery-mcp` 命令：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
+```
+
+把这个命令加入 MCP 客户端配置：
+
+```json
+{
+  "mcpServers": {
+    "skills-discovery": {
+      "command": "skills-discovery-mcp"
+    }
+  }
+}
+```
+
+重新运行 `scripts/install.sh` 可以更新已有安装。卸载：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/uninstall.sh | bash
+```
+
+也可以在克隆后的仓库里直接启动本地发现服务器：
 
 ```bash
 python3 -m mcp.skills_discovery.server
