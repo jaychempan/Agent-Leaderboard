@@ -655,12 +655,26 @@ function renderMcpUsage() {
     title: '一键接入 AI 客户端',
     desc: '自动安装并配置检测到的客户端，打开聊天工具就能搜索 Skills、MCP、Prompt 和框架。',
     commandLabel: '安装命令',
+    examplesTitle: '使用示例',
+    exampleIntro: '安装后新开 Codex 会话，可以直接点名使用 skills-discovery。',
+    verifyLabel: '验证',
+    chatLabel: '聊天里说',
+    execLabel: '命令行',
+    chatExample: '请使用 skills-discovery 搜索：Claude code writing skills',
+    doc: '完整快速文档',
     repo: 'GitHub 仓库',
     index: '每日索引',
   } : {
     title: 'One-Step Client Setup',
     desc: 'Installs the server, connects detected clients, and lets you search Skills, MCP servers, prompts, and frameworks from chat.',
     commandLabel: 'Install command',
+    examplesTitle: 'Usage Examples',
+    exampleIntro: 'After installing, start a new Codex session and explicitly ask for skills-discovery.',
+    verifyLabel: 'Verify',
+    chatLabel: 'In chat',
+    execLabel: 'CLI',
+    chatExample: 'Use skills-discovery to search: Claude code writing skills',
+    doc: 'Full quick guide',
     repo: 'GitHub repo',
     index: 'Daily index',
   };
@@ -683,6 +697,27 @@ function renderMcpUsage() {
           <a class="mcp-link" href="data/discovery_index.json" target="_blank" rel="noopener noreferrer">${copy.index}</a>
         </div>
       </div>
+      <details class="mcp-quick-examples">
+        <summary>${copy.examplesTitle}</summary>
+        <div class="mcp-quick-body">
+          <p>${copy.exampleIntro}</p>
+          <div class="mcp-example-grid">
+            <div>
+              <span>${copy.verifyLabel}</span>
+              <code>codex mcp list</code>
+            </div>
+            <div>
+              <span>${copy.chatLabel}</span>
+              <code>${copy.chatExample}</code>
+            </div>
+            <div>
+              <span>${copy.execLabel}</span>
+              <code>codex exec "请使用 skills-discovery 搜索 Claude code writing skills"</code>
+            </div>
+          </div>
+          <a class="mcp-quick-doc" href="docs/mcp-quick-use.zh.md" target="_blank" rel="noopener noreferrer">${copy.doc}</a>
+        </div>
+      </details>
     </div>`;
 }
 

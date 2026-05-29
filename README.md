@@ -170,6 +170,8 @@ For Codex, verify the server is registered, then start a new Codex session:
 codex mcp list
 ```
 
+Quick examples are in [`docs/mcp-quick-use.zh.md`](docs/mcp-quick-use.zh.md).
+
 To skip client config or target specific clients:
 
 ```bash

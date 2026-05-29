@@ -170,6 +170,8 @@ Codex 配好后，先确认 MCP 已注册，然后新开一个 Codex 会话：
 codex mcp list
 ```
 
+快速示例见 [`docs/mcp-quick-use.zh.md`](docs/mcp-quick-use.zh.md)。
+
 如果要跳过客户端配置，或指定客户端：
 
 ```bash
