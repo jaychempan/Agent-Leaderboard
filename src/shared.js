@@ -652,57 +652,35 @@ function renderMcpUsage() {
 
   const isZh = app.lang === 'zh';
   const copy = isZh ? {
-    title: '在 AI 聊天工具里使用这个目录',
-    desc: '一条命令安装并自动接入检测到的客户端，然后直接在聊天工具里搜索 Skills、MCP、Prompt 和框架。',
+    title: '一键接入 AI 客户端',
+    desc: '自动安装并配置检测到的客户端，打开聊天工具就能搜索 Skills、MCP、Prompt 和框架。',
     commandLabel: '安装命令',
-    examplesLabel: '示例提问',
-    examples: [
-      '帮我找适合 Codex 的测试技能',
-      '推荐 Claude 可用的 UI/UX 技能',
-      '列出最热门的 MCP 浏览器自动化服务器',
-    ],
-    safety: '安装器写入客户端配置前会备份文件；MCP 工具本身只返回建议、说明和链接。',
     repo: 'GitHub 仓库',
     index: '每日索引',
-    uninstall: '卸载脚本',
   } : {
-    title: 'Use this catalog in your AI chat',
-    desc: 'One command installs the server and connects detected clients, then you can search Skills, MCP servers, prompts, and frameworks from chat.',
+    title: 'One-Step Client Setup',
+    desc: 'Installs the server, connects detected clients, and lets you search Skills, MCP servers, prompts, and frameworks from chat.',
     commandLabel: 'Install command',
-    examplesLabel: 'Example queries',
-    examples: [
-      'Find Codex testing skills',
-      'Recommend Claude UI/UX skills',
-      'Top MCP browser automation servers',
-    ],
-    safety: 'The installer backs up client config files before editing; the MCP tool itself returns guidance and links only.',
     repo: 'GitHub repo',
     index: 'Daily index',
-    uninstall: 'Uninstall script',
   };
   const installCommand = 'curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash';
 
   el.innerHTML = `
     <div class="mcp-usage">
       <div class="mcp-usage-main">
-        <div class="mcp-usage-kicker">MCP Skill Discovery</div>
-        <h2>${copy.title}</h2>
-        <p>${copy.desc}</p>
+        <div class="mcp-usage-copy">
+          <div class="mcp-usage-kicker">MCP Skill Discovery</div>
+          <h2>${copy.title}</h2>
+          <p>${copy.desc}</p>
+        </div>
         <div class="mcp-command" aria-label="${copy.commandLabel}">
           <span>${copy.commandLabel}</span>
           <code>${installCommand}</code>
         </div>
-      </div>
-      <div class="mcp-usage-side">
-        <div class="mcp-examples-label">${copy.examplesLabel}</div>
-        <ul class="mcp-examples">
-          ${copy.examples.map(example => `<li>${example}</li>`).join('')}
-        </ul>
-        <p class="mcp-safety">${copy.safety}</p>
         <div class="mcp-links">
           <a class="mcp-link mcp-link-primary" href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer">${copy.repo}</a>
           <a class="mcp-link" href="data/discovery_index.json" target="_blank" rel="noopener noreferrer">${copy.index}</a>
-          <a class="mcp-link" href="scripts/uninstall.sh" target="_blank" rel="noopener noreferrer">${copy.uninstall}</a>
         </div>
       </div>
     </div>`;

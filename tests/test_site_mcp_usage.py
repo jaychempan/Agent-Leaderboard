@@ -19,9 +19,10 @@ class SiteMcpUsageTests(unittest.TestCase):
         self.assertIn("scripts/install.sh", js)
         self.assertIn("curl -fsSL", js)
         self.assertIn("SKILLS_DISCOVERY_CONFIGURE_CLIENTS", js)
-        self.assertIn("scripts/uninstall.sh", js)
+        self.assertNotIn("scripts/uninstall.sh", js)
         self.assertNotIn("clientConfig", js)
         self.assertNotIn("mcp-config", js)
+        self.assertNotIn("mcp-usage-side", js)
 
 
 if __name__ == "__main__":
