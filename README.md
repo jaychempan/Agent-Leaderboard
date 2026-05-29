@@ -161,7 +161,16 @@ Use the catalog directly from any AI chat client that supports MCP. The fastest 
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
 ```
 
-Add the command to your MCP client configuration:
+During interactive installs, the script can configure detected MCP clients automatically. To force non-interactive configuration:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
+  | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
+```
+
+Supported values are `auto`, `none`, or a comma-separated list such as `codex,claude,cursor`. The installer backs up config files before editing them.
+
+If your client is not configured automatically, add the command manually:
 
 ```json
 {

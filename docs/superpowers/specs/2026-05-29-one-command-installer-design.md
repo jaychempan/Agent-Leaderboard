@@ -2,7 +2,7 @@
 
 ## Summary
 
-Add a curl-friendly installer for the Skills Discovery MCP server. The installer creates an isolated user-local runtime, installs a command named `skills-discovery-mcp`, and leaves MCP client configuration as an explicit copy-paste step.
+Add a curl-friendly installer for the Skills Discovery MCP server. The installer creates an isolated user-local runtime, installs a command named `skills-discovery-mcp`, and can configure common MCP clients after creating backups.
 
 ## Goals
 
@@ -10,11 +10,11 @@ Add a curl-friendly installer for the Skills Discovery MCP server. The installer
 - Avoid modifying system Python or global site packages.
 - Make updates idempotent by re-running the installer.
 - Provide a matching uninstall script.
-- Document MCP client configuration for command-based clients.
+- Configure detected MCP clients when the user opts in or when `SKILLS_DISCOVERY_CONFIGURE_CLIENTS` is set.
+- Document automatic and manual MCP client configuration for command-based clients.
 
 ## Non-Goals
 
-- Do not auto-edit Claude, Codex, Cursor, or other MCP client config files in the first version.
 - Do not publish a PyPI package in this version.
 - Do not require Node, Docker, or third-party Python packages.
 
@@ -36,8 +36,19 @@ The installer supports environment overrides:
 - `SKILLS_DISCOVERY_REF`: Branch or tag to install. Defaults to `main`.
 - `SKILLS_DISCOVERY_INSTALL_DIR`: Install root. Defaults to `~/.local/share/skills-discovery-mcp`.
 - `SKILLS_DISCOVERY_BIN_DIR`: Command directory. Defaults to `~/.local/bin`.
+- `SKILLS_DISCOVERY_CONFIGURE_CLIENTS`: `auto`, `none`, or a comma-separated list such as `codex,claude,cursor`.
 
 The runtime keeps existing server environment variables, including `SKILLS_DISCOVERY_INDEX_URL` and `SKILLS_DISCOVERY_CACHE_DIR`.
+
+## Client Configuration
+
+Automatic configuration writes the `skills-discovery` MCP server into known client config files:
+
+- Codex: `~/.codex/config.toml`
+- Claude Desktop on macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Cursor: `~/.cursor/mcp.json`
+
+The installer creates a timestamped backup before modifying an existing config file. `auto` mode only configures clients with existing config files. Explicit client names may create missing config files.
 
 ## Error Handling
 
@@ -50,6 +61,7 @@ The uninstaller removes the install directory and wrapper command, honoring the 
 Add tests that verify:
 
 - `scripts/install.sh` and `scripts/uninstall.sh` exist and pass shell syntax checks.
-- The installer includes fail-fast shell options, dependency checks, the default repo URL, install paths, venv creation, and wrapper generation.
+- The installer includes fail-fast shell options, dependency checks, the default repo URL, install paths, venv creation, wrapper generation, and client configuration wiring.
+- The configuration helper preserves existing config data, backs up files, and updates Codex, Claude Desktop, and Cursor configs idempotently.
 - The uninstaller targets the same install directory and command path.
 - README documents the one-command install and MCP config snippet.

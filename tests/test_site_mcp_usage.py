@@ -18,6 +18,7 @@ class SiteMcpUsageTests(unittest.TestCase):
 
         self.assertIn("scripts/install.sh", js)
         self.assertIn("curl -fsSL", js)
+        self.assertIn("SKILLS_DISCOVERY_CONFIGURE_CLIENTS", js)
         self.assertIn('"command": "skills-discovery-mcp"', js)
         self.assertIn("scripts/uninstall.sh", js)
 

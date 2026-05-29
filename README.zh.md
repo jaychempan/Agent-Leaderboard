@@ -161,7 +161,16 @@ python3 -m http.server 8080
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
 ```
 
-把这个命令加入 MCP 客户端配置：
+交互式安装时，脚本可以自动配置检测到的 MCP 客户端。非交互安装时可以强制自动配置：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
+  | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
+```
+
+支持的值包括 `auto`、`none`，或逗号分隔的客户端列表，例如 `codex,claude,cursor`。安装器写入前会先备份配置文件。
+
+如果客户端没有被自动配置，可以手动加入：
 
 ```json
 {

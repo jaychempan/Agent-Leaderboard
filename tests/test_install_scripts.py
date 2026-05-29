@@ -38,6 +38,8 @@ class InstallScriptTests(unittest.TestCase):
         self.assertIn("command -v git", text)
         self.assertIn("command -v python3", text)
         self.assertIn("python3 -m venv", text)
+        self.assertIn("SKILLS_DISCOVERY_CONFIGURE_CLIENTS", text)
+        self.assertIn("configure_mcp_client.py", text)
         self.assertIn("skills-discovery-mcp", text)
         self.assertIn("mcp.skills_discovery.server", text)
 
@@ -61,6 +63,7 @@ class InstallScriptTests(unittest.TestCase):
                 self.assertIn("scripts/install.sh", text)
                 self.assertIn("scripts/uninstall.sh", text)
                 self.assertIn("skills-discovery-mcp", text)
+                self.assertIn("SKILLS_DISCOVERY_CONFIGURE_CLIENTS", text)
                 self.assertIn('"command": "skills-discovery-mcp"', text)
 
 

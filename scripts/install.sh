@@ -8,6 +8,7 @@ BIN_DIR="${SKILLS_DISCOVERY_BIN_DIR:-$HOME/.local/bin}"
 SOURCE_DIR="$INSTALL_DIR/source"
 VENV_DIR="$INSTALL_DIR/.venv"
 COMMAND_PATH="$BIN_DIR/skills-discovery-mcp"
+CONFIGURE_CLIENTS="${SKILLS_DISCOVERY_CONFIGURE_CLIENTS:-}"
 
 log() {
   printf 'skills-discovery-mcp: %s\n' "$*"
@@ -51,9 +52,27 @@ EOF
 chmod +x "$COMMAND_PATH"
 
 log "installed command: $COMMAND_PATH"
+
+if [ -z "$CONFIGURE_CLIENTS" ] && [ -r /dev/tty ] && [ -w /dev/tty ]; then
+  printf 'Configure detected MCP clients now? [Y/n] ' >/dev/tty
+  read -r reply </dev/tty || reply=""
+  case "$reply" in
+    n|N|no|NO|No) CONFIGURE_CLIENTS="none" ;;
+    *) CONFIGURE_CLIENTS="auto" ;;
+  esac
+fi
+
+if [ -n "$CONFIGURE_CLIENTS" ] && [ "$CONFIGURE_CLIENTS" != "none" ] && [ "$CONFIGURE_CLIENTS" != "0" ]; then
+  "$VENV_DIR/bin/python" "$SOURCE_DIR/scripts/configure_mcp_client.py" \
+    --command "$COMMAND_PATH" \
+    --clients "$CONFIGURE_CLIENTS"
+elif [ -z "$CONFIGURE_CLIENTS" ]; then
+  log "client config not changed; set SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto to configure detected clients"
+fi
+
 cat <<EOF
 
-Add this MCP server to your client configuration:
+If your MCP client was not configured automatically, add this server manually:
 
 {
   "mcpServers": {
@@ -65,4 +84,9 @@ Add this MCP server to your client configuration:
 
 If $BIN_DIR is not on PATH, use the absolute command path:
 $COMMAND_PATH
+
+Automatic client configuration:
+  SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto    configure detected clients
+  SKILLS_DISCOVERY_CONFIGURE_CLIENTS=none    skip client configuration
+  SKILLS_DISCOVERY_CONFIGURE_CLIENTS=codex,claude,cursor
 EOF

@@ -653,7 +653,7 @@ function renderMcpUsage() {
   const isZh = app.lang === 'zh';
   const copy = isZh ? {
     title: '在 AI 聊天工具里使用这个目录',
-    desc: '一键安装 MCP 技能发现助手，让聊天工具基于每日更新的目录推荐 Skills、MCP 服务器、Prompt 和框架。',
+    desc: '一键安装 MCP 技能发现助手，并可自动配置检测到的客户端，让聊天工具基于每日更新的目录推荐 Skills、MCP 服务器、Prompt 和框架。',
     commandLabel: '安装命令',
     configLabel: '客户端配置',
     examplesLabel: '示例提问',
@@ -662,13 +662,13 @@ function renderMcpUsage() {
       '推荐 Claude 可用的 UI/UX 技能',
       '列出最热门的 MCP 浏览器自动化服务器',
     ],
-    safety: '只返回建议、说明和链接；不会执行安装命令。',
+    safety: '安装器写入客户端配置前会备份文件；MCP 工具本身只返回建议、说明和链接。',
     repo: 'GitHub 仓库',
     index: '每日索引',
     uninstall: '卸载脚本',
   } : {
     title: 'Use this catalog in your AI chat',
-    desc: 'Install the MCP Skill Discovery server so your chat tool can recommend Skills, MCP servers, prompts, and frameworks from the daily catalog.',
+    desc: 'Install the MCP Skill Discovery server and optionally configure detected clients so your chat tool can recommend Skills, MCP servers, prompts, and frameworks from the daily catalog.',
     commandLabel: 'Install command',
     configLabel: 'Client config',
     examplesLabel: 'Example queries',
@@ -677,12 +677,12 @@ function renderMcpUsage() {
       'Recommend Claude UI/UX skills',
       'Top MCP browser automation servers',
     ],
-    safety: 'Returns guidance and links only; it does not execute install commands.',
+    safety: 'The installer backs up client config files before editing; the MCP tool itself returns guidance and links only.',
     repo: 'GitHub repo',
     index: 'Daily index',
     uninstall: 'Uninstall script',
   };
-  const installCommand = 'curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash';
+  const installCommand = 'curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash';
   const clientConfig = '{\n  "mcpServers": {\n    "skills-discovery": {\n      "command": "skills-discovery-mcp"\n    }\n  }\n}';
 
   el.innerHTML = `
