@@ -155,22 +155,21 @@ python3 -m http.server 8080
 
 ## MCP 技能发现助手
 
-在任何支持 MCP 的 AI 聊天工具里，都可以直接使用这个目录。最快的安装方式会在 `~/.local/share/skills-discovery-mcp` 下创建独立 venv，并提供 `skills-discovery-mcp` 命令：
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
-```
-
-交互式安装时，脚本可以自动配置检测到的 MCP 客户端。非交互安装时可以强制自动配置：
+在任何支持 MCP 的 AI 聊天工具里，都可以直接使用这个目录。一条命令会安装服务、在 `~/.local/share/skills-discovery-mcp` 下创建独立 venv，并自动配置检测到的客户端：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
   | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
 ```
 
-支持的值包括 `auto`、`none`，或逗号分隔的客户端列表，例如 `codex,claude,cursor`。安装器写入前会先备份配置文件。
+如果要跳过客户端配置，或指定客户端：
 
-如果客户端没有被自动配置，可以手动加入：
+```bash
+SKILLS_DISCOVERY_CONFIGURE_CLIENTS=none bash scripts/install.sh
+SKILLS_DISCOVERY_CONFIGURE_CLIENTS=codex,claude,cursor bash scripts/install.sh
+```
+
+安装器写入前会先备份配置文件。如果客户端没有被自动配置，可以使用这个手动兜底配置：
 
 ```json
 {

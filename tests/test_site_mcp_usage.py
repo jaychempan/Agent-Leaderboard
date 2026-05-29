@@ -13,14 +13,15 @@ class SiteMcpUsageTests(unittest.TestCase):
 
         self.assertIn('id="mcpUsage"', html)
 
-    def test_mcp_usage_promotes_one_command_install_and_client_config(self):
+    def test_mcp_usage_promotes_one_command_install_without_manual_config_block(self):
         js = SHARED_JS.read_text(encoding="utf-8")
 
         self.assertIn("scripts/install.sh", js)
         self.assertIn("curl -fsSL", js)
         self.assertIn("SKILLS_DISCOVERY_CONFIGURE_CLIENTS", js)
-        self.assertIn('"command": "skills-discovery-mcp"', js)
         self.assertIn("scripts/uninstall.sh", js)
+        self.assertNotIn("clientConfig", js)
+        self.assertNotIn("mcp-config", js)
 
 
 if __name__ == "__main__":

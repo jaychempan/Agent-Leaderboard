@@ -155,22 +155,21 @@ python3 -m http.server 8080
 
 ## MCP Skill Discovery
 
-Use the catalog directly from any AI chat client that supports MCP. The fastest install path creates an isolated venv under `~/.local/share/skills-discovery-mcp` and exposes a `skills-discovery-mcp` command:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | bash
-```
-
-During interactive installs, the script can configure detected MCP clients automatically. To force non-interactive configuration:
+Use the catalog directly from any AI chat client that supports MCP. One command installs the server, creates an isolated venv under `~/.local/share/skills-discovery-mcp`, and configures detected clients:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
   | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
 ```
 
-Supported values are `auto`, `none`, or a comma-separated list such as `codex,claude,cursor`. The installer backs up config files before editing them.
+To skip client config or target specific clients:
 
-If your client is not configured automatically, add the command manually:
+```bash
+SKILLS_DISCOVERY_CONFIGURE_CLIENTS=none bash scripts/install.sh
+SKILLS_DISCOVERY_CONFIGURE_CLIENTS=codex,claude,cursor bash scripts/install.sh
+```
+
+The installer backs up config files before editing them. If your client is not configured automatically, add this fallback manually:
 
 ```json
 {

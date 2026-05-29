@@ -653,9 +653,8 @@ function renderMcpUsage() {
   const isZh = app.lang === 'zh';
   const copy = isZh ? {
     title: '在 AI 聊天工具里使用这个目录',
-    desc: '一键安装 MCP 技能发现助手，并可自动配置检测到的客户端，让聊天工具基于每日更新的目录推荐 Skills、MCP 服务器、Prompt 和框架。',
+    desc: '一条命令安装并自动接入检测到的客户端，然后直接在聊天工具里搜索 Skills、MCP、Prompt 和框架。',
     commandLabel: '安装命令',
-    configLabel: '客户端配置',
     examplesLabel: '示例提问',
     examples: [
       '帮我找适合 Codex 的测试技能',
@@ -668,9 +667,8 @@ function renderMcpUsage() {
     uninstall: '卸载脚本',
   } : {
     title: 'Use this catalog in your AI chat',
-    desc: 'Install the MCP Skill Discovery server and optionally configure detected clients so your chat tool can recommend Skills, MCP servers, prompts, and frameworks from the daily catalog.',
+    desc: 'One command installs the server and connects detected clients, then you can search Skills, MCP servers, prompts, and frameworks from chat.',
     commandLabel: 'Install command',
-    configLabel: 'Client config',
     examplesLabel: 'Example queries',
     examples: [
       'Find Codex testing skills',
@@ -683,7 +681,6 @@ function renderMcpUsage() {
     uninstall: 'Uninstall script',
   };
   const installCommand = 'curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash';
-  const clientConfig = '{\n  "mcpServers": {\n    "skills-discovery": {\n      "command": "skills-discovery-mcp"\n    }\n  }\n}';
 
   el.innerHTML = `
     <div class="mcp-usage">
@@ -694,10 +691,6 @@ function renderMcpUsage() {
         <div class="mcp-command" aria-label="${copy.commandLabel}">
           <span>${copy.commandLabel}</span>
           <code>${installCommand}</code>
-        </div>
-        <div class="mcp-config" aria-label="${copy.configLabel}">
-          <span>${copy.configLabel}</span>
-          <pre><code>${clientConfig}</code></pre>
         </div>
       </div>
       <div class="mcp-usage-side">
