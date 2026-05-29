@@ -13,6 +13,12 @@ class SiteMcpUsageTests(unittest.TestCase):
 
         self.assertIn('id="mcpUsage"', html)
 
+    def test_homepage_cache_busts_shared_assets(self):
+        html = INDEX.read_text(encoding="utf-8")
+
+        self.assertRegex(html, r'src/shared\.css\?v=\d+')
+        self.assertRegex(html, r'src/shared\.js\?v=\d+')
+
     def test_mcp_usage_promotes_one_command_install_without_manual_config_block(self):
         js = SHARED_JS.read_text(encoding="utf-8")
 
