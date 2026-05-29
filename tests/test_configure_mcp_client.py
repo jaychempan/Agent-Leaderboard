@@ -107,6 +107,18 @@ class ConfigureMcpClientTests(unittest.TestCase):
             self.assertIn("[mcp_servers.skills-discovery]", codex.read_text(encoding="utf-8"))
             self.assertFalse((home / ".cursor" / "mcp.json").exists())
 
+    def test_auto_configures_codex_when_codex_home_exists_without_config(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            (home / ".codex").mkdir()
+
+            result = self.run_configure(home, "auto")
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            config = home / ".codex" / "config.toml"
+            self.assertTrue(config.exists())
+            self.assertIn("[mcp_servers.skills-discovery]", config.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

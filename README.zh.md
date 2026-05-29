@@ -155,11 +155,19 @@ python3 -m http.server 8080
 
 ## MCP 技能发现助手
 
-在任何支持 MCP 的 AI 聊天工具里，都可以直接使用这个目录。一条命令会安装服务、在 `~/.local/share/skills-discovery-mcp` 下创建独立 venv，并自动配置检测到的客户端：
+在任何支持 MCP 的 AI 聊天工具里，都可以直接使用这个目录。这条 Bash 命令会安装服务、在 `~/.local/share/skills-discovery-mcp` 下创建独立 venv，并自动配置检测到的客户端：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
   | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
+```
+
+安装命令适用于 macOS、Linux、WSL 或 Git Bash。原生 PowerShell 不支持这段 Bash 语法。
+
+Codex 配好后，先确认 MCP 已注册，然后新开一个 Codex 会话：
+
+```bash
+codex mcp list
 ```
 
 如果要跳过客户端配置，或指定客户端：

@@ -96,7 +96,7 @@ def selected_clients(raw: str, home: Path) -> list[str]:
         return clients
 
     detected: list[str] = []
-    if (home / ".codex" / "config.toml").exists():
+    if (home / ".codex").exists():
         detected.append("codex")
     if (home / "Library" / "Application Support" / "Claude" / "claude_desktop_config.json").exists():
         detected.append("claude")

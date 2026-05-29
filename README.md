@@ -155,11 +155,19 @@ python3 -m http.server 8080
 
 ## MCP Skill Discovery
 
-Use the catalog directly from any AI chat client that supports MCP. One command installs the server, creates an isolated venv under `~/.local/share/skills-discovery-mcp`, and configures detected clients:
+Use the catalog directly from any AI chat client that supports MCP. This Bash command installs the server, creates an isolated venv under `~/.local/share/skills-discovery-mcp`, and configures detected clients:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jaychempan/Agent-Leaderboard/main/scripts/install.sh \
   | SKILLS_DISCOVERY_CONFIGURE_CLIENTS=auto bash
+```
+
+Use macOS, Linux, WSL, or Git Bash for the installer. Native PowerShell does not support this Bash syntax.
+
+For Codex, verify the server is registered, then start a new Codex session:
+
+```bash
+codex mcp list
 ```
 
 To skip client config or target specific clients:
