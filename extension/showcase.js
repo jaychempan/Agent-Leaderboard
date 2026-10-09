@@ -32,7 +32,7 @@ const zh = {
   q5:'所有仓库都能直接安装吗？', a5:'不一定，有些条目是合集、文档或提示词。目录平台标签根据关键词推断，不代表兼容性已验证。安装提示会要求 AI 先读官方文档，选择适当的使用方式，保留已有配置，并如实说明不支持的情况。',
   updatesTitle:'版本更新', current:'当前版本', updateTitle:'找到工具后，再往前走一步。',
   u1:'每个仓库旁新增复制安装提示按钮，“详情”中也可直接复制。', u2:'中英文提示包含仓库及 README 地址、环境识别、按文档安装与结果验证。', u3:'同时包含紧凑侧栏、五大榜单、多用途筛选、分页、本地收藏、离线搜索和跟随系统主题。',
-  fullDocs:'查看完整插件文档', back:'返回排行榜', feedback:'反馈问题', privacy:'数据与隐私',
+  fullDocs:'查看完整插件文档', back:'返回排行榜', feedback:'反馈问题', privacy:'隐私政策',
 };
 const entries = [...document.querySelectorAll('[data-copy]')].map(node => ({node, key:node.dataset.copy, en:node.innerHTML}));
 const read = key => {try {return localStorage.getItem(key);} catch {return null;}};
@@ -48,6 +48,7 @@ function render() {
   document.documentElement.dataset.theme = theme;
   for (const {node,key,en} of entries) node.innerHTML = isZh ? zh[key] : en;
   document.getElementById('full-docs').href=isZh?'../chrome/help.html':'../chrome/help-en.html';
+  document.getElementById('privacy-link').href=isZh?'../privacy/':'../privacy/en.html';
   document.title = isZh ? 'Chrome 搜索插件 · Agent Leaderboard' : 'Chrome extension · Agent Leaderboard';
   document.querySelector('meta[name=description]').content = isZh ? '在 Chrome 侧边栏发现 Skills、MCP 和 AI 工具。下载 Agent Leaderboard 插件，了解使用方法，并复制安装提示交给你的 AI 编程工具。' : 'Find Skills, MCP servers and AI tools in your Chrome side panel. Download Agent Leaderboard, learn the workflow, and copy installation prompts for your AI coding tool.';
   document.getElementById('language').textContent = isZh ? 'EN' : '中';

@@ -444,6 +444,11 @@ function toggleLang() {
 function applyLangBtn() {
   const btn = document.getElementById('langBtn');
   if (btn) btn.textContent = app.lang === 'zh' ? 'EN' : '中';
+  const privacy = document.getElementById('privacyFooterLink');
+  if (privacy) {
+    privacy.textContent = app.lang === 'zh' ? '隐私政策' : 'Privacy policy';
+    privacy.href = app.lang === 'zh' ? 'privacy/' : 'privacy/en.html';
+  }
 }
 
 /* ── Favorites ──────────────────────────────────────────────────── */

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>隐私政策 · Agent Leaderboard</title>
+<meta name="description" content="了解 Agent Leaderboard Chrome 插件与官网如何处理本地搜索、收藏、目录更新、权限及数据删除。">
+<link rel="canonical" href="https://agentskills.media/privacy/">
+<link rel="alternate" hreflang="zh-CN" href="https://agentskills.media/privacy/">
+<link rel="alternate" hreflang="en" href="https://agentskills.media/privacy/en.html">
+<link rel="icon" href="../extension/assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="privacy.css">
+</head>
+<body>
+<a class="skip" href="#main">跳转到正文</a>
+<header class="header"><a class="brand" href="../"><img src="../extension/assets/logo.svg" alt="" width="42" height="42">Agent Leaderboard</a><nav aria-label="页面导航"><a class="back" href="../extension/">Chrome 插件</a><a href="en.html" lang="en" hreflang="en">English</a></nav></header>
+<div class="layout">
+<nav class="contents" aria-label="政策目录"><p>本页内容</p><a href="#scope">适用范围</a><a href="#local">本地数据</a><a href="#network">网络与第三方</a><a href="#permissions">插件权限</a><a href="#website">官网数据</a><a href="#control">保留与删除</a><a href="#limited-use">数据使用承诺</a><a href="#contact">更新与联系</a></nav>
+<main id="main">
+<h1>隐私政策</h1>
+<p class="meta">生效及更新日期：2026 年 10 月 9 日 · 适用插件版本：1.6.0</p>
+<p class="intro">这份政策说明 Agent Leaderboard 如何处理你使用 Chrome 搜索助手和官网时涉及的数据。</p>
+<div class="summary"><p><strong>插件的搜索与筛选在你的设备上完成，收藏保存在当前浏览器。</strong>无需注册账号。插件不向开发者上传搜索词或收藏，不读取浏览历史、Cookie 或整页正文，也不包含广告或分析追踪代码。目录更新会产生必要的网络请求。</p></div>
+<section id="scope"><h2>适用范围</h2><p>本政策适用于由 Jiancheng Pan（GitHub：<a href="https://github.com/jaychempan">jaychempan</a>）维护的 Agent Leaderboard Chrome 插件，以及 <a href="https://agentskills.media/">agentskills.media</a> 官网。插件用于搜索、筛选、收藏公开的 AI 工具仓库，并复制仓库链接和安装提示。</p><p>插件与官网使用各自的浏览器存储，收藏不会在两者之间或不同设备之间同步。你主动打开的 GitHub 仓库、其他外部网站和 AI 编程服务，适用各自的隐私政策。</p></section>
+<section id="local"><h2>插件在本地处理什么</h2><dl class="data-list">
+<div><dt>搜索词、筛选条件和主动选择的文字</dt><dd>你在插件或地址栏中输入的搜索词，以及主动使用右键搜索时选中的文字，仅用于本地目录检索。插件不自动扫描网页。当前搜索与筛选状态保存在浏览器会话存储中；右键请求在接收后移除，不发送到搜索服务器。地址栏搜索或备用搜索页面可能将关键词放在本地 <code>chrome-extension://</code> 页面地址中。</dd></div>
+<div><dt>收藏的仓库</dt><dd>仓库标识及收藏时的公开仓库资料保存在插件本地存储中，以显示收藏列表；没有开发者端的收藏账户或云同步。</dd></div>
+<div><dt>偏好设置和目录缓存</dt><dd>语言、主题、公开目录缓存与最近检查时间保存在插件本地存储中，用于恢复偏好、离线搜索和控制更新频率。</dd></div>
+<div><dt>复制的链接与安装提示</dt><dd>只有你点击复制按钮时，插件才把仓库链接或生成的安装提示写入系统剪贴板。插件不读取剪贴板，也不会自动发送内容给 AI 服务或执行安装。你随后粘贴内容到其他应用时，由你选择的应用处理这些内容。</dd></div>
+</dl></section>
+<section id="network"><h2>网络请求与第三方服务</h2><h3>公开目录更新</h3><p>插件在首次打开、打开时距上次成功检查超过 24 小时，或你手动刷新时，通过 HTTPS 请求 <code>https://agentskills.media/data/discovery_index.json</code>。请求不附带搜索词、收藏、选中文字或浏览器 Cookie。没有网络时，仍可使用已缓存或内置的目录。</p><p>与其他网站请求一样，服务网站的托管及网络基础设施会接收到 IP 地址、请求时间、请求路径、浏览器请求头等连接信息，并可能为提供服务、安全或故障排查保留访问日志。官网通过 GitHub Pages 发布；相关基础设施的数据处理适用其服务政策，包括 <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub 隐私声明</a>。本项目没有为这些基础设施日志设定或承诺统一的保留期限。</p><h3>你主动访问的链接</h3><p>点击仓库、README、官网或反馈链接时，浏览器会访问相应网站，该网站会按自身政策接收请求信息。插件不读取你在 ChatGPT、其他 AI 工具或其他浏览器扩展中的对话。</p></section>
+<section id="permissions"><h2>插件权限分别用于什么</h2><dl class="data-list">
+<div><dt><code>storage</code></dt><dd>保存本地目录缓存、收藏、语言与主题设置，以及临时搜索状态。</dd></div>
+<div><dt><code>sidePanel</code></dt><dd>在 Chrome 侧边栏展示搜索助手。</dd></div>
+<div><dt><code>contextMenus</code></dt><dd>提供“搜索选中文字”的右键菜单；只有主动点击菜单时才使用选中的文字。</dd></div>
+<div><dt><code>https://agentskills.media/*</code></dt><dd>允许从官网获取最新公开目录。插件未申请读取浏览历史、Cookie、任意网站正文或剪贴板内容的权限。</dd></div>
+</dl></section>
+<section id="website"><h2>官网的数据处理</h2><p>官网通过浏览器 <code>localStorage</code> 保存界面语言、主题、列表视图与官网收藏。官网的仓库搜索与筛选在浏览器中进行，这些偏好和收藏不会作为账户数据上传。</p><p><strong>官网排行榜包含访问次数统计，插件本身不包含该统计。</strong>排行榜会向 <code>api.counterapi.dev</code> 请求对应榜单的计数，用于显示访问总次数。请求路径包含榜单标识，不包含搜索词或收藏；CounterAPI 作为第三方会接收 IP 地址和浏览器请求头等常规连接信息，并依其服务政策处理。</p><p>本隐私政策页面不加载访问计数、外部字体或第三方脚本；访问页面本身仍会产生前述网站托管请求。官网“复制示例安装提示”只写入你主动复制的内容，不会自动联系 AI 服务。</p></section>
+<section id="control"><h2>数据保留、控制与删除</h2><ul>
+<li><strong>收藏：</strong>再次点击仓库书签即可取消收藏，并从插件本地收藏中移除该记录。</li>
+<li><strong>临时搜索：</strong>清空搜索或更改筛选会更新当前会话状态。关闭单个侧边栏不一定清除会话存储；浏览器会在浏览器重启、扩展重新加载、禁用或更新时清除扩展会话存储。</li>
+<li><strong>插件全部本地数据：</strong>卸载插件会移除其浏览器存储中的收藏、设置和目录缓存。浏览器自身的历史记录、标签页地址、系统剪贴板或已复制到其他应用的内容需在相应位置另行清理。</li>
+<li><strong>官网本地数据：</strong>在浏览器中清除 <code>agentskills.media</code> 的网站数据，可删除官网保存的偏好和收藏。</li>
+<li><strong>保留期限：</strong>插件收藏和设置持续保留，直到你移除相关数据或卸载插件；目录缓存可能在更新时被替换。开发者没有保存搜索词或收藏的服务器副本。</li>
+</ul><p>目录更新使用 HTTPS。浏览器本地存储由你的浏览器和设备保护，插件没有为本地缓存额外提供独立的加密或云端备份服务。</p></section>
+<section id="limited-use"><h2>数据使用承诺</h2><p>我们仅为本政策说明的搜索、筛选、收藏、设置与目录更新功能处理插件数据，不出售用户数据，不将其用于个性化广告、数据交易、信用评估或贷款用途。开发者不远程查看保存在你浏览器中的搜索内容或收藏。</p><p>Agent Leaderboard 对通过 Chrome 扩展 API 获取的信息的使用遵守 <a href="https://developer.chrome.com/docs/webstore/program-policies/user-data">Chrome Web Store User Data Policy</a>，包括 <a href="https://developer.chrome.com/docs/webstore/program-policies/limited-use">Limited Use（有限使用）要求</a>。本插件不使用 Google 账户登录，也不请求访问 Google 账户数据。</p></section>
+<section id="contact"><h2>政策更新与联系方式</h2><p>若功能或数据处理方式发生变化，我们会更新本页面及顶部日期，并按适用的平台要求说明相关变更。</p><p>如有隐私问题或希望报告与本政策不一致的行为，请通过 <a href="https://github.com/jaychempan/Agent-Leaderboard/issues">项目 GitHub Issues</a> 联系维护者。Issues 是公开页面，请勿提交密码、密钥或其他敏感信息。你主动提交的反馈会由 GitHub 按其隐私政策保存，维护者仅将其用于处理你的反馈。</p></section>
+</main></div>
+<footer class="footer"><span>Agent Leaderboard</span><nav aria-label="页脚导航"><a href="../">返回排行榜</a><a href="../extension/">Chrome 插件</a><a href="en.html" lang="en">English</a></nav></footer>
+</body></html>
