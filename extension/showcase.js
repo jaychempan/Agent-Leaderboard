@@ -1,6 +1,6 @@
 import {installationPrompt} from '../chrome/install-prompt.mjs';
 const zh = {
-  relatedTools:'更多工具', viewFull:'查看高清大图', skip:'跳转到正文', navInstall:'下载安装', navGuide:'使用指南', navUpdates:'版本更新',
+  viewFull:'查看高清大图', skip:'跳转到正文', navInstall:'下载安装', navGuide:'使用指南', navUpdates:'版本更新',
   product:'Chrome 搜索助手', headline:'找 AI 工具，<br>就在浏览器侧边。',
   intro:'把 Skills、MCP、Prompt、AI 框架和研究工具放进紧凑的侧边栏。找到项目后，复制安装提示，交给你自己的 AI 编程工具继续完成安装。',
   get:'获取插件', source:'查看源码', compatibility:'Chrome 116+ · 免费开源 · 无需账号',
@@ -53,6 +53,7 @@ function render() {
   document.getElementById('language').textContent = isZh ? 'EN' : '中';
   document.getElementById('language').setAttribute('aria-label',isZh?'Switch to English':'切换为中文');
   document.getElementById('theme').setAttribute('aria-label',isZh?`切换为${theme==='light'?'深色':'浅色'}主题`:`Switch to ${theme==='light'?'dark':'light'} theme`);
+  document.getElementById('mobile-menu').setAttribute('aria-label',isZh?'导航菜单':'Navigation menu');
   document.querySelector('nav').setAttribute('aria-label',isZh?'页面导航':'Page navigation');
   const preview=document.getElementById('preview-image');
   preview.src=`assets/panel-${language}-${theme}.png?v=202610092045`;
@@ -72,5 +73,10 @@ document.getElementById('copy-address').addEventListener('click',()=>copy('chrom
 document.getElementById('copy-prompt').addEventListener('click',()=>copy(installationPrompt(example,language==='zh'?'zh-CN':'en'),language==='zh'?'安装提示已复制，粘贴到你的 AI 编程工具。':'Install prompt copied. Paste it into your AI coding tool.'));
 media.addEventListener('change',()=>{if(!manualTheme)render();});
 window.addEventListener('storage',event=>{if(event.key==='st_lang'){language=event.newValue==='zh'?'zh':'en';render();}if(event.key==='st_theme'){manualTheme=['light','dark'].includes(event.newValue)?event.newValue:null;render();}});
+const menu=document.getElementById('mobile-menu');
+const closeMenu=()=>{document.querySelector('.site-header').classList.remove('menu-open');menu.setAttribute('aria-expanded','false');};
+menu.addEventListener('click',()=>{const open=document.querySelector('.site-header').classList.toggle('menu-open');menu.setAttribute('aria-expanded',String(open));});
+document.getElementById('page-navigation').addEventListener('click',closeMenu);
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();});
 render();
 fetch('../chrome/manifest.json').then(response=>{if(!response.ok)throw new Error('manifest');return response.json();}).then(manifest=>{for(const node of document.querySelectorAll('.version'))node.textContent=`v${manifest.version}`;}).catch(()=>{/* Authored release label remains available offline. */});

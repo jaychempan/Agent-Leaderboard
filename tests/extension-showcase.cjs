@@ -14,8 +14,8 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   await page.goto(new URL('extension/',base).href);
   await page.locator('#prompt-text').filter({hasText:'Please help me'}).waitFor({state:'attached'});
   assert.equal(await page.title(),'Chrome extension · Agent Leaderboard');
-  assert.equal(await page.locator('.related-tools-bar a').count(),2);
-  assert.equal(await page.locator('.related-tools-bar a').first().textContent(),'CCF DDL Tracker');
+  assert.equal(await page.locator('.related-tools a').count(),2);
+  assert.equal(await page.locator('.related-tools a').first().getAttribute('aria-label'),'CCF DDL Tracker');
   const manifest=await (await context.request.get(new URL('chrome/manifest.json',base).href)).json();
   await page.waitForFunction(version=>[...document.querySelectorAll('.version')].every(n=>n.textContent===`v${version}`),manifest.version);
   for(const locale of ['en','zh']){
@@ -28,7 +28,9 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`overflow: ${locale} ${theme} ${width}`);
      assert.ok(await page.locator('#preview-image').evaluate(image=>image.naturalWidth>=image.clientWidth*3),'high-density preview');
      assert.equal(await page.locator('#preview-full').getAttribute('href'),await page.locator('#preview-image').evaluate(image=>image.src));
-     assert.ok(await page.locator('.related-tools-bar a').evaluateAll(nodes=>nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0 && r.left>=0 && r.right<=innerWidth;})),'visible related tools');
+   assert.equal(await page.locator('.related-tools-bar').count(),0);
+   assert.ok(await page.locator('.related-tools a').evaluateAll(nodes=>nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0 && r.left>=0 && r.right<=innerWidth;})),'visible related tools');
+     assert.equal(await page.locator('.site-header').evaluate(node=>node.getBoundingClientRect().height<=74),true,'single-row showcase header');
      const links=await page.locator('.site-header a,.site-header button').evaluateAll(nodes=>nodes.map(n=>({left:n.getBoundingClientRect().left,right:n.getBoundingClientRect().right})));
      assert.ok(links.every(r=>r.left>=0 && r.right<=width),`header fits: ${locale} ${width}`);
      if(!process.env.SITE_BASE_URL && [390,1440].includes(width)){
@@ -60,15 +62,18 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   for(const url of localLinks){const response=await context.request.get(url);assert.equal(response.status(),200,url);}
   await page.goto(base);
   await page.locator('.nav-extension').waitFor();
+  await page.locator('#pageLoader').waitFor({state:'detached'});
   assert.equal(await page.locator('.nav-extension').textContent(),'Chrome 插件');
-  for(const width of [320,390,768,1024,1280,1440]){
+  for(const width of [320,390,768,1024,1100,1200,1280,1440,1920]){
    await page.setViewportSize({width,height:900});
    assert.equal(await page.locator('.navbar').evaluate(node=>node.scrollWidth<=innerWidth),true,`homepage navigation overflow ${width}`);
-   assert.ok(await page.locator('.related-tools-bar a').evaluateAll(nodes=>nodes.length===2&&nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth;})),'homepage related tools visible');
+   assert.equal(await page.locator('.navbar').evaluate(node=>node.getBoundingClientRect().height),54,'single-row homepage header');
+   assert.ok(await page.locator('.related-tools a').evaluateAll(nodes=>nodes.length===2&&nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth;})),'homepage related tools visible');
   }
+  if(!process.env.SITE_BASE_URL){await page.setViewportSize({width:1440,height:850});await page.screenshot({path:'artifacts/extension/home-navigation-one-row.png'});}
   await page.locator('#langBtn').click();
   assert.equal(await page.locator('.nav-extension').textContent(),'Chrome extension');
-  for(const width of [320,390,768,1024,1280,1440]){
+  for(const width of [320,390,768,1024,1100,1200,1280,1440,1920]){
    await page.setViewportSize({width,height:850});
    assert.equal(await page.locator('.navbar').evaluate(node=>node.scrollWidth<=innerWidth),true,`English homepage navigation overflow ${width}`);
   }
@@ -78,6 +83,11 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   await page.locator('.nav-extension').click();
   await page.waitForURL('**/extension/');
   assert.equal(await page.locator('html').getAttribute('lang'),'zh-CN');
+  await page.locator('#mobile-menu').click();
+  assert.equal(await page.locator('#mobile-menu').getAttribute('aria-expanded'),'true');
+  assert.equal(await page.locator('#page-navigation').isVisible(),true);
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('#mobile-menu').getAttribute('aria-expanded'),'false');
   assert.deepEqual(errors,[]);
   console.log(JSON.stringify({status:'passed',base,version:manifest.version,downloadBytes:zipBytes.length,checks:['bilingual content','theme and preference persistence','real preview images','320–1440px responsive layouts','install prompt and address copy','FAQ','download ZIP','local links','homepage entry']}));
  }finally{await browser.close();}

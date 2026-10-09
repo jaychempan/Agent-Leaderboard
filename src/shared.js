@@ -558,8 +558,6 @@ document.addEventListener('click', e => {
 });
 
 function renderNav() {
-  const related = document.querySelector('.related-tools-bar > span');
-  if (related) related.textContent = app.lang === 'zh' ? '更多工具' : 'More tools';
   const pg = app.pageConfig.page;
   const nav = document.getElementById('navbar');
   if (!nav) return;
@@ -594,6 +592,10 @@ function renderNav() {
       </a>
       <a class="nav-link nav-extension" href="extension/">${t('nav_extension')}</a>
     </div>
+<div class="related-tools" aria-label="Related tools">
+<a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer" title="CCF DDL Tracker" aria-label="CCF DDL Tracker"><img src="extension/assets/ccf-ddl-tracker.png" alt="" width="18" height="18"><span>CCF DDL Tracker</span></a>
+<a href="https://jianchengpan.space/citation-tracker/" target="_blank" rel="noopener noreferrer" title="Citation Tracker" aria-label="Citation Tracker"><img src="extension/assets/citation-tracker.png" alt="" width="18" height="18"><span>Citation Tracker</span></a>
+</div>
     <div class="nav-actions">
       <a class="nav-btn" href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer" title="GitHub">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">

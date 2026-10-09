@@ -7,21 +7,21 @@
 <meta name="description" content="Find Skills, MCP servers and AI tools in your Chrome side panel. Download Agent Leaderboard, learn the workflow, and copy installation prompts for your AI coding tool.">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('st_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}</script>
-<link rel="stylesheet" href="showcase.css?v=202610092045">
-<script type="module" src="showcase.js?v=202610092045"></script>
+<link rel="stylesheet" href="showcase.css?v=202610092110">
+<script type="module" src="showcase.js?v=202610092110"></script>
 </head>
 <body>
 <a class="skip" href="#main" data-copy="skip">Skip to content</a>
 <header class="site-header">
 <a class="brand" href="../"><img src="assets/logo.svg" alt="" width="38" height="38"><span>Agent Leaderboard</span></a>
-<nav aria-label="Page navigation"><a href="#install" data-copy="navInstall">Install</a><a href="#guide" data-copy="navGuide">Guide</a><a href="#faq">FAQ</a><a href="#updates" data-copy="navUpdates">Updates</a></nav>
+<nav id="page-navigation" aria-label="Page navigation"><a href="#install" data-copy="navInstall">Install</a><a href="#guide" data-copy="navGuide">Guide</a><a href="#faq">FAQ</a><a href="#updates" data-copy="navUpdates">Updates</a></nav>
+<div class="related-tools" aria-label="Related tools">
+<a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer" title="CCF DDL Tracker" aria-label="CCF DDL Tracker"><img src="../extension/assets/ccf-ddl-tracker.png" alt="" width="18" height="18"><span>CCF DDL Tracker</span></a>
+<a href="https://jianchengpan.space/citation-tracker/" target="_blank" rel="noopener noreferrer" title="Citation Tracker" aria-label="Citation Tracker"><img src="../extension/assets/citation-tracker.png" alt="" width="18" height="18"><span>Citation Tracker</span></a>
+</div>
+<button id="mobile-menu" type="button" aria-expanded="false" aria-controls="page-navigation" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
 <div class="preferences"><button id="language" type="button" aria-label="切换为中文">中</button><button id="theme" type="button" aria-label="Switch theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 0v18"/></svg></button></div>
 </header>
-<aside class="related-tools-bar" aria-label="Related tools">
-<span data-copy="relatedTools">More tools</span>
-<a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer"><img src="../extension/assets/ccf-ddl-tracker.png" alt="" width="20" height="20">CCF DDL Tracker</a>
-<a href="https://jianchengpan.space/citation-tracker/" target="_blank" rel="noopener noreferrer"><img src="../extension/assets/citation-tracker.png" alt="" width="20" height="20">Citation Tracker</a>
-</aside>
 <main id="main">
 <section class="hero wrap">
 <div class="hero-copy">
@@ -35,8 +35,8 @@
 </div>
 <figure class="preview">
 <div class="preview-title"><img src="assets/logo.svg" alt="" width="23" height="23"><span>Agent Leaderboard</span><span class="preview-close" aria-hidden="true">×</span></div>
-<img id="preview-image" src="assets/panel-en-light.png?v=202610092045" alt="Agent Leaderboard extension showing repository search, filters, copy and bookmark buttons" width="390" height="660" fetchpriority="high">
-<figcaption><span data-copy="caption">Actual extension interface. Preview follows this page’s language and theme.</span> <a id="preview-full" href="assets/panel-en-light.png?v=202610092045" target="_blank" rel="noopener noreferrer" data-copy="viewFull">View full-resolution image</a></figcaption>
+<img id="preview-image" src="assets/panel-en-light.png?v=202610092110" alt="Agent Leaderboard extension showing repository search, filters, copy and bookmark buttons" width="390" height="660" fetchpriority="high">
+<figcaption><span data-copy="caption">Actual extension interface. Preview follows this page’s language and theme.</span> <a id="preview-full" href="assets/panel-en-light.png?v=202610092110" target="_blank" rel="noopener noreferrer" data-copy="viewFull">View full-resolution image</a></figcaption>
 </figure>
 </section>
 <section class="features wrap" aria-labelledby="features-title">

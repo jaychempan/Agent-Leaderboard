@@ -1387,10 +1387,31 @@ button, select, input { font: inherit; }
 /* Keep the extension entry accessible without crowding the board navigation. */
 .nav-extension { color:var(--accent); }
 
-/* Related projects stay readable at every screen width. */
-.related-tools-bar { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:8px 24px; padding:9px 18px; background:var(--surface); border-bottom:1px solid var(--line,var(--border)); font-size:12px; }
-.related-tools-bar>span { color:var(--muted); font-size:11px; }
-.related-tools-bar a { display:inline-flex; align-items:center; gap:7px; color:var(--text); text-decoration:none; white-space:nowrap; }
-.related-tools-bar a:hover { color:var(--blue,var(--accent)); text-decoration:underline; }
-.related-tools-bar img { width:20px; height:20px; object-fit:contain; border-radius:4px; }
-@media(max-width:420px){ .related-tools-bar { gap:7px 18px; padding:8px 12px; font-size:11px; } .related-tools-bar>span { flex-basis:100%; text-align:center; font-size:10px; } }
+
+/* Related tools share the main navigation row; compact icons remain on mobile. */
+.related-tools { display:flex; align-items:center; flex-shrink:0; gap:12px; margin:0 12px; }
+.related-tools a { display:inline-flex; align-items:center; gap:6px; min-height:30px; color:var(--muted); font-size:12px; text-decoration:none; white-space:nowrap; }
+.related-tools a:hover { color:var(--text); }
+.related-tools img { width:18px; height:18px; object-fit:contain; flex-shrink:0; }
+
+@media(min-width:1025px) and (max-width:1450px){
+ .navbar { padding:0 12px; }
+ .navbar .nav-brand { margin-right:10px; font-size:13px; gap:6px; }
+ .navbar .nav-link { padding:6px; font-size:12px; gap:4px; }
+ .navbar .nav-actions { gap:4px; }
+ .navbar .nav-btn { padding:5px 7px; font-size:11px; }
+ .navbar .related-tools { gap:9px; margin:0 9px; }
+ .navbar .related-tools a { font-size:11px; gap:4px; }
+}
+@media(min-width:1025px) and (max-width:1360px){ .navbar .nav-brand-text { display:none; } }
+@media(max-width:1024px){
+ .navbar .related-tools { margin:0 8px 0 auto; gap:6px; }
+ .navbar .related-tools a { justify-content:center; width:26px; }
+ .navbar .related-tools span { display:none; }
+ .navbar .nav-actions { margin-left:0; }
+}
+@media(max-width:360px){ .navbar .related-tools { margin-inline:3px; gap:2px; } }
+@media(min-width:1025px) and (max-width:1200px){
+ .navbar .related-tools span { display:none; }
+ .navbar .related-tools a { width:24px; justify-content:center; }
+}
