@@ -15,7 +15,8 @@ const I18N = {
     nav_prompts:    'Prompt 库',
     nav_frameworks: 'AI 框架',
     nav_favorites:  '收藏',
-    nav_extension:  'Chrome 插件',
+    nav_extension:  '安装 Chrome 插件',
+    nav_extension_short: '安装插件',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
     research_title: 'Auto Research 排行榜',
@@ -70,7 +71,8 @@ const I18N = {
     nav_prompts:    'Prompt Library',
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
-    nav_extension:  'Chrome extension',
+    nav_extension:  'Get extension',
+    nav_extension_short: 'Install',
     skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
     research_title: 'Auto Research Leaderboard',
@@ -590,7 +592,6 @@ function renderNav() {
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-frameworks" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect x="8.5" y="3" width="7" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.6"/><rect x="5" y="9" width="14" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.8"/><rect x="2.5" y="15" width="19" height="4" rx="1.5" fill="url(#ni-frameworks)"/></svg>
         <span class="full">${t('nav_frameworks')}</span>
       </a>
-      <a class="nav-link nav-extension" href="extension/">${t('nav_extension')}</a>
     </div>
 <div class="related-tools" aria-label="Related tools">
 <a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer" title="CCF DDL Tracker" aria-label="CCF DDL Tracker"><img src="extension/assets/ccf-ddl-tracker.png" alt="" width="18" height="18"><span>CCF DDL Tracker</span></a>
@@ -603,8 +604,8 @@ function renderNav() {
         </svg>
         <span class="full">GitHub</span>
       </a>
-      <button class="nav-btn" id="favBtn" onclick="openFavModal()">
-        ❤ ${t('nav_favorites')} <span class="fav-count${app.favorites.size > 0 ? ' visible' : ''}">${app.favorites.size}</span>
+      <button class="nav-btn" id="favBtn" onclick="openFavModal()" aria-label="${t('nav_favorites')}" title="${t('nav_favorites')}">
+        ❤ <span class="nav-fav-label">${t('nav_favorites')}</span> <span class="fav-count${app.favorites.size > 0 ? ' visible' : ''}">${app.favorites.size}</span>
       </button>
       <button class="nav-btn" id="langBtn" onclick="toggleLang()">
         ${app.lang === 'zh' ? 'EN' : '中'}
@@ -612,6 +613,10 @@ function renderNav() {
       <button class="nav-btn" id="themeBtn" onclick="toggleTheme()">
         ${app.theme === 'dark' ? '☀️' : '🌙'}
       </button>
+      <a class="nav-extension" href="extension/" aria-label="${t('nav_extension')}" title="${t('nav_extension')}">
+        <img src="extension/assets/logo.svg" alt="" width="22" height="22" />
+        <span class="extension-label">${t('nav_extension')}</span><span class="extension-label-short">${t('nav_extension_short')}</span>
+      </a>
     </div>`;
 }
 

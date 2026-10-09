@@ -63,23 +63,26 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   await page.goto(base);
   await page.locator('.nav-extension').waitFor();
   await page.locator('#pageLoader').waitFor({state:'detached'});
-  assert.equal(await page.locator('.nav-extension').textContent(),'Chrome 插件');
-  for(const width of [320,390,768,1024,1100,1200,1280,1440,1920]){
+  assert.equal(await page.locator('.nav-extension').getAttribute('aria-label'),'安装 Chrome 插件');
+  assert.equal(await page.locator('.nav-links .nav-extension').count(),0);
+  assert.equal(await page.locator('.nav-actions .nav-extension').count(),1);
+  for(const width of [320,390,480,600,768,1024,1100,1200,1280,1440,1920]){
    await page.setViewportSize({width,height:900});
    assert.equal(await page.locator('.navbar').evaluate(node=>node.scrollWidth<=innerWidth),true,`homepage navigation overflow ${width}`);
+   assert.equal(await page.locator('.nav-extension').isVisible(),true,'install action always visible');
+   assert.ok(await page.locator('.nav-extension').evaluate(node=>{const r=node.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;}),'install action fits');
    assert.equal(await page.locator('.navbar').evaluate(node=>node.getBoundingClientRect().height),54,'single-row homepage header');
    assert.ok(await page.locator('.related-tools a').evaluateAll(nodes=>nodes.length===2&&nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth;})),'homepage related tools visible');
   }
   if(!process.env.SITE_BASE_URL){await page.setViewportSize({width:1440,height:850});await page.screenshot({path:'artifacts/extension/home-navigation-one-row.png'});}
   await page.locator('#langBtn').click();
-  assert.equal(await page.locator('.nav-extension').textContent(),'Chrome extension');
+  assert.equal(await page.locator('.nav-extension').getAttribute('aria-label'),'Get extension');
   for(const width of [320,390,768,1024,1100,1200,1280,1440,1920]){
    await page.setViewportSize({width,height:850});
    assert.equal(await page.locator('.navbar').evaluate(node=>node.scrollWidth<=innerWidth),true,`English homepage navigation overflow ${width}`);
   }
   await page.locator('#langBtn').click();
   await page.setViewportSize({width:390,height:850});
-  await page.locator('.nav-hamburger').click();
   await page.locator('.nav-extension').click();
   await page.waitForURL('**/extension/');
   assert.equal(await page.locator('html').getAttribute('lang'),'zh-CN');

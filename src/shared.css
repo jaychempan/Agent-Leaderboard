@@ -1384,8 +1384,16 @@ button, select, input { font: inherit; }
   gap: 14px;
 }
 
-/* Keep the extension entry accessible without crowding the board navigation. */
-.nav-extension { color:var(--accent); }
+/* The extension is a primary action, separate from leaderboard categories. */
+.nav-extension { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; gap:7px; min-height:34px; margin-left:6px; padding:5px 11px; border:1px solid transparent; border-radius:7px; background:#0969da; color:#fff; font-size:12px; font-weight:650; white-space:nowrap; text-decoration:none; }
+.nav-extension:hover { background:#0759bd; color:#fff; }
+.nav-extension:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.nav-extension img { width:22px; height:22px; object-fit:contain; }
+.extension-label-short { display:none; }
+@media(max-width:1024px){ .nav-extension { padding:4px 8px; gap:5px; margin-left:3px; min-height:32px; font-size:11px; } .extension-label { display:none; } .extension-label-short { display:inline; } }
+@media(max-width:600px){ .navbar .nav-brand-text { display:none; } .navbar .nav-actions>a[title="GitHub"] { display:none; } }
+@media(max-width:360px){ .nav-extension { padding-inline:6px; gap:4px; margin-left:1px; } .nav-extension img { width:19px; height:19px; } .navbar .nav-btn { padding-inline:5px; } }
+
 
 
 /* Related tools share the main navigation row; compact icons remain on mobile. */
@@ -1414,4 +1422,13 @@ button, select, input { font: inherit; }
 @media(min-width:1025px) and (max-width:1200px){
  .navbar .related-tools span { display:none; }
  .navbar .related-tools a { width:24px; justify-content:center; }
+}
+
+@media(max-width:600px){
+ .navbar .nav-fav-label { display:none; }
+ .navbar #favBtn { position:relative; width:28px; justify-content:center; }
+ .navbar #favBtn .fav-count { position:absolute; right:-3px; top:-5px; min-width:13px; padding:0 3px; font-size:8px; }
+ .navbar .nav-actions { gap:3px; }
+ .navbar .nav-hamburger { width:28px; margin-left:4px; }
+ .navbar .nav-actions .nav-btn { padding:5px 4px; min-width:26px; }
 }
