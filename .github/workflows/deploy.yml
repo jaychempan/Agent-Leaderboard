@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Chrome extension download
-        run: python3 chrome/scripts/build.py
+        run: python3 scripts/chrome/build.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

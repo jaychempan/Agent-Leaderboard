@@ -18,7 +18,7 @@ function harness(failOpen = false) {
     tabs: {create: value => calls.push(['create', value]), update: value => calls.push(['update', value])},
     omnibox: {setDefaultSuggestion: value => calls.push(['suggestion', value]), onInputEntered: event('omnibox')},
   };
-  vm.runInNewContext(fs.readFileSync(new URL('../background.js', import.meta.url), 'utf8'), {
+  vm.runInNewContext(fs.readFileSync(new URL('../../chrome/background.js', import.meta.url), 'utf8'), {
     chrome, console, crypto: {randomUUID: () => 'test-request'},
   });
   return {listeners, calls, preferences};

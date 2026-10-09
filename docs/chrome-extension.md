@@ -13,26 +13,26 @@
 3. 选择项目根目录下的 **`chrome/`** 文件夹。
 4. 在 Chrome 工具栏的扩展程序菜单中固定本插件，点击图标打开搜索侧边栏。
 
-发给同事时可以直接复制整个 `chrome/` 文件夹，也可运行 `python3 chrome/scripts/build.py`，将生成的 `chrome/dist/agent-leaderboard-extension.zip` 发给同事，解压后加载。此版本为本地安装包，尚未发布到 Chrome 应用商店。
+发给同事时可以直接复制整个 `chrome/` 文件夹，也可运行 `python3 scripts/chrome/build.py`，将生成的 `dist/Chrome.zip` 发给同事，解压后加载。此版本为本地安装包，尚未发布到 Chrome 应用商店。
 
 ## 目录结构
 
 ```text
-chrome/
-├── manifest.json       # Chrome 扩展入口
-├── background.js       # 右键菜单、地址栏入口
-├── core.mjs            # 搜索和目录处理
-├── taxonomy.mjs        # 从网站生成的榜单名称和分类
-├── panel.html/js/css   # 搜索侧边栏
-├── help.html           # 使用与隐私说明
-├── data/catalog.json  # 离线目录快照
-├── icons/              # 插件图标
-├── scripts/build.py    # 更新快照与打包
-├── scripts/render_icons.cjs # 可选：从 SVG 重新导出 PNG 图标
-├── tests/              # 插件单元与浏览器测试
-├── dist/               # ZIP 和测试截图（不提交 Git）
-├── LICENSE
-└── README.md
+chrome/                  # 仅插件运行文件，可直接加载
+├── manifest.json
+├── background.js
+├── panel.html/js/css
+├── core.mjs / i18n.mjs / install-prompt.mjs / taxonomy.mjs
+├── help.html / help-en.html
+├── data/catalog.json
+├── icons/               # Chrome 使用的 PNG 图标
+└── LICENSE
+scripts/chrome/          # 构建、图标导出、官网截图脚本
+tests/chrome/            # 插件测试
+docs/chrome-extension.md # 本说明
+extension/assets/       # 官网展示图与原始 SVG 标志
+dist/Chrome.zip         # 只包含插件运行文件的发布包（不提交 Git）
+artifacts/extension/    # 本地测试截图和检查结果（不提交 Git）
 ```
 
 ## 使用
@@ -64,8 +64,8 @@ chrome/
 ## 开发与验证
 
 ```bash
-python3 chrome/scripts/build.py
-node --test chrome/tests/*.test.mjs
+python3 scripts/chrome/build.py
+node --test tests/chrome/*.test.mjs
 python3 -m unittest discover -s tests
 ```
 
@@ -74,15 +74,15 @@ python3 -m unittest discover -s tests
 ```bash
 PLAYWRIGHT_MODULE=/absolute/path/to/playwright-core \
 CHROME_PATH=/absolute/path/to/chrome \
-node chrome/tests/browser.cjs
+node tests/chrome/browser.cjs
 ```
 
-测试使用全新临时 Chrome 配置，直接以 DevTools `Extensions.loadUnpacked` 加载 `chrome/`；该测试入口需要支持此调试接口的新版 Chrome。联网响应由测试夹具控制，避免依赖线上更新内容。截图输出在 `chrome/dist/`。右键与地址栏事件处理另有单元测试。
+测试使用全新临时 Chrome 配置，直接以 DevTools `Extensions.loadUnpacked` 加载 `chrome/`；该测试入口需要支持此调试接口的新版 Chrome。联网响应由测试夹具控制，避免依赖线上更新内容。截图输出在 `artifacts/extension/`。右键与地址栏事件处理另有单元测试。
 
-修改源码后在扩展管理页面点击“重新加载”即可。更新内置快照或生成 ZIP 时才需运行构建脚本；脚本读取项目的 `data/discovery_index.json`，更新 `chrome/data/catalog.json`，并打包现有图标。每日线上目录更新无需重新安装。运行所需文件均保存在 `chrome/`；只有 `chrome/dist/` 的 ZIP 和测试截图不提交到 Git。
+修改源码后在扩展管理页面点击“重新加载”即可。更新内置快照或生成 ZIP 时才需运行构建脚本；脚本读取项目的 `data/discovery_index.json`，更新 `chrome/data/catalog.json`，并打包现有图标。每日线上目录更新无需重新安装。运行所需文件均保存在 `chrome/`；`dist/` 的安装包和 `artifacts/` 的测试输出不提交到 Git。
 
-图标复用项目根目录 `favicon.svg` 的领奖台、排名数字和星标，保留主体比例，通过收紧画布留白使主体较原始透明版放大约 14%，移除底板和背景光晕，使用透明背景，位于 `icons/logo.svg`。原图与 [官网 favicon](https://agentskills.media/favicon.svg) 一致。Chrome 侧边栏标题、工具栏和扩展管理页统一使用从该 SVG 导出的 `icons/icon-*.png` 透明图标；清单中同时指定扩展图标和工具栏图标。只有修改 Logo 时，才需要配置与浏览器测试相同的 `PLAYWRIGHT_MODULE` / `CHROME_PATH`，运行 `node chrome/scripts/render_icons.cjs` 重新导出，再打包。
+图标复用项目根目录 `favicon.svg` 的领奖台、排名数字和星标，保留主体比例，通过收紧画布留白使主体较原始透明版放大约 14%，移除底板和背景光晕，使用透明背景，原始 SVG 位于 `extension/assets/logo.svg`。原图与 [官网 favicon](https://agentskills.media/favicon.svg) 一致。Chrome 侧边栏标题、工具栏和扩展管理页统一使用从该 SVG 导出的 `chrome/icons/icon-*.png` 透明图标；清单中同时指定扩展图标和工具栏图标。只有修改 Logo 时，才需要配置与浏览器测试相同的 `PLAYWRIGHT_MODULE` / `CHROME_PATH`，运行 `node scripts/chrome/render_icons.cjs` 重新导出，再打包。
 
 Chrome API 依据：[Side Panel](https://developer.chrome.com/docs/extensions/reference/api/sidePanel)、[Omnibox](https://developer.chrome.com/docs/extensions/reference/api/omnibox)、[权限声明](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions)。
 
-官网通过 `.github/workflows/deploy.yml` 在部署前运行构建脚本，发布最新 ZIP 到 `chrome/dist/agent-leaderboard-extension.zip`。展示页复用插件的安装提示生成逻辑；更新界面后，可用相同的浏览器环境运行 `node chrome/scripts/capture_showcase.cjs` 重新生成 `extension/assets/` 中英文、明暗截图。官网测试入口为 `node tests/extension-showcase.cjs`（默认本地端口 8765，或设置 `SITE_BASE_URL`）。
+官网通过 `.github/workflows/deploy.yml` 在部署前运行构建脚本，发布最新 ZIP 到 `dist/Chrome.zip`。展示页复用插件的安装提示生成逻辑；更新界面后，可用相同的浏览器环境运行 `node scripts/chrome/capture_showcase.cjs` 重新生成 `extension/assets/` 中英文、明暗截图。官网测试入口为 `node tests/extension-showcase.cjs`（默认本地端口 8765，或设置 `SITE_BASE_URL`）。

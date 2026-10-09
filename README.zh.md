@@ -162,12 +162,12 @@ python3 -m http.server 8080
 整个插件位于 **`chrome/`**，已包含图标和离线数据，可以直接加载。需要更新内置快照或生成 ZIP 时运行：
 
 ```bash
-python3 chrome/scripts/build.py
+python3 scripts/chrome/build.py
 ```
 
 打开 `chrome://extensions` → 开启“开发者模式” → “加载已解压的扩展程序” → 选择 **`chrome/`** 文件夹。固定插件图标后，点击即可打开搜索侧边栏。
 
-需要 Chrome 116+。构建同时生成可分享的 ZIP；当前为本地安装版。完整说明、快捷键与隐私说明见 [Chrome 插件文档](chrome/README.md)。
+需要 Chrome 116+。构建同时生成可分享的 ZIP；当前为本地安装版。完整说明、快捷键与隐私说明见 [Chrome 插件文档](docs/chrome-extension.md)。
 
 ## MCP 技能发现助手
 

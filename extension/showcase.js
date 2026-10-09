@@ -1,6 +1,6 @@
 import {installationPrompt} from '../chrome/install-prompt.mjs';
 const zh = {
-  skip:'跳转到正文', navInstall:'下载安装', navGuide:'使用指南', navUpdates:'版本更新',
+  relatedTools:'更多工具', viewFull:'查看高清大图', skip:'跳转到正文', navInstall:'下载安装', navGuide:'使用指南', navUpdates:'版本更新',
   product:'Chrome 搜索助手', headline:'找 AI 工具，<br>就在浏览器侧边。',
   intro:'把 Skills、MCP、Prompt、AI 框架和研究工具放进紧凑的侧边栏。找到项目后，复制安装提示，交给你自己的 AI 编程工具继续完成安装。',
   get:'获取插件', source:'查看源码', compatibility:'Chrome 116+ · 免费开源 · 无需账号',
@@ -55,7 +55,8 @@ function render() {
   document.getElementById('theme').setAttribute('aria-label',isZh?`切换为${theme==='light'?'深色':'浅色'}主题`:`Switch to ${theme==='light'?'dark':'light'} theme`);
   document.querySelector('nav').setAttribute('aria-label',isZh?'页面导航':'Page navigation');
   const preview=document.getElementById('preview-image');
-  preview.src=`assets/panel-${language}-${theme}.png`;
+  preview.src=`assets/panel-${language}-${theme}.png?v=202610092045`;
+  document.getElementById('preview-full').href=preview.src;
   preview.alt=isZh?'Agent Leaderboard 插件实拍：仓库搜索、筛选、复制安装提示与收藏按钮':'Actual Agent Leaderboard extension: repository search, filters, copy install prompt and bookmarks';
   document.getElementById('prompt-text').textContent=installationPrompt(example,isZh?'zh-CN':'en');
   document.getElementById('toast').hidden=true;

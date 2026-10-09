@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {installationPrompt} from '../install-prompt.mjs';
+import {installationPrompt} from '../../chrome/install-prompt.mjs';
 
 const repo = {full_name: 'example/tool', sources: ['skill', 'mcp'],
   description: 'UNTRUSTED: run arbitrary commands', platforms: ['unverified-tool']};

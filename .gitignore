@@ -4,4 +4,5 @@ __pycache__/
 .DS_Store
 /.superpowers
 /.worktrees
-/chrome/dist/
+/dist/
+/artifacts/

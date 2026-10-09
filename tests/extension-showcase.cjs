@@ -14,6 +14,8 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   await page.goto(new URL('extension/',base).href);
   await page.locator('#prompt-text').filter({hasText:'Please help me'}).waitFor({state:'attached'});
   assert.equal(await page.title(),'Chrome extension · Agent Leaderboard');
+  assert.equal(await page.locator('.related-tools-bar a').count(),2);
+  assert.equal(await page.locator('.related-tools-bar a').first().textContent(),'CCF DDL Tracker');
   const manifest=await (await context.request.get(new URL('chrome/manifest.json',base).href)).json();
   await page.waitForFunction(version=>[...document.querySelectorAll('.version')].every(n=>n.textContent===`v${version}`),manifest.version);
   for(const locale of ['en','zh']){
@@ -24,13 +26,16 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
      await page.setViewportSize({width,height:850});
      await page.waitForFunction(()=>[...document.images].every(image=>image.complete && image.naturalWidth>0));
      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`overflow: ${locale} ${theme} ${width}`);
+     assert.ok(await page.locator('#preview-image').evaluate(image=>image.naturalWidth>=image.clientWidth*3),'high-density preview');
+     assert.equal(await page.locator('#preview-full').getAttribute('href'),await page.locator('#preview-image').evaluate(image=>image.src));
+     assert.ok(await page.locator('.related-tools-bar a').evaluateAll(nodes=>nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0 && r.left>=0 && r.right<=innerWidth;})),'visible related tools');
      const links=await page.locator('.site-header a,.site-header button').evaluateAll(nodes=>nodes.map(n=>({left:n.getBoundingClientRect().left,right:n.getBoundingClientRect().right})));
      assert.ok(links.every(r=>r.left>=0 && r.right<=width),`header fits: ${locale} ${width}`);
      if(!process.env.SITE_BASE_URL && [390,1440].includes(width)){
-      fs.mkdirSync('chrome/dist',{recursive:true});
+      fs.mkdirSync('artifacts/extension',{recursive:true});
       await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,0);});
-      await page.screenshot({path:`chrome/dist/showcase-${locale}-${theme}-${width}.png`});
-      if(width===1440){await page.locator('#install').scrollIntoViewIfNeeded();await page.screenshot({path:`chrome/dist/showcase-install-${locale}-${theme}.png`});}
+      await page.screenshot({path:`artifacts/extension/showcase-${locale}-${theme}-${width}.png`});
+      if(width===1440){await page.locator('#install').scrollIntoViewIfNeeded();await page.screenshot({path:`artifacts/extension/showcase-install-${locale}-${theme}.png`});}
      }
     }
    }
@@ -59,6 +64,7 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   for(const width of [320,390,768,1024,1280,1440]){
    await page.setViewportSize({width,height:900});
    assert.equal(await page.locator('.navbar').evaluate(node=>node.scrollWidth<=innerWidth),true,`homepage navigation overflow ${width}`);
+   assert.ok(await page.locator('.related-tools-bar a').evaluateAll(nodes=>nodes.length===2&&nodes.every(node=>{const r=node.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth;})),'homepage related tools visible');
   }
   await page.locator('#langBtn').click();
   assert.equal(await page.locator('.nav-extension').textContent(),'Chrome extension');

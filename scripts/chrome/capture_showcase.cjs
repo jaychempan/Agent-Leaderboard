@@ -6,7 +6,7 @@ const os=require('node:os');
 const root=path.resolve(__dirname,'../..');
 (async()=>{
  const context=await chromium.launchPersistentContext(fs.mkdtempSync(path.join(os.tmpdir(),'agent-showcase-')),{
-  executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,viewport:{width:390,height:660},ignoreDefaultArgs:['--disable-extensions'],args:['--enable-unsafe-extension-debugging']});
+  executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,deviceScaleFactor:3,viewport:{width:390,height:660},ignoreDefaultArgs:['--disable-extensions'],args:['--enable-unsafe-extension-debugging']});
  try {
   const cdp=await context.browser().newBrowserCDPSession();
   const {id}=await cdp.send('Extensions.loadUnpacked',{path:path.join(root,'chrome')});

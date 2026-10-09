@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {BOARDS, UC_EN, CAT_EN} from '../taxonomy.mjs';
-import {setLocale, t, localizedCategory, useLabel, boardLabel, MESSAGES_EN} from '../i18n.mjs';
+import {BOARDS, UC_EN, CAT_EN} from '../../chrome/taxonomy.mjs';
+import {setLocale, t, localizedCategory, useLabel, boardLabel, MESSAGES_EN} from '../../chrome/i18n.mjs';
 
 test('all bundled Chinese categories and use cases have English website labels', () => {
-  const catalog = JSON.parse(fs.readFileSync(new URL('../data/catalog.json', import.meta.url)));
+  const catalog = JSON.parse(fs.readFileSync(new URL('../../chrome/data/catalog.json', import.meta.url)));
   for (const board of Object.values(BOARDS)) {
     assert.ok(board.labelEn);
     for (const label of Object.values(board.categories)) if (/\p{Script=Han}/u.test(label)) assert.ok(CAT_EN[label], label);
@@ -15,7 +15,7 @@ test('all bundled Chinese categories and use cases have English website labels',
   }
 });
 test('static interface and interpolated messages translate both ways', () => {
-  const html = fs.readFileSync(new URL('../panel.html', import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL('../../chrome/panel.html', import.meta.url), 'utf8');
   for (const match of html.matchAll(/>([^<>]+)</g)) {
     const label = match[1].trim();
     if (/\p{Script=Han}/u.test(label)) assert.ok(MESSAGES_EN[label], label);

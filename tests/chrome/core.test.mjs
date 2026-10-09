@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {compactCatalog, prepareCatalog, searchCatalog, includeFavorites, favoriteRecord, repoURL, BOARDS} from '../core.mjs';
+import {compactCatalog, prepareCatalog, searchCatalog, includeFavorites, favoriteRecord, repoURL, BOARDS} from '../../chrome/core.mjs';
 
 const item = (name, extra = {}) => ({full_name: name, source_type: 'skill', description: 'browser 浏览器自动化',
   platforms: ['codex'], topics: ['testing'], use_cases: ['开发工具'], language: 'TypeScript', stars: 200,

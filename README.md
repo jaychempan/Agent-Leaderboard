@@ -162,12 +162,12 @@ Search all five boards in a Chrome side panel with the website's categories, use
 The complete extension lives in **`chrome/`**, including icons and offline data, and can be loaded directly. To refresh the bundled snapshot or generate a ZIP:
 
 ```bash
-python3 chrome/scripts/build.py
+python3 scripts/chrome/build.py
 ```
 
 Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select the **`chrome/`** folder. Pin the extension and click its icon to open the side panel.
 
-Requires Chrome 116+. The build also produces a shareable ZIP; this is a local installation package, not a Chrome Web Store release. See the [extension guide](chrome/README.md) for shortcuts, data updates, privacy, and development instructions.
+Requires Chrome 116+. The build also produces a shareable ZIP; this is a local installation package, not a Chrome Web Store release. See the [extension guide](docs/chrome-extension.md) for shortcuts, data updates, privacy, and development instructions.
 
 ## MCP Skill Discovery
 

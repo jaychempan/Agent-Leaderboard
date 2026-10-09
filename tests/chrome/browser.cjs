@@ -1,5 +1,5 @@
 /* Real unpacked-extension smoke test. Requires Chrome and playwright-core.
- * PLAYWRIGHT_MODULE=/absolute/path/to/playwright-core node chrome/tests/browser.cjs
+ * PLAYWRIGHT_MODULE=/absolute/path/to/playwright-core node tests/chrome/browser.cjs
  * Uses an isolated temporary profile and never touches the user's browser profile.
  */
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright-core');
@@ -17,9 +17,9 @@ const root = path.resolve(__dirname, '../..');
   });
   context.setDefaultTimeout(10000);
   try {
-    fs.mkdirSync(path.join(root, 'chrome/dist'), {recursive: true});
+    fs.mkdirSync(path.join(root, 'artifacts/extension'), {recursive: true});
     const cdp = await context.browser().newBrowserCDPSession();
-    const {id} = await cdp.send('Extensions.loadUnpacked', {path: path.join(root, 'chrome')});
+    const {id} = await cdp.send('Extensions.loadUnpacked', {path: process.env.EXTENSION_PATH || path.join(root, 'chrome')});
     let mode = 'offline';
     const remote = JSON.parse(fs.readFileSync(path.join(root, 'data/discovery_index.json')));
     await context.route('https://agentskills.media/data/discovery_index.json', async route => {
@@ -187,7 +187,7 @@ const root = path.resolve(__dirname, '../..');
     await page.locator('#clear-uses').click();
     assert.equal(await page.locator('#use-label').textContent(), '全部用途');
     await page.setViewportSize({width: 390, height: 850});
-    await page.screenshot({path: path.join(root, 'chrome/dist/extension-use-picker-390-light.png')});
+    await page.screenshot({path: path.join(root, 'artifacts/extension/extension-use-picker-390-light.png')});
     await page.locator('#use-search').press('Escape');
     assert.equal(await page.locator('#use-picker').isVisible(), false);
     assert.equal(await page.locator('#toggle-uses').getAttribute('aria-expanded'), 'false');
@@ -211,9 +211,9 @@ const root = path.resolve(__dirname, '../..');
       });
       assert.ok(measure.fullyVisibleResults >= (width < 650 ? 6 : 12), `compact result density at ${width}: ${JSON.stringify(measure)}`);
       density.push(measure);
-      await page.screenshot({path: path.join(root, `chrome/dist/extension-${width}-light.png`), fullPage: false});
+      await page.screenshot({path: path.join(root, `artifacts/extension/extension-${width}-light.png`), fullPage: false});
     }
-    fs.writeFileSync(path.join(root, 'chrome/dist/density.json'), JSON.stringify(density, null, 2));
+    fs.writeFileSync(path.join(root, 'artifacts/extension/density.json'), JSON.stringify(density, null, 2));
     await page.setViewportSize({width: 390, height: 850});
     // Locale switching preserves result membership, page and stable filter IDs.
     await page.locator('#next-page').click();
@@ -237,7 +237,7 @@ const root = path.resolve(__dirname, '../..');
       await page.setViewportSize({width, height: 850});
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `English overflow at ${width}`);
       assert.ok(await page.locator('#sources').evaluate(node => node.scrollWidth <= node.clientWidth));
-      await page.screenshot({path: path.join(root, `chrome/dist/extension-${width}-en.png`)});
+      await page.screenshot({path: path.join(root, `artifacts/extension/extension-${width}-en.png`)});
     }
     await page.locator('#query').fill('');
     await page.locator('[data-source="mcp"]').click();
@@ -283,14 +283,14 @@ const root = path.resolve(__dirname, '../..');
     await page.locator('#query').fill('browser');
     await page.setViewportSize({width: 390, height: 850});
     await page.locator('#theme').click();
-    await page.screenshot({path: path.join(root, 'chrome/dist/extension-390-dark.png')});
+    await page.screenshot({path: path.join(root, 'artifacts/extension/extension-390-dark.png')});
     await page.setViewportSize({width: 390, height: 600});
     await page.locator('#filter-toggle').click();
     await page.locator('#language').selectOption('Python');
     assert.ok(await page.locator('#results-scroll').evaluate(node => node.clientHeight >= 120));
     assert.ok(await page.locator('footer').evaluate(node => node.getBoundingClientRect().bottom <= innerHeight));
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
-    await page.screenshot({path: path.join(root, 'chrome/dist/extension-filters-390-dark.png')});
+    await page.screenshot({path: path.join(root, 'artifacts/extension/extension-filters-390-dark.png')});
     await page.locator('#language').selectOption('');
     await page.locator('#filter-toggle').click();
     await page.locator('.repo summary').first().click();
