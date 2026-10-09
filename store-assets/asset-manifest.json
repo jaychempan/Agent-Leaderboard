@@ -1,0 +1,84 @@
+{
+  "extensionVersion": "1.6.0",
+  "generatedAt": "2026-10-09T13:02:58.406Z",
+  "assets": [
+    {
+      "file": "zh-CN/01-search-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "zh-CN/02-filters-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "zh-CN/03-copy-setup-prompt-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "zh-CN/04-favorites-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "zh-CN/05-language-and-theme-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "en/01-search-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "en/02-filters-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "en/03-copy-setup-prompt-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "en/04-favorites-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "en/05-language-and-theme-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "common/small-promo-440x280.png",
+      "width": 440,
+      "height": 280,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "common/marquee-1400x560.png",
+      "width": 1400,
+      "height": 560,
+      "format": "PNG RGB, 24-bit, no alpha"
+    },
+    {
+      "file": "common/store-icon-128.png",
+      "width": 128,
+      "height": 128,
+      "format": "PNG with transparency; original extension icon"
+    }
+  ]
+}
