@@ -1432,3 +1432,11 @@ button, select, input { font: inherit; }
  .navbar .nav-hamburger { width:28px; margin-left:4px; }
  .navbar .nav-actions .nav-btn { padding:5px 4px; min-width:26px; }
 }
+
+/* A quiet update notice between the leaderboard summary and the setup guide. */
+.site-announcement { display:flex; align-items:center; justify-content:center; gap:9px; min-height:40px; padding:9px 18px; border-bottom:1px dashed var(--border); background:var(--surface); color:var(--muted); font-size:12px; line-height:1.65; }
+.site-announcement>svg { width:17px; height:17px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.site-announcement a { color:var(--accent); white-space:nowrap; margin-left:8px; text-underline-offset:3px; }
+.site-announcement a:hover { text-decoration:underline; }
+.site-announcement:empty { display:none; }
+@media(max-width:600px){ .site-announcement { justify-content:flex-start; align-items:flex-start; padding:8px 14px; font-size:11px; gap:7px; } .site-announcement>svg { margin-top:2px; } }

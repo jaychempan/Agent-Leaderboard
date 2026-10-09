@@ -17,6 +17,9 @@ const I18N = {
     nav_favorites:  '收藏',
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
+    announcement_label: '功能更新',
+    announcement_extension: '新增 Chrome 搜索插件，支持侧栏搜索、收藏与复制 AI 安装提示。',
+    announcement_link: '了解与安装',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
     research_title: 'Auto Research 排行榜',
@@ -73,6 +76,9 @@ const I18N = {
     nav_favorites:  'Favorites',
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
+    announcement_label: 'Product update',
+    announcement_extension: 'New Chrome extension: sidebar search, favorites and AI install prompts.',
+    announcement_link: 'Learn more & install',
     skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
     research_title: 'Auto Research Leaderboard',
@@ -646,6 +652,13 @@ function renderHero() {
       <span class="meta-pill">${t('stat_updated')} <strong>${updated}</strong></span>
       <span class="meta-pill">${t('stat_top')} <strong>★${fmtNum(top)}</strong></span>
     </div>`;
+  const announcement = document.getElementById('siteAnnouncement');
+  if (announcement) {
+    announcement.setAttribute('aria-label', t('announcement_label'));
+    announcement.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l10 4V6l-10 4H3ZM7 14l2 6h3l-2-5M20 9a5 5 0 0 1 0 6"/></svg>
+      <span>${t('announcement_extension')} <a href="extension/">${t('announcement_link')}</a></span>`;
+  }
 }
 
 /* ── MCP usage render ───────────────────────────────────────────── */
