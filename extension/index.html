@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chrome extension · Agent Leaderboard</title>
+<meta name="description" content="Find Skills, MCP servers and AI tools in your Chrome side panel. Download Agent Leaderboard, learn the workflow, and copy installation prompts for your AI coding tool.">
+<link rel="icon" href="../chrome/icons/logo.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('st_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}</script>
+<link rel="stylesheet" href="showcase.css?v=20261009">
+<script type="module" src="showcase.js?v=20261009"></script>
+</head>
+<body>
+<a class="skip" href="#main" data-copy="skip">Skip to content</a>
+<header class="site-header">
+<a class="brand" href="../"><img src="../chrome/icons/logo.svg" alt="" width="38" height="38"><span>Agent Leaderboard</span></a>
+<nav aria-label="Page navigation"><a href="#install" data-copy="navInstall">Install</a><a href="#guide" data-copy="navGuide">Guide</a><a href="#faq">FAQ</a><a href="#updates" data-copy="navUpdates">Updates</a></nav>
+<div class="preferences"><button id="language" type="button" aria-label="切换为中文">中</button><button id="theme" type="button" aria-label="Switch theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 0v18"/></svg></button></div>
+</header>
+<main id="main">
+<section class="hero wrap">
+<div class="hero-copy">
+<div class="product"><img src="../chrome/icons/logo.svg" alt="" width="62" height="62"><div><span data-copy="product">Chrome search assistant</span><small>Agent Leaderboard <span class="version">v1.6.0</span></small></div></div>
+<h1 data-copy="headline">Find your next AI tool.<br>Keep your browser open.</h1>
+<p class="intro" data-copy="intro">Search Skills, MCP servers, prompts, frameworks and research tools in a compact side panel. Find a repository, then take its installation prompt straight to your AI coding workspace.</p>
+<div class="hero-actions"><a class="button primary" href="#install" data-copy="get">Get the extension</a><a class="text-link" href="https://github.com/jaychempan/Agent-Leaderboard/tree/main/chrome" target="_blank" rel="noopener noreferrer" data-copy="source">View source</a></div>
+<p class="compatibility" data-copy="compatibility">Chrome 116+ · Free & open source · No account</p>
+<div class="workflow"><span data-copy="flowFind">Find a repository</span><b aria-hidden="true">›</b><span data-copy="flowCopy">Copy install prompt</span><b aria-hidden="true">›</b><span data-copy="flowUse">Use in your AI tool</span></div>
+<p class="release-note"><span class="release-dot" aria-hidden="true"></span><span data-copy="new">New in 1.6: copy an installation prompt from any repository.</span><a href="#updates" data-copy="whatsNew">What changed</a></p>
+</div>
+<figure class="preview">
+<div class="preview-title"><img src="../chrome/icons/logo.svg" alt="" width="23" height="23"><span>Agent Leaderboard</span><span class="preview-close" aria-hidden="true">×</span></div>
+<img id="preview-image" src="assets/panel-en-light.png" alt="Agent Leaderboard extension showing repository search, filters, copy and bookmark buttons" width="390" height="660" fetchpriority="high">
+<figcaption data-copy="caption">Actual extension interface. Preview follows this page’s language and theme.</figcaption>
+</figure>
+</section>
+<section class="features wrap" aria-labelledby="features-title">
+<div class="section-heading"><h2 id="features-title" data-copy="featuresTitle">The whole directory, within reach.</h2><p data-copy="featuresIntro">The website’s five boards and categories, with a workflow made for the browser.</p></div>
+<div class="feature-grid">
+<article><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6"/></svg><h3 data-copy="f1Title">Search with context</h3><p data-copy="f1">Search names and use cases, combine categories and filters, or select text on a webpage and search from the right-click menu.</p></article>
+<article><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h11v12H9V9ZM15 9V3H3v12h6"/></svg><h3 data-copy="f2Title">Hand off to your coding AI</h3><p data-copy="f2">Copy a repository’s installation prompt. Your AI reads the README, checks your environment, follows the documented setup and verifies the result.</p></article>
+<article><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg><h3 data-copy="f3Title">A shortlist that stays close</h3><p data-copy="f3">Save favorites locally. Browse 30 repositories per page, jump to a page, and open full details only when you need them.</p></article>
+<article><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v12H3V4Zm5 16h8m-4-4v4"/></svg><h3 data-copy="f4Title">Comfortable, online or off</h3><p data-copy="f4">Search the bundled catalog offline. Switch between English and Chinese, follow your system’s theme, or choose light or dark.</p></article>
+</div>
+</section>
+<section class="install-section" id="install"><div class="wrap install-grid">
+<div><h2 data-copy="installTitle">Ready for your sidebar.</h2><p data-copy="installIntro">Download the extension and load it into desktop Chrome. This is an unpacked release; it is not yet listed in the Chrome Web Store.</p><a class="button primary download" href="../chrome/dist/agent-leaderboard-extension.zip" download="agent-leaderboard-extension.zip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span data-copy="download">Download ZIP</span><span class="version">v1.6.0</span></a><p class="small" data-copy="downloadNote">Includes icons and an offline catalog. No build tools required.</p><a class="text-link" href="https://github.com/jaychempan/Agent-Leaderboard/tree/main/chrome" target="_blank" rel="noopener noreferrer" data-copy="sourceAlternative">Or load the chrome/ folder from the repository</a></div>
+<ol class="install-steps"><li><h3 data-copy="step1Title">Unzip and keep the folder</h3><p data-copy="step1">Extract the download into a permanent folder. Keep it there while the extension is installed.</p></li><li><h3 data-copy="step2Title">Open Chrome’s extensions page</h3><div class="address"><code>chrome://extensions</code><button id="copy-address" data-copy="copyAddress" type="button">Copy address</button></div><p data-copy="step2">Paste the address into a new tab and enable Developer mode at the top right.</p></li><li><h3 data-copy="step3Title">Load the extracted folder</h3><p data-copy="step3">Choose “Load unpacked” and select the folder containing manifest.json. If using the source repository, select its chrome/ folder.</p></li><li><h3 data-copy="step4Title">Pin it and start searching</h3><p data-copy="step4">Open Chrome’s Extensions menu, pin Agent Leaderboard, then click its icon to open the side panel.</p></li></ol>
+</div></section>
+<section class="wrap guide" id="guide">
+<div class="section-heading"><h2 data-copy="guideTitle">From discovery to your workspace.</h2><p data-copy="guideIntro">Three small steps, without losing the page you’re reading.</p></div>
+<ol class="guide-steps"><li><h3 data-copy="g1Title">Find the right project</h3><p data-copy="g1">Choose Skills, MCP, Prompt, AI frameworks or research. Narrow by category, platform, language, stars or recent updates. Multiple use cases must all match.</p></li><li><h3 data-copy="g2Title">Check it, then copy</h3><p data-copy="g2">Open the README or expand Details. The copy icon beside the bookmark copies an installation prompt with the repository URL and documentation link.</p></li><li><h3 data-copy="g3Title">Paste into your AI coding tool</h3><p data-copy="g3">Use Claude Code, Codex, Cursor or your preferred assistant. It checks the actual setup; a collection may need a specific component selected first.</p></li></ol>
+<div class="handoff"><div><h3 data-copy="tryTitle">Try the handoff</h3><p data-copy="tryText">This example uses microsoft/playwright-mcp. Copy the same prompt the extension would generate, in your selected language.</p><button class="button secondary" id="copy-prompt" type="button" data-copy="copyPrompt">Copy example install prompt</button><p class="small" data-copy="handoffNote">Copying does not install software or send anything to an AI service. Paste the prompt into your own tool to continue.</p></div><div class="prompt-example"><div class="prompt-title"><span>MCP</span><a href="https://github.com/microsoft/playwright-mcp" target="_blank" rel="noopener noreferrer">microsoft/playwright-mcp</a></div><details><summary data-copy="previewPrompt">Read the full installation prompt</summary><pre id="prompt-text"></pre></details></div></div>
+<div class="shortcuts"><h3 data-copy="shortcuts">Two quicker ways in</h3><p><kbd>agent</kbd> <span data-copy="omnibox">Type in Chrome’s address bar, press Tab, then enter your search.</span></p><p><kbd>⌘ / Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd> <span data-copy="shortcutText">Open the side panel. Customize in chrome://extensions/shortcuts.</span></p></div>
+</section>
+<section class="wrap faq-section" id="faq"><h2 data-copy="faqTitle">A few useful details.</h2>
+<div class="faq-list">
+<details><summary data-copy="q1">How does the catalog stay up to date?</summary><p data-copy="a1">The website’s catalog is updated daily. The extension checks for a newer catalog when opened if its last successful check was over 24 hours ago. You can also refresh manually. If the network is unavailable, the saved or bundled catalog stays usable and the footer shows its date.</p></details>
+<details><summary data-copy="q2">How do I update the extension itself?</summary><p data-copy="a2">Download the newest ZIP, extract it and replace the files in your existing extension folder. Open chrome://extensions and click Reload on Agent Leaderboard. Keep the same folder and do not uninstall first, so local favorites and settings remain. Catalog refreshes update data, not extension code.</p></details>
+<details><summary data-copy="q3">Does it work with ChatGPT or other extensions?</summary><p data-copy="a3">You can use it alongside ChatGPT and other browser extensions. Copy a prompt into your preferred AI tool. It does not read their conversations or integrate with their private APIs; an assistant needs appropriate workspace and execution tools to perform an installation.</p></details>
+<details><summary data-copy="q4">Are my favorites or searches uploaded?</summary><p data-copy="a4">No account is required. Search runs locally and favorites stay in this Chrome profile. The extension has no analytics, does not read browsing history, cookies or page content, and does not sync favorites with the website or other devices. Uninstalling removes its local data.</p></details>
+<details><summary data-copy="q5">Can every repository be installed directly?</summary><p data-copy="a5">No. Some entries are collections, documentation or prompts. Catalog platform tags are inferred from keywords, not verified compatibility. The installation prompt asks your AI to read the official documentation, choose the correct approach, preserve existing settings and report unsupported integrations honestly.</p></details>
+</div></section>
+<section class="wrap updates" id="updates"><h2 data-copy="updatesTitle">What’s new</h2><article class="update"><div><span class="version">v1.6.0</span><span class="current" data-copy="current">Current release</span></div><div><h3 data-copy="updateTitle">From finding a tool to setting it up.</h3><ul><li data-copy="u1">One-click installation prompts beside each repository, with a second entry in Details.</li><li data-copy="u2">Chinese and English prompts include repository and README links, environment checks, documented setup and verification.</li><li data-copy="u3">Includes the compact sidebar, five boards, multi-use filters, pagination, favorites, offline search and system-aware theme.</li></ul><a href="../chrome/help-en.html" id="full-docs" data-copy="fullDocs">Read the complete extension documentation</a></div></article></section>
+</main>
+<footer class="wrap footer"><a class="brand" href="../"><img src="../chrome/icons/logo.svg" alt="" width="28" height="28"><span>Agent Leaderboard</span></a><div><a href="../" data-copy="back">Browse the leaderboard</a><a href="https://github.com/jaychempan/Agent-Leaderboard/issues" target="_blank" rel="noopener noreferrer" data-copy="feedback">Report an issue</a><a href="#faq" data-copy="privacy">Data & privacy</a><span>MIT License</span></div></footer>
+<p id="toast" role="status" hidden></p>
+</body></html>

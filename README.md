@@ -119,7 +119,7 @@ The go-to leaderboard for discovering trending AI agent ecosystem repositories o
 |---------|-------------|
 | 🌐 **Five Boards** | Agent Skills · MCP Servers · Prompt Library · AI Frameworks · Auto Research |
 | 🔍 **Multi-filter** | Keyword search, language, Stars threshold (All / 500+ / 1k+ / 5k+ / 10k+), time range |
-| 🏷️ **Use-case chips** | Click tags to filter by use case — multi-select with OR logic |
+| 🏷️ **Use-case chips** | Click tags to filter by use case — all selected tags must match |
 | ⊞ **Dual views** | Grid / List view toggle, 24 / 48 / 96 items per page |
 | ❤️ **Favorites** | Bookmark repos; persisted in localStorage |
 | 🌐 **i18n** | Switch between English and Chinese with one click |
@@ -152,6 +152,22 @@ npx live-server --port=8080
 python3 -m http.server 8080
 # then open http://localhost:8080
 ```
+
+## Chrome Search Extension
+
+**[Preview, download and usage guide](https://agentskills.media/extension/)** — bilingual walkthrough, installation prompts, FAQ and release notes.
+
+Search all five boards in a Chrome side panel with the website's categories, use-case filters and time ranges. Filter by platform, language and stars, save favorites, and open repository READMEs. Includes selection context-menu search, the `agent` address-bar keyword, and a complete offline catalog.
+
+The complete extension lives in **`chrome/`**, including icons and offline data, and can be loaded directly. To refresh the bundled snapshot or generate a ZIP:
+
+```bash
+python3 chrome/scripts/build.py
+```
+
+Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select the **`chrome/`** folder. Pin the extension and click its icon to open the side panel.
+
+Requires Chrome 116+. The build also produces a shareable ZIP; this is a local installation package, not a Chrome Web Store release. See the [extension guide](chrome/README.md) for shortcuts, data updates, privacy, and development instructions.
 
 ## MCP Skill Discovery
 

@@ -1383,3 +1383,7 @@ button, select, input { font: inherit; }
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 14px;
 }
+
+/* Keep the extension entry accessible without crowding the board navigation. */
+.nav-extension { color:var(--accent); }
+@media (min-width:1025px) and (max-width:1550px) { .nav-friend,.nav-divider { display:none; } }

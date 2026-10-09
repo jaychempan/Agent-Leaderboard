@@ -29,6 +29,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build Chrome extension download
+        run: python3 chrome/scripts/build.py
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

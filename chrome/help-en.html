@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Help · Agent Search</title><link rel="stylesheet" href="panel.css"></head>
+<body><div class="app"><header><h1>Agent Search · Help</h1><a href="help.html" lang="zh-CN">中文</a></header><main class="search-area">
+<h2>Search while you browse</h2>
+<p>Click the extension's toolbar icon to open the side panel. The keyboard shortcut is Ctrl+Shift+Y on Windows / Linux or Command+Shift+Y on macOS. Change it at chrome://extensions/shortcuts if needed.</p>
+<p>Select text on a webpage and choose “Search Agent Leaderboard” from the context menu. You can also type <strong>agent</strong> in the address bar, press Tab or Space, and enter a query.</p>
+<h2>Language and appearance</h2>
+<p>Click EN at the top right of the search bar to switch to English, or 中 to return to Chinese. Your choice is saved in this Chrome profile and synchronized across open extension panels and tabs. Search terms, filters, favorites, and the current page are preserved. Repository names and descriptions remain in their original language.</p>
+<p>The theme follows your system by default and updates when the system appearance changes. Click the theme button to cycle through System, Light, and Dark. Your choice is saved and synchronized across open extension pages. Manual Light / Dark modes override the system; select System again to restore automatic switching. Wide tabs show results in two columns.</p>
+<h2>Search, filter, and save</h2>
+<p>The six boards are always visible. Matching icons, colors, and labels identify Skills, MCP, Prompt, AI frameworks, and research tools in the results.</p>
+<p>Search repository names, descriptions, topics, and use cases. Space-separated keywords must all match. Duplicate repositories are merged while retaining their board memberships.</p>
+<p>Categories match the website. Choose a board, then a category such as Claude, Codex, Database, or Orchestration. Open “All use cases” to search and select uses. Results must match every selected use. Counts reflect other filters before applying use-case selections. Press Escape inside the use picker to close it.</p>
+<p>Additional filters include platform, programming language, minimum stars, and update time. Sort by relevance, stars, or recent updates. Changing boards clears the previous category and use-case selections. Platform compatibility is inferred from catalog keywords; check the repository README. Update dates refer to GitHub's updated_at field.</p>
+<p>Each page contains up to 30 repositories. Previous / Next and the page number stay at the bottom. Enter a page number and press Enter to jump. Changing the search, filters, or sort resets to page one.</p>
+<p>Click a repository name to open GitHub. Expand “Details” to read the full description, categories, uses, and links, or copy the repository URL. Use the bookmark button to save a repository, then choose Favorites to view it. Saved snapshots remain available if a repository leaves the catalog.</p>
+<p>Press / to focus search. Press Escape in the search field to clear the query. The website link opens the current board.</p>
+<h2>Copy an installation prompt</h2>
+<p>Click the copy icon beside a repository's bookmark, or expand Details and choose “Copy install prompt”. Paste it into Claude Code, Codex, Cursor, or another AI coding tool. The prompt includes the repository and README URLs and asks the AI to identify your environment, follow the documented setup, preserve existing configuration, and verify the integration. For collections, it first identifies the component you need; unsupported integrations receive an explanation of the actual usage. The prompt follows the interface language. The extension does not install software or send the prompt to another app automatically.</p>
+<h2>Data and privacy</h2>
+<p>The extension includes a complete catalog snapshot. It checks agentskills.media for an updated JSON catalog on opening if the last successful check was over 24 hours ago. You can also refresh manually. If the update fails, is invalid, or is older, existing offline data remains available. The footer shows the active catalog's date and status.</p>
+<p>If there is not enough browser storage, an updated catalog can still be used for the current session without being cached. Favorites and preferences are local to this Chrome profile, independent of the website, and do not sync across devices. Uninstalling deletes local extension data.</p>
+<p>Search and filtering run locally. The extension does not read webpage content, history, or cookies, and includes no analytics or remote executable code. Selected text is passed only when you use the context menu and is not sent to a server. Opening repository, README, or website links uses normal browser navigation.</p>
+<p>Permissions: storage saves the catalog, favorites, and preferences; sidePanel displays the assistant; contextMenus provides selection search; agentskills.media access downloads catalog updates.</p>
+<p><a href="https://agentskills.media" target="_blank" rel="noreferrer">Full leaderboard</a> · <a href="https://github.com/jaychempan/Agent-Leaderboard" target="_blank" rel="noreferrer">Source code</a></p>
+</main><footer>Agent Leaderboard · MIT License</footer></div></body>
+</html>

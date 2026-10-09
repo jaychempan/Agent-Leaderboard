@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>使用说明 · Agent 搜索助手</title><link rel="stylesheet" href="panel.css"></head>
+<body><div class="app"><header><h1>Agent 搜索助手 · 使用说明</h1><a href="help-en.html" lang="en">English</a></header><main class="search-area">
+<h2>随手搜索，留在当前网页</h2>
+<p>点击工具栏插件图标打开侧边栏。快捷键为 Windows / Linux 的 Ctrl+Shift+Y、macOS 的 Command+Shift+Y；如有冲突，可在 chrome://extensions/shortcuts 中修改。</p>
+<p>选中网页上的文字，右键选择“在 Agent 排行榜搜索”。也可在地址栏输入 <strong>agent</strong>，按 Tab 或空格，再输入关键词并回车，在新页面内查看结果。</p>
+<h2>搜索与收藏</h2>
+<p>点击搜索栏右上角的 EN 切换英文，点击“中”返回中文。语言选择保存在当前 Chrome 配置中，并同步到已打开的插件页面。切换时保留搜索、筛选、收藏与当前页码；仓库名称和简介保留原文。</p>
+<p>仓库按每页 30 条分页，底部固定显示上一页、页码和下一页。可输入页码按回车直接跳转；翻页后回到列表顶部，搜索、筛选或排序变化时回到第一页。</p>
+<p>顶部集中搜索和筛选，仓库列表单独滚动，底部显示数据状态。名称、Stars 和书签收藏同一行，简介显示一行，作者、语言、所属榜单和 README 位于下方。点击“详情”可查看完整简介和所有标签。顶部六个榜单入口全部直接显示，用图标和简短名称区分，不需要横向滚动。仓库左侧也显示对应的彩色图标与类型文字，便于区分 Skills、MCP、Prompt、框架和研究工具。分类和用途并排显示。</p>
+<p>按仓库名、描述、用途、标签搜索；多个关键词用空格分隔，结果需同时包含这些关键词。榜单名称和二级分类与网站一致：先选榜单，再选 Claude、Codex、数据库、流程编排等分类。</p>
+<p>用途标签可多选，结果需同时满足全部已选用途。标签数字是应用其他筛选后、应用用途筛选前的仓库数，与网站逻辑一致。点击“全部用途”展开双列选项，可查找用途、清空已选，按 Esc 收起；也可点击仓库卡片上的分类或用途快速筛选。</p>
+<p>更多筛选包括平台、语言、最低 Stars，以及近 1 月 / 近 3 月 / 近 1 年。可逐项移除已选条件。切换榜单会清除原有分类和用途。按相关度、Stars 或最近更新排序。</p>
+<p>同一仓库会合并显示，保留所有所属榜单。平台来自目录关键词推断，请以仓库 README 的兼容说明为准。“最近更新”使用目录中的 GitHub updated_at，并不等同于最近一次代码提交。</p>
+<p>点击仓库右侧的书签按钮收藏；点击“详情”查看用途、标签和链接。收藏只保存在当前浏览器，不与网站收藏夹或其他设备同步。即使仓库从后续目录移除，仍保留收藏时的信息。</p>
+<p>按 / 聚焦搜索框；在搜索框按 Esc 清空关键词。主题默认跟随系统明暗模式；主题按钮依次切换“跟随系统、浅色、深色”，选择会记住。底部网站链接会打开对应榜单。</p>
+<h2>复制给 AI 安装</h2>
+<p>点击仓库右侧、书签旁的复制图标，或展开“详情”点击“复制安装提示”，再粘贴到 Claude Code、Codex、Cursor 等 AI 编程工具。内容包含仓库与 README 地址，让 AI 先识别当前环境和项目类型，再按官方文档安装、保留已有配置并验证。资源合集会先确认具体组件；不支持直接接入的项目会说明实际用法。复制内容跟随界面语言，插件不会自动安装或发送给其他应用。</p>
+<h2>数据和隐私</h2>
+<p>插件内置构建时的完整目录快照。打开时如果距离上次成功检查超过 24 小时，会从 agentskills.media 下载最新 JSON 目录；也可点击“更新数据”。更新失败时继续使用本地数据，底部显示实际目录日期。</p>
+<p>搜索与筛选均在本地完成。插件不读取网页正文、浏览历史或 Cookie，不含分析追踪代码。只有主动使用右键搜索时，所选文字才会传入插件，并且不发送到搜索服务器。打开仓库、网站或 README 链接时，浏览器会正常访问对应网站。</p>
+<p>storage 用于目录缓存、收藏和设置；sidePanel 用于侧边栏；contextMenus 用于右键搜索；agentskills.media 访问权限仅用于目录更新。卸载插件会清除插件本地数据。</p>
+<p><a href="https://agentskills.media" target="_blank" rel="noreferrer">打开完整榜单</a> · <a href="https://github.com/jaychempan/Agent-Leaderboard" target="_blank" rel="noreferrer">项目源码</a></p>
+</main><footer>Agent Leaderboard · MIT License</footer></div></body>
+</html>
