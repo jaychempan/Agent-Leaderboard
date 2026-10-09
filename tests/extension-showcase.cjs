@@ -8,8 +8,8 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
  try{
   const context=await browser.newContext({viewport:{width:1440,height:850},colorScheme:'light'});
-  context.setDefaultTimeout(10000);
-  const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  context.setDefaultTimeout(process.env.SITE_BASE_URL ? 30000 : 10000);
+  const page=await context.newPage();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.error('Page error:',e.message);});
   await page.addInitScript(()=>{navigator.clipboard.writeText=async text=>{window.copiedText=text;};});
   await page.goto(new URL('extension/',base).href);
   await page.locator('#prompt-text').filter({hasText:'Please help me'}).waitFor({state:'attached'});
