@@ -45,8 +45,10 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
    const copied=await page.evaluate(()=>window.copiedText);
    assert.ok(copied.includes('https://github.com/microsoft/playwright-mcp#readme'));
    assert.ok(copied.startsWith(locale==='zh'?'请帮我':'Please help me'));
+   await page.locator('.manual-install summary').click();
    await page.locator('#copy-address').click();
    assert.equal(await page.evaluate(()=>window.copiedText),'chrome://extensions');
+   await page.locator('.manual-install summary').click();
    await page.locator('.faq-list summary').first().click();
    assert.equal(await page.locator('.faq-list details').first().getAttribute('open'),'');
    await page.locator('.faq-list summary').first().click();
@@ -83,9 +85,22 @@ const base=process.env.SITE_BASE_URL||'http://127.0.0.1:8765/';
   }
   await page.locator('#langBtn').click();
   await page.setViewportSize({width:390,height:850});
-  await page.locator('.nav-extension').click();
+  const storeURL='https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf';
+  assert.equal(await page.locator('.nav-extension').getAttribute('href'),storeURL);
+  assert.equal(await page.locator('.nav-extension').getAttribute('target'),'_blank');
+  await page.locator('#siteAnnouncement a').click();
   await page.waitForURL('**/extension/');
   assert.equal(await page.locator('html').getAttribute('lang'),'zh-CN');
+  for(const locale of ['zh','en']){
+   if(locale==='en')await page.locator('#language').click();
+   for(const selector of ['.hero-actions .primary','.store-install']){
+    assert.equal(await page.locator(selector).getAttribute('href'),storeURL);
+    assert.equal(await page.locator(selector).getAttribute('target'),'_blank');
+    assert.equal(await page.locator(selector).innerText(),locale==='zh'?'添加至 Chrome':'Add to Chrome');
+   }
+   assert.equal(await page.locator('.store-steps li').count(),3);
+   assert.equal(await page.locator('body').innerText().then(text=>/not yet listed|尚未上架/.test(text)),false);
+  }
   await page.locator('#mobile-menu').click();
   assert.equal(await page.locator('#mobile-menu').getAttribute('aria-expanded'),'true');
   assert.equal(await page.locator('#page-navigation').isVisible(),true);

@@ -35,3 +35,5 @@
  #mobile-menu { display:flex; }
  .site-header.menu-open nav { display:flex; position:absolute; top:100%; left:0; right:0; width:auto; padding:14px 20px; border-bottom:1px solid var(--line); background:var(--bg); }
 }
+
+.store-install{margin-top:25px}.manual-install{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}.manual-install summary{font-size:13px;color:var(--blue)}.manual-install .install-steps{margin-top:20px}

@@ -4,6 +4,7 @@
 ================================================================ */
 
 /* ── Config ─────────────────────────────────────────────────────── */
+const CHROME_STORE_URL = 'https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf';
 const GITHUB_REPO = 'https://github.com/jaychempan/Agent-Leaderboard';
 
 /* ── i18n ──────────────────────────────────────────────────────── */
@@ -18,8 +19,8 @@ const I18N = {
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
     announcement_label: '功能更新',
-    announcement_extension: '新增 Chrome 搜索插件，支持侧栏搜索、收藏与复制 AI 安装提示。',
-    announcement_link: '了解与安装',
+    announcement_extension: 'Chrome 搜索插件已上架应用商店，支持侧栏搜索、收藏与复制 AI 安装提示。',
+    announcement_link: '使用指南',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
     research_title: 'Auto Research 排行榜',
@@ -77,8 +78,8 @@ const I18N = {
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
     announcement_label: 'Product update',
-    announcement_extension: 'New Chrome extension: sidebar search, favorites and AI install prompts.',
-    announcement_link: 'Learn more & install',
+    announcement_extension: 'Now on the Chrome Web Store: sidebar search, favorites and AI install prompts.',
+    announcement_link: 'View guide',
     skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
     research_title: 'Auto Research Leaderboard',
@@ -624,7 +625,7 @@ function renderNav() {
       <button class="nav-btn" id="themeBtn" onclick="toggleTheme()">
         ${app.theme === 'dark' ? '☀️' : '🌙'}
       </button>
-      <a class="nav-extension" href="extension/" aria-label="${t('nav_extension')}" title="${t('nav_extension')}">
+      <a class="nav-extension" href="${CHROME_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="${t('nav_extension')}" title="${t('nav_extension')}">
         <img src="extension/assets/logo.svg" alt="" width="22" height="22" />
         <span class="extension-label">${t('nav_extension')}</span><span class="extension-label-short">${t('nav_extension_short')}</span>
       </a>
