@@ -7,7 +7,8 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <style>html{background:#0d1117}html[data-theme="light"]{background:#f6f8fa}</style>
   <script>(function(){var t=localStorage.getItem('st_theme')||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);})();</script>
-  <link rel="stylesheet" href="src/shared.css?v=202610092145" />
+  <link rel="stylesheet" href="src/shared.css?v=202610182350" />
+  <link rel="stylesheet" href="src/trends.css?v=202610190030" />
 </head>
 <body>
 
@@ -82,7 +83,7 @@
   <div class="grid" id="grid"></div>
 
   <!-- List table -->
-  <table class="list-table" id="listTable" style="display:none"></table>
+  <div class="list-scroll"><table class="list-table" id="listTable" style="display:none"></table></div>
 
   <!-- Pagination -->
   <div class="pagination" id="pagination"></div>
@@ -91,6 +92,28 @@
   <div class="visit-badge" id="visitBadge"></div>
 
 </div>
+
+<dialog id="trend-panel" class="trend-panel" aria-labelledby="trend-title">
+  <div class="trend-panel-header">
+    <div class="trend-heading"><svg class="trend-heading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m4 16 6-6 4 4 6-9M14 5h6v6"/></svg><h2 id="trend-title">趋势榜</h2><span id="trend-projectsLabel">前 20 名</span></div>
+    <div class="trend-panel-actions"><button id="trend-collapse" type="button" aria-label="收起到右下角" title="收起到右下角"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 13h12"/></svg></button><button id="trend-close" type="button" aria-label="关闭趋势榜" title="关闭趋势榜"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></div>
+  </div>
+  <div class="trend-controls">
+    <nav id="trend-sourceTabs" class="trend-source-tabs" aria-label="板块"></nav>
+    <div class="trend-toolbar">
+      <div id="trend-periods" class="trend-periods" role="group" aria-label="时间范围"></div>
+      <label class="trend-sort"><span id="trend-sortLabel">排序</span><select id="trend-sort"><option value="rate">增长率</option><option value="delta">新增 Stars</option></select></label>
+    </div>
+    <div class="trend-summary"><span id="trend-overview" role="status"></span></div>
+  </div>
+  <div class="trend-columns" aria-hidden="true"><span>#</span><span id="trend-projectColumn">项目</span><span>Stars</span><span id="trend-growthColumn">新增 Stars / 涨幅</span></div>
+  <div class="trend-panel-body" id="trend-body">
+    <ol id="trend-ranking" class="trend-ranking"></ol>
+    <div id="trend-empty" class="trend-empty" hidden></div>
+    <footer class="trend-data-footer"><span id="trend-dateRange"></span><details><summary id="trend-methodLabel">如何计算</summary><p id="trend-methodText"></p></details></footer>
+  </div>
+</dialog>
+<div class="trend-dock" id="trend-dock" hidden><button id="trend-expand" type="button" aria-haspopup="dialog" aria-controls="trend-panel">↗ 展开趋势榜</button><button id="trend-dismiss" type="button" aria-label="关闭趋势榜">×</button></div>
 
 <div class="footer">
   Data sourced from <a href="https://docs.github.com/en/rest/search" target="_blank">GitHub Search API</a> · Updated daily ·
@@ -109,6 +132,8 @@
 <script src="data/frameworks_data.js?v=202610180713"></script>
 <script src="data/prompts_data.js?v=202610180716"></script>
 <script src="data/auto_research_data.js?v=202610180718"></script>
-<script src="src/shared.js?v=202610101830"></script>
+<script src="src/shared.js?v=202610182350"></script>
+<script src="data/trends.js?v=202610180718"></script>
+<script src="src/trends.js?v=202610190030"></script>
 </body>
 </html>

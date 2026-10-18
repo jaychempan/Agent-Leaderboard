@@ -1,175 +1,68 @@
 # Agent Leaderboard
 
-<img src="favicon.svg" width="48" alt="logo" align="right" />
+<img src="favicon.svg" width="48" alt="Agent Leaderboard logo" align="right" />
 
-The go-to leaderboard for discovering trending AI agent ecosystem repositories on GitHub — covering **Agent Skills**, **MCP Servers**, **Prompt Libraries**, **AI Frameworks**, and **Auto Research** tools, all ranked by GitHub stars and updated automatically.
+Discover GitHub repositories across **Agent Skills**, **MCP Servers**, **Prompt Libraries**, **AI Frameworks**, and **Auto Research**. Browse by total stars, find projects gaining momentum, or search the same catalog from Chrome and an MCP client.
 
 [![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Leaderboard)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**[中文文档](README.zh.md)**
+**[中文文档](README.zh.md)** · **[Browse the boards](https://agentskills.media)** · **[Chrome extension](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)**
 
----
+## Five boards
 
-## Five Boards, One Place
+| Board | What it covers |
+|-------|----------------|
+| [Agent Skills](https://agentskills.media/#skills) | Skills and tools for Claude Code, Codex, Cursor, Copilot, Gemini, DeepSeek, OpenClaw, Hermes Agent and more |
+| [MCP Servers](https://agentskills.media/#mcp) | Model Context Protocol servers for databases, files, web tools, APIs and development workflows |
+| [Prompt Libraries](https://agentskills.media/#prompts) | Prompt collections, system prompts and prompt engineering resources |
+| [AI Frameworks](https://agentskills.media/#frameworks) | Agent orchestration, multi-agent systems, memory and model routing |
+| [Auto Research](https://agentskills.media/#research) | Deep research, literature discovery, data research and knowledge tools |
 
-| Board | Repos Tracked | What It Covers |
-|-------|:---:|----------------|
-| 🛠 **Agent Skills** | 500+ | Installable skills/plugins for Claude Code, Cursor, Copilot, Codex and other AI coding agents |
-| 🔌 **MCP Servers** | 1,500+ | Model Context Protocol servers that extend agent tool-use capabilities |
-| 📚 **Prompt Library** | 1,100+ | Curated system prompts, prompt collections, and prompt engineering guides |
-| 🏗 **AI Frameworks** | 1,200+ | Agent orchestration frameworks, multi-agent platforms, and LLM app scaffolding |
-| 🔬 **Auto Research** | 100+ | Autonomous deep-research agents and AI-powered research tools |
+The website shows each board's repository count, data timestamp and ranking. Use the board links for current results; this README does not duplicate a manually maintained Top 10 snapshot. Boards can overlap, so their counts are not counts of unique repositories across the site.
 
-→ **Explore all boards at [agentskills.media](https://agentskills.media)**
+## Trending
 
----
+Click the highlighted **Trending** button in the top navigation to open the ranking on the current page. On mobile, it is inside the navigation menu. The entry briefly wiggles on its first appearance, unless reduced motion is enabled.
 
-## Top 10 Agent Skills
+- **Daily + growth rate by default.** Switch to Weekly or Monthly, or sort by **Stars gained**.
+- **Top 20 per board.** All five boards use the same controls; no coding-agent subcategory filter is applied inside Trending.
+- **Compact rows.** Project and category icons, 🥇🥈🥉 medals for the top three, total stars, gains and percentages stay easy to compare. Large star counts use `k`; hover for exact values.
+- **Minimize and resume.** Minimize to the bottom-right dock and restore the selected board, period, sort and scroll position. Close with ×, Escape or a click outside the panel. Homepage filters and scroll position stay intact.
 
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | The agent harness performance optimization system. Skills, instincts, memory,… | ★ 185,355 | claude |
-| 2 | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | The agent that grows with you | ★ 154,273 | claude |
-| 3 | [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI… | ★ 137,532 | claude |
-| 4 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy | ★ 133,529 | claude |
-| 5 | [mattpocock/skills](https://github.com/mattpocock/skills) | Skills for Real Engineers. Straight from my .claude directory. | ★ 88,185 | claude |
-| 6 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | An AI SKILL that provides design intelligence for building professional UI/UX | ★ 79,571 | claude |
-| 7 | [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | An open-source long-horizon SuperAgent harness that researches, codes, and creates | ★ 68,076 | other |
-| 8 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens | ★ 61,217 | claude |
-| 9 | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | A curated list of awesome Claude Skills, resources, and tools | ★ 60,260 | claude |
-| 10 | [safishamsi/graphify](https://github.com/safishamsi/graphify) | AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI…) | ★ 48,702 | claude |
+Growth is calculated from the site's recorded daily snapshots: **stars gained = current − baseline**, and **growth rate = stars gained ÷ baseline × 100%**. Daily, weekly and monthly compare UTC dates 1, 7 and 30 days apart, relative to each dataset's update date. Only positive gains rank; missing history is excluded, and a zero baseline is excluded from growth-rate ranking. The summary's net gain includes declines.
 
-→ **[See full Agent Skills ranking at agentskills.media](https://agentskills.media)**
+These are observed changes in the catalog, not real-time GitHub star events: incremental collection can retain older counts. See [trend data and calculation details](docs/trending.md).
 
-## Top 10 MCP Servers
+## Website features
 
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | A collection of MCP servers | ★ 87,171 | general |
-| 2 | [sansan0/TrendRadar](https://github.com/sansan0/TrendRadar) | AI-driven public opinion & trend monitor with multi-platform data | ★ 57,880 | dev_tools |
-| 3 | [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Chrome DevTools for coding agents | ★ 40,041 | web |
-| 4 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) | Playwright MCP server | ★ 32,726 | web |
-| 5 | [github/github-mcp-server](https://github.com/github/github-mcp-server) | GitHub's official MCP Server | ★ 29,976 | official |
-| 6 | [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | Model Context Protocol Servers (official reference implementations) | ★ — | official |
-| 7 | [jlowin/fastmcp](https://github.com/jlowin/fastmcp) | The fast, Pythonic way to build MCP servers | ★ — | dev_tools |
-| 8 | [Cursor-to-API/cursor-api](https://github.com/Cursor-to-API/cursor-api) | Use Cursor as an OpenAI-compatible API | ★ — | dev_tools |
-| 9 | [bgauryy/octocode-mcp](https://github.com/bgauryy/octocode-mcp) | MCP server for semantic code research and context generation | ★ — | dev_tools |
-| 10 | [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | Configuration files that enhance Cursor AI editor experience | ★ — | general |
+| Feature | Behavior |
+|---------|----------|
+| Search and filters | Repository name/description, category, language, minimum stars and last-update time range |
+| Use cases | Multiple selected use-case tags must all match |
+| Grid and list | Switch views; display 24, 48 or 96 repositories per page |
+| Favorites | Saved in the browser's localStorage |
+| Language and theme | Chinese/English; follows system light/dark theme until manually changed |
+| Brand identification | Reuses brand and category icons across the homepage and trend panel |
 
-→ **[See full MCP Servers ranking at agentskills.media/#mcp](https://agentskills.media/#mcp)**
+## Chrome search extension
 
-## Top 10 Prompt Libraries
+Install from the **[Chrome Web Store](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)**, or visit the [bilingual showcase and usage guide](https://agentskills.media/extension/). Requires Chrome 116 or later.
 
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) | Awesome ChatGPT Prompts — share, discover and collect prompts | ★ 162,535 | collection |
-| 2 | [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | Extracted system prompts from major AI tools | ★ 137,850 | system |
-| 3 | [dair-ai/Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide) | Guides, papers, and resources for prompt engineering | ★ 74,758 | engineering |
-| 4 | [PlexPt/awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh) | ChatGPT 中文调教指南 | ★ 60,191 | collection |
-| 5 | [obra/superpowers](https://github.com/obra/superpowers) | An agentic skills framework & software development methodology | ★ 198,224 | engineering |
-| 6 | [anthropics/anthropic-cookbook](https://github.com/anthropics/anthropic-cookbook) | Recipes and notebooks for using Claude effectively | ★ — | engineering |
-| 7 | [openai/openai-cookbook](https://github.com/openai/openai-cookbook) | Examples and best practices for working with the OpenAI API | ★ — | engineering |
-| 8 | [brexhq/prompt-engineering](https://github.com/brexhq/prompt-engineering) | Tips and tricks for working with Large Language Models | ★ — | engineering |
-| 9 | [linexjlin/GPTs](https://github.com/linexjlin/GPTs) | Leaked prompts of GPTs | ★ — | system |
-| 10 | [ai-boost/awesome-prompts](https://github.com/ai-boost/awesome-prompts) | Curated list of awesome ChatGPT prompts | ★ — | collection |
+Search all five boards in a side panel with categories, use cases, platform, language, stars and time filters. Save favorites, open READMEs, and copy an AI installation prompt to paste into your coding assistant. The extension generates the prompt; it does not install repositories automatically.
 
-→ **[See full Prompt Library ranking at agentskills.media/#prompts](https://agentskills.media/#prompts)**
+It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Extension favorites are stored separately from website favorites.
 
-## Top 10 AI Frameworks
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [obra/superpowers](https://github.com/obra/superpowers) | An agentic skills framework & software development methodology | ★ 198,224 | general |
-| 2 | [langchain-ai/langchain](https://github.com/langchain-ai/langchain) | The agent engineering platform | ★ 137,134 | orchestration |
-| 3 | [vllm-project/vllm](https://github.com/vllm-project/vllm) | High-throughput and memory-efficient inference and serving for LLMs | ★ 80,489 | memory |
-| 4 | [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | Multi-Agents LLM Financial Trading Framework | ★ 77,314 | multi_agent |
-| 5 | [FoundationAgents/MetaGPT](https://github.com/FoundationAgents/MetaGPT) | The Multi-Agent Framework: First AI Software Company | ★ 68,127 | multi_agent |
-| 6 | [microsoft/autogen](https://github.com/microsoft/autogen) | A programming framework for agentic AI | ★ — | orchestration |
-| 7 | [crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) | Framework for orchestrating role-playing, autonomous AI agents | ★ — | orchestration |
-| 8 | [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai) | Agent Framework / shim to use Pydantic with LLMs | ★ — | orchestration |
-| 9 | [BerriAI/litellm](https://github.com/BerriAI/litellm) | Call all LLM APIs using the OpenAI format | ★ — | routing |
-| 10 | [openai/swarm](https://github.com/openai/swarm) | Educational framework for lightweight multi-agent orchestration | ★ — | orchestration |
-
-→ **[See full AI Frameworks ranking at agentskills.media/#frameworks](https://agentskills.media/#frameworks)**
-
-## Top 10 Auto Research Tools
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [karpathy/autoresearch](https://github.com/karpathy/autoresearch) | AI agents running research on single-GPU nanochat training automatically | ★ 81,483 | general |
-| 2 | [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | An open-source long-horizon SuperAgent harness that researches, codes, and creates | ★ 68,076 | deep_research |
-| 3 | [microsoft/qlib](https://github.com/microsoft/qlib) | AI-oriented Quant investment platform | ★ 43,098 | literature |
-| 4 | [666ghj/BettaFish](https://github.com/666ghj/BettaFish) | 多Agent舆情分析助手，打破信息茧房，还原舆情原貌 | ★ 40,936 | deep_research |
-| 5 | [khoj-ai/khoj](https://github.com/khoj-ai/khoj) | Your AI second brain. Self-hostable. Get answers from the web or your docs. | ★ 34,578 | deep_research |
-| 6 | [stanford-oval/storm](https://github.com/stanford-oval/storm) | An LLM-powered knowledge curation system that researches and generates wiki-like articles | ★ 28,228 | deep_research |
-| 7 | [assafelovic/gpt-researcher](https://github.com/assafelovic/gpt-researcher) | An autonomous agent that conducts deep research on any data using any LLM | ★ 27,113 | deep_research |
-| 8 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket | ★ 26,015 | deep_research |
-| 9 | [virattt/dexter](https://github.com/virattt/dexter) | An autonomous agent for deep financial research | ★ 25,789 | data_research |
-| 10 | [dzhng/deep-research](https://github.com/dzhng/deep-research) | An AI-powered research assistant that performs iterative, deep research on any topic | ★ 18,924 | deep_research |
-
-→ **[See full Auto Research ranking at agentskills.media/#research](https://agentskills.media/#research)**
-
----
-
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| 🌐 **Five Boards** | Agent Skills · MCP Servers · Prompt Library · AI Frameworks · Auto Research |
-| 🔍 **Multi-filter** | Keyword search, language, Stars threshold (All / 500+ / 1k+ / 5k+ / 10k+), time range |
-| 🏷️ **Use-case chips** | Click tags to filter by use case — all selected tags must match |
-| ⊞ **Dual views** | Grid / List view toggle, 24 / 48 / 96 items per page |
-| ❤️ **Favorites** | Bookmark repos; persisted in localStorage |
-| 🌐 **i18n** | Switch between English and Chinese with one click |
-| 🌙 **Theme** | Dark mode (default) / Light mode toggle |
-| 📊 **Auto tagging** | Parses repo description + topics to assign use-case labels |
-| 📄 **Pagination** | Smart pagination with ellipsis |
-
-## Quick Start
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/jaychempan/Agent-Leaderboard.git
-cd Agent-Leaderboard
-
-# 2. Fetch data (Python 3.8+, no extra dependencies)
-python3 scripts/fetch_data.py           # Agent Skills
-python3 scripts/fetch_mcp.py            # MCP Servers
-python3 scripts/fetch_prompts.py        # Prompt Library
-python3 scripts/fetch_frameworks.py    # AI Frameworks
-python3 scripts/fetch_auto_research.py  # Auto Research
-
-# Optional: supply a GitHub Token to raise the API rate limit (60 → 5000 req/hr)
-python3 scripts/fetch_data.py --token ghp_xxxxxxxxxxxx
-
-# 3. Serve locally
-# Option A — with live reload (auto-refreshes browser on file change, requires Node)
-npx live-server --port=8080
-
-# Option B — basic static server (no live reload, no extra dependencies)
-python3 -m http.server 8080
-# then open http://localhost:8080
-```
-
-## Chrome Search Extension
-
-**[Preview, download and usage guide](https://agentskills.media/extension/)** — bilingual walkthrough, installation prompts, FAQ and release notes.
-
-Search all five boards in a Chrome side panel with the website's categories, use-case filters and time ranges. Filter by platform, language and stars, save favorites, and open repository READMEs. Includes selection context-menu search, the `agent` address-bar keyword, and a complete offline catalog.
-
-The complete extension lives in **`chrome/`**, including icons and offline data, and can be loaded directly. To refresh the bundled snapshot or generate a ZIP:
+For development, load **`chrome/`** through `chrome://extensions` → **Developer mode** → **Load unpacked**. Refresh the bundled catalog and build `dist/Chrome.zip` with:
 
 ```bash
 python3 scripts/chrome/build.py
 ```
 
-Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select the **`chrome/`** folder. Pin the extension and click its icon to open the side panel.
+See the [extension documentation](docs/chrome-extension.md) for permissions, updates, shortcuts and testing.
 
-Requires Chrome 116+. The build also produces a shareable ZIP; this is a local installation package, not a Chrome Web Store release. See the [extension guide](docs/chrome-extension.md) for shortcuts, data updates, privacy, and development instructions.
-
-## MCP Skill Discovery
+## MCP skill discovery
 
 Use the catalog directly from any AI chat client that supports MCP. This Bash command installs the server, creates an isolated venv under `~/.local/share/skills-discovery-mcp`, and configures detected clients:
 
@@ -234,70 +127,93 @@ Example chat queries:
 
 The server returns guidance, matching repositories, and links only. It does not execute install commands or modify your environment.
 
-## File Structure
+## Run locally
 
+The checkout includes data, so you can preview the website without fetching GitHub or installing frontend dependencies. Python 3.12 is recommended and is used by the daily workflow.
+
+```bash
+git clone https://github.com/jaychempan/Agent-Leaderboard.git
+cd Agent-Leaderboard
+python3 -m http.server 8080 --bind 127.0.0.1
 ```
-agent-leaderboard/
-├── index.html                       # Single-page app (all five boards)
-├── favicon.svg                      # Site logo / favicon
-│
+
+Open **http://127.0.0.1:8080**. The website is plain HTML, CSS and JavaScript with no frontend build step.
+
+### Refresh data
+
+Run from the repository root. Fetchers use the Python standard library. A GitHub token is optional locally; the scripts accept `GITHUB_TOKEN` / `GH_TOKEN` from the environment or a `--token` argument.
+
+```bash
+python3 scripts/fetch_data.py
+python3 scripts/fetch_mcp.py
+python3 scripts/fetch_prompts.py
+python3 scripts/fetch_frameworks.py
+python3 scripts/fetch_auto_research.py
+python3 scripts/build_discovery_index.py
+python3 scripts/build_trends.py
+```
+
+The discovery builder produces the catalog consumed by MCP and the extension. The trend builder records daily snapshots, retains up to 40 days and writes compact browser data. For a one-time recovery from available Git history, use `python3 scripts/build_trends.py --from-git`; this needs the relevant historical commits. Missing baseline dates remain unavailable rather than being replaced by shorter periods.
+
+### Validate changes
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/chrome/*.test.mjs
+```
+
+For trend interaction and responsive layout checks, install `playwright-core`, keep the local server running, and supply your Chrome executable:
+
+```bash
+SITE_BASE_URL=http://127.0.0.1:8080/ \
+CHROME_PATH=/absolute/path/to/chrome \
+node tests/trends-browser.cjs
+```
+
+If needed, set `PLAYWRIGHT_MODULE` to an absolute path to the `playwright-core` module. Browser screenshots are written to the ignored `artifacts/trends/` directory.
+
+## Automated updates and deployment
+
+| Workflow | Trigger | What it does |
+|----------|---------|--------------|
+| [Daily Data Update](.github/workflows/daily-update.yml) | Daily at 02:00 UTC / 10:00 China time; manual dispatch | Refreshes all five boards, rebuilds discovery and trend data, and commits changed outputs |
+| [Deploy to GitHub Pages](.github/workflows/deploy.yml) | Push to `main`, completion of the daily workflow, or manual dispatch | Builds the extension download and deploys the static site |
+
+The daily workflow passes the built-in `github.token` as `GH_TOKEN` and requests `contents: write`; a separately configured `GH_TOKEN` secret is not required by the current workflow. For a fork, enable Actions and select **GitHub Actions** as the Pages source. Use **Actions → Daily Data Update → Run workflow** for a manual data refresh.
+
+## Data coverage
+
+All five collectors currently use a **50-star threshold**. Repository names, descriptions and topics drive discovery and classification; relevance rules and exclusions vary by board. Categories and platform labels are discovery aids, not guarantees of compatibility or quality. The data comes from GitHub search and incremental merges, so it is not an exhaustive directory or a guarantee that every repository is refreshed on each run.
+
+## Repository structure
+
+```text
+Agent-Leaderboard/
+├── index.html                   # Five boards and the trending overlay
 ├── src/
-│   ├── shared.css                   # Shared styles (dark / light theme)
-│   └── shared.js                    # Shared logic (i18n, filtering, rendering, routing)
-│
+│   ├── shared.js / shared.css   # Routing, filters, themes and shared UI
+│   └── trends.js / trends.css   # Trending rankings and panel interaction
+├── data/
+│   ├── *.json / *.js            # Board datasets and discovery index
+│   ├── star_history.json       # Daily snapshots; not loaded by the browser
+│   └── trends.json / trends.js  # Compact 1 / 7 / 30-day star changes
 ├── scripts/
-│   ├── fetch_data.py                # Crawl Skills repos → data/data.js
-│   ├── fetch_mcp.py                 # Crawl MCP repos → data/mcp_data.js
-│   ├── fetch_prompts.py             # Crawl Prompt repos → data/prompts_data.js
-│   ├── fetch_frameworks.py         # Crawl Framework repos → data/frameworks_data.js
-│   ├── fetch_auto_research.py       # Crawl Research repos → data/auto_research_data.js
-│   ├── build_discovery_index.py     # Build MCP discovery index → data/discovery_index.js
-│   └── fetch_utils.py               # Shared fetch utilities
-│
-└── data/
-    ├── data.json / data.js                       # Agent Skills data
-    ├── mcp_data.json / mcp_data.js               # MCP Servers data
-    ├── prompts_data.json / prompts_data.js        # Prompt Library data
-    ├── frameworks_data.json / frameworks_data.js  # AI Frameworks data
-    ├── auto_research_data.json / auto_research_data.js  # Auto Research data
-    └── discovery_index.json / discovery_index.js  # Daily MCP discovery index
+│   ├── fetch_*.py               # GitHub collection and shared helpers
+│   ├── build_discovery_index.py # Catalog for MCP and the extension
+│   ├── build_trends.py          # Daily history and trend generation
+│   ├── install.sh / uninstall.sh
+│   └── chrome/                 # Extension packaging and assets
+├── mcp/skills_discovery/        # Local MCP discovery server
+├── chrome/                     # Loadable Chrome extension
+├── extension/                  # Extension showcase and guides
+├── trending/index.html         # Legacy URL redirect to the overlay
+├── docs/                       # Usage and data documentation
+├── tests/                      # Python, extension and browser checks
+└── .github/workflows/          # Daily data refresh and Pages deployment
 ```
-
-## Automated Updates (GitHub Actions)
-
-Each board has its own daily workflow that keeps data fresh automatically.
-
-| Workflow | Schedule | Board |
-|----------|----------|-------|
-| `update-skills.yml` | Daily | Agent Skills |
-| `update-mcp.yml` | Daily | MCP Servers |
-| `update-prompts.yml` | Daily | Prompt Library |
-| `update-frameworks.yml` | Daily | AI Frameworks |
-| `update-research.yml` | Daily | Auto Research |
-| `weekly-update.yml` | On demand | All boards (manual trigger) |
-
-**Setup (one-time):**
-
-1. Go to **Settings → Secrets and variables → Actions** in your GitHub repo.
-2. Add a secret named **`GH_TOKEN`** with a [Personal Access Token](https://github.com/settings/tokens) (public repo read access is sufficient).
-3. Push this repo to GitHub. Workflows run on schedule automatically.
-
-You can also trigger a full refresh manually via **Actions → Update All (Manual) → Run workflow**.
-
-## Inclusion Criteria
-
-| | Skills | MCP Servers | Prompt Library | AI Frameworks | Auto Research |
-|-|--------|-------------|----------------|---------------|---------------|
-| Min stars | ★ 100+ | ★ 50+ | ★ 50+ | ★ 50+ | ★ 100+ |
-| Keywords | claude / codex / cursor / copilot / skill | mcp / model context protocol / tool server | prompt / system prompt / chatgpt prompts | langchain / autogen / crewai / framework | deep research / autonomous / literature / RAG |
-| Categories | Claude · Codex · Cursor · Copilot · Other | Official · Web · Dev Tools · API · General | Collection · System · Engineering · General | Orchestration · Multi-Agent · Memory · Routing | Deep Research · Web Research · Literature · Data · Knowledge Base |
-
-## Tech Stack
-
-- **Pure HTML + CSS + JS** — no framework, no build step
-- **Python 3 stdlib only** — `urllib` only, no `pip install` needed
-- **GitHub REST Search API** — public endpoint, token optional
 
 ## Contributing
 
-PRs welcome to improve search queries, use-case tag rules, or the UI!
+Improvements to discovery queries, classification, documentation and the UI are welcome. Keep the English and Chinese READMEs aligned, and run the checks relevant to your change.
+
+Licensed under [MIT](LICENSE).

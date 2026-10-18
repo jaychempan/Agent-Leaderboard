@@ -6,6 +6,10 @@
 
 ## 安装
 
+直接通过 [Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf) 安装。
+
+如需本地开发或手动加载，按以下步骤操作：
+
 `chrome/` 已包含源码、图标和离线目录，可直接加载，无需先构建。
 
 1. 打开 `chrome://extensions`，开启右上角的“开发者模式”。
@@ -13,7 +17,7 @@
 3. 选择项目根目录下的 **`chrome/`** 文件夹。
 4. 在 Chrome 工具栏的扩展程序菜单中固定本插件，点击图标打开搜索侧边栏。
 
-发给同事时可以直接复制整个 `chrome/` 文件夹，也可运行 `python3 scripts/chrome/build.py`，将生成的 `dist/Chrome.zip` 发给同事，解压后加载。此版本为本地安装包，尚未发布到 Chrome 应用商店。
+本地安装也可直接复制整个 `chrome/` 文件夹，或运行 `python3 scripts/chrome/build.py`，将生成的 `dist/Chrome.zip` 解压后加载。日常使用可直接安装应用商店版本。
 
 ## 目录结构
 

@@ -181,6 +181,21 @@ button, select, input { font: inherit; }
 }
 .nav-link:hover { background: var(--surface2); color: var(--text); }
 .nav-link.active { background: var(--surface2); color: var(--text); font-weight: 600; }
+.nav-link.nav-trending { color: var(--accent); font-weight: 700; border: 0; background: color-mix(in srgb, var(--accent) 12%, var(--surface)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent); cursor: pointer; }
+.nav-link.nav-trending:hover { background: color-mix(in srgb, var(--accent) 20%, var(--surface)); }
+.nav-link.nav-trending:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nav-trending.trend-intro { animation: trend-entry-wiggle 780ms ease-in-out; transform-origin: center; }
+@keyframes trend-entry-wiggle {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  18% { transform: translateY(-2px) rotate(-5deg); }
+  36% { transform: translateY(-2px) rotate(4deg); }
+  54% { transform: translateY(-1px) rotate(-3deg); }
+  72% { transform: translateY(0) rotate(2deg); }
+  88% { transform: rotate(-1deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-trending.trend-intro { animation: none; }
+}
 
 .nav-divider {
   display: inline-block;
@@ -569,6 +584,7 @@ button, select, input { font: inherit; }
 }
 .bs-primary:hover { opacity: .88; }
 @media (max-width: 600px) {
+  .time-preset { max-width: 100%; flex-wrap: wrap; }
   .brand-spotlight { flex-wrap: wrap; }
   .bs-links { width: 100%; }
 }
@@ -990,6 +1006,9 @@ button, select, input { font: inherit; }
 .fork-info { font-size: 10px; color: var(--muted); margin-left: auto; display: inline-flex; align-items: center; gap: 3px; }
 
 /* ── List View ──────────────────────────────────────────────────── */
+.list-scroll { max-width: 100%; overflow-x: auto; }
+
+
 .list-view { margin-bottom: 20px; }
 .list-view .grid { display: none; }
 
@@ -1419,9 +1438,13 @@ button, select, input { font: inherit; }
  .navbar .nav-actions { margin-left:0; }
 }
 @media(max-width:360px){ .navbar .related-tools { margin-inline:3px; gap:2px; } }
-@media(min-width:1025px) and (max-width:1200px){
+@media(min-width:1025px) and (max-width:1450px){
  .navbar .related-tools span { display:none; }
  .navbar .related-tools a { width:24px; justify-content:center; }
+}
+@media(min-width:1025px) and (max-width:1200px){
+ .navbar .extension-label { display:none; }
+ .navbar .extension-label-short { display:inline; }
 }
 
 @media(max-width:600px){

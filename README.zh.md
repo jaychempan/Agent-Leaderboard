@@ -1,173 +1,66 @@
 # Agent 排行榜
 
-<img src="favicon.svg" width="48" alt="logo" align="right" />
+<img src="favicon.svg" width="48" alt="Agent 排行榜 Logo" align="right" />
 
-一站式发现 GitHub 上最热门的 AI Agent 生态仓库 —— 涵盖 **Agent Skills**、**MCP 服务器**、**Prompt 库**、**AI 框架** 和 **Auto Research** 工具，全部按 GitHub star 数排名，自动每日更新。
+一站式发现 GitHub 上的 **Agent Skills**、**MCP 服务器**、**Prompt 库**、**AI 框架**和 **Auto Research** 工具。按累计 Stars 浏览热门项目，用趋势榜发现近期增长，也可以通过 Chrome 插件或 MCP 客户端搜索同一份目录。
 
 [![Website](https://img.shields.io/badge/website-agentskills.media-blue?logo=googlechrome&logoColor=white)](https://agentskills.media)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-jaychempan.github.io-blue?logo=github&logoColor=white)](https://jaychempan.github.io/Agent-Leaderboard)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**[English](README.md)**
+**[English](README.md)** · **[浏览榜单](https://agentskills.media)** · **[安装 Chrome 插件](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)**
 
----
+## 五大榜单
 
-## 五大榜单，一站搞定
+| 榜单 | 覆盖内容 |
+|------|----------|
+| [Agent Skills](https://agentskills.media/#skills) | Claude Code、Codex、Cursor、Copilot、Gemini、DeepSeek、OpenClaw、Hermes Agent 等工具的技能与相关项目 |
+| [MCP 服务器](https://agentskills.media/#mcp) | 数据库、文件、网页、API 与开发工作流相关的 Model Context Protocol 服务器 |
+| [Prompt 库](https://agentskills.media/#prompts) | 提示词合集、系统提示词与提示工程资源 |
+| [AI 框架](https://agentskills.media/#frameworks) | Agent 编排、多智能体系统、记忆管理与模型路由 |
+| [Auto Research](https://agentskills.media/#research) | 深度研究、文献检索、数据研究与知识工具 |
 
-| 榜单 | 收录数量 | 覆盖内容 |
-|------|:---:|----------|
-| 🛠 **Agent Skills** | 500+ | 适用于 Claude Code、Cursor、Copilot、Codex 等 AI 编程工具的可安装技能/插件 |
-| 🔌 **MCP 服务器** | 1,500+ | 扩展 Agent 工具调用能力的 Model Context Protocol 服务器 |
-| 📚 **Prompt 库** | 1,100+ | 精选系统提示词、Prompt 集合与提示工程指南 |
-| 🏗 **AI 框架** | 1,200+ | Agent 编排框架、多智能体平台及 LLM 应用脚手架 |
-| 🔬 **Auto Research** | 100+ | 自主深度研究 Agent 与 AI 驱动的研究工具 |
+网站显示各榜单的收录数量、数据更新时间和排名。最新结果请以榜单页面为准，README 不再维护容易过期的手写 Top 10 快照。同一仓库可能属于多个榜单，各榜单数量相加不等于去重后的仓库总数。
 
-→ **在 [agentskills.media](https://agentskills.media) 探索所有榜单**
+## 趋势榜
 
----
+点击顶部导航中高亮的 **「趋势榜」**，直接在主页展开浮窗；手机端入口位于导航菜单中。入口首次出现时轻轻晃动一次，系统开启「减少动态效果」时保持静态。
 
-## Top 10 Agent Skills
+- **默认日榜，按增长率排序。** 可切换周榜、月榜，也可选择按 **新增 Stars** 排序。
+- **每个板块展示前 20 名。** 五大板块使用统一交互，趋势榜内不按编码 Agent 再细分。
+- **紧凑列表。** 显示项目对应的品牌与分类图标，前三名使用 🥇🥈🥉 奖牌；累计 Stars、增量和涨幅对齐展示。大数采用 `k` 缩写，悬停可看完整数值。
+- **收起后继续查看。** 收起为右下角小按钮，再次展开保留板块、周期、排序和滚动位置。点击 ×、按 Esc 或点击浮窗外部可关闭，主页原有筛选与浏览位置保留。
 
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | The agent harness performance optimization system. Skills, instincts, memory… | ★ 185,355 | claude |
-| 2 | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | The agent that grows with you | ★ 154,273 | claude |
-| 3 | [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | 主流 AI 工具完整系统提示词合集（Claude Code、Cursor、Devin…） | ★ 137,532 | claude |
-| 4 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | 基于 Andrej Karpathy 方法论的单文件 CLAUDE.md | ★ 133,529 | claude |
-| 5 | [mattpocock/skills](https://github.com/mattpocock/skills) | Skills for Real Engineers. Straight from my .claude directory. | ★ 88,185 | claude |
-| 6 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 为 AI Agent 提供专业 UI/UX 设计能力的 Skill | ★ 79,571 | claude |
-| 7 | [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | 字节跳动开源的长程 SuperAgent，可研究、编码、创作 | ★ 68,076 | other |
-| 8 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 🪨 用最少 token 完成工作的 Claude Code skill，降低 65% token 消耗 | ★ 61,217 | claude |
-| 9 | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | 精选 Claude Skills、资源与工具大全 | ★ 60,260 | claude |
-| 10 | [safishamsi/graphify](https://github.com/safishamsi/graphify) | 适用于 Claude Code、Codex、Cursor、Gemini CLI 的知识图谱 Skill | ★ 48,702 | claude |
+趋势基于站内每日快照计算：**新增 Stars = 期末 − 期初**，**增长率 = 新增 Stars ÷ 期初 Stars × 100%**。日榜、周榜、月榜分别以各板块数据更新日期为基准，对比相隔 1、7、30 天的 UTC 日期。榜单只展示正增长项目；缺少历史的项目不参与比较，期初为零的项目不参与增长率排序。概览净增包含下降项目。
 
-→ **[查看 Agent Skills 完整排行 agentskills.media](https://agentskills.media)**
+这些数字反映目录中观测到的变化，并非 GitHub 实时新增事件；增量采集可能保留部分旧记录。详见 [趋势数据与计算说明](docs/trending.md)。
 
-## Top 10 MCP 服务器
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | MCP 服务器精选合集 | ★ 87,171 | general |
-| 2 | [sansan0/TrendRadar](https://github.com/sansan0/TrendRadar) | AI 驱动的多平台舆情与趋势监控 MCP | ★ 57,880 | dev_tools |
-| 3 | [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | 为 AI Agent 提供 Chrome DevTools 能力 | ★ 40,041 | web |
-| 4 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) | Playwright MCP 服务器 | ★ 32,726 | web |
-| 5 | [github/github-mcp-server](https://github.com/github/github-mcp-server) | GitHub 官方 MCP Server | ★ 29,976 | official |
-| 6 | [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | MCP 官方参考实现 | ★ — | official |
-| 7 | [jlowin/fastmcp](https://github.com/jlowin/fastmcp) | 用 Python 快速构建 MCP 服务器的框架 | ★ — | dev_tools |
-| 8 | [Cursor-to-API/cursor-api](https://github.com/Cursor-to-API/cursor-api) | 将 Cursor 转为 OpenAI 兼容 API | ★ — | dev_tools |
-| 9 | [bgauryy/octocode-mcp](https://github.com/bgauryy/octocode-mcp) | 语义代码研究与上下文生成 MCP 服务器 | ★ — | dev_tools |
-| 10 | [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 增强 Cursor AI 体验的配置文件集合 | ★ — | general |
-
-→ **[查看 MCP 服务器完整排行 agentskills.media/#mcp](https://agentskills.media/#mcp)**
-
-## Top 10 Prompt 库
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) | Awesome ChatGPT Prompts — 分享、发现和收藏提示词 | ★ 162,535 | collection |
-| 2 | [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | 主流 AI 工具系统提示词泄露合集 | ★ 137,850 | system |
-| 3 | [dair-ai/Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide) | 提示工程指南、论文与资源 | ★ 74,758 | engineering |
-| 4 | [PlexPt/awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh) | ChatGPT 中文调教指南 | ★ 60,191 | collection |
-| 5 | [anthropics/anthropic-cookbook](https://github.com/anthropics/anthropic-cookbook) | Claude 使用技巧与代码示例 | ★ — | engineering |
-| 6 | [openai/openai-cookbook](https://github.com/openai/openai-cookbook) | OpenAI API 最佳实践与示例 | ★ — | engineering |
-| 7 | [brexhq/prompt-engineering](https://github.com/brexhq/prompt-engineering) | LLM 提示工程技巧与实践指南 | ★ — | engineering |
-| 8 | [linexjlin/GPTs](https://github.com/linexjlin/GPTs) | GPTs 系统提示词泄露合集 | ★ — | system |
-| 9 | [ai-boost/awesome-prompts](https://github.com/ai-boost/awesome-prompts) | 精选 ChatGPT Prompt 列表 | ★ — | collection |
-| 10 | [yokoffing/ChatGPT-Prompts](https://github.com/yokoffing/ChatGPT-Prompts) | ChatGPT 与 Bing AI 提示词精选 | ★ — | collection |
-
-→ **[查看 Prompt 库完整排行 agentskills.media/#prompts](https://agentskills.media/#prompts)**
-
-## Top 10 AI 框架
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [obra/superpowers](https://github.com/obra/superpowers) | Agentic Skills 框架与软件开发方法论 | ★ 198,224 | general |
-| 2 | [langchain-ai/langchain](https://github.com/langchain-ai/langchain) | Agent 工程平台 | ★ 137,134 | orchestration |
-| 3 | [vllm-project/vllm](https://github.com/vllm-project/vllm) | 高吞吐量 LLM 推理与服务框架 | ★ 80,489 | memory |
-| 4 | [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | 多 Agent LLM 金融交易框架 | ★ 77,314 | multi_agent |
-| 5 | [FoundationAgents/MetaGPT](https://github.com/FoundationAgents/MetaGPT) | 多 Agent 框架：首个 AI 软件公司 | ★ 68,127 | multi_agent |
-| 6 | [microsoft/autogen](https://github.com/microsoft/autogen) | 微软 Agentic AI 编程框架 | ★ — | orchestration |
-| 7 | [crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) | 角色扮演自主 Agent 编排框架 | ★ — | orchestration |
-| 8 | [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai) | 用 Pydantic 构建 LLM Agent 的框架 | ★ — | orchestration |
-| 9 | [BerriAI/litellm](https://github.com/BerriAI/litellm) | 统一调用 100+ LLM API 的网关 | ★ — | routing |
-| 10 | [openai/swarm](https://github.com/openai/swarm) | 轻量级多 Agent 编排教学框架 | ★ — | orchestration |
-
-→ **[查看 AI 框架完整排行 agentskills.media/#frameworks](https://agentskills.media/#frameworks)**
-
-## Top 10 Auto Research 工具
-
-| # | Repository | Description | Stars | Category |
-|---|-----------|-------------|-------|----------|
-| 1 | [karpathy/autoresearch](https://github.com/karpathy/autoresearch) | AI Agent 自动在单 GPU 上运行 nanochat 训练研究 | ★ 81,483 | general |
-| 2 | [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | 字节开源的长程 SuperAgent，研究、编码、创作一体化 | ★ 68,076 | deep_research |
-| 3 | [microsoft/qlib](https://github.com/microsoft/qlib) | 面向 AI 的量化投资平台 | ★ 43,098 | literature |
-| 4 | [666ghj/BettaFish](https://github.com/666ghj/BettaFish) | 多 Agent 舆情分析助手，打破信息茧房 | ★ 40,936 | deep_research |
-| 5 | [khoj-ai/khoj](https://github.com/khoj-ai/khoj) | 你的 AI 第二大脑，可自托管，从网络或文档获取答案 | ★ 34,578 | deep_research |
-| 6 | [stanford-oval/storm](https://github.com/stanford-oval/storm) | LLM 驱动的知识整理系统，研究任意主题并生成维基式文章 | ★ 28,228 | deep_research |
-| 7 | [assafelovic/gpt-researcher](https://github.com/assafelovic/gpt-researcher) | 使用任意 LLM 对任意数据进行深度研究的自主 Agent | ★ 27,113 | deep_research |
-| 8 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 跨 Reddit、X、YouTube、HN 等平台研究任意话题的 Skill | ★ 26,015 | deep_research |
-| 9 | [virattt/dexter](https://github.com/virattt/dexter) | 深度金融研究自主 Agent | ★ 25,789 | data_research |
-| 10 | [dzhng/deep-research](https://github.com/dzhng/deep-research) | 对任意主题执行迭代深度研究的 AI 助手 | ★ 18,924 | deep_research |
-
-→ **[查看 Auto Research 完整排行 agentskills.media/#research](https://agentskills.media/#research)**
-
----
-
-## 功能
+## 网站功能
 
 | 功能 | 说明 |
 |------|------|
-| 🌐 **五大榜单** | Agent Skills · MCP 服务器 · Prompt 库 · AI 框架 · Auto Research |
-| 🔍 **多维筛选** | 关键词搜索、语言、Stars 档位（全部 / 500+ / 1k+ / 5k+ / 10k+）、时间范围 |
-| 🏷️ **用途多选** | 点击用途标签快速过滤，多选时需同时满足所有已选用途 |
-| ⊞ **双视图** | 网格视图 / 列表视图自由切换，支持每页 24 / 48 / 96 条 |
-| ❤️ **收藏夹** | 收藏感兴趣的仓库，数据存本地（localStorage） |
-| 🌐 **中/英切换** | 界面文字一键切换中文 / English |
-| 🌙 **深色/浅色** | 深色模式（默认）/ 浅色模式切换 |
-| 📊 **用途分析** | 自动解析仓库 description + topics，归类用途标签 |
-| 📄 **分页** | 带省略号的智能翻页控件 |
-
-## 快速开始
-
-```bash
-# 1. 克隆仓库
-git clone https://github.com/jaychempan/Agent-Leaderboard.git
-cd Agent-Leaderboard
-
-# 2. 爬取数据（需要 Python 3.8+，无需额外依赖）
-python3 scripts/fetch_data.py            # Agent Skills
-python3 scripts/fetch_mcp.py             # MCP 服务器
-python3 scripts/fetch_prompts.py         # Prompt 库
-python3 scripts/fetch_frameworks.py     # AI 框架
-python3 scripts/fetch_auto_research.py   # Auto Research
-
-# 可选：使用 GitHub Token 提高 API 限额（60 → 5000 次/小时）
-python3 scripts/fetch_data.py --token ghp_xxxxxxxxxxxx
-
-# 3. 启动本地服务器
-# 方式 A — 带实时刷新（文件变更自动刷新浏览器，需要 Node）
-npx live-server --port=8080
-
-# 方式 B — 基础静态服务器（无需额外依赖）
-python3 -m http.server 8080
-# 然后打开 http://localhost:8080
-```
+| 搜索与筛选 | 按仓库名称/描述、分类、编程语言、最低 Stars 和最近更新时间筛选 |
+| 用途多选 | 同时满足所有已选用途标签 |
+| 网格与列表 | 自由切换视图，每页显示 24、48 或 96 个仓库 |
+| 收藏夹 | 收藏保存在当前浏览器的 localStorage 中 |
+| 语言与主题 | 中文/English；默认跟随系统深浅色，手动切换后记住选择 |
+| 品牌辨认 | 主页与趋势浮窗复用品牌和分类图标 |
 
 ## Chrome 搜索插件
 
-**[插件展示、下载与使用指南](https://agentskills.media/extension/)**：提供中英文介绍、安装提示示例、常见问题与版本更新。
+通过 **[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** 安装，或查看 [中英文展示与使用指南](https://agentskills.media/extension/)。需要 Chrome 116 或更高版本。
 
-在浏览器侧边栏搜索全部五类榜单，使用与网站一致的二级分类、用途多选及时间范围，按平台、语言、Stars 筛选，收藏仓库并快速查看 README。支持网页选中文字右键搜索、地址栏 `agent` 搜索，以及离线目录。
+在浏览器侧边栏搜索五大榜单，按分类、用途、平台、语言、Stars 和时间范围筛选，收藏项目、打开 README，并复制 AI 安装提示到编码助手。插件只生成提示，不会自动安装仓库。
 
-整个插件位于 **`chrome/`**，已包含图标和离线数据，可以直接加载。需要更新内置快照或生成 ZIP 时运行：
+支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。插件收藏与网站收藏独立保存。
+
+开发时可以打开 `chrome://extensions` → **开发者模式** → **加载已解压的扩展程序**，选择 **`chrome/`** 文件夹。更新内置目录并生成 `dist/Chrome.zip`：
 
 ```bash
 python3 scripts/chrome/build.py
 ```
 
-打开 `chrome://extensions` → 开启“开发者模式” → “加载已解压的扩展程序” → 选择 **`chrome/`** 文件夹。固定插件图标后，点击即可打开搜索侧边栏。
-
-需要 Chrome 116+。构建同时生成可分享的 ZIP；当前为本地安装版。完整说明、快捷键与隐私说明见 [Chrome 插件文档](docs/chrome-extension.md)。
+权限、更新策略、快捷键和开发验证见 [插件文档](docs/chrome-extension.md)。
 
 ## MCP 技能发现助手
 
@@ -234,70 +127,93 @@ python3 -m mcp.skills_discovery.server
 
 这个服务器只返回建议、匹配仓库和链接；不会执行安装命令，也不会修改你的环境。
 
+## 本地运行
+
+仓库已包含数据快照，无需先爬取 GitHub 或安装前端依赖即可预览。建议使用 Python 3.12，与每日更新工作流保持一致。
+
+```bash
+git clone https://github.com/jaychempan/Agent-Leaderboard.git
+cd Agent-Leaderboard
+python3 -m http.server 8080 --bind 127.0.0.1
+```
+
+打开 **http://127.0.0.1:8080**。网站使用原生 HTML、CSS 和 JavaScript，无需前端构建。
+
+### 更新数据
+
+在仓库根目录运行。采集脚本只依赖 Python 标准库。本地可选用 GitHub Token，通过环境变量 `GITHUB_TOKEN` / `GH_TOKEN` 或 `--token` 参数提供。
+
+```bash
+python3 scripts/fetch_data.py
+python3 scripts/fetch_mcp.py
+python3 scripts/fetch_prompts.py
+python3 scripts/fetch_frameworks.py
+python3 scripts/fetch_auto_research.py
+python3 scripts/build_discovery_index.py
+python3 scripts/build_trends.py
+```
+
+发现索引供 MCP 与插件使用。趋势构建器保存每日快照，保留最多 40 天历史，并生成浏览器使用的精简数据。若需从已有 Git 历史一次性恢复快照，可执行 `python3 scripts/build_trends.py --from-git`，需要本地具备对应历史提交。缺少基准日期时会显示数据不足，不以更短周期代替。
+
+### 验证修改
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/chrome/*.test.mjs
+```
+
+验证趋势浮窗交互与响应式布局时，先安装 `playwright-core`，保持本地服务器运行，并指定 Chrome 可执行文件：
+
+```bash
+SITE_BASE_URL=http://127.0.0.1:8080/ \
+CHROME_PATH=/absolute/path/to/chrome \
+node tests/trends-browser.cjs
+```
+
+如需指定模块位置，设置 `PLAYWRIGHT_MODULE` 为 `playwright-core` 模块的绝对路径。截图输出到不提交 Git 的 `artifacts/trends/` 目录。
+
+## 自动更新与部署
+
+| 工作流 | 触发方式 | 内容 |
+|--------|----------|------|
+| [Daily Data Update](.github/workflows/daily-update.yml) | 每日 UTC 02:00 / 北京时间 10:00，或手动触发 | 更新五大榜单，构建发现索引与趋势数据，提交变化的产物 |
+| [Deploy to GitHub Pages](.github/workflows/deploy.yml) | 推送到 `main`、每日更新工作流结束，或手动触发 | 构建插件下载包并部署静态站点 |
+
+当前每日工作流使用内置 `github.token` 作为 `GH_TOKEN`，并申请 `contents: write` 权限，无需另建同名 Secret。Fork 后需启用 Actions，并将 Pages 的发布来源设为 **GitHub Actions**。手动刷新数据：**Actions → Daily Data Update → Run workflow**。
+
+## 数据范围
+
+五个采集器目前均采用 **50 Stars 门槛**。仓库名称、描述和 topics 用于发现与分类，各板块有各自的相关性规则和排除项。分类及平台标签用于辅助发现，不保证兼容性或项目质量。数据来自 GitHub 搜索与增量合并，并非完整目录，也不保证每次运行都会刷新每个仓库。
+
 ## 文件结构
 
-```
-agent-leaderboard/
-├── index.html                            # 单页应用（包含五大榜单）
-├── favicon.svg                           # 网站图标
-│
+```text
+Agent-Leaderboard/
+├── index.html                   # 五大榜单与趋势浮窗
 ├── src/
-│   ├── shared.css                        # 共享样式（深/浅色主题）
-│   └── shared.js                         # 共享逻辑（i18n、筛选、渲染、路由）
-│
+│   ├── shared.js / shared.css   # 路由、筛选、主题和共享界面
+│   └── trends.js / trends.css   # 趋势排序和浮窗交互
+├── data/
+│   ├── *.json / *.js            # 各榜单数据与发现索引
+│   ├── star_history.json       # 每日快照，不由浏览器加载
+│   └── trends.json / trends.js  # 1 / 7 / 30 天精简增量数据
 ├── scripts/
-│   ├── fetch_data.py                     # 爬取 Skills 数据 → data/data.js
-│   ├── fetch_mcp.py                      # 爬取 MCP 数据 → data/mcp_data.js
-│   ├── fetch_prompts.py                  # 爬取 Prompt 数据 → data/prompts_data.js
-│   ├── fetch_frameworks.py              # 爬取 Framework 数据 → data/frameworks_data.js
-│   ├── fetch_auto_research.py            # 爬取 Research 数据 → data/auto_research_data.js
-│   ├── build_discovery_index.py          # 构建 MCP 发现索引 → data/discovery_index.js
-│   └── fetch_utils.py                    # 公共爬取工具
-│
-└── data/
-    ├── data.json / data.js               # Agent Skills 数据
-    ├── mcp_data.json / mcp_data.js       # MCP 服务器数据
-    ├── prompts_data.json / prompts_data.js      # Prompt 库数据
-    ├── frameworks_data.json / frameworks_data.js # AI 框架数据
-    ├── auto_research_data.json / auto_research_data.js # Auto Research 数据
-    └── discovery_index.json / discovery_index.js # 每日 MCP 发现索引
+│   ├── fetch_*.py               # GitHub 采集脚本与公共工具
+│   ├── build_discovery_index.py # MCP 和插件使用的目录
+│   ├── build_trends.py          # 历史快照与趋势生成
+│   ├── install.sh / uninstall.sh
+│   └── chrome/                 # 插件打包与素材
+├── mcp/skills_discovery/        # 本地 MCP 发现服务
+├── chrome/                     # 可直接加载的 Chrome 插件
+├── extension/                  # 插件展示页与使用指南
+├── trending/index.html         # 旧地址跳转到主页浮窗
+├── docs/                       # 使用与数据说明
+├── tests/                      # Python、插件与浏览器验证
+└── .github/workflows/          # 每日数据更新和 Pages 部署
 ```
-
-## 自动更新（GitHub Actions）
-
-每个榜单都有独立的每日 workflow，自动保持数据新鲜。
-
-| Workflow | 计划 | 榜单 |
-|----------|------|------|
-| `update-skills.yml` | 每日 | Agent Skills |
-| `update-mcp.yml` | 每日 | MCP 服务器 |
-| `update-prompts.yml` | 每日 | Prompt 库 |
-| `update-frameworks.yml` | 每日 | AI 框架 |
-| `update-research.yml` | 每日 | Auto Research |
-| `weekly-update.yml` | 手动触发 | 全部榜单 |
-
-**一次性配置：**
-
-1. 进入 GitHub 仓库的 **Settings → Secrets and variables → Actions**。
-2. 新建名为 **`GH_TOKEN`** 的 Secret，值为你的 [Personal Access Token](https://github.com/settings/tokens)（只需要公开仓库读权限）。
-3. 将本仓库推送到 GitHub，之后每日自动执行。
-
-也可在 **Actions → Update All (Manual) → Run workflow** 手动触发全量更新。
-
-## 收录标准
-
-| 维度 | Skills | MCP 服务器 | Prompt 库 | AI 框架 | Auto Research |
-|------|--------|-----------|----------|---------|---------------|
-| 最低星数 | ★ 100+ | ★ 50+ | ★ 50+ | ★ 50+ | ★ 100+ |
-| 关键词 | claude / codex / cursor / copilot / skill | mcp / model context protocol / tool server | prompt / system prompt / chatgpt prompts | langchain / autogen / crewai / framework | deep research / autonomous / literature / RAG |
-| 分类 | Claude · Codex · Cursor · Copilot · 其他 | 官方 · 网页 · 开发工具 · API · 通用 | 合集 · 系统提示 · 提示工程 · 通用 | 编排 · 多Agent · 内存 · 路由 | 深度研究 · 网页研究 · 文献综述 · 数据 · 知识库 |
-
-## 技术栈
-
-- **纯 HTML + CSS + JS** —— 无框架，无构建工具
-- **Python 3 标准库** —— 仅用 `urllib`，无需 `pip install`
-- **GitHub REST Search API** —— 公开接口，Token 可选
 
 ## 贡献
 
-欢迎提交 PR 改进搜索查询、用途标签规则或 UI！
+欢迎改进搜索查询、分类规则、文档和界面。修改说明时请同步中英文 README，并运行与改动相关的检查。
+
+采用 [MIT 许可证](LICENSE)。

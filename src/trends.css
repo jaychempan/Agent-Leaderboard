@@ -1,0 +1,102 @@
+/* Compact ranking overlay; shares the homepage palette and typography. */
+.trend-panel { --growth: #3fb950; --trend-columns: 32px minmax(0, 1fr) 100px 126px; width: min(1000px, calc(100vw - 64px)); height: min(810px, calc(100dvh - 64px)); max-width: none; max-height: none; margin: auto; padding: 0; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
+[data-theme="light"] .trend-panel { --growth: #1a7f37; }
+.trend-panel[open] { display: flex; flex-direction: column; }
+.trend-panel::backdrop { background: rgba(13,17,23,.38); backdrop-filter: blur(3px); }
+.trend-panel :focus-visible, .trend-dock button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.trend-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 10px; gap: 12px; flex-shrink: 0; }
+.trend-heading { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.trend-heading-icon { width: 23px; height: 23px; color: var(--accent); }
+.trend-panel-header h2 { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -.4px; }
+#trend-projectsLabel { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface2); padding: 3px 7px; border-radius: 5px; white-space: nowrap; }
+.trend-panel-actions { display: flex; gap: 4px; align-items: center; }
+.trend-panel-actions button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; }
+.trend-panel-actions button:hover { color: var(--text); background: var(--surface2); }
+.trend-panel-actions svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+.trend-controls { padding: 0 20px; flex-shrink: 0; }
+.trend-source-tabs { display: flex; gap: 22px; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: thin; }
+.trend-source-tabs button { display: inline-flex; align-items: center; gap: 6px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); padding: 11px 0 10px; white-space: nowrap; cursor: pointer; font: inherit; font-size: 13px; }
+.trend-source-tabs button:hover { color: var(--text); }
+.trend-source-tabs button[aria-pressed="true"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.trend-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0 9px; }
+.trend-periods { display: flex; padding: 3px; gap: 2px; background: var(--surface2); border-radius: 8px; }
+.trend-periods button { background: transparent; border: 0; color: var(--muted); border-radius: 5px; padding: 5px 17px; font: inherit; font-size: 12px; cursor: pointer; }
+.trend-periods button[aria-pressed="true"] { color: var(--text); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.12); font-weight: 600; }
+.trend-sort { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.trend-sort select { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 7px; padding: 6px 8px; cursor: pointer; font: inherit; }
+.trend-summary { padding: 0 0 11px; color: var(--muted); font-size: 11px; }
+#trend-overview { display: flex; gap: 5px 16px; flex-wrap: wrap; }
+.trend-stat strong { color: var(--text); font-weight: 600; }
+.trend-stat .net-positive { color: var(--growth); }
+.trend-columns, .trend-ranking .project { display: grid; grid-template-columns: var(--trend-columns); align-items: center; column-gap: 14px; }
+.trend-columns { padding: 8px 24px 8px 20px; background: var(--bg); border-block: 1px solid var(--border); color: var(--muted); font-size: 11px; flex-shrink: 0; }
+.trend-columns > :first-child { text-align: center; }
+.trend-columns > :nth-child(n+3) { text-align: right; }
+.trend-panel-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-gutter: stable; }
+.trend-ranking { list-style: none; padding: 0 14px; margin: 0; }
+.trend-ranking li { min-width: 0; border-bottom: 1px solid var(--border); }
+.trend-ranking li:last-child { border-bottom: 0; }
+.trend-ranking .project { padding: 12px 6px; min-height: 72px; color: var(--text); text-decoration: none; border-radius: 6px; }
+.trend-ranking .project:hover { background: var(--bg); }
+.trend-rank { font-size: 12px; text-align: center; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.trend-ranking .rank-1 .trend-rank, .trend-ranking .rank-2 .trend-rank, .trend-ranking .rank-3 .trend-rank { font-size: 20px; width: 28px; height: 28px; line-height: 28px; justify-self: center; }
+.trend-project-info { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; align-items: center; }
+.trend-source-icon, .trend-project-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.trend-source-icon svg { width: 14px; height: 14px; }
+.trend-project-icons { display: flex; align-items: center; gap: 6px; }
+.trend-project-icon .brand-logo { width: 14px !important; height: 14px !important; }
+.trend-more-icons { color: var(--muted); font-size: 10px; }
+.trend-project-name { font-size: 13px; line-height: 1.5; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.trend-project-name .owner { color: var(--muted); }
+.trend-project-name strong { font-weight: 600; }
+.trend-description { grid-column: 1 / -1; font-size: 12px; line-height: 1.5; margin: 3px 0 0; color: var(--muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.trend-ranking .star-box { display: block; text-align: right; font-size: 12px; font-weight: 500; color: var(--text2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.trend-ranking .star-box > span { color: var(--gold); font-size: 11px; }
+.trend-panel .growth { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.trend-panel .growth strong { color: var(--growth); font-size: 15px; font-weight: 650; }
+.trend-panel .growth small { color: var(--muted); font-size: 11px; }
+.trend-data-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); background: var(--bg); }
+.trend-data-footer details { max-width: 65ch; }
+.trend-data-footer summary { cursor: pointer; text-align: right; }
+.trend-data-footer p { margin-top: 8px; line-height: 1.8; }
+.trend-empty { padding: 50px 16px; text-align: center; color: var(--muted); font-size: 13px; }
+.trend-dock { position: fixed; bottom: 22px; right: 22px; z-index: 101; display: flex; max-width: calc(100vw - 32px); align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 4px; }
+.trend-dock button { border: 0; border-radius: 8px; background: none; cursor: pointer; color: var(--accent); padding: 9px 11px; font-size: 12px; font-weight: 600; }
+.trend-dock button:hover { background: var(--surface2); }
+#trend-dismiss { color: var(--muted); font-size: 20px; font-weight: 400; padding: 4px 10px; }
+.trend-dock[hidden], .trend-panel [hidden] { display: none !important; }
+@media (max-width: 680px) {
+  .trend-panel { --trend-columns: 24px minmax(0, 1fr) 78px; width: calc(100vw - 24px); height: calc(100dvh - 40px); border-radius: 12px; }
+  .trend-panel-header { padding: 10px 12px 4px; }
+  .trend-panel-header h2 { font-size: 17px; }
+  .trend-heading { gap: 6px; }
+  .trend-heading-icon { width: 20px; }
+  .trend-panel-actions button { width: 34px; height: 36px; }
+  .trend-controls { padding: 0 12px; }
+  .trend-source-tabs { gap: 18px; }
+  .trend-source-tabs button { font-size: 12px; }
+  .trend-periods button { padding: 6px 12px; font-size: 11px; }
+  .trend-sort > span { display: none; }
+  .trend-sort select { font-size: 11px; max-width: 125px; }
+  .trend-summary { font-size: 10px; }
+  #trend-overview { gap: 3px 10px; }
+  .trend-columns { padding: 7px 16px 7px 12px; column-gap: 9px; font-size: 10px; }
+  .trend-columns > :nth-child(3) { display: none; }
+  .trend-ranking { padding: 0 8px; }
+  .trend-ranking .project { padding: 10px 4px; column-gap: 9px; row-gap: 4px; min-height: 88px; }
+  .trend-rank { grid-row: 1 / 3; align-self: start; margin-top: 3px; }
+  .trend-ranking .rank-1 .trend-rank, .trend-ranking .rank-2 .trend-rank, .trend-ranking .rank-3 .trend-rank { width: 23px; height: 24px; line-height: 24px; }
+  .trend-project-info { grid-column: 2; display: flex; flex-direction: column; align-items: stretch; gap: 2px; }
+  .trend-project-icons { order: 3; margin-top: 2px; }
+  .trend-project-icon .brand-logo { width: 12px !important; height: 12px !important; }
+  .trend-project-name { font-size: 12px; }
+  .trend-description { font-size: 11px; margin-top: 2px; }
+  .trend-ranking .star-box { grid-column: 2; grid-row: 2; text-align: left; font-size: 10px; color: var(--muted); }
+  .trend-panel .growth { grid-column: 3; grid-row: 1 / 3; }
+  .trend-panel .growth strong { font-size: 14px; }
+  .trend-panel .growth small { font-size: 10px; }
+  .trend-data-footer { padding: 12px; font-size: 10px; }
+  .trend-data-footer summary { text-align: left; }
+  .trend-dock { bottom: 16px; right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .trend-panel *, .trend-panel *::before { transition: none !important; } }

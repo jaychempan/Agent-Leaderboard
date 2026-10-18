@@ -27,6 +27,7 @@ jobs:
           python3 scripts/fetch_prompts.py
           python3 scripts/fetch_auto_research.py
           python3 scripts/build_discovery_index.py
+          python3 scripts/build_trends.py
 
       - name: Commit and push
         run: |
@@ -38,7 +39,8 @@ jobs:
                   data/prompts_data.json data/prompts_data.js \
                   data/frameworks_data.json data/frameworks_data.js \
                   data/discovery_index.json data/discovery_index.js \
-                  index.html
+                  data/star_history.json data/trends.json data/trends.js \
+                  index.html trending/index.html
           if git diff --cached --quiet; then
             echo "No changes — skipping commit"
           else

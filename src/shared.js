@@ -16,6 +16,7 @@ const I18N = {
     nav_prompts:    'Prompt 库',
     nav_frameworks: 'AI 框架',
     nav_favorites:  '收藏',
+    nav_trending:   '趋势榜',
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
     announcement_label: '功能更新',
@@ -75,6 +76,7 @@ const I18N = {
     nav_prompts:    'Prompt Library',
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
+    nav_trending:   'Trending',
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
     announcement_label: 'Product update',
@@ -571,6 +573,31 @@ document.addEventListener('click', e => {
     nav.classList.remove('nav-open');
 });
 
+let trendEntryIntroduced = false;
+let trendEntryObserver;
+let trendEntryTimer;
+function introduceTrendEntry() {
+  clearTimeout(trendEntryTimer);
+  trendEntryObserver?.disconnect();
+  if (trendEntryIntroduced || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const entry = document.querySelector('.nav-trending');
+  if (!entry) return;
+  // Wait until visible, including when the mobile menu first opens.
+  trendEntryObserver = new IntersectionObserver(entries => {
+    clearTimeout(trendEntryTimer);
+    if (!entries.some(item => item.isIntersecting)) return;
+    trendEntryTimer = setTimeout(() => {
+      if (!entry.isConnected || !entry.getClientRects().length || document.querySelector('#trend-panel[open]')) return;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      trendEntryIntroduced = true;
+      trendEntryObserver.disconnect();
+      entry.classList.add('trend-intro');
+      entry.addEventListener('animationend', () => entry.classList.remove('trend-intro'), {once: true});
+    }, 650);
+  });
+  trendEntryObserver.observe(entry);
+}
+
 function renderNav() {
   const pg = app.pageConfig.page;
   const nav = document.getElementById('navbar');
@@ -604,6 +631,10 @@ function renderNav() {
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-frameworks" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect x="8.5" y="3" width="7" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.6"/><rect x="5" y="9" width="14" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.8"/><rect x="2.5" y="15" width="19" height="4" rx="1.5" fill="url(#ni-frameworks)"/></svg>
         <span class="full">${t('nav_frameworks')}</span>
       </a>
+      <button type="button" class="nav-link nav-trending" onclick="openTrendPanel('${pg}')" aria-haspopup="dialog" aria-controls="trend-panel">
+        <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-10M15 5h6v6"/></svg>
+        <span>${t('nav_trending')}</span>
+      </button>
     </div>
 <div class="related-tools" aria-label="Related tools">
 <a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer" title="CCF DDL Tracker" aria-label="CCF DDL Tracker"><img src="extension/assets/ccf-ddl-tracker.png" alt="" width="18" height="18"><span>CCF DDL Tracker</span></a>
@@ -630,6 +661,7 @@ function renderNav() {
         <span class="extension-label">${t('nav_extension')}</span><span class="extension-label-short">${t('nav_extension_short')}</span>
       </a>
     </div>`;
+  introduceTrendEntry();
 }
 
 /* ── Hero render ────────────────────────────────────────────────── */
@@ -949,6 +981,7 @@ function clearFilters() {
   document.querySelectorAll('.uc-chip').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === 'all'));
   const fb = document.getElementById('favBtn'); if (fb) fb.classList.remove('active');
+  renderBrandSpotlight();
   applyFilters();
 }
 
