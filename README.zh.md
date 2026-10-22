@@ -134,10 +134,12 @@ python3 -m mcp.skills_discovery.server
 ```bash
 git clone https://github.com/jaychempan/Agent-Leaderboard.git
 cd Agent-Leaderboard
-python3 -m http.server 8080 --bind 127.0.0.1
+python3 scripts/serve.py --port 8080
 ```
 
 打开 **http://127.0.0.1:8080**。网站使用原生 HTML、CSS 和 JavaScript，无需前端构建。
+
+访问统计使用[不蒜子（busuanzi.cc）](https://www.busuanzi.cc/doc.php)，仅在 `https://agentskills.media` 启用。页面只展示接口返回的“今日访问量”（PV），按服务商日界线每天重置；累计总数由统计服务端保存，页面不展示，也不添加历史估算基数。每次加载页面发送一次请求，切换榜单和语言不重复计数。本地预览调用自己的 `/api/visits` 接口，显示带“本地”标记的真实今日访问次数；以北京时间划分日期，累计数保存在 `.local/visits.sqlite3`，重启后保留且不计入线上统计。`GET /api/visits` 可读取今日与累计数，不增加访问记录；普通 `python3 -m http.server` 不提供此接口。上报内容仅为官网首页地址，不含搜索词、查询参数或来源页面；不发送第三方 Cookie。页面显示的是加载时的统计快照，重新加载后获取最新值。服务故障时显示不可用，不回退为累计数或 0。该服务与此前的 busuanzi.ibruce.info、CounterAPI 独立，旧数据未迁移。运行 `node --test tests/visit-counter.test.cjs` 验证统计逻辑。
 
 ### 更新数据
 

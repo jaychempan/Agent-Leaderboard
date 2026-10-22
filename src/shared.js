@@ -66,7 +66,13 @@ const I18N = {
     stat_min:      '星起收录',
     stat_updated:  '更新于',
     stat_top:      '最高',
-    stat_visits:   '次访问',
+    stat_visits:   '今日访问量',
+    visits_loading: '访问统计加载中…',
+    visits_unavailable: '访问统计暂不可用',
+    visits_preview: '此预览域名未启用访问统计',
+    visits_local: '（本地）',
+    visits_local_note: '本地真实访问次数，按北京时间每日重置；累计总数保存在本地数据库，不计入线上统计。',
+    visits_note: '页面加载时获取的今日访问次数，按统计服务的日界线重置；累计总数由统计服务保存。',
     page_size:     '每页',
   },
   en: {
@@ -126,7 +132,13 @@ const I18N = {
     stat_min:      '+ stars min',
     stat_updated:  'Updated',
     stat_top:      'Top',
-    stat_visits:   'visits',
+    stat_visits:   'Visits today',
+    visits_loading: 'Loading visit count…',
+    visits_unavailable: 'Visit count temporarily unavailable',
+    visits_preview: 'Visit statistics are not enabled on this preview host',
+    visits_local: '(local)',
+    visits_local_note: 'Real local visits, reset daily in Asia/Shanghai. Cumulative totals are stored locally, separate from production.',
+    visits_note: 'Today’s visits as of page load, reset at the provider’s day boundary. Cumulative totals are kept by the statistics service.',
     page_size:     'Per page',
   }
 };
@@ -1326,6 +1338,7 @@ function renderAll() {
   applyThemeBtn();
   applyLangBtn();
   updatePageTitle();
+  renderVisitCount();
 }
 
 /* ── Filter Bar (i18n-aware, rendered from JS) ──────────────────── */
@@ -1383,27 +1396,60 @@ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e 
 });
 
 /* ── Visit counter ──────────────────────────────────────────────── */
-let _visitLoaded = false;
-async function loadVisitCount() {
-  if (_visitLoaded) return;
-  _visitLoaded = true;
-  const key   = app.pageConfig.page;
+// The provider increments daily and cumulative counts in one request. Display
+// only today's PV; hash navigation, filtering and language changes do not count.
+let visitState = { status: 'idle' };
+function renderVisitCount() {
   const badge = document.getElementById('visitBadge');
   if (!badge) return;
+  badge.textContent = visitState.status === 'ready'
+    ? `👁 ${t('stat_visits')} ${visitState.today.toLocaleString(app.lang === 'zh' ? 'zh-CN' : 'en-US')}${visitState.local ? ` ${t('visits_local')}` : ''}`
+    : t(visitState.status === 'preview' ? 'visits_preview'
+      : visitState.status === 'error' ? 'visits_unavailable' : 'visits_loading');
+  badge.title = visitState.status === 'ready' ? t(visitState.local ? 'visits_local_note' : 'visits_note') : '';
+}
+
+async function loadVisitCount() {
+  if (!document.getElementById('visitBadge')) return;
+  if (visitState.status !== 'idle') {
+    renderVisitCount();
+    return;
+  }
+  const local = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
+    && ['http:', 'https:'].includes(location.protocol);
+  if (!local && (location.protocol !== 'https:' || location.hostname !== 'agentskills.media')) {
+    visitState = { status: 'preview' };
+    renderVisitCount();
+    return;
+  }
+  visitState = { status: 'loading' };
+  renderVisitCount();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
-    const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), 8000);
-    const res  = await fetch(
-      `https://api.counterapi.dev/v1/agentskills/${key}/up`,
-      { signal: ctrl.signal }
-    );
-    clearTimeout(tid);
-    if (!res.ok) throw new Error('non-ok');
-    const data  = await res.json();
-    const count = data?.count;
-    if (typeof count !== 'number') throw new Error('no count');
-    badge.textContent = `👁 ${count.toLocaleString()} ${t('stat_visits')}`;
-  } catch {
-    badge.textContent = '';
+    // Same POST contract as busuanzi.cc's official 3.6.9 script. Send the
+    // canonical URL only, without searches, query strings or referring pages.
+    const response = await fetch(local ? '/api/visits' : 'https://cdn.busuanzi.cc/api.php', {
+      method: 'POST',
+      ...(local ? {} : {body: JSON.stringify({ url: 'https://agentskills.media/', referrer: '' })}),
+      credentials: 'omit',
+      referrerPolicy: 'origin',
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Visit statistics HTTP ${response.status}`);
+    const data = await response.json();
+    const value = local ? data?.today : data?.busuanzi_today_pv;
+    // The provider may return full counts as numbers or digit strings.
+    const today = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
+    if (!Number.isSafeInteger(today) || today < 0) throw new Error('Invalid daily visit count');
+    if (controller.signal.aborted) throw new Error('Visit statistics timed out');
+    visitState = { status: 'ready', today, local };
+  } catch (error) {
+    visitState = { status: 'error' };
+    console.warn('Visit statistics unavailable:', error);
+  } finally {
+    clearTimeout(timer);
+    renderVisitCount();
   }
 }

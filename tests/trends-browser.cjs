@@ -19,7 +19,9 @@ function expected(source, days, sort) {
     const page=await browser.newPage({viewport:{width:1440,height:1000}});
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.addInitScript(()=>{localStorage.setItem('st_lang','zh');localStorage.setItem('st_theme','light');});
-    await page.route('https://api.counterapi.dev/**',route=>route.fulfill({json:{count:1}}));
+    await page.route('https://cdn.busuanzi.cc/api.php',route=>route.fulfill({
+      json:{busuanzi_today_pv:12,busuanzi_site_pv:123,busuanzi_site_uv:45}
+    }));
     await page.goto(base);
     await page.locator('#pageLoader').waitFor({state:'detached'});
     assert.equal(await page.locator('.hero .trend-entry').count(),0,'Removed the circled hero link');

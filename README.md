@@ -134,10 +134,13 @@ The checkout includes data, so you can preview the website without fetching GitH
 ```bash
 git clone https://github.com/jaychempan/Agent-Leaderboard.git
 cd Agent-Leaderboard
-python3 -m http.server 8080 --bind 127.0.0.1
+python3 scripts/serve.py --port 8080
 ```
 
 Open **http://127.0.0.1:8080**. The website is plain HTML, CSS and JavaScript with no frontend build step.
+
+
+Visit statistics use [Busuanzi (busuanzi.cc)](https://www.busuanzi.cc/doc.php) on `https://agentskills.media` only. The page displays the provider’s daily PV, reset at its day boundary. Cumulative totals stay at the statistics service and are not displayed; no historical estimate is added. Each document load sends one request; hash navigation and language changes do not recount. Local previews use their own `/api/visits` endpoint and label the daily count as local. Days use Asia/Shanghai; `.local/visits.sqlite3` persists daily and cumulative counts across restarts, separately from production. `GET /api/visits` reads today and total without incrementing. Plain `python3 -m http.server` does not provide this API. Only the canonical homepage URL is submitted, without searches, query strings, referring pages or third-party cookies. The displayed value is a page-load snapshot; reload to update it. Failures show an unavailable state, never cumulative PV or a fake zero. This service is separate from busuanzi.ibruce.info and CounterAPI; their history is not migrated. Run `node --test tests/visit-counter.test.cjs` to check the integration.
 
 ### Refresh data
 
