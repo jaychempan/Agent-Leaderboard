@@ -9,6 +9,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from uuid import UUID
 
 ROOT = Path(__file__).resolve().parents[1]
 STAT_TIMEZONE = timezone(timedelta(hours=8))
@@ -23,8 +24,9 @@ class VisitStore:
                 "CREATE TABLE IF NOT EXISTS daily_visits "
                 "(day TEXT PRIMARY KEY, views INTEGER NOT NULL)"
             )
+            connection.execute("CREATE TABLE IF NOT EXISTS visitors (id TEXT PRIMARY KEY)")
 
-    def counts(self, *, increment=False, now=None):
+    def counts(self, *, increment=False, now=None, visitor=None):
         day = (now or datetime.now(STAT_TIMEZONE)).astimezone(STAT_TIMEZONE).date().isoformat()
         with sqlite3.connect(self.database, timeout=10) as connection:
             connection.execute("BEGIN IMMEDIATE" if increment else "BEGIN")
@@ -33,10 +35,13 @@ class VisitStore:
                     "INSERT INTO daily_visits(day, views) VALUES (?, 1) "
                     "ON CONFLICT(day) DO UPDATE SET views = views + 1", (day,)
                 )
+                if visitor:
+                    connection.execute("INSERT OR IGNORE INTO visitors(id) VALUES (?)", (visitor,))
             row = connection.execute("SELECT views FROM daily_visits WHERE day = ?", (day,)).fetchone()
             total = connection.execute("SELECT COALESCE(SUM(views), 0) FROM daily_visits").fetchone()[0]
+            visitors = connection.execute("SELECT COUNT(*) FROM visitors").fetchone()[0]
         return {"date": day, "timezone": "Asia/Shanghai", "today": row[0] if row else 0,
-                "total": total, "scope": "local"}
+                "total": total, "visitors": visitors, "scope": "local"}
 
 
 class PreviewHandler(SimpleHTTPRequestHandler):
@@ -58,11 +63,20 @@ class PreviewHandler(SimpleHTTPRequestHandler):
         if origin and origin != f"http://{self.headers.get('Host')}":
             self.send_error(403)
             return
-        self.send_counts(increment=True)
-
-    def send_counts(self, *, increment):
         try:
-            body = json.dumps(self.store.counts(increment=increment)).encode()
+            length = int(self.headers.get("Content-Length", "0"))
+            if not 0 <= length <= 1024:
+                raise ValueError("Invalid body length")
+            data = json.loads(self.rfile.read(length)) if length else {}
+            visitor = str(UUID(data["visitor"])) if data.get("visitor") else None
+        except (ValueError, TypeError, AttributeError):
+            self.send_error(400)
+            return
+        self.send_counts(increment=True, visitor=visitor)
+
+    def send_counts(self, *, increment, visitor=None):
+        try:
+            body = json.dumps(self.store.counts(increment=increment, visitor=visitor)).encode()
         except sqlite3.Error:
             self.send_error(503, "Local visit database unavailable")
             return

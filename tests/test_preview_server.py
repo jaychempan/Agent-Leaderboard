@@ -44,6 +44,17 @@ class VisitStoreTests(unittest.TestCase):
             list(executor.map(lambda _: self.store.counts(increment=True, now=now), range(40)))
         self.assertEqual(self.store.counts(now=now)["total"], 40)
 
+    def test_visitors_deduplicate_across_days_and_restarts(self):
+        before = datetime(2026, 10, 20, 15, 59, tzinfo=timezone.utc)
+        after = datetime(2026, 10, 20, 16, 0, tzinfo=timezone.utc)
+        self.store.counts(increment=True, now=before, visitor="browser-a")
+        self.store.counts(increment=True, now=before, visitor="browser-a")
+        reopened = preview.VisitStore(self.path)
+        counts = reopened.counts(increment=True, now=after, visitor="browser-a")
+        self.assertEqual((counts["today"], counts["visitors"]), (1, 1))
+        counts = reopened.counts(increment=True, now=after, visitor="browser-b")
+        self.assertEqual((counts["today"], counts["total"], counts["visitors"]), (2, 4, 2))
+
 
 class PreviewHTTPTests(unittest.TestCase):
     def test_counts_api_static_files_and_database_protection(self):
@@ -56,9 +67,9 @@ class PreviewHTTPTests(unittest.TestCase):
             worker = threading.Thread(target=server.serve_forever, daemon=True)
             worker.start()
             try:
-                def request(method, path, headers=None):
+                def request(method, path, headers=None, body=None):
                     client = HTTPConnection("127.0.0.1", server.server_port, timeout=5)
-                    client.request(method, path, headers=headers or {})
+                    client.request(method, path, headers=headers or {}, body=body)
                     response = client.getresponse()
                     result = response.status, response.read()
                     client.close()
@@ -75,6 +86,14 @@ class PreviewHTTPTests(unittest.TestCase):
                 self.assertEqual(request("POST", "/api/visits", {"Origin": "https://elsewhere.example"})[0], 403)
                 self.assertEqual(request("GET", "/.local/visits.sqlite3")[0], 403)
                 self.assertEqual(request("GET", "/%2elocal/visits.sqlite3")[0], 403)
+                identity = json.dumps({"visitor": "00000000-0000-4000-8000-000000000001"})
+                for _ in range(2):
+                    status, body = request("POST", "/api/visits", body=identity)
+                    self.assertEqual(status, 200)
+                    self.assertEqual(json.loads(body)["visitors"], 1)
+                self.assertEqual(json.loads(body)["today"], 3)
+                self.assertEqual(request("POST", "/api/visits", body='{"visitor":"invalid"}')[0], 400)
+                self.assertEqual(request("POST", "/api/visits", body='[]')[0], 400)
             finally:
                 server.shutdown()
                 server.server_close()

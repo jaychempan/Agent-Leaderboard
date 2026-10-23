@@ -19,8 +19,8 @@ function expected(source, days, sort) {
     const page=await browser.newPage({viewport:{width:1440,height:1000}});
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.addInitScript(()=>{localStorage.setItem('st_lang','zh');localStorage.setItem('st_theme','light');});
-    await page.route('https://cdn.busuanzi.cc/api.php',route=>route.fulfill({
-      json:{busuanzi_today_pv:12,busuanzi_site_pv:123,busuanzi_site_uv:45}
+    await page.route('https://busuanzi.9420.ltd/api',route=>route.fulfill({
+      json:{success:true,data:{page_pv:12,site_pv:123,site_uv:45}}
     }));
     await page.goto(base);
     await page.locator('#pageLoader').waitFor({state:'detached'});

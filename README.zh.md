@@ -139,7 +139,11 @@ python3 scripts/serve.py --port 8080
 
 打开 **http://127.0.0.1:8080**。网站使用原生 HTML、CSS 和 JavaScript，无需前端构建。
 
-访问统计使用[不蒜子（busuanzi.cc）](https://www.busuanzi.cc/doc.php)，仅在 `https://agentskills.media` 启用。页面只展示接口返回的“今日访问量”（PV），按服务商日界线每天重置；累计总数由统计服务端保存，页面不展示，也不添加历史估算基数。每次加载页面发送一次请求，切换榜单和语言不重复计数。本地预览调用自己的 `/api/visits` 接口，显示带“本地”标记的真实今日访问次数；以北京时间划分日期，累计数保存在 `.local/visits.sqlite3`，重启后保留且不计入线上统计。`GET /api/visits` 可读取今日与累计数，不增加访问记录；普通 `python3 -m http.server` 不提供此接口。上报内容仅为官网首页地址，不含搜索词、查询参数或来源页面；不发送第三方 Cookie。页面显示的是加载时的统计快照，重新加载后获取最新值。服务故障时显示不可用，不回退为累计数或 0。该服务与此前的 busuanzi.ibruce.info、CounterAPI 独立，旧数据未迁移。运行 `node --test tests/visit-counter.test.cjs` 验证统计逻辑。
+访问统计使用 [soxft/busuanzi](https://github.com/soxft/busuanzi/wiki/api) 公共服务 `https://busuanzi.9420.ltd/api`，适用于纯静态 GitHub Pages，无需在 Pages 上运行后端。首页显示“今日访问量（PV）”与“累计访客人数（UV）”。在 `https://agentskills.media` 和 `https://jaychempan.github.io/Agent-Leaderboard/` 下启用，两者统一使用 `agentskills.media` 的统计命名空间。每个页面文档只发送一次 POST；切换榜单、筛选或语言不会重复计数。北京时间日期由浏览器时钟生成，作为虚拟统计路径 `/__visits/YYYY-MM-DD`；接口的 `page_pv` 即该日所有榜单的访问量，`site_uv` 是服务端去重的累计访客数，不是各天 UV 相加。刷新页面获取新快照，跨天使用新路径，不从累计 PV 相减推算日访问量。浏览器时钟应正确。
+
+累计访客是服务商按 IP、User-Agent 和签名匿名标识估算的 UV，并非实名人数。签名标识保存在 `localStorage` 的 `st_visit_identity_v1`；清理存储、更换设备等会影响去重。请求仅发送规范域名、统计日期和匿名标识，不含搜索词、页面查询参数或来源页面，不发送第三方 Cookie。该公共服务无 SLA 或数据完整性承诺；若需长期数据保障，可自行部署同一开源服务并更改 `VISIT_API`。旧 `busuanzi.cc` 接口实测超时（524），已移除；各服务数据独立，旧历史无法自动迁移，当前数值从新服务接入开始累计，不添加估算基数。故障会显示不可用，缺失的单项显示 `—`，不显示假 0，也不自动重试可能已经计数的 POST。
+
+本地运行 `python3 scripts/serve.py`，通过 `/api/visits` 提供隔离的日访问量和匿名浏览器去重人数，保存于 `.local/visits.sqlite3`，不影响线上统计。既有本地访问次数保留，访客数从启用新功能起累计；普通 `python3 -m http.server` 不提供统计接口。运行 `node --test tests/visit-counter.test.cjs` 和 `python3 -m unittest discover -s tests -p 'test_preview_server.py'` 验证逻辑；浏览器检查见 `tests/visit-counter-browser.cjs`（默认模拟接口，`--live` 验证真实服务）。部署工作流会先检查首页脚本没有重复加载或合并冲突。
 
 ### 更新数据
 

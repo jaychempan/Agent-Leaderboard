@@ -67,12 +67,13 @@ const I18N = {
     stat_updated:  '更新于',
     stat_top:      '最高',
     stat_visits:   '今日访问量',
+    stat_visitors: '累计访客人数',
     visits_loading: '访问统计加载中…',
     visits_unavailable: '访问统计暂不可用',
     visits_preview: '此预览域名未启用访问统计',
     visits_local: '（本地）',
-    visits_local_note: '本地真实访问次数，按北京时间每日重置；累计总数保存在本地数据库，不计入线上统计。',
-    visits_note: '页面加载时获取的今日访问次数，按统计服务的日界线重置；累计总数由统计服务保存。',
+    visits_local_note: '本地统计：访问量按北京时间每日重置；人数按本浏览器的匿名标识去重，不计入线上统计。',
+    visits_note: '今日访问量（PV）按北京时间划分；累计访客人数（UV）由统计服务去重。数据从本次接入开始，页面重新加载时更新。',
     page_size:     '每页',
   },
   en: {
@@ -133,12 +134,13 @@ const I18N = {
     stat_updated:  'Updated',
     stat_top:      'Top',
     stat_visits:   'Visits today',
+    stat_visitors: 'Total visitors',
     visits_loading: 'Loading visit count…',
     visits_unavailable: 'Visit count temporarily unavailable',
     visits_preview: 'Visit statistics are not enabled on this preview host',
     visits_local: '(local)',
-    visits_local_note: 'Real local visits, reset daily in Asia/Shanghai. Cumulative totals are stored locally, separate from production.',
-    visits_note: 'Today’s visits as of page load, reset at the provider’s day boundary. Cumulative totals are kept by the statistics service.',
+    visits_local_note: 'Local statistics: daily views use Asia/Shanghai; visitors are deduplicated by an anonymous browser ID. Separate from production.',
+    visits_note: 'Daily views (PV) use Asia/Shanghai; total visitors (UV) are deduplicated by the statistics service. Counts start with this integration and update on page load.',
     page_size:     'Per page',
   }
 };
@@ -1396,17 +1398,33 @@ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e 
 });
 
 /* ── Visit counter ──────────────────────────────────────────────── */
-// The provider increments daily and cumulative counts in one request. Display
-// only today's PV; hash navigation, filtering and language changes do not count.
+// One POST per document. A dated virtual page groups all leaderboard loads for
+// the Shanghai day; page_pv is daily PV, site_uv is all-time deduplicated UV.
+// Do not mix counts from independent providers or retry an ambiguous POST.
+const VISIT_API = 'https://busuanzi.9420.ltd/api';
+const VISIT_ID_KEY = 'st_visit_identity_v1';
 let visitState = { status: 'idle' };
+
+function visitDay(now = new Date()) {
+  return new Date(now.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+function visitCount(value) {
+  const count = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
+  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
 function renderVisitCount() {
   const badge = document.getElementById('visitBadge');
   if (!badge) return;
+  const format = value => value === null ? '—' : value.toLocaleString(app.lang === 'zh' ? 'zh-CN' : 'en-US');
   badge.textContent = visitState.status === 'ready'
-    ? `👁 ${t('stat_visits')} ${visitState.today.toLocaleString(app.lang === 'zh' ? 'zh-CN' : 'en-US')}${visitState.local ? ` ${t('visits_local')}` : ''}`
+    ? `👁 ${t('stat_visits')} ${format(visitState.today)} · ${t('stat_visitors')} ${format(visitState.visitors)}${visitState.local ? ` ${t('visits_local')}` : ''}`
     : t(visitState.status === 'preview' ? 'visits_preview'
       : visitState.status === 'error' ? 'visits_unavailable' : 'visits_loading');
-  badge.title = visitState.status === 'ready' ? t(visitState.local ? 'visits_local_note' : 'visits_note') : '';
+  badge.title = visitState.status === 'ready'
+    ? t(visitState.local ? 'visits_local_note' : 'visits_note') +
+      (visitState.today === null || visitState.visitors === null ? ` ${t('visits_unavailable')}` : '') : '';
 }
 
 async function loadVisitCount() {
@@ -1417,7 +1435,11 @@ async function loadVisitCount() {
   }
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
     && ['http:', 'https:'].includes(location.protocol);
-  if (!local && (location.protocol !== 'https:' || location.hostname !== 'agentskills.media')) {
+  const production = location.protocol === 'https:' && (
+    location.hostname === 'agentskills.media' ||
+    (location.hostname === 'jaychempan.github.io' && /^\/Agent-Leaderboard(?:\/|$)/.test(location.pathname))
+  );
+  if (!local && !production) {
     visitState = { status: 'preview' };
     renderVisitCount();
     return;
@@ -1425,26 +1447,43 @@ async function loadVisitCount() {
   visitState = { status: 'loading' };
   renderVisitCount();
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
+  const timer = setTimeout(() => controller.abort(), 10000);
   try {
-    // Same POST contract as busuanzi.cc's official 3.6.9 script. Send the
-    // canonical URL only, without searches, query strings or referring pages.
-    const response = await fetch(local ? '/api/visits' : 'https://cdn.busuanzi.cc/api.php', {
+    // Local IDs never leave the preview server. Provider identities are signed
+    // opaque tokens, not credentials for a user account. Storage may be blocked.
+    const storageKey = local ? 'st_local_visit_id' : VISIT_ID_KEY;
+    let identity = '';
+    try { identity = localStorage.getItem(storageKey) || ''; } catch (_) { /* optional */ }
+    if (local && !identity) {
+      identity = crypto.randomUUID();
+      try { localStorage.setItem(storageKey, identity); } catch (_) { /* optional */ }
+    }
+    const response = await fetch(local ? '/api/visits' : VISIT_API, {
       method: 'POST',
-      ...(local ? {} : {body: JSON.stringify({ url: 'https://agentskills.media/', referrer: '' })}),
+      ...(local ? {body: JSON.stringify({visitor: identity})} : {headers: {
+        'x-bsz-referer': `https://agentskills.media/__visits/${visitDay()}`,
+        ...(identity ? {Authorization: `Bearer ${identity}`} : {}),
+      }}),
       credentials: 'omit',
       referrerPolicy: 'origin',
       cache: 'no-store',
       signal: controller.signal,
     });
     if (!response.ok) throw new Error(`Visit statistics HTTP ${response.status}`);
-    const data = await response.json();
-    const value = local ? data?.today : data?.busuanzi_today_pv;
-    // The provider may return full counts as numbers or digit strings.
-    const today = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
-    if (!Number.isSafeInteger(today) || today < 0) throw new Error('Invalid daily visit count');
+    const result = await response.json();
+    if (!local && result?.success !== true) throw new Error('Visit statistics rejected');
+    const data = local ? result : result.data;
+    const today = visitCount(local ? data?.today : data?.page_pv);
+    const visitors = visitCount(local ? data?.visitors : data?.site_uv);
+    if (today === null && visitors === null) throw new Error('Invalid visit counts');
     if (controller.signal.aborted) throw new Error('Visit statistics timed out');
-    visitState = { status: 'ready', today, local };
+    if (!local) {
+      const nextIdentity = response.headers.get('Set-Bsz-Identity');
+      if (nextIdentity) {
+        try { localStorage.setItem(storageKey, nextIdentity); } catch (_) { /* optional */ }
+      }
+    }
+    visitState = { status: 'ready', today, visitors, local };
   } catch (error) {
     visitState = { status: 'error' };
     console.warn('Visit statistics unavailable:', error);
