@@ -1415,6 +1415,8 @@ button, select, input { font: inherit; }
 .favorite-account [data-state="synced"] { color:var(--green); }
 .favorite-account [data-state="offline"] { color:var(--gold); }
 .favorite-account [data-state="error"] { color:var(--red); }
+.favorites-notice { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:1100; width:max-content; max-width:calc(100vw - 28px); padding:11px 16px; border:1px solid var(--border2); border-radius:var(--radius); background:var(--surface); color:var(--text); box-shadow:var(--shadow); font-size:13px; line-height:1.6; }
+.favorites-notice[hidden] { display:none; }
 .favorite-account button:focus-visible, .fav-modal button:focus-visible, .saved-favorite a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
 .saved-favorite { min-width:0; }
 .favorite-origin { color:var(--muted); font-size:11px; }

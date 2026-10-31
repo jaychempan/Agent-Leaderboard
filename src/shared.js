@@ -25,12 +25,14 @@ const I18N = {
     fav_not_configured: 'GitHub 云同步暂未启用，现有收藏仍会保存在此浏览器。',
     fav_syncing: '正在同步收藏…',
     fav_synced: '收藏已保存到云端',
-    fav_offline: '已在本机保存，联网后继续同步',
-    fav_sync_failed: '暂时无法同步，更改已保留。请稍后重试。',
+    fav_offline: '暂时无法连接。登录后的收藏需要联网保存，请恢复连接后重试。',
+    fav_sync_failed: '暂时无法读取云端收藏，请稍后重试。',
+    fav_save_failed: '收藏未保存，已恢复原状态。请联网后重试。',
+    fav_import_failed: '本地收藏尚未全部导入，原记录仍已保留。请点击重试。',
+    fav_account_changed: '登录账号已变化，请刷新收藏后再操作。',
     fav_auth_failed: 'GitHub 登录未完成，请重试。',
     fav_storage_failed: '浏览器暂时无法写入数据。请保持此页打开，恢复存储权限或等待云同步成功后再关闭。',
-    fav_pending: '项更改待同步',
-    fav_logout_note: '退出后云端收藏仍会保留；未同步的更改会留在此设备。',
+    fav_logout_note: '退出后云端收藏仍会保留，重新登录即可恢复。',
     fav_close: '关闭收藏',
     fav_remove: '取消收藏',
     fav_other: '其他收藏',
@@ -115,12 +117,14 @@ const I18N = {
     fav_not_configured: 'GitHub cloud sync is not enabled yet. Your existing favorites stay saved in this browser.',
     fav_syncing: 'Syncing favorites…',
     fav_synced: 'Favorites saved to the cloud',
-    fav_offline: 'Saved on this device. Sync will resume when you’re online.',
-    fav_sync_failed: 'Sync is temporarily unavailable. Your changes are kept; try again later.',
+    fav_offline: 'Unable to connect. Account favorites need an internet connection; reconnect and try again.',
+    fav_sync_failed: 'Cloud favorites could not be loaded. Please try again.',
+    fav_save_failed: 'Your favorite was not saved. The previous state was restored; reconnect and try again.',
+    fav_import_failed: 'Some local favorites still need importing. The originals are kept; please retry.',
+    fav_account_changed: 'Your signed-in account has changed. Refresh favorites before continuing.',
     fav_auth_failed: 'GitHub sign-in did not finish. Please try again.',
     fav_storage_failed: 'Your browser cannot write data right now. Keep this page open until storage works again or cloud sync succeeds.',
-    fav_pending: 'changes waiting to sync',
-    fav_logout_note: 'Cloud favorites stay saved after sign-out. Pending changes remain on this device.',
+    fav_logout_note: 'Cloud favorites stay saved after sign-out. Sign in again to restore them.',
     fav_close: 'Close favorites',
     fav_remove: 'Remove favorite',
     fav_other: 'Other favorites',
@@ -288,7 +292,7 @@ function getFavoriteCatalog() {
 const favoritesStore = FavoritesSync.createFavoritesStore({
   storage: localStorage,
   config: window.FAVORITES_CONFIG,
-  createClient: window.supabase?.createClient,
+  fetch: window.fetch.bind(window),
   catalog: getFavoriteCatalog,
   onChange: applyFavoriteSnapshot,
   location: window.location,
@@ -545,8 +549,30 @@ function applyLangBtn() {
 
 /* ── Favorites ──────────────────────────────────────────────────── */
 let favoriteAccountActionError = '';
+let lastFavoriteError = null;
+let favoriteNoticeTimer;
 let favoriteModalReturnFocus;
 let favoriteModalPreviousOverflow = '';
+function favoriteErrorKey(code) {
+  return ({save_failed: 'fav_save_failed', local_import_failed: 'fav_import_failed',
+    auth_failed: 'fav_auth_failed', account_changed: 'fav_account_changed',
+    storage_unavailable: 'fav_storage_failed'})[code] || 'fav_sync_failed';
+}
+function showFavoriteNotice(key) {
+  let notice = document.getElementById('favoritesNotice');
+  if (!notice) {
+    notice = document.createElement('p');
+    notice.id = 'favoritesNotice';
+    notice.className = 'favorites-notice';
+    notice.setAttribute('role', 'status');
+    notice.setAttribute('aria-live', 'polite');
+    document.body.appendChild(notice);
+  }
+  clearTimeout(favoriteNoticeTimer);
+  notice.textContent = t(key);
+  notice.hidden = false;
+  favoriteNoticeTimer = setTimeout(() => { notice.hidden = true; }, 6500);
+}
 function escapeFavoriteHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 }
@@ -565,14 +591,17 @@ function applyFavoriteSnapshot(snapshot) {
     button.textContent = saved ? '❤' : '♡';
   });
   const modal = document.getElementById('favModal');
+  if (snapshot.error && snapshot.error !== lastFavoriteError && modal?.style.display !== 'flex') showFavoriteNotice(favoriteErrorKey(snapshot.error));
+  lastFavoriteError = snapshot.error;
   if (modal?.style.display === 'flex') {
     if (changed || recordsChanged) renderFavModal();
     else renderFavoritesAccount();
   }
 }
-function toggleFav(id) {
+async function toggleFav(id) {
   const repo = getFavoriteCatalog().find(item => item.id === Number(id)) || app.favoriteRecords[id] || Number(id);
-  favoritesStore.toggle(repo, app.pageConfig?.page);
+  try { await favoritesStore.toggle(repo, app.pageConfig?.page); }
+  catch { showFavoriteNotice('fav_save_failed'); }
 }
 function toggleFavOnly() {
   app.favOnly = !app.favOnly;
@@ -604,19 +633,17 @@ function renderFavoritesAccount() {
   const snapshot = favoritesStore.getSnapshot();
   const busy = snapshot.status === 'initializing' || snapshot.status === 'syncing';
   const storageError = snapshot.error === 'storage_unavailable';
-  const authError = snapshot.error === 'auth_failed';
   let status = t('fav_local');
   if (snapshot.user) {
-    status = t(busy ? 'fav_syncing' : snapshot.status === 'synced' ? 'fav_synced' : snapshot.status === 'offline' ? 'fav_offline' : 'fav_sync_failed');
+    status = t(busy ? 'fav_syncing' : snapshot.error ? favoriteErrorKey(snapshot.error) : snapshot.status === 'synced' ? 'fav_synced' : snapshot.status === 'offline' ? 'fav_offline' : 'fav_sync_failed');
   }
   if (storageError) status = t('fav_storage_failed');
-  const pending = snapshot.pendingCount ? ` · ${snapshot.pendingCount} ${t('fav_pending')}` : '';
   const activeId = document.activeElement?.id;
   const hadFocus = container.contains(document.activeElement);
   container.innerHTML = snapshot.user ? `
     <div class="favorite-account-copy">
       <strong>${FAVORITE_GITHUB_ICON}<span>${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}</span></strong>
-      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${escapeFavoriteHTML(status + pending)}</p>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${escapeFavoriteHTML(status)}</p>
       <p class="favorite-account-note">${t('fav_logout_note')}</p>
     </div>
     <div class="favorite-account-actions">
@@ -628,11 +655,11 @@ function renderFavoritesAccount() {
       <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
     </div>
     ${snapshot.configured ? `<button type="button" class="nav-extension" id="githubSignIn" onclick="signInGithub()" ${busy ? 'disabled' : ''}>${t('fav_sign_in')}</button>` : ''}`;
-  if (favoriteAccountActionError || storageError || authError) {
+  if (favoriteAccountActionError || (snapshot.error && !snapshot.user)) {
     const message = document.createElement('p');
     message.className = 'favorite-account-error';
     message.setAttribute('role', 'alert');
-    message.textContent = t(favoriteAccountActionError || (storageError ? 'fav_storage_failed' : 'fav_auth_failed'));
+    message.textContent = t(favoriteAccountActionError || favoriteErrorKey(snapshot.error));
     container.appendChild(message);
   }
   if (hadFocus) (document.getElementById(activeId) || container.querySelector('button:not(:disabled)') || document.querySelector('#favModal .fav-modal-close'))?.focus({preventScroll: true});

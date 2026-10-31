@@ -1,0 +1,16 @@
+{
+  "name": "agent-leaderboard-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/index.js && node --test test/*.test.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply agent-leaderboard --local",
+    "db:migrate:remote": "wrangler d1 migrations apply agent-leaderboard --remote"
+  },
+  "devDependencies": {"wrangler": "4.156.0"},
+  "engines": {"node": ">=22.13.0"}
+}

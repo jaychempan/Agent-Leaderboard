@@ -42,15 +42,15 @@
 | 搜索与筛选 | 按仓库名称/描述、分类、编程语言、最低 Stars 和最近更新时间筛选 |
 | 用途多选 | 同时满足所有已选用途标签 |
 | 网格与列表 | 自由切换视图，每页显示 24、48 或 96 个仓库 |
-| 收藏夹 | 浏览器本地保存；配置 Supabase 后可选用 GitHub 登录与私有云同步 |
+| 收藏夹 | 浏览器本地保存；可通过 Cloudflare Worker 与 D1 接入 GitHub 登录和账号收藏 |
 | 语言与主题 | 中文/English；默认跟随系统深浅色，手动切换后记住选择 |
 | 品牌辨认 | 主页与趋势浮窗复用品牌和分类图标 |
 
 ### GitHub 登录与云收藏
 
-配置 Supabase 项目后，网站访客可以通过 GitHub 登录，让收藏跨设备保留。首次登录合并已有本地收藏；用户专属缓存与待同步操作支持断网后继续使用。取消收藏会同步删除标记，退出登录或清除浏览器数据保留已同步的云端记录，不会自动修改 GitHub Stars。Chrome 插件继续使用本地收藏，不接入网站登录。
+网站通过一个同源 Cloudflare Worker 与 D1 数据库接入 GitHub 登录和账号收藏。首次登录合并已有本地收藏；登录后的添加和取消通过在线 API 保存。请求失败时恢复原状态并提示重试。退出登录或清除浏览器数据保留已成功保存的云端收藏，不会自动修改 GitHub Stars。Chrome 插件继续使用本地收藏，不接入网站登录。
 
-未登录或未配置云服务时仍可使用本地收藏。真实登录需要 Supabase 项目、GitHub OAuth App、数据库迁移与公开前端配置，提交代码本身不会开通服务。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。前端只能放 Supabase publishable key 或旧版 anon key，不能放 secret/service-role key 或 GitHub Client Secret。
+没有 API 时仍可使用本地收藏。真实登录需要 Cloudflare 账号与已代理域名、自有 GitHub OAuth App、D1 迁移和 Worker 部署，不需要安装插件或在前端填写令牌。密钥保存在 Worker 配置中，浏览器使用 HttpOnly 会话 Cookie。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。代码与模拟测试通过不等于生产服务已开通。
 
 ## Chrome 搜索插件
 

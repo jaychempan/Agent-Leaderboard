@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agent-leaderboard-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {"PUBLIC_ORIGIN": "https://agentskills.media"},
+  "routes": [{"pattern": "agentskills.media/api/*", "zone_name": "agentskills.media"}],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "agent-leaderboard",
+    "database_id": "REPLACE_WITH_CREATED_D1_DATABASE_ID",
+    "migrations_dir": "migrations"
+  }],
+  "observability": {"enabled": false}
+}

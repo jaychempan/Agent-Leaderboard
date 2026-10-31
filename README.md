@@ -42,15 +42,15 @@ These are observed changes in the catalog, not real-time GitHub star events: inc
 | Search and filters | Repository name/description, category, language, minimum stars and last-update time range |
 | Use cases | Multiple selected use-case tags must all match |
 | Grid and list | Switch views; display 24, 48 or 96 repositories per page |
-| Favorites | Local browser storage; optional GitHub sign-in and private cloud sync through a configured Supabase project |
+| Favorites | Local browser storage; optional GitHub sign-in and account favorites through a Cloudflare Worker and D1 |
 | Language and theme | Chinese/English; follows system light/dark theme until manually changed |
 | Brand identification | Reuses brand and category icons across the homepage and trend panel |
 
 ### GitHub sign-in and cloud favorites
 
-When a Supabase project is configured, website visitors can sign in with GitHub to keep favorites across devices. Existing local favorites are merged on first sign-in; account-specific caches and queued changes support offline use. Removing a favorite synchronizes a deletion marker, while signing out or clearing browser data keeps already-synced cloud records. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
+The website uses a small same-origin Cloudflare Worker and D1 database for GitHub sign-in and account favorites. Existing local favorites are merged on first sign-in; signed-in additions and removals save through the online API. Failed requests restore the previous state and show a retry message. Signing out or clearing browser data keeps successfully saved cloud favorites. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
 
-The website remains usable without an account or cloud configuration. Enabling real sign-in requires a Supabase project, a GitHub OAuth App, the database migration and a public frontend configuration; code alone does not activate the service. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Only a Supabase publishable key or legacy anon key belongs in frontend configuration; never expose a secret/service-role key or GitHub Client Secret.
+Local favorites work without the API. Real sign-in requires a Cloudflare account and proxied domain, a GitHub OAuth App, D1 migration and Worker deployment; no plugin installation or frontend token is required. Secrets stay in Worker configuration and the browser uses an HttpOnly session cookie. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Code and mocked tests alone do not activate the production service.
 
 ## Chrome search extension
 

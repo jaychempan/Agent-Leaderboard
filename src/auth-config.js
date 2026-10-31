@@ -1,8 +1,7 @@
-/* Public browser configuration. Never put a GitHub secret or Supabase secret/service-role key here.
- * Configure GitHub OAuth and the favorites table first; see docs/github-favorites-setup.md.
- * Empty values keep existing local favorites working while cloud sign-in is not configured.
+/* Public same-origin API path. No credentials belong in browser configuration.
+ * The Cloudflare Worker handles GitHub OAuth and HttpOnly session cookies.
+ * Without a deployed API, favorites continue to work locally.
  */
 window.FAVORITES_CONFIG = Object.freeze({
-  url: '',
-  publishableKey: '',
+  apiBase: '/api',
 });

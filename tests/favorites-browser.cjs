@@ -1,245 +1,220 @@
-/* Browser integration for account favorites. The real Supabase SDK talks to a
- * deterministic HTTP fixture; this does not verify a live GitHub OAuth App or RLS. */
+/* Frontend account-favorites integration. A same-origin HTTP fixture exercises
+ * the browser contract; live GitHub OAuth, Worker security and D1 are separate checks. */
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || '/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules/playwright-core');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8765/';
-const writeArtifacts = ['localhost','127.0.0.1','[::1]'].includes(new URL(base).hostname);
-const authOrigin = 'https://favorites-test.supabase.co';
-const authKey = 'st_supabase_auth_v1';
+const baseURL = new URL(base);
+const writeArtifacts = ['localhost','127.0.0.1','[::1]'].includes(baseURL.hostname);
 const firstRepos = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/data.json'), 'utf8')).repos.slice(0, 3);
 const [first, second, third] = firstRepos;
-const alice = makeUser('11111111-1111-4111-8111-111111111111', 'alice');
-const bob = makeUser('22222222-2222-4222-8222-222222222222', 'bob');
+const alice = {id:'111111',login:'alice',avatar_url:'https://avatars.githubusercontent.com/u/111111'};
+const bob = {id:'222222',login:'bob',avatar_url:'https://avatars.githubusercontent.com/u/222222'};
+const fixtureCookie = 'favorites_fixture_session';
+const publicRepo = (repo,sources=['skills']) => ({...repo,sources});
 
-function makeUser(id, login) {
-  return {id, aud:'authenticated', role:'authenticated', email:`${login}@example.test`,
-    app_metadata:{provider:'github', providers:['github']},
-    user_metadata:{user_name:login, preferred_username:login, avatar_url:`https://avatars.githubusercontent.com/${login}`},
-    identities:[{id:login, identity_id:id, user_id:id, provider:'github', identity_data:{sub:login, user_name:login}}],
-    created_at:'2026-10-31T00:00:00Z', updated_at:'2026-10-31T00:00:00Z'};
-}
-function session(user) {
-  const now = Math.floor(Date.now() / 1000);
-  const encode = value => Buffer.from(JSON.stringify(value)).toString('base64url');
-  return {access_token:`${encode({alg:'HS256',typ:'JWT'})}.${encode({sub:user.id,role:'authenticated',aud:'authenticated',iss:`${authOrigin}/auth/v1`,iat:now,exp:now+3600})}.test-signature`,
-    token_type:'bearer', expires_in:3600, expires_at:now+3600,
-    refresh_token:`refresh-${user.id}`, user};
-}
-function publicRepo(repo, sources=['skills']) {
-  return {...repo, sources};
-}
-async function eventually(predicate, message, timeout=10000) {
+async function eventually(predicate,message,timeout=10000) {
   const deadline=Date.now()+timeout;
-  while(Date.now()<deadline) { if(await predicate())return; await new Promise(resolve=>setTimeout(resolve,60)); }
+  while(Date.now()<deadline) {if(await predicate())return;await new Promise(resolve=>setTimeout(resolve,60));}
   assert.fail(message);
 }
-async function state(page) { return page.evaluate(()=>favoritesStore.getSnapshot()); }
-async function waitState(page, predicate, label) {
+async function state(page) {return page.evaluate(()=>favoritesStore.getSnapshot());}
+async function waitState(page,predicate,label) {
   let latest;
-  try {await eventually(async()=>predicate(latest=await state(page)), label);}
+  try {await eventually(async()=>predicate(latest=await state(page)),label);}
   catch(error) {error.message+=`\nLast favorites state: ${JSON.stringify(latest)}`;throw error;}
 }
 async function ready(page) {
   await page.locator('#pageLoader').waitFor({state:'detached'});
   await page.waitForFunction(()=>typeof favoritesStore!=='undefined');
+  await waitState(page,s=>s.status!=='initializing','favorites initialization settles');
 }
 async function openFavorites(page) {
   if(!await page.locator('#favModal').isVisible())await page.locator('#favBtn').click();
   await page.locator('#favoritesAccount').waitFor({state:'visible'});
 }
 async function closeFavorites(page) {
-  if(await page.locator('#favModal').isVisible()) {
-    await page.keyboard.press('Escape');
-    await page.locator('#favModal').waitFor({state:'hidden'});
-  }
+  if(await page.locator('#favModal').isVisible()) {await page.keyboard.press('Escape');await page.locator('#favModal').waitFor({state:'hidden'});}
 }
-async function clickGridFavorite(page, id) {
+async function clickGridFavorite(page,id) {
   await closeFavorites(page);
   await page.locator(`#grid .fav-btn[data-id="${id}"]`).click();
 }
 
 function backendFixture() {
-  const rows = new Map([[alice.id,new Map()], [bob.id,new Map()]]);
+  const rows = new Map([[alice.id,new Map()],[bob.id,new Map()]]);
+  const receipts = new Map();
   const requests=[];
-  let oauthUser=alice, failWrites=false, disconnected=false;
-  const getUser=request=>{
-    try { const payload=JSON.parse(Buffer.from((request.headers().authorization||'').replace(/^Bearer\s+/i,'').split('.')[1], 'base64url'));return [alice,bob].find(user=>user.id===payload.sub); }
-    catch {return null;}
+  let loginUser=alice,failWrites=false,disconnected=false;
+  const userFor=request=>{
+    const cookie=(request.headers().cookie||'').split(';').map(item=>item.trim()).find(item=>item.startsWith(fixtureCookie+'='));
+    return cookie?[alice,bob].find(user=>user.id===decodeURIComponent(cookie.slice(fixtureCookie.length+1))):null;
   };
-  const cors={'access-control-allow-origin':'*','access-control-allow-headers':'apikey,authorization,x-client-info,content-type,prefer,range,range-unit','access-control-allow-methods':'GET,POST,PATCH,DELETE,OPTIONS','access-control-expose-headers':'content-range'};
-  async function intercept(route) {
-    const request=route.request(), url=new URL(request.url());
-    requests.push({method:request.method(),url:url.href,body:request.postData()});
+  async function intercept(route,{configured=true}={}) {
+    const request=route.request(),url=new URL(request.url()),method=request.method();
+    requests.push({method,path:url.pathname,url:url.href,body:request.postData(),headers:request.headers()});
     if(disconnected)return route.abort('internetdisconnected');
-    const respond=(status,json,headers={})=>route.fulfill({status,headers:{...cors,...headers},...(json===undefined?{}:{json})});
-    if(request.method()==='OPTIONS')return respond(204);
-    if(url.pathname==='/auth/v1/authorize')return route.fulfill({status:200,headers:cors,contentType:'text/html',body:'<!doctype html><title>Mock authorization</title><p>GitHub authorization fixture</p>'});
-    if(url.pathname==='/auth/v1/token') {
-      const body=request.postDataJSON()||{};
-      if(url.searchParams.get('grant_type')==='pkce') {
-        assert.ok(body.code_verifier,'PKCE exchange includes the verifier');
-        assert.ok(body.auth_code,'PKCE exchange includes the authorization code');
-        assert.equal('client_secret' in body,false,'provider secret stays outside the browser');
+    const respond=(status,json,headers={})=>route.fulfill({status,headers,...(json===undefined?{}:{json})});
+    if(url.pathname==='/api/health')return respond(200,{ok:true,authConfigured:configured});
+    if(url.pathname==='/api/auth/github') {
+      assert.equal(method,'GET');
+      const returnTo=url.searchParams.get('return_to')||'/';
+      assert.ok(returnTo.startsWith('/')&&!returnTo.startsWith('//'),'login return is a same-origin path');
+      const target=new URL(returnTo,baseURL.origin);
+      assert.equal(target.origin,baseURL.origin);
+      return respond(302,undefined,{location:target.href,'set-cookie':`${fixtureCookie}=${loginUser.id}; HttpOnly; Path=/; SameSite=Lax`});
+    }
+    const user=userFor(request);
+    if(url.pathname==='/api/bootstrap') {
+      const after=Number(url.searchParams.get('after')||0);
+      if(after&&(!user||request.headers()['x-favorites-user']!==user.id))return respond(409,{error:'account_changed'});
+      const values=configured&&user?[...rows.get(user.id).values()].sort((a,b)=>a.repo_id-b.repo_id).filter(row=>row.repo_id>after):[];
+      const favorites=values.slice(0,500);
+      return respond(200,{authConfigured:configured,user:configured?user:null,favorites,
+        nextCursor:values.length>500?favorites[favorites.length-1].repo_id:null});
+    }
+    if(method==='POST'||method==='PUT'||method==='DELETE') {
+      assert.equal(request.headers().origin,baseURL.origin,'writes carry the browser same-origin header');
+      if(!user)return respond(401,{error:'auth_required'});
+      const requestedUser=request.headers()['x-favorites-user'];
+      if(requestedUser&&requestedUser!==user.id)return respond(409,{error:'account_changed'});
+      if(failWrites)return respond(503,{error:'temporarily_unavailable'});
+    }
+    if(url.pathname==='/api/auth/logout')return respond(200,{ok:true},{'set-cookie':`${fixtureCookie}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`});
+    if(url.pathname==='/api/favorites/import') {
+      const body=request.postDataJSON(),favorites=body.favorites;
+      assert.ok(Array.isArray(favorites)&&favorites.length<=100,'imports use bounded batches');
+      assert.equal(typeof body.migration_id,'string');assert.ok(body.migration_id.length>=16);
+      assert.ok(Number.isInteger(body.batch_id)&&body.batch_id>=0);
+      const receipt=`${user.id}:${body.migration_id}:${body.batch_id}`;
+      if(!receipts.has(receipt)) {
+        for(const row of favorites)if(!rows.get(user.id).has(Number(row.repo_id)))rows.get(user.id).set(Number(row.repo_id),{repo_id:Number(row.repo_id),repository:row.repository});
+        receipts.set(receipt,true);
       }
-      const user=url.searchParams.get('grant_type')==='refresh_token'
-        ? [alice,bob].find(item=>body.refresh_token===`refresh-${item.id}`) : oauthUser;
-      return user?respond(200,session(user)):respond(400,{error:'invalid_grant'});
+      return respond(200,{ok:true});
     }
-    if(url.pathname==='/auth/v1/user')return getUser(request)?respond(200,getUser(request)):respond(401,{message:'Not authenticated'});
-    if(url.pathname==='/auth/v1/logout')return respond(204);
-    if(url.pathname!=='/rest/v1/favorites')return respond(404,{message:'Unexpected fixture endpoint'});
-    const user=getUser(request);
-    if(!user)return respond(401,{message:'Not authenticated'});
-    const ownRows=rows.get(user.id);
-    if(request.method()==='GET') {
-      const owner=url.searchParams.get('user_id');
-      if(owner&&owner!==`eq.${user.id}`)return respond(200,[]);
-      let values=[...ownRows.values()].sort((a,b)=>a.repo_id-b.repo_id);
-      const deleted=url.searchParams.get('deleted');
-      if(deleted==='eq.false')values=values.filter(row=>!row.deleted);
-      const range=request.headers().range;
-      const from=Number(url.searchParams.get('offset')||(range?range.split('-')[0]:0));
-      const count=Number(url.searchParams.get('limit')||(range?Number(range.split('-')[1])-from+1:500));
-      const page=values.slice(from,from+count);
-      return respond(200,page,{'content-range':`${from}-${Math.max(from,from+page.length-1)}/${values.length}`});
-    }
-    if(request.method()==='POST') {
-      if(failWrites)return respond(503,{message:'Temporary unavailable'});
-      const payload=request.postDataJSON(), updates=Array.isArray(payload)?payload:[payload];
-      assert.ok(updates.length<=100,'writes use bounded batches');
-      if(updates.some(row=>row.user_id!==user.id))return respond(403,{message:'Fixture owner policy'});
-      for(const row of updates)ownRows.set(Number(row.repo_id),{...row,repo_id:Number(row.repo_id),updated_at:new Date().toISOString()});
-      return respond(201,[]);
-    }
-    return respond(405,{message:'Unexpected fixture operation'});
+    const match=url.pathname.match(/^\/api\/favorites\/([1-9]\d*)$/);
+    if(!match)return respond(404,{error:'not_found'});
+    const id=Number(match[1]);
+    if(method==='PUT') {const body=request.postDataJSON();rows.get(user.id).set(id,{repo_id:id,repository:body.repository});return respond(200,{ok:true});}
+    if(method==='DELETE') {rows.get(user.id).delete(id);return respond(200,{ok:true});}
+    return respond(405,{error:'method_not_allowed'});
   }
-  return {rows,requests,intercept,setOAuthUser:user=>{oauthUser=user;},setFailWrites:value=>{failWrites=value;},setDisconnected:value=>{disconnected=value;}};
+  return {rows,receipts,requests,intercept,setLoginUser:user=>{loginUser=user;},setFailWrites:value=>{failWrites=value;},setDisconnected:value=>{disconnected=value;}};
 }
 
 (async()=>{
-  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
-  const errors=[];
-  const backend=backendFixture();
-  const contexts=[];
-  async function device({cloud=true,user=null,legacy=[],language='en',broken=false}={}) {
-    const context=await browser.newContext({viewport:{width:1366,height:900},colorScheme:'light',reducedMotion:'reduce'});
-    context.setDefaultTimeout(10000);contexts.push(context);
-    await context.route('**/src/auth-config.js*',route=>route.fulfill({contentType:'application/javascript',body:`window.FAVORITES_CONFIG=${JSON.stringify(cloud?{url:authOrigin,publishableKey:'sb_publishable_test'}:{url:'',publishableKey:''})};`}));
-    await context.route(`${authOrigin}/**`,backend.intercept);
-    await context.route('https://busuanzi.9420.ltd/api',route=>route.fulfill({json:{success:true,data:{page_pv:1,site_pv:1,site_uv:1}}}));
-    await context.addInitScript(({legacy,language,broken,userSession,authKey})=>{
-      if(sessionStorage.getItem('favorites_fixture_seeded'))return;
-      localStorage.setItem('st_lang',language);localStorage.setItem('st_theme','light');
-      localStorage.setItem('st_favorites',broken?'{invalid json':JSON.stringify(legacy));
-      if(userSession)localStorage.setItem(authKey,JSON.stringify(userSession));
-      sessionStorage.setItem('favorites_fixture_seeded','1');
-    },{legacy,language,broken,userSession:user?session(user):null,authKey});
-    const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
-    await page.goto(base);await ready(page);
-    return {context,page};
-  }
-  try {
-    // Anonymous users retain local favorites and are not advertised a working login without configuration.
-    const local=await device({cloud:false,legacy:[first.id]});
-    await openFavorites(local.page);
-    assert.deepEqual((await state(local.page)).ids,[first.id]);
-    assert.equal(await local.page.locator('#githubSignIn').count(),0);
-    assert.equal(await local.page.locator(`.fav-modal-section:not(.hidden) .saved-favorite[data-id="${first.id}"]`).count(),1);
-    await clickGridFavorite(local.page,second.id);
-    await local.page.reload();await ready(local.page);
-    assert.deepEqual(new Set((await state(local.page)).ids),new Set([first.id,second.id]),'local saves survive reload');
-    const bad=await device({cloud:false,broken:true});
-    assert.deepEqual((await state(bad.page)).ids,[],'corrupted legacy storage does not stop the page');
-    assert.equal(backend.requests.length,0,'unconfigured anonymous visitors make no auth or favorites requests');
+ const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
+ const contexts=[],errors=[],backend=backendFixture();
+ async function device({cloud=true,user=null,legacy=[],language='en',broken=false}={}) {
+  const context=await browser.newContext({viewport:{width:1366,height:900},colorScheme:'light',reducedMotion:'reduce'});
+  context.setDefaultTimeout(10000);contexts.push(context);
+  await context.route('**/src/auth-config.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.FAVORITES_CONFIG={apiBase:"/api"};'}));
+  await context.route(`${baseURL.origin}/api/**`,route=>backend.intercept(route,{configured:cloud}));
+  await context.route('https://busuanzi.9420.ltd/api',route=>route.fulfill({json:{success:true,data:{page_pv:1,site_pv:1,site_uv:1}}}));
+  await context.addInitScript(({legacy,language,broken})=>{
+   if(sessionStorage.getItem('favorites_fixture_seeded'))return;
+   localStorage.setItem('st_lang',language);localStorage.setItem('st_theme','light');
+   localStorage.setItem('st_favorites',broken?'{invalid json':JSON.stringify(legacy));
+   sessionStorage.setItem('favorites_fixture_seeded','1');
+  },{legacy,language,broken});
+  if(user)await context.addCookies([{name:fixtureCookie,value:user.id,url:baseURL.origin,httpOnly:true,sameSite:'Lax'}]);
+  const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
+  await page.goto(base);await ready(page);return {context,page};
+ }
+ try {
+  const local=await device({cloud:false,legacy:[first.id]});
+  await openFavorites(local.page);
+  assert.deepEqual((await state(local.page)).ids,[first.id]);
+  assert.equal(await local.page.locator('#githubSignIn').count(),0,'disabled backend does not advertise working sign-in');
+  assert.equal(await local.page.locator('script[src*="supabase"]').count(),0,'the page has no Supabase SDK dependency');
+  await clickGridFavorite(local.page,second.id);await local.page.reload();await ready(local.page);
+  assert.deepEqual(new Set((await state(local.page)).ids),new Set([first.id,second.id]),'anonymous local favorites survive reload');
+  const bad=await device({cloud:false,broken:true});
+  assert.deepEqual((await state(bad.page)).ids,[],'corrupt legacy JSON does not stop the page');
+  assert.equal(backend.requests.some(request=>request.path.startsWith('/api/auth/')),false);
 
-    // Exercise the actual SDK PKCE path against a HTTP fixture, rather than stubbing SDK methods.
-    const a=await device({legacy:[first.id]});
-    await openFavorites(a.page);
-    await a.page.locator('#githubSignIn').click();
-    await a.page.waitForURL(`${authOrigin}/auth/v1/authorize**`);
-    const authorization=new URL(a.page.url());
-    assert.equal(authorization.searchParams.get('provider'),'github');
-    assert.equal(authorization.searchParams.get('code_challenge_method')?.toLowerCase(),'s256');
-    assert.ok(authorization.searchParams.get('code_challenge'));
-    assert.equal(/(?:^|[ ,])(?:repo|public_repo|gist)(?:$|[ ,])/.test(authorization.searchParams.get('scopes')||''),false);
-    assert.equal(new URL(authorization.searchParams.get('redirect_to')).origin,new URL(base).origin);
-    await a.page.goto(new URL('?code=favorites-test-code#skills',base).href);await ready(a.page);
-    await waitState(a.page,s=>s.user?.id===alice.id&&s.status==='synced','GitHub session restores and first sync completes');
-    assert.equal(new URL(a.page.url()).searchParams.has('code'),false,'authorization code is removed after exchange');
-    assert.ok(backend.rows.get(alice.id).has(first.id),'first sign-in uploads existing anonymous favorites');
-    await openFavorites(a.page);
-    assert.match(await a.page.locator('#favoritesAccount').innerText(),/alice/);
+  const existingCloudId=987654320;
+  backend.rows.get(alice.id).set(existingCloudId,{repo_id:existingCloudId,repository:{id:existingCloudId,full_name:'cloud/existing-tool',url:'https://github.com/cloud/existing-tool',description:'Saved before this browser signed in',sources:['mcp'],stars:2}});
+  const a=await device({legacy:[first.id]});await openFavorites(a.page);
+  assert.equal(await a.page.locator('#githubSignIn').isEnabled(),true);
+  await a.page.locator('#githubSignIn').click();await ready(a.page);
+  await waitState(a.page,s=>s.user?.id===alice.id&&s.status==='synced'&&s.ids.includes(first.id),'first login imports existing local favorites');
+  assert.equal(backend.rows.get(alice.id).has(first.id),true);
+  assert.equal((await state(a.page)).ids.includes(existingCloudId),true,'first import preserves existing cloud favorites');
+  assert.equal(await a.page.evaluate(cookie=>document.cookie.includes(cookie),fixtureCookie),false,'the fixture session is HttpOnly');
+  assert.equal(await a.page.evaluate(()=>Object.keys(localStorage).some(key=>/supabase|auth.token|access.token|refresh.token/i.test(key))),false,'account client does not persist provider tokens');
+  const authRequest=backend.requests.find(request=>request.path==='/api/auth/github');
+  assert.ok(authRequest,'sign-in uses the same-origin Worker route');
+  assert.equal(new URL(authRequest.url).origin,baseURL.origin);
+  await clickGridFavorite(a.page,second.id);await waitState(a.page,s=>s.status==='synced'&&s.ids.includes(second.id),'online addition saves');
+  assert.equal(backend.rows.get(alice.id).has(second.id),true);
 
-    // A failed write keeps the local add/remove pair until an explicit retry succeeds.
-    backend.setFailWrites(true);
-    await clickGridFavorite(a.page,second.id);
-    await clickGridFavorite(a.page,first.id);
-    await waitState(a.page,s=>s.pendingCount>0&&['error','offline'].includes(s.status),'failed writes remain pending');
-    assert.deepEqual(new Set((await state(a.page)).ids),new Set([second.id]));
-    assert.equal(backend.rows.get(alice.id).get(first.id).deleted,false,'cloud is unchanged during failure');
-    backend.setFailWrites(false);
-    await openFavorites(a.page);await a.page.locator('#favoritesSync').click();
-    await waitState(a.page,s=>s.status==='synced'&&s.pendingCount===0,'retry drains pending operations');
-    assert.equal(backend.rows.get(alice.id).get(first.id).deleted,true,'offline removal has a cloud tombstone');
-    assert.equal(backend.rows.get(alice.id).get(second.id).deleted,false);
+  backend.setFailWrites(true);
+  await clickGridFavorite(a.page,third.id);await waitState(a.page,s=>s.error==='save_failed'&&!s.ids.includes(third.id),'failed addition rolls back');
+  assert.equal(backend.rows.get(alice.id).has(third.id),false);
+  await a.page.locator('#favoritesNotice').waitFor({state:'visible'});
+  assert.equal(await a.page.locator('#favoritesNotice').getAttribute('role'),'status');
+  assert.match(await a.page.locator('#favoritesNotice').innerText(),/not saved|previous state/i,'failed grid save is visibly explained');
+  assert.equal(await a.page.locator(`#grid .fav-btn[data-id="${third.id}"]`).evaluate(button=>button.classList.contains('saved')),false,'failed grid save restores the button');
+  await openFavorites(a.page);
+  await a.page.locator(`.fav-modal-section:not(.hidden) .fav-btn[data-id="${first.id}"]`).click();
+  await waitState(a.page,s=>s.error==='save_failed'&&s.ids.includes(first.id),'failed modal removal rolls back');
+  assert.equal(backend.rows.get(alice.id).has(first.id),true);
+  assert.match(await a.page.locator('#favoritesSyncStatus').innerText(),/not saved|previous state/i,'modal save failure is visibly explained');
+  backend.setFailWrites(false);
+  await clickGridFavorite(a.page,third.id);await waitState(a.page,s=>s.status==='synced'&&s.ids.includes(third.id),'retry can save an addition');
+  await clickGridFavorite(a.page,first.id);await waitState(a.page,s=>s.status==='synced'&&!s.ids.includes(first.id),'retry can remove a favorite');
+  assert.equal(backend.rows.get(alice.id).has(first.id),false,'removal deletes the fixture row');
 
-    backend.setDisconnected(true);
-    await a.context.setOffline(true);
-    await clickGridFavorite(a.page,third.id);
-    await waitState(a.page,s=>s.status==='offline'&&s.ids.includes(third.id)&&s.pendingCount>0,'browser offline save remains available locally');
-    assert.equal(backend.rows.get(alice.id).has(third.id),false);
-    backend.setDisconnected(false);
-    await a.context.setOffline(false);
-    await waitState(a.page,s=>s.status==='synced'&&s.pendingCount===0,'returning online automatically saves pending favorites');
-    assert.equal(backend.rows.get(alice.id).get(third.id).deleted,false);
+  backend.setDisconnected(true);
+  await clickGridFavorite(a.page,second.id);await waitState(a.page,s=>s.error&&s.ids.includes(second.id),'offline removal does not pretend to save');
+  assert.equal((await state(a.page)).pendingCount,0,'offline mutations are not queued');
+  backend.setDisconnected(false);await a.page.evaluate(()=>favoritesStore.sync());
+  await waitState(a.page,s=>s.status==='synced','explicit refresh recovers after offline failure');
+  assert.equal(backend.rows.get(alice.id).has(second.id),true,'offline failure left server favorite intact');
 
-    // A separate browser starts from the account data, including previously removed entries.
-    const outsideId=2147000000;
-    backend.rows.get(alice.id).set(outsideId,{user_id:alice.id,repo_id:outsideId,deleted:false,updated_at:new Date().toISOString(),repository:{id:outsideId,full_name:'cloud/archived-tool',url:'https://github.com/cloud/archived-tool',description:'<img src=x onerror="window.favoriteXSS=1">',sources:['skills'],stars:1}});
-    const b=await device({user:alice});
-    await waitState(b.page,s=>s.status==='synced'&&s.ids.includes(second.id)&&s.ids.includes(third.id)&&s.ids.includes(outsideId),'second device restores cloud favorites');
-    assert.equal((await state(b.page)).ids.includes(first.id),false,'deleted favorite does not return on another device');
-    await openFavorites(b.page);
-    const outside=b.page.locator(`.saved-favorite[data-id="${outsideId}"]`);
-    assert.equal(await outside.count(),1,'a repository absent from current boards is still visible');
-    assert.equal(await outside.locator('img').count(),0,'stored descriptions remain text');
-    assert.equal(await b.page.evaluate(()=>window.favoriteXSS),undefined);
-    assert.equal(await outside.locator('a').first().getAttribute('href'),'https://github.com/cloud/archived-tool');
-
-    for(const language of ['en','zh']) {
-      await closeFavorites(b.page);
-      const current=await b.page.evaluate(()=>app.lang);
-      if(current!==language)await b.page.locator('#langBtn').click();
-      for(const theme of ['light','dark']) {
-        if(await b.page.locator('html').getAttribute('data-theme')!==theme)await b.page.locator('#themeBtn').click();
-        for(const width of [320,390,1366]) {
-          await b.page.setViewportSize({width,height:850});await openFavorites(b.page);
-          const layout=await b.page.locator('#favModal').evaluate(node=>({width:innerWidth,scroll:node.scrollWidth,dialog:node.querySelector('.fav-modal').getBoundingClientRect().toJSON(),controls:[...node.querySelectorAll('#favoritesAccount button')].map(button=>button.getBoundingClientRect().toJSON())}));
-          assert.ok(layout.scroll<=layout.width+1,`favorites overlay fits ${language}/${theme}/${width}`);
-          assert.ok(layout.dialog.left>=0&&layout.dialog.right<=width+1);
-          assert.ok(layout.controls.every(rect=>rect.left>=0&&rect.right<=width+1));
-          for(let index=0;index<8;index++) {await b.page.keyboard.press('Tab');assert.equal(await b.page.evaluate(()=>document.querySelector('#favModal').contains(document.activeElement)),true,'favorites keeps keyboard focus inside');}
-          if(width===390&&writeArtifacts) {fs.mkdirSync('artifacts/favorites',{recursive:true});await b.page.locator('#favModal').evaluate(node=>{node.scrollTop=0;});await b.page.screenshot({path:`artifacts/favorites/account-${language}-${theme}.png`});}
-          await closeFavorites(b.page);
-          assert.equal(await b.page.locator('#favBtn').evaluate(node=>node===document.activeElement),true,'Escape restores the favorites entry focus');
-        }
-      }
+  const outsideId=987654321;
+  backend.rows.get(alice.id).set(outsideId,{repo_id:outsideId,repository:{id:outsideId,full_name:'cloud/archived-tool',url:'https://github.com/cloud/archived-tool',description:'<img src=x onerror="window.favoriteXSS=1">',sources:['skills'],stars:1}});
+  const b=await device({user:alice});
+  await waitState(b.page,s=>s.status==='synced'&&s.ids.includes(second.id)&&s.ids.includes(third.id)&&s.ids.includes(outsideId),'another browser restores saved favorites');
+  assert.equal((await state(b.page)).ids.includes(first.id),false,'a removed favorite does not return');
+  await openFavorites(b.page);const outside=b.page.locator(`.saved-favorite[data-id="${outsideId}"]`);
+  assert.equal(await outside.count(),1,'out-of-catalog favorite remains visible');
+  assert.equal(await outside.locator('img').count(),0);assert.equal(await b.page.evaluate(()=>window.favoriteXSS),undefined);
+  assert.equal(await outside.locator('a').first().getAttribute('href'),'https://github.com/cloud/archived-tool');
+  for(const language of ['en','zh']) {
+   await closeFavorites(b.page);if(await b.page.evaluate(()=>app.lang)!==language)await b.page.locator('#langBtn').click();
+   for(const theme of ['light','dark']) {
+    if(await b.page.locator('html').getAttribute('data-theme')!==theme)await b.page.locator('#themeBtn').click();
+    for(const width of [320,390,1366]) {
+     await b.page.setViewportSize({width,height:850});await openFavorites(b.page);
+     const layout=await b.page.locator('#favModal').evaluate(node=>({width:innerWidth,scroll:node.scrollWidth,dialog:node.querySelector('.fav-modal').getBoundingClientRect().toJSON(),controls:[...node.querySelectorAll('#favoritesAccount button')].map(button=>button.getBoundingClientRect().toJSON())}));
+     assert.ok(layout.scroll<=layout.width+1,`favorites fit ${language}/${theme}/${width}`);
+     assert.ok(layout.dialog.left>=0&&layout.dialog.right<=width+1);assert.ok(layout.controls.every(rect=>rect.left>=0&&rect.right<=width+1));
+     for(let i=0;i<8;i++){await b.page.keyboard.press('Tab');assert.equal(await b.page.evaluate(()=>document.querySelector('#favModal').contains(document.activeElement)),true);}
+     if(width===390&&writeArtifacts){fs.mkdirSync('artifacts/favorites',{recursive:true});await b.page.locator('#favModal').evaluate(node=>{node.scrollTop=0;});await b.page.screenshot({path:`artifacts/favorites/account-${language}-${theme}.png`});}
+     await closeFavorites(b.page);assert.equal(await b.page.locator('#favBtn').evaluate(node=>node===document.activeElement),true);
     }
-    await openFavorites(b.page);
-    await b.page.locator('#githubSignOut').click();
-    await waitState(b.page,s=>!s.user,'sign-out returns to local mode');
-    assert.deepEqual((await state(b.page)).ids,[],'sign-out does not expose account favorites as anonymous data');
-    assert.equal(backend.rows.get(alice.id).get(second.id).deleted,false,'sign-out keeps cloud favorites');
-    assert.equal(await b.page.locator('#githubSignIn').isVisible(),true);
-    backend.setOAuthUser(bob);
-    await b.page.locator('#githubSignIn').click();await b.page.waitForURL(`${authOrigin}/auth/v1/authorize**`);
-    await b.page.goto(new URL('?code=bob-test-code#skills',base).href);await ready(b.page);
-    await waitState(b.page,s=>s.user?.id===bob.id&&s.status==='synced','second account can sign in');
-    assert.deepEqual((await state(b.page)).ids,[],'the next account does not inherit the previous account cache');
-    assert.equal(backend.rows.get(bob.id).size,0,'switching account does not upload another user favorites');
-    assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({status:'passed',base,auth:'real Supabase SDK with mocked HTTP; live GitHub OAuth and database RLS require separate verification',checks:['local migration and malformed storage','GitHub PKCE redirect and code exchange','initial merge','failed add/remove retry','second-browser restoration','out-of-catalog favorites and escaped content','account isolation and logout retention','bilingual light/dark 320–1366px modal layout and keyboard focus']}));
-  } finally {await Promise.all(contexts.map(context=>context.close()));await browser.close();}
+   }
+  }
+  await openFavorites(b.page);await b.page.locator('#githubSignOut').click();await waitState(b.page,s=>!s.user,'sign-out returns to anonymous mode');
+  assert.deepEqual((await state(b.page)).ids,[],'account favorites are not exposed as anonymous data');
+  assert.equal(backend.rows.get(alice.id).has(second.id),true,'sign-out retains cloud favorites');
+  assert.equal(await b.page.locator('#githubSignIn').isVisible(),true);
+  backend.setLoginUser(bob);await b.page.locator('#githubSignIn').click();await ready(b.page);
+  await waitState(b.page,s=>s.user?.id===bob.id&&s.status==='synced','another account can sign in');
+  assert.deepEqual((await state(b.page)).ids,[],'new account does not inherit the previous account favorites');
+  assert.equal(backend.rows.get(bob.id).size,0,'account switching does not import another account cache');
+  const pageRows=backend.rows.get(bob.id);
+  for(let i=0;i<503;i++){const id=700000000+i;pageRows.set(id,{repo_id:id,repository:{id,full_name:`paged/tool-${i}`,sources:['skills']}});}
+  await b.page.evaluate(()=>favoritesStore.sync());
+  await waitState(b.page,s=>s.status==='synced'&&s.ids.length===503,'browser restores every cursor page');
+  const laterPage=backend.requests.find(request=>request.path==='/api/bootstrap'&&new URL(request.url).searchParams.has('after'));
+  assert.ok(laterPage,'large lists request the next bootstrap page');
+  assert.equal(laterPage.headers['x-favorites-user'],bob.id,'subsequent page remains bound to the first-page account');
+  assert.deepEqual(errors,[]);
+  console.log(JSON.stringify({status:'passed',base,auth:'same-origin HTTP fixture; production GitHub OAuth, Worker security and D1 require separate verification',checks:['local migration and corrupt storage','same-origin sign-in and HttpOnly fixture session','first import','online add/remove, visible failure and rollback','offline rollback without queue','second-browser and paginated restoration','out-of-catalog favorites and escaped content','account isolation and logout retention','bilingual light/dark 320–1366px layout and keyboard focus']}));
+ }finally{await Promise.all(contexts.map(context=>context.close()));await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
