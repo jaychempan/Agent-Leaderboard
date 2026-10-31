@@ -17,6 +17,8 @@ const I18N = {
     nav_frameworks: 'AI 框架',
     nav_favorites:  '收藏',
     nav_trending:   '趋势榜',
+    nav_related:    '推荐工具',
+    nav_menu:       '导航菜单',
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
     announcement_label: '功能更新',
@@ -84,6 +86,8 @@ const I18N = {
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
     nav_trending:   'Trending',
+    nav_related:    'More tools',
+    nav_menu:       'Navigation menu',
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
     announcement_label: 'Product update',
@@ -577,14 +581,42 @@ function closeFavModal() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFavModal(); });
 
 /* ── Nav render ─────────────────────────────────────────────────── */
+function closeMobileNav(restoreFocus = false) {
+  const nav = document.getElementById('navbar');
+  if (!nav) return;
+  nav.classList.remove('nav-open');
+  const button = nav.querySelector('.nav-hamburger');
+  button?.setAttribute('aria-expanded', 'false');
+  if (restoreFocus) button?.focus();
+}
+function closeRelatedTools(restoreFocus = false) {
+  const tools = document.querySelector('#navbar .related-tools');
+  if (!tools?.open) return;
+  tools.open = false;
+  if (restoreFocus) tools.querySelector('summary')?.focus();
+}
 function toggleMobileNav() {
   const nav = document.getElementById('navbar');
-  if (nav) nav.classList.toggle('nav-open');
+  if (!nav) return;
+  closeRelatedTools();
+  const open = nav.classList.toggle('nav-open');
+  nav.querySelector('.nav-hamburger')?.setAttribute('aria-expanded', String(open));
 }
 document.addEventListener('click', e => {
   const nav = document.getElementById('navbar');
-  if (nav && nav.classList.contains('nav-open') && !nav.contains(e.target))
-    nav.classList.remove('nav-open');
+  if (!nav) return;
+  if (!nav.contains(e.target)) closeMobileNav();
+  const tools = nav.querySelector('.related-tools');
+  if (!tools?.contains(e.target) || e.target.closest('.related-tools a')) closeRelatedTools();
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (document.querySelector('#navbar .related-tools[open]')) closeRelatedTools(true);
+  else if (document.getElementById('navbar')?.classList.contains('nav-open')) closeMobileNav(true);
+});
+matchMedia('(max-width: 1200px)').addEventListener('change', () => {
+  closeMobileNav();
+  closeRelatedTools();
 });
 
 let trendEntryIntroduced = false;
@@ -616,32 +648,33 @@ function renderNav() {
   const pg = app.pageConfig.page;
   const nav = document.getElementById('navbar');
   if (!nav) return;
+  closeMobileNav();
   nav.innerHTML = `
-    <a class="nav-brand" href="#" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
+    <a class="nav-brand" href="#" onclick="event.preventDefault();navigate('skills');closeMobileNav()">
       <img src="favicon.svg" alt="logo" />
       <span class="nav-brand-text">${app.lang === 'zh' ? 'Agent 排行榜' : 'Agent Leaderboard'}</span>
     </a>
-    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu" style="display:none">
+    <button type="button" class="nav-hamburger" onclick="toggleMobileNav()" aria-label="${t('nav_menu')}" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
-    <div class="nav-links">
-      <a class="nav-link${pg==='skills'?' active':''}" href="#skills" onclick="event.preventDefault();navigate('skills');document.getElementById('navbar').classList.remove('nav-open')">
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link${pg==='skills'?' active':''}" href="#skills" onclick="event.preventDefault();navigate('skills');closeMobileNav()">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-skills" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><path d="M13 2L4.5 13H10L9 22L19.5 11H14L13 2Z" fill="url(#ni-skills)"/></svg>
         <span class="full">${t('nav_skills')}</span>
       </a>
-      <a class="nav-link${pg==='research'?' active':''}" href="#research" onclick="event.preventDefault();navigate('research');document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='research'?' active':''}" href="#research" onclick="event.preventDefault();navigate('research');closeMobileNav()">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-research" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs><circle cx="10" cy="10" r="6.5" stroke="url(#ni-research)" stroke-width="2.2"/><line x1="15.2" y1="15.2" x2="21" y2="21" stroke="url(#ni-research)" stroke-width="2.5" stroke-linecap="round"/><circle cx="8.2" cy="10" r="1.4" fill="#a78bfa"/><circle cx="11.8" cy="10" r="1.4" fill="#6366f1"/><path d="M8.2 10 L10 7.8 L11.8 10" fill="none" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/></svg>
         <span class="full">${t('nav_research')}</span>
       </a>
-      <a class="nav-link${pg==='mcp'?' active':''}" href="#mcp" onclick="event.preventDefault();navigate('mcp');document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='mcp'?' active':''}" href="#mcp" onclick="event.preventDefault();navigate('mcp');closeMobileNav()">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-mcp" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient></defs><rect x="9" y="9" width="6" height="6" rx="1.5" fill="url(#ni-mcp)"/><circle cx="3.5" cy="12" r="1.8" fill="#22d3ee"/><circle cx="20.5" cy="12" r="1.8" fill="#3b82f6"/><circle cx="12" cy="3.5" r="1.8" fill="#22d3ee"/><circle cx="12" cy="20.5" r="1.8" fill="#3b82f6"/><line x1="9" y1="12" x2="5.3" y2="12" stroke="#22d3ee" stroke-width="1.4"/><line x1="15" y1="12" x2="18.7" y2="12" stroke="#3b82f6" stroke-width="1.4"/><line x1="12" y1="9" x2="12" y2="5.3" stroke="#22d3ee" stroke-width="1.4"/><line x1="12" y1="15" x2="12" y2="18.7" stroke="#3b82f6" stroke-width="1.4"/></svg>
         <span class="full">${t('nav_mcp')}</span>
       </a>
-      <a class="nav-link${pg==='prompts'?' active':''}" href="#prompts" onclick="event.preventDefault();navigate('prompts');document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='prompts'?' active':''}" href="#prompts" onclick="event.preventDefault();navigate('prompts');closeMobileNav()">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-prompts" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs><rect x="5" y="4" width="14" height="16" rx="2" fill="url(#ni-prompts)"/><line x1="8.5" y1="9" x2="15.5" y2="9" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8.5" y1="16" x2="13" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span class="full">${t('nav_prompts')}</span>
       </a>
-      <a class="nav-link${pg==='frameworks'?' active':''}" href="#frameworks" onclick="event.preventDefault();navigate('frameworks');document.getElementById('navbar').classList.remove('nav-open')">
+      <a class="nav-link${pg==='frameworks'?' active':''}" href="#frameworks" onclick="event.preventDefault();navigate('frameworks');closeMobileNav()">
         <svg class="nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ni-frameworks" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect x="8.5" y="3" width="7" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.6"/><rect x="5" y="9" width="14" height="4" rx="1" fill="url(#ni-frameworks)" opacity="0.8"/><rect x="2.5" y="15" width="19" height="4" rx="1.5" fill="url(#ni-frameworks)"/></svg>
         <span class="full">${t('nav_frameworks')}</span>
       </a>
@@ -650,10 +683,17 @@ function renderNav() {
         <span>${t('nav_trending')}</span>
       </button>
     </div>
-<div class="related-tools" aria-label="Related tools">
+<details class="related-tools">
+<summary aria-label="${t('nav_related')}" title="${t('nav_related')}" onclick="closeMobileNav()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+  <span class="related-tools-label">${t('nav_related')}</span>
+  <svg class="related-tools-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+</summary>
+<div class="related-tools-menu">
 <a href="https://jianchengpan.space/ccf-ddl-tracker/" target="_blank" rel="noopener noreferrer" title="CCF DDL Tracker" aria-label="CCF DDL Tracker"><img src="extension/assets/ccf-ddl-tracker.png" alt="" width="18" height="18"><span>CCF DDL Tracker</span></a>
 <a href="https://jianchengpan.space/citation-tracker/" target="_blank" rel="noopener noreferrer" title="Citation Tracker" aria-label="Citation Tracker"><img src="extension/assets/citation-tracker.png" alt="" width="18" height="18"><span>Citation Tracker</span></a>
 </div>
+</details>
     <div class="nav-actions">
       <a class="nav-btn" href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer" title="GitHub">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">

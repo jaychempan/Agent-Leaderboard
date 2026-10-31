@@ -140,7 +140,7 @@
     render();
     updateDock();
     $('dock').hidden = true;
-    document.getElementById('navbar')?.classList.remove('nav-open');
+    closeMobileNav();
     previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     minimized = false;
