@@ -1397,8 +1397,39 @@ button, select, input { font: inherit; }
 .fav-modal-section.hidden { display: none; }
 .fav-modal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 14px;
+}
+.favorite-total { margin-left:5px; color:var(--muted); font-size:12px; font-weight:400; }
+.favorite-account { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px 24px; margin-bottom:22px; padding:16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
+.favorite-account-copy { flex:1 1 260px; min-width:0; }
+.favorite-account-copy strong { display:flex; align-items:center; gap:8px; color:var(--text); font-size:14px; overflow-wrap:anywhere; }
+.favorite-account-copy strong svg { flex-shrink:0; }
+.favorite-account-copy p { margin-top:7px; color:var(--muted); font-size:12px; line-height:1.65; }
+.favorite-account-copy .favorite-account-note { font-size:11px; }
+.favorite-account-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.favorite-account .nav-extension { margin:0; }
+.favorite-account button { min-height:36px; }
+.favorite-account button:disabled { opacity:.55; cursor:wait; }
+.favorite-account-error { flex:1 0 100%; color:var(--red); font-size:12px; line-height:1.6; }
+.favorite-account [data-state="synced"] { color:var(--green); }
+.favorite-account [data-state="offline"] { color:var(--gold); }
+.favorite-account [data-state="error"] { color:var(--red); }
+.favorite-account button:focus-visible, .fav-modal button:focus-visible, .saved-favorite a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.saved-favorite { min-width:0; }
+.favorite-origin { color:var(--muted); font-size:11px; }
+.saved-favorite-name { color:var(--accent); font-size:15px; font-weight:600; overflow-wrap:anywhere; }
+a.saved-favorite-name:hover, .saved-favorite-meta a:hover { text-decoration:underline; }
+.saved-favorite .card-desc { white-space:normal; overflow-wrap:anywhere; }
+.saved-favorite-meta { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:14px; color:var(--muted); font-size:11px; }
+.saved-favorite-meta a { color:var(--accent); }
+@media(max-width:600px){
+ .fav-modal-overlay { padding:16px 10px; }
+ .fav-modal { padding:16px; }
+ .favorite-account { padding:13px; gap:12px; }
+ .favorite-account-copy { flex-basis:100%; }
+ .favorite-account .nav-extension { width:100%; }
+ .favorite-account-actions { width:100%; }
 }
 
 /* The extension is a primary action, separate from leaderboard categories. */

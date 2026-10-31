@@ -16,6 +16,27 @@ const I18N = {
     nav_prompts:    'Prompt 库',
     nav_frameworks: 'AI 框架',
     nav_favorites:  '收藏',
+    fav_account_title: '收藏随账号保存',
+    fav_account_description: '首次登录会合并现有本地收藏，之后可在其他设备恢复。',
+    fav_sign_in: '使用 GitHub 登录',
+    fav_sign_out: '退出登录',
+    fav_sync: '立即同步',
+    fav_local: '收藏保存在此浏览器',
+    fav_not_configured: 'GitHub 云同步暂未启用，现有收藏仍会保存在此浏览器。',
+    fav_syncing: '正在同步收藏…',
+    fav_synced: '收藏已保存到云端',
+    fav_offline: '已在本机保存，联网后继续同步',
+    fav_sync_failed: '暂时无法同步，更改已保留。请稍后重试。',
+    fav_auth_failed: 'GitHub 登录未完成，请重试。',
+    fav_storage_failed: '浏览器暂时无法写入数据。请保持此页打开，恢复存储权限或等待云同步成功后再关闭。',
+    fav_pending: '项更改待同步',
+    fav_logout_note: '退出后云端收藏仍会保留；未同步的更改会留在此设备。',
+    fav_close: '关闭收藏',
+    fav_remove: '取消收藏',
+    fav_other: '其他收藏',
+    fav_unavailable: '仓库资料暂不可用，收藏记录仍已保留。',
+    fav_repository: '仓库',
+    fav_open_repository: '打开仓库',
     nav_trending:   '趋势榜',
     nav_related:    '推荐工具',
     nav_menu:       '导航菜单',
@@ -85,6 +106,27 @@ const I18N = {
     nav_prompts:    'Prompt Library',
     nav_frameworks: 'AI Frameworks',
     nav_favorites:  'Favorites',
+    fav_account_title: 'Keep your favorites across devices',
+    fav_account_description: 'Your first sign-in merges existing local favorites. Sign in on other devices to restore them.',
+    fav_sign_in: 'Sign in with GitHub',
+    fav_sign_out: 'Sign out',
+    fav_sync: 'Sync now',
+    fav_local: 'Favorites saved in this browser',
+    fav_not_configured: 'GitHub cloud sync is not enabled yet. Your existing favorites stay saved in this browser.',
+    fav_syncing: 'Syncing favorites…',
+    fav_synced: 'Favorites saved to the cloud',
+    fav_offline: 'Saved on this device. Sync will resume when you’re online.',
+    fav_sync_failed: 'Sync is temporarily unavailable. Your changes are kept; try again later.',
+    fav_auth_failed: 'GitHub sign-in did not finish. Please try again.',
+    fav_storage_failed: 'Your browser cannot write data right now. Keep this page open until storage works again or cloud sync succeeds.',
+    fav_pending: 'changes waiting to sync',
+    fav_logout_note: 'Cloud favorites stay saved after sign-out. Pending changes remain on this device.',
+    fav_close: 'Close favorites',
+    fav_remove: 'Remove favorite',
+    fav_other: 'Other favorites',
+    fav_unavailable: 'Repository details are unavailable. Your favorite is still kept.',
+    fav_repository: 'Repository',
+    fav_open_repository: 'Open repository',
     nav_trending:   'Trending',
     nav_related:    'More tools',
     nav_menu:       'Navigation menu',
@@ -210,7 +252,8 @@ const app = {
   selectedUCs:  new Set(),
   viewMode:     localStorage.getItem('st_view') || 'grid',
   favOnly:      false,
-  favorites:    new Set(JSON.parse(localStorage.getItem('st_favorites') || '[]')),
+  favorites:    new Set(),
+  favoriteRecords: {},
   currentPage:  1,
   pageSize:     24,
   pageConfig:   null,
@@ -224,6 +267,34 @@ const ROUTES = {
   prompts:    { page: 'prompts',    dataKey: 'PROMPTS_DATA',    noDataHint: 'Run python3 fetch_prompts.py' },
   frameworks: { page: 'frameworks', dataKey: 'FRAMEWORKS_DATA', noDataHint: 'Run python3 fetch_frameworks.py' },
 };
+
+let favoriteCatalog;
+function getFavoriteCatalog() {
+  if (!favoriteCatalog) {
+    const byId = new Map();
+    for (const [source, route] of Object.entries(ROUTES)) {
+      for (const repo of window[route.dataKey]?.repos || []) {
+        const previous = byId.get(repo.id);
+        const sources = [...new Set([...(previous?.sources || []), source])];
+        const latest = previous && Date.parse(previous.updated_at) > Date.parse(repo.updated_at) ? previous : repo;
+        byId.set(repo.id, {...latest, sources});
+      }
+    }
+    favoriteCatalog = [...byId.values()];
+  }
+  return favoriteCatalog;
+}
+
+const favoritesStore = FavoritesSync.createFavoritesStore({
+  storage: localStorage,
+  config: window.FAVORITES_CONFIG,
+  createClient: window.supabase?.createClient,
+  catalog: getFavoriteCatalog,
+  onChange: applyFavoriteSnapshot,
+  location: window.location,
+  eventTarget: window,
+});
+applyFavoriteSnapshot(favoritesStore.getSnapshot());
 
 /* ── Official brand links (Skills page) ─────────────────────────── */
 const BRAND_LINKS = {
@@ -473,17 +544,35 @@ function applyLangBtn() {
 }
 
 /* ── Favorites ──────────────────────────────────────────────────── */
-function toggleFav(id) {
-  const saved = app.favorites.has(id);
-  if (saved) app.favorites.delete(id);
-  else       app.favorites.add(id);
-  localStorage.setItem('st_favorites', JSON.stringify([...app.favorites]));
-  document.querySelectorAll(`.fav-btn[data-id="${id}"]`).forEach(b => {
-    b.classList.toggle('saved', !saved);
-    b.textContent = saved ? '♡' : '❤';
-  });
+let favoriteAccountActionError = '';
+let favoriteModalReturnFocus;
+let favoriteModalPreviousOverflow = '';
+function escapeFavoriteHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+function applyFavoriteSnapshot(snapshot) {
+  const before = [...app.favorites].sort((a, b) => a - b).join(',');
+  const recordsChanged = Object.keys(snapshot.records).some(id => JSON.stringify(snapshot.records[id]) !== JSON.stringify(app.favoriteRecords[id]));
+  app.favorites = new Set(snapshot.ids);
+  app.favoriteRecords = snapshot.records;
+  if (!app.data) return;
   updateFavBtn();
-  if (app.favOnly) applyFilters();
+  const changed = before !== [...app.favorites].sort((a, b) => a - b).join(',');
+  if (changed) applyFilters();
+  document.querySelectorAll('.fav-btn[data-id]').forEach(button => {
+    const saved = app.favorites.has(Number(button.dataset.id));
+    button.classList.toggle('saved', saved);
+    button.textContent = saved ? '❤' : '♡';
+  });
+  const modal = document.getElementById('favModal');
+  if (modal?.style.display === 'flex') {
+    if (changed || recordsChanged) renderFavModal();
+    else renderFavoritesAccount();
+  }
+}
+function toggleFav(id) {
+  const repo = getFavoriteCatalog().find(item => item.id === Number(id)) || app.favoriteRecords[id] || Number(id);
+  favoritesStore.toggle(repo, app.pageConfig?.page);
 }
 function toggleFavOnly() {
   app.favOnly = !app.favOnly;
@@ -493,13 +582,13 @@ function toggleFavOnly() {
   applyFilters();
 }
 function updateFavBtn() {
-  const cnt = document.querySelector('.fav-count');
-  if (!cnt) return;
-  cnt.textContent = app.favorites.size;
-  cnt.classList.toggle('visible', app.favorites.size > 0);
+  const count = document.querySelector('.fav-count');
+  if (!count) return;
+  count.textContent = app.favorites.size;
+  count.classList.toggle('visible', app.favorites.size > 0);
 }
 
-/* ── Favorites modal ────────────────────────────────────────────── */
+/* ── Favorites modal and GitHub account ─────────────────────────── */
 const FAV_SECTION_LABELS = {
   skills:     { en: 'Skills',        zh: 'Skills 技能' },
   mcp:        { en: 'MCP Servers',   zh: 'MCP 服务器' },
@@ -507,16 +596,121 @@ const FAV_SECTION_LABELS = {
   prompts:    { en: 'Prompt Library',zh: 'Prompt 库' },
   frameworks: { en: 'AI Frameworks', zh: 'AI 框架' },
 };
+const FAVORITE_GITHUB_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.84c.85 0 1.71.11 2.51.33 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>';
 
+function renderFavoritesAccount() {
+  const container = document.getElementById('favoritesAccount');
+  if (!container) return;
+  const snapshot = favoritesStore.getSnapshot();
+  const busy = snapshot.status === 'initializing' || snapshot.status === 'syncing';
+  const storageError = snapshot.error === 'storage_unavailable';
+  const authError = snapshot.error === 'auth_failed';
+  let status = t('fav_local');
+  if (snapshot.user) {
+    status = t(busy ? 'fav_syncing' : snapshot.status === 'synced' ? 'fav_synced' : snapshot.status === 'offline' ? 'fav_offline' : 'fav_sync_failed');
+  }
+  if (storageError) status = t('fav_storage_failed');
+  const pending = snapshot.pendingCount ? ` · ${snapshot.pendingCount} ${t('fav_pending')}` : '';
+  const activeId = document.activeElement?.id;
+  const hadFocus = container.contains(document.activeElement);
+  container.innerHTML = snapshot.user ? `
+    <div class="favorite-account-copy">
+      <strong>${FAVORITE_GITHUB_ICON}<span>${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}</span></strong>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${escapeFavoriteHTML(status + pending)}</p>
+      <p class="favorite-account-note">${t('fav_logout_note')}</p>
+    </div>
+    <div class="favorite-account-actions">
+      <button type="button" class="nav-btn" id="favoritesSync" onclick="syncFavoritesNow()" ${busy ? 'disabled' : ''}>${t('fav_sync')}</button>
+      <button type="button" class="nav-btn" id="githubSignOut" onclick="signOutGithub()">${t('fav_sign_out')}</button>
+    </div>` : `
+    <div class="favorite-account-copy">
+      <strong>${FAVORITE_GITHUB_ICON}<span>${t(snapshot.configured ? 'fav_account_title' : 'fav_local')}</span></strong>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
+    </div>
+    ${snapshot.configured ? `<button type="button" class="nav-extension" id="githubSignIn" onclick="signInGithub()" ${busy ? 'disabled' : ''}>${t('fav_sign_in')}</button>` : ''}`;
+  if (favoriteAccountActionError || storageError || authError) {
+    const message = document.createElement('p');
+    message.className = 'favorite-account-error';
+    message.setAttribute('role', 'alert');
+    message.textContent = t(favoriteAccountActionError || (storageError ? 'fav_storage_failed' : 'fav_auth_failed'));
+    container.appendChild(message);
+  }
+  if (hadFocus) (document.getElementById(activeId) || container.querySelector('button:not(:disabled)') || document.querySelector('#favModal .fav-modal-close'))?.focus({preventScroll: true});
+}
+async function signInGithub() {
+  favoriteAccountActionError = '';
+  try { await favoritesStore.signIn(); }
+  catch { favoriteAccountActionError = 'fav_auth_failed'; }
+  renderFavoritesAccount();
+}
+async function signOutGithub() {
+  favoriteAccountActionError = '';
+  try { await favoritesStore.signOut(); }
+  catch { favoriteAccountActionError = 'fav_sync_failed'; }
+  renderFavoritesAccount();
+}
+async function syncFavoritesNow() {
+  favoriteAccountActionError = '';
+  try { await favoritesStore.sync(); }
+  catch { favoriteAccountActionError = 'fav_sync_failed'; }
+  renderFavoritesAccount();
+}
+
+function savedFavoriteHTML(record, section) {
+  const id = Number(record.id);
+  const name = record.full_name || `${t('fav_repository')} #${id}`;
+  const safeUrl = /^https:\/\/github\.com\/[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+\/?$/.test(record.url || '') ? record.url : '';
+  const sources = (record.sources || []).filter(source => Object.hasOwn(FAV_SECTION_LABELS, source)).map(source => FAV_SECTION_LABELS[source][app.lang]);
+  return `<article class="card saved-favorite" data-id="${id}">
+    <div class="card-header">
+      <span class="favorite-origin">${escapeFavoriteHTML(sources.join(' · '))}</span>
+      <button type="button" class="fav-btn saved" id="favorite-remove-${section}-${id}" data-id="${id}" aria-pressed="true" aria-label="${escapeFavoriteHTML(t('fav_remove') + ' ' + name)}" onclick="toggleFav(${id})">❤</button>
+    </div>
+    ${safeUrl ? `<a class="saved-favorite-name" href="${escapeFavoriteHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">${escapeFavoriteHTML(name)}</a>` : `<span class="saved-favorite-name">${escapeFavoriteHTML(name)}</span>`}
+    <p class="card-desc">${escapeFavoriteHTML(safeUrl ? record.description || t('no_desc') : t('fav_unavailable'))}</p>
+    <div class="saved-favorite-meta">
+      ${Number.isFinite(record.stars) ? `<span>★ ${fmtNum(record.stars)}</span>` : ''}
+      ${safeUrl ? `<a href="${escapeFavoriteHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">${t('fav_open_repository')}</a>` : ''}
+    </div>
+  </article>`;
+}
+function renderFavModal() {
+  const modal = document.getElementById('favModal');
+  if (!modal) return;
+  const selectedPage = modal.querySelector('.fav-modal-tab.active')?.dataset.page;
+  const activeId = document.activeElement?.id;
+  const hadFocus = modal.contains(document.activeElement);
+  const scrollTop = modal.scrollTop;
+  const catalog = new Map(getFavoriteCatalog().map(repo => [repo.id, repo]));
+  const records = [...app.favorites].map(id => ({...(app.favoriteRecords[id] || catalog.get(id) || {}), id}));
+  const sections = Object.entries(FAV_SECTION_LABELS).map(([page, labels]) => ({
+    page, label: labels[app.lang], repos: records.filter(repo => repo.sources?.includes(page))
+  }));
+  sections.push({page: 'other', label: t('fav_other'), repos: records.filter(repo => !repo.sources?.some(source => Object.hasOwn(FAV_SECTION_LABELS, source)))});
+  const nonempty = sections.filter(section => section.repos.length);
+  const selected = nonempty.some(section => section.page === selectedPage) ? selectedPage : nonempty[0]?.page;
+  for (const section of nonempty) section.repos.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+  modal.innerHTML = `
+    <div class="fav-modal" role="dialog" aria-modal="true" aria-labelledby="favModalTitle" onclick="event.stopPropagation()">
+      <div class="fav-modal-header">
+        <span id="favModalTitle">❤ ${t('nav_favorites')} <span class="favorite-total">${app.favorites.size}</span></span>
+        <button type="button" class="fav-modal-close" aria-label="${t('fav_close')}" onclick="closeFavModal()">✕</button>
+      </div>
+      <div class="favorite-account" id="favoritesAccount"></div>
+      ${nonempty.length ? `
+        <div class="fav-modal-tabs">${nonempty.map(section => `<button type="button" class="fav-modal-tab${section.page === selected ? ' active' : ''}" onclick="switchFavTab('${section.page}')" data-page="${section.page}">${section.label} <span class="cnt">${section.repos.length}</span></button>`).join('')}</div>
+        ${nonempty.map(section => `<div class="fav-modal-section${section.page === selected ? '' : ' hidden'}" data-page="${section.page}"><div class="fav-modal-grid">${section.repos.map(repo => savedFavoriteHTML(repo, section.page)).join('')}</div></div>`).join('')}
+      ` : `<div class="empty-state"><span class="icon">🤍</span><strong>${t('no_fav')}</strong><p>${t('no_fav_sub')}</p></div>`}
+    </div>`;
+  renderFavoritesAccount();
+  modal.scrollTop = scrollTop;
+  if (activeId?.startsWith('favorite-remove-')) {
+    (document.getElementById(activeId) || modal.querySelector('.fav-modal-section:not(.hidden) .fav-btn') || modal.querySelector('.fav-modal-close'))?.focus({preventScroll: true});
+  } else if (hadFocus) (document.getElementById(activeId) || modal.querySelector('.fav-modal-close'))?.focus({preventScroll: true});
+}
 function openFavModal() {
-  // Group favorites by source page
-  const sections = Object.entries(ROUTES).map(([page, cfg]) => {
-    const repos = (window[cfg.dataKey]?.repos || [])
-      .filter(r => app.favorites.has(r.id))
-      .sort((a, b) => b.stars - a.stars);
-    return { page, label: FAV_SECTION_LABELS[page][app.lang] || page, repos };
-  }).filter(s => s.repos.length > 0);
-
+  closeMobileNav();
+  closeRelatedTools();
   let modal = document.getElementById('favModal');
   if (!modal) {
     modal = document.createElement('div');
@@ -525,60 +719,37 @@ function openFavModal() {
     modal.addEventListener('click', closeFavModal);
     document.body.appendChild(modal);
   }
-
-  if (!sections.length) {
-    modal.innerHTML = `
-      <div class="fav-modal" onclick="event.stopPropagation()">
-        <div class="fav-modal-header">
-          <span>❤ ${t('nav_favorites')}</span>
-          <button class="fav-modal-close" onclick="closeFavModal()">✕</button>
-        </div>
-        <div class="empty-state"><span class="icon">🤍</span><strong>${t('no_fav')}</strong><p>${t('no_fav_sub')}</p></div>
-      </div>`;
-  } else {
-    const tabsHtml = sections.map((s, i) => `
-      <button class="fav-modal-tab${i === 0 ? ' active' : ''}" onclick="switchFavTab('${s.page}')" data-page="${s.page}">
-        ${s.label} <span class="cnt">${s.repos.length}</span>
-      </button>`).join('');
-
-    const sectionsHtml = sections.map((s, i) => {
-      const allForPage = window[ROUTES[s.page]?.dataKey]?.repos || [];
-      const rankMap = new Map(allForPage.map((r, idx) => [r.id, idx + 1]));
-      return `
-      <div class="fav-modal-section${i === 0 ? '' : ' hidden'}" data-page="${s.page}">
-        <div class="fav-modal-grid">${s.repos.map(r => cardHTML(r, rankMap.get(r.id) ?? 999)).join('')}</div>
-      </div>`;
-    }).join('');
-
-    modal.innerHTML = `
-      <div class="fav-modal" onclick="event.stopPropagation()">
-        <div class="fav-modal-header">
-          <span>❤ ${t('nav_favorites')}</span>
-          <button class="fav-modal-close" onclick="closeFavModal()">✕</button>
-        </div>
-        <div class="fav-modal-tabs">${tabsHtml}</div>
-        ${sectionsHtml}
-      </div>`;
+  if (modal.style.display !== 'flex') {
+    favoriteModalReturnFocus = document.activeElement;
+    favoriteModalPreviousOverflow = document.body.style.overflow;
   }
-
+  renderFavModal();
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  modal.querySelector('.fav-modal-close').focus({preventScroll: true});
 }
-
 function switchFavTab(page) {
-  document.querySelectorAll('#favModal .fav-modal-tab').forEach(b =>
-    b.classList.toggle('active', b.dataset.page === page));
-  document.querySelectorAll('#favModal .fav-modal-section').forEach(s =>
-    s.classList.toggle('hidden', s.dataset.page !== page));
+  document.querySelectorAll('#favModal .fav-modal-tab').forEach(button => button.classList.toggle('active', button.dataset.page === page));
+  document.querySelectorAll('#favModal .fav-modal-section').forEach(section => section.classList.toggle('hidden', section.dataset.page !== page));
 }
-
 function closeFavModal() {
   const modal = document.getElementById('favModal');
-  if (modal) modal.style.display = 'none';
-  document.body.style.overflow = '';
+  if (!modal || modal.style.display !== 'flex') return;
+  modal.style.display = 'none';
+  document.body.style.overflow = favoriteModalPreviousOverflow;
+  if (favoriteModalReturnFocus?.isConnected) favoriteModalReturnFocus.focus({preventScroll: true});
 }
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFavModal(); });
+document.addEventListener('keydown', event => {
+  const modal = document.getElementById('favModal');
+  if (modal?.style.display !== 'flex') return;
+  if (event.key === 'Escape') { event.preventDefault(); closeFavModal(); }
+  if (event.key !== 'Tab') return;
+  const focusable = [...modal.querySelectorAll('button:not(:disabled), a[href], [tabindex="0"]')].filter(node => node.getClientRects().length);
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (!modal.contains(document.activeElement)) { event.preventDefault(); first?.focus(); }
+  else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+});
 
 /* ── Nav render ─────────────────────────────────────────────────── */
 function closeMobileNav(restoreFocus = false) {
@@ -1381,6 +1552,7 @@ function renderAll() {
   applyLangBtn();
   updatePageTitle();
   renderVisitCount();
+  if (document.getElementById('favModal')?.style.display === 'flex') renderFavModal();
 }
 
 /* ── Filter Bar (i18n-aware, rendered from JS) ──────────────────── */
@@ -1424,7 +1596,13 @@ function renderFilterBar() {
 }
 
 /* ── Boot ───────────────────────────────────────────────────────── */
-window.addEventListener('DOMContentLoaded', router);
+window.addEventListener('DOMContentLoaded', () => {
+  router();
+  favoritesStore.init().catch(() => {
+    favoriteAccountActionError = 'fav_auth_failed';
+    renderFavoritesAccount();
+  });
+});
 window.addEventListener('hashchange', router);
 window.addEventListener('resize', () => { syncTabsScrollBtn(); syncUCScrollBtn(); });
 

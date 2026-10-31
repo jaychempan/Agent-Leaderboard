@@ -153,6 +153,7 @@
     panelScroll = $('body').scrollTop;
     minimized = collapse;
     closing = true;
+    document.body.style.overflow = previousOverflow;
     panel.close();
   }
   panel.addEventListener('close', () => {

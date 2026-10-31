@@ -42,9 +42,15 @@ These are observed changes in the catalog, not real-time GitHub star events: inc
 | Search and filters | Repository name/description, category, language, minimum stars and last-update time range |
 | Use cases | Multiple selected use-case tags must all match |
 | Grid and list | Switch views; display 24, 48 or 96 repositories per page |
-| Favorites | Saved in the browser's localStorage |
+| Favorites | Local browser storage; optional GitHub sign-in and private cloud sync through a configured Supabase project |
 | Language and theme | Chinese/English; follows system light/dark theme until manually changed |
 | Brand identification | Reuses brand and category icons across the homepage and trend panel |
+
+### GitHub sign-in and cloud favorites
+
+When a Supabase project is configured, website visitors can sign in with GitHub to keep favorites across devices. Existing local favorites are merged on first sign-in; account-specific caches and queued changes support offline use. Removing a favorite synchronizes a deletion marker, while signing out or clearing browser data keeps already-synced cloud records. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
+
+The website remains usable without an account or cloud configuration. Enabling real sign-in requires a Supabase project, a GitHub OAuth App, the database migration and a public frontend configuration; code alone does not activate the service. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Only a Supabase publishable key or legacy anon key belongs in frontend configuration; never expose a secret/service-role key or GitHub Client Secret.
 
 ## Chrome search extension
 
@@ -52,7 +58,7 @@ Install from the **[Chrome Web Store](https://chromewebstore.google.com/detail/a
 
 Search all five boards in a side panel with categories, use cases, platform, language, stars and time filters. Save favorites, open READMEs, and copy an AI installation prompt to paste into your coding assistant. The extension generates the prompt; it does not install repositories automatically.
 
-It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Extension favorites are stored separately from website favorites.
+It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Extension favorites stay local to the current Chrome profile, separate from website favorites and its optional cloud sync.
 
 For development, load **`chrome/`** through `chrome://extensions` → **Developer mode** → **Load unpacked**. Refresh the bundled catalog and build `dist/Chrome.zip` with:
 

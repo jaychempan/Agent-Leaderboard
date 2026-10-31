@@ -34,8 +34,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Verify homepage and visit counter
-        run: node --test tests/visit-counter.test.cjs
+      - name: Verify homepage, visit counter and favorites sync
+        run: node --test tests/visit-counter.test.cjs tests/favorites.test.cjs
 
       - name: Build Chrome extension download
         run: python3 scripts/chrome/build.py

@@ -42,9 +42,15 @@
 | 搜索与筛选 | 按仓库名称/描述、分类、编程语言、最低 Stars 和最近更新时间筛选 |
 | 用途多选 | 同时满足所有已选用途标签 |
 | 网格与列表 | 自由切换视图，每页显示 24、48 或 96 个仓库 |
-| 收藏夹 | 收藏保存在当前浏览器的 localStorage 中 |
+| 收藏夹 | 浏览器本地保存；配置 Supabase 后可选用 GitHub 登录与私有云同步 |
 | 语言与主题 | 中文/English；默认跟随系统深浅色，手动切换后记住选择 |
 | 品牌辨认 | 主页与趋势浮窗复用品牌和分类图标 |
+
+### GitHub 登录与云收藏
+
+配置 Supabase 项目后，网站访客可以通过 GitHub 登录，让收藏跨设备保留。首次登录合并已有本地收藏；用户专属缓存与待同步操作支持断网后继续使用。取消收藏会同步删除标记，退出登录或清除浏览器数据保留已同步的云端记录，不会自动修改 GitHub Stars。Chrome 插件继续使用本地收藏，不接入网站登录。
+
+未登录或未配置云服务时仍可使用本地收藏。真实登录需要 Supabase 项目、GitHub OAuth App、数据库迁移与公开前端配置，提交代码本身不会开通服务。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。前端只能放 Supabase publishable key 或旧版 anon key，不能放 secret/service-role key 或 GitHub Client Secret。
 
 ## Chrome 搜索插件
 
@@ -52,7 +58,7 @@
 
 在浏览器侧边栏搜索五大榜单，按分类、用途、平台、语言、Stars 和时间范围筛选，收藏项目、打开 README，并复制 AI 安装提示到编码助手。插件只生成提示，不会自动安装仓库。
 
-支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。插件收藏与网站收藏独立保存。
+支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。插件收藏只保存在当前 Chrome 配置中，与网站收藏及其可选的云同步独立。
 
 开发时可以打开 `chrome://extensions` → **开发者模式** → **加载已解压的扩展程序**，选择 **`chrome/`** 文件夹。更新内置目录并生成 `dist/Chrome.zip`：
 
