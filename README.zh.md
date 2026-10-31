@@ -48,9 +48,9 @@
 
 ### GitHub 登录与云收藏
 
-网站通过一个同源 Cloudflare Worker 与 D1 数据库接入 GitHub 登录和账号收藏。首次登录合并已有本地收藏；登录后的添加和取消通过在线 API 保存。请求失败时恢复原状态并提示重试。退出登录或清除浏览器数据保留已成功保存的云端收藏，不会自动修改 GitHub Stars。Chrome 插件继续使用本地收藏，不接入网站登录。
+网站通过一个使用独立 `workers.dev` 地址的 Cloudflare Worker 与 D1 数据库接入 GitHub 登录和账号收藏。首次登录合并已有本地收藏；登录后的添加和取消通过在线 API 保存。请求失败时恢复原状态并提示重试。退出登录或清除浏览器数据保留已成功保存的云端收藏，不会自动修改 GitHub Stars。Chrome 插件继续使用本地收藏，不接入网站登录。
 
-没有 API 时仍可使用本地收藏。真实登录需要 Cloudflare 账号与已代理域名、自有 GitHub OAuth App、D1 迁移和 Worker 部署，不需要安装插件或在前端填写令牌。密钥保存在 Worker 配置中，浏览器使用 HttpOnly 会话 Cookie。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。代码与模拟测试通过不等于生产服务已开通。
+没有 API 时仍可使用本地收藏。真实登录需要 Cloudflare 账号、自有 GitHub OAuth App、D1 迁移和 Worker 部署。DNS 可以保留在腾讯云，静态网页继续由 GitHub Pages 托管。GitHub 密钥仅存于 Worker；浏览器只在 `sessionStorage` 保存短期本站会话，GitHub 令牌和会话令牌不会放进网址。会话最长八小时，关闭标签页后重新打开可能需要再次登录。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。代码与模拟测试通过不等于生产服务已开通。
 
 ## Chrome 搜索插件
 

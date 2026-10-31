@@ -1,12 +1,13 @@
 # GitHub login and favorites API
 
-This small Cloudflare Worker serves `https://agentskills.media/api/*`; GitHub Pages
-continues to serve the website. GitHub verifies identity, and D1 stores website
-favorites. It does not change GitHub repository Stars or retain GitHub access
-tokens. The architecture follows the public [CCFDDL Worker design](https://github.com/ccfddl/ccf-deadlines/tree/main/worker),
-with only login and repository favorites implemented here.
+GitHub Pages continues to serve `https://agentskills.media`. This Cloudflare
+Worker serves a separate `https://agent-leaderboard-api.jaychempan.workers.dev`
+API, so the domain can keep Tencent Cloud / DNSPod nameservers. GitHub verifies
+the visitor's identity; D1 stores this website's favorites. The application does
+not change GitHub Stars, request repository/Gist/email scopes, or retain GitHub
+access tokens.
 
-## Configure and deploy
+## Configuration and deployment
 
 Use Node 22.13 or newer. From `worker/`:
 
@@ -16,17 +17,25 @@ npx wrangler login
 npx wrangler d1 create agent-leaderboard
 ```
 
-Put the returned database ID in `wrangler.jsonc`. Keep `PUBLIC_ORIGIN` set to the
-website's exact origin, and apply `migrations/0001_initial.sql`:
+Put the returned database ID in `wrangler.jsonc`. Set `PUBLIC_ORIGIN` to the
+website's exact origin, and `API_ORIGIN` to the Worker's exact HTTPS origin;
+neither value may include a path, query, credentials, or fragment. Enable the
+Worker's `workers.dev` endpoint. This setup requires no Cloudflare DNS zone,
+custom-domain route, or Tencent DNS changes. Apply **both** migrations:
 
 ```sh
 npm run db:migrate:remote
 ```
 
+`0001_initial.sql` is immutable once applied. `0002_cross_origin_login.sql` adds
+the frontend login proof and the one-time login handoff table without changing
+existing users, favorites, sessions, or import receipts. Previously pending
+OAuth attempts lack the new proof and must be restarted.
+
 Create a GitHub OAuth App with homepage `https://agentskills.media/` and callback
-`https://agentskills.media/api/auth/github/callback`. It needs no repository,
-Gist, or email scope for this feature. Configure its credentials and a random
-session secret of at least 32 bytes with the interactive secret prompts:
+`https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`
+(using the actual `API_ORIGIN`). It needs no extra scope. Set the credentials
+and a random server secret of at least 32 bytes using interactive prompts:
 
 ```sh
 npx wrangler secret put GITHUB_CLIENT_ID
@@ -36,79 +45,107 @@ npm run check
 npm run deploy
 ```
 
-The domain must be in the deploying Cloudflare account and proxied so its
-`agentskills.media/api/*` route reaches this Worker. Keep unrelated site paths on
-GitHub Pages. Do not enable a public cross-origin API or put secrets in browser
-configuration. Configure a separate OAuth App and `PUBLIC_ORIGIN` for local
-testing if required. Ignored `.dev.vars` may hold local values; it must never be
-committed or uploaded with static assets.
+Configure the same public API origin in the website's client configuration.
+Client ID/secret, SESSION_SECRET, and GitHub access tokens must never be placed
+in static assets. Ignored `.dev.vars` can hold local test values. For local
+HTTP development only, origin validation also accepts localhost, 127.0.0.1,
+and [::1]; use a separate OAuth App and matching origin configuration. When both
+origins equal the same local HTTP origin, a browser bootstrap GET may omit
+Origin if `Sec-Fetch-Site: same-origin` or its Referer proves that exact origin.
+This exception does not apply to production or cross-origin calls.
 
-Before enabling the website's login entry, check `/api/health` returns
-`{"ok":true,"authConfigured":true}` and complete a real GitHub login, save, reload,
-and restore in a second browser. The health check verifies the favorites table
-is accessible when credentials are present; it cannot prove that OAuth is
-configured correctly. See [the site setup guide](../docs/github-favorites-setup.md).
+Before enabling login, check `/api/health` returns
+`{"ok":true,"authConfigured":true}`, then perform a real GitHub login, save,
+reload, and sign in in a second browser to restore the same favorites. Health
+checks that credentials exist and all required database tables are accessible;
+it does not prove the OAuth App credentials or callback are correct. See
+[the site setup guide](../docs/github-favorites-setup.md).
 
-## API
+## API contract
 
 | Request | Result |
 | --- | --- |
 | `GET /api/health` | `{ok, authConfigured}` |
 | `GET /api/bootstrap?after=<repo_id>` | `{authConfigured, user, favorites, nextCursor}`; omit `after` for the first page |
-| `GET /api/auth/github?return_to=/#mcp` | Starts GitHub authorization with browser-bound state and PKCE |
-| `GET /api/auth/github/callback` | Finishes authorization and returns to a validated local path |
-| `POST /api/auth/logout` | Revokes the current site session |
+| `GET /api/auth/github?client_challenge=<S256>&client_state=<random>&return_to=/#mcp` | Starts browser-bound GitHub authorization |
+| `GET /api/auth/github/callback` | Identifies the user, redirects to the primary website with `login_code` and `login_state` |
+| `POST /api/auth/exchange` | `{code, verifier, state}` → `{token, expiresAt, user}` |
+| `POST /api/auth/logout` | Revokes the current site bearer session |
 | `PUT /api/favorites/:repo_id` | Saves `{repository: <public display snapshot>}` |
 | `DELETE /api/favorites/:repo_id` | Removes that user's favorite |
 | `POST /api/favorites/import` | First-login merge: `{migration_id, batch_id, favorites:[{repo_id,repository}]}` |
 
-`user` contains its string GitHub ID, login, and public avatar URL. Each favorite
-has numeric `repo_id` and a sanitized `repository` snapshot; repositories that
-leave the directory can still be displayed. Old local IDs without a snapshot
-remain valid but have no invented repository link. The snapshot is not proof
-that a repository exists.
+`user` contains its string GitHub ID, login, and public avatar URL. `expiresAt`
+is an ISO 8601 timestamp. Each favorite has numeric `repo_id` and a sanitized
+`repository` snapshot; repositories that leave the directory remain displayable.
+Old local IDs without a snapshot remain valid but have no invented repository
+link. A snapshot is not proof that a repository exists.
 
-Authenticated writes require the website's exact `Origin` and
-`X-Favorites-User: <GitHub ID shown by the client>`. A mismatched user returns
-`409 account_changed`, preventing a stale Alice tab from writing through a
-newly signed-in Bob cookie. Missing or expired sessions return `401`.
+Browser API calls use `credentials: 'omit'`, an exact `Origin: PUBLIC_ORIGIN`,
+and `Authorization: Bearer <site token>` when authenticated. Bootstrap requires
+the website Origin even when anonymous. Authenticated writes additionally
+require `X-Favorites-User: <GitHub ID shown by the client>`. An account mismatch
+returns `409 account_changed`; a missing expected user returns `400`, and a
+missing or expired session returns `401` on writes. A first-page bootstrap with
+no valid session returns `user: null`, empty favorites, and a null cursor.
+Session cookies are not accepted as API credentials.
 
-Import batches contain at most 100 records and have a stable `migration_id`
+CORS allows only `PUBLIC_ORIGIN`, never `*` or credentialed cookies. Preflight
+checks the route's method and allows only `Authorization`, `Content-Type`, and
+`X-Favorites-User`; other headers and origins are rejected. The API also rejects
+requests addressed to any origin other than `API_ORIGIN`. A plain health check
+and top-level OAuth navigations may omit Origin. All responses disable caching.
+
+## Login handoff and sessions
+
+1. The primary website tab creates a random 43-character base64url verifier and
+   an independent state, retaining them in its own sessionStorage. It navigates
+   to the API with the verifier's SHA-256 challenge and state, never the verifier.
+2. The Worker stores that challenge/state and starts GitHub OAuth with a separate
+   backend PKCE verifier, an HMAC-signed nonce, and a ten-minute OAuth attempt.
+   A Secure/HttpOnly/SameSite=Lax `__Host-agent_oauth` cookie on the API origin
+   binds the attempt to the initiating browser. This cookie is used only during
+   top-level redirects; ordinary API requests do not require third-party cookies.
+3. The callback consumes the browser-bound attempt once, exchanges GitHub's code,
+   verifies the public GitHub identity, and discards the GitHub token. It redirects
+   to a validated relative path on `PUBLIC_ORIGIN`, preserving path/query/hash,
+   with a random opaque `login_code` and the tab's `login_state`. Return paths
+   cannot target another origin or API endpoint. No site session exists yet.
+4. The primary tab removes callback parameters from its URL, verifies the state,
+   and posts the code, state, and retained verifier to `/api/auth/exchange`.
+   A matching SHA-256 challenge, state, unexpired code, and exact website Origin
+   are required. D1 atomically consumes the code once. Codes expire in 90 seconds
+   and only their hashes are stored. A stolen URL alone cannot redeem a code.
+5. Only the exchange JSON contains the random site session token. Keep it in
+   sessionStorage, never URLs or persistent localStorage. D1 stores only its
+   hash. Sessions expire after a fixed eight hours with no rolling renewal.
+   Logout revokes the current token immediately; other sessions and favorites
+   remain. A login retains at most twenty active sessions per account.
+
+OAuth failures return a safe `auth_error` code on the primary website. API errors
+contain generic codes, never upstream error text or secrets. Observability is
+disabled by default to avoid logging OAuth callback query strings; any future
+logging must redact credentials, authorization headers, and login codes.
+
+## Favorites, migration, and pagination
+
+Import batches contain at most 100 records and use a stable `migration_id`
 (16–100 ASCII letters/digits/underscores/hyphens) and nonnegative integer
-`batch_id`. Reuse both when retrying the same frozen batch. D1 transactions
-record receipts with the insert, so a lost import response cannot make a retry
-restore a favorite that was later removed. Existing cloud favorites are never
-overwritten by import. This is one-time migration protection, not an offline
-write queue. Without an explicit migration ID, the API uses a receipt derived
-from that batch's repository IDs for compatibility.
+`batch_id`. Retry the same frozen batch with the same identifiers. A transaction
+records the receipt with the inserts, so a lost response cannot make a retry
+restore a subsequently removed favorite. Import never overwrites existing cloud
+favorites. Without a migration ID, a compatibility receipt is derived from the
+batch's repository IDs. This is one-time migration protection, not an offline
+write queue.
 
-Requests are limited to 32 KiB for individual favorites and 1 MiB for an import,
-enforced while reading the body. Snapshots are whitelist-sanitized, link URLs
-are derived from validated GitHub repository names, and unknown fields are not
-stored. Bootstrap uses keyset pagination with up to 500 favorites per response.
-Continue with `?after=<nextCursor>` until `nextCursor` is `null`; even collections
-larger than the directory can be restored without a fixed favorite-count cap.
-Each page includes the current user. Subsequent pages should send
-`X-Favorites-User` from the first page: expired sessions or account switches then
-return `409 account_changed`, instead of merging two accounts' pages. An invalid
-cursor returns `400 invalid_cursor`. No user means `user: null`, an empty array,
-and a null cursor.
-
-## Sessions and error handling
-
-OAuth states expire after ten minutes, have a signed nonce, and can only be
-consumed once with their initiating browser's secret cookie. PKCE verifiers
-stay in D1, not inside the visible `state` parameter. Site sessions use random
-tokens with only hashes stored in D1, HttpOnly/Secure/SameSite=Lax `__Host-`
-cookies, and a rolling 30-day expiry renewed at most daily during authenticated
-bootstrap. Signing out immediately invalidates the current session. A login
-retains at most twenty active sessions per user and removes expired sessions.
-
-OAuth failures return a safe `auth_error` code in the local return URL. API
-failures return stable generic error codes, not upstream error text, tokens,
-cookies, or secrets. Responses disable caching and cross-origin access. Worker
-observability is disabled by default to avoid request logs containing OAuth
-callback query strings; configure any future diagnostics to redact credentials.
+Bodies are limited while streaming to 32 KiB per favorite and 1 MiB per import.
+Snapshots are whitelist-sanitized and links are derived from validated public
+GitHub repository names. Bootstrap uses keyset pagination with at most 500
+favorites per response and no collection-size cap. Continue with
+`?after=<nextCursor>` until the cursor is null. Subsequent pages must include
+`X-Favorites-User` from the first page; an expired token or changed account then
+returns `409 account_changed` instead of merging accounts. Invalid cursors
+return `400 invalid_cursor`.
 
 ## Tests
 
@@ -117,9 +154,10 @@ npm test
 npm run db:migrate:local
 ```
 
-The Node tests run the real SQL migration against `node:sqlite` and adapt its
-prepared statements to the D1 API shape. They verify OAuth browser binding,
-PKCE, replay/expiry, return-path validation, user isolation, origin checks,
-logout, imports, and input limits. They do not verify a deployed Cloudflare
-account, real GitHub authorization, or production D1 resources. Apply the local
-migration and use Wrangler's local runtime as an additional deployment check.
+Node tests execute both real SQL migrations against `node:sqlite` adapted to the
+D1 API. Coverage includes the two independent PKCE proofs, browser binding,
+state/code theft, replay, expiry, URL secrecy, exact CORS/preflight, bearer
+isolation/logout, import receipts, input limits, and over 5,000 favorites across
+multiple pages. They do not verify a deployed Cloudflare account, real GitHub
+authorization, or production D1. Use Wrangler's local runtime as an additional
+check, then complete the real production OAuth and cross-browser flow.

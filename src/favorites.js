@@ -1,4 +1,4 @@
-/* GitHub favorites use the site's same-origin Worker API and HttpOnly session. */
+/* GitHub favorites use a Worker API and a short-lived site session in sessionStorage. */
 (function (root, factory) {
   const api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -8,6 +8,8 @@
   const KEYS = Object.freeze({legacy: 'st_favorites', backup: 'st_favorites_backup_v1',
     anonymous: 'st_favorites_anonymous_v1', meta: 'st_favorites_sync_v1',
     cloud: 'st_favorites_cloud_v2'});
+  const SESSION_KEYS = Object.freeze({session: 'st_favorites_session_v1', login: 'st_favorites_login_v1'});
+  const OPAQUE = /^[A-Za-z0-9_-]{43}$/;
   const SOURCES = new Set(['skills', 'mcp', 'research', 'prompts', 'frameworks']);
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   const text = (value, limit) => typeof value === 'string' ? value.slice(0, limit) : '';
@@ -45,9 +47,11 @@
       if (!config || typeof config.apiBase !== 'string' || !config.apiBase) return null;
       if (/[\\\s%]/.test(config.apiBase) || /(?:^|\/)\.\.?(?:\/|$)/.test(config.apiBase)) return null;
       const page = new URL(typeof location === 'string' ? location : location?.href || 'https://agentskills.media/');
+      if (config.apiBase.startsWith('//')) return null;
       const api = new URL(config.apiBase, page);
       if ((page.protocol !== 'https:' && !(page.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(page.hostname)))
-          || api.origin !== page.origin || api.username || api.password || api.search || api.hash
+          || (api.protocol !== 'https:' && !(api.origin === page.origin && page.protocol === 'http:'))
+          || api.username || api.password || api.search || api.hash
           || !/^\/[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*\/?$/.test(api.pathname)) return null;
       return api.href.replace(/\/$/, '');
     } catch (_) { return null; }
@@ -66,9 +70,14 @@
     const history = options.history || (typeof window !== 'undefined' ? window.history : null);
     const fetcher = options.fetch || (typeof fetch === 'function' ? fetch.bind(globalThis) : null);
     const api = apiConfiguration(options.config, location);
+    let sessionStorage = options.sessionStorage;
+    if (!sessionStorage) { try { sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : null; } catch (_) { /* Sign-in reports blocked browser storage. */ } }
+    const webCrypto = options.crypto || (typeof globalThis !== 'undefined' ? globalThis.crypto : null);
+    const now = typeof options.now === 'function' ? options.now : Date.now;
     const catalog = typeof options.catalog === 'function' ? options.catalog : () => [];
     const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
     let user = null, configured = false, status = 'local', error = null, storageFailed = false;
+    let session = null, sessionStorageFailed = false;
     let epoch = 0, destroyed = false, initialized = null, syncTask = null, tail = Promise.resolve();
     let confirmed = {}, records = {}, anonymous = {}, migration = null, importBlocked = false, anonymousUnsaved = false;
     let catalogReference = null, catalogIndex = new Map();
@@ -82,6 +91,30 @@
       } catch (_) { storageFailed = true; error = 'storage_unavailable'; return false; }
     }
     function json(key) { try { return JSON.parse(read(key)); } catch (_) { return null; } }
+    function sessionValue(key) {
+      try { return JSON.parse(sessionStorage?.getItem(key) || 'null'); }
+      catch (_) { return null; }
+    }
+    function saveSessionValue(key, value) {
+      try {
+        if (!sessionStorage?.setItem || !sessionStorage?.removeItem) throw new Error('storage');
+        if (value === null) sessionStorage.removeItem(key); else sessionStorage.setItem(key, JSON.stringify(value));
+        sessionStorageFailed = false;
+        return true;
+      } catch (_) { sessionStorageFailed = true; error = 'storage_unavailable'; return false; }
+    }
+    function clearSession() { session = null; saveSessionValue(SESSION_KEYS.session, null); }
+    function activeSession() {
+      if (session && Date.parse(session.expiresAt) <= now()) clearSession();
+      return session;
+    }
+    function restoreSession() {
+      const value = sessionValue(SESSION_KEYS.session), owner = safeUser(value?.user);
+      if (value?.api === api && OPAQUE.test(value.token) && owner && Number.isFinite(Date.parse(value.expiresAt))
+          && Date.parse(value.expiresAt) > now()) session = {api, token: value.token, expiresAt: value.expiresAt, user: owner};
+      else if (value) saveSessionValue(SESSION_KEYS.session, null);
+    }
+    restoreSession();
     function localRecords(value) {
       const result = {};
       if (!value || typeof value !== 'object') return result;
@@ -148,23 +181,29 @@
       const snapshotRecords = {};
       for (const [id, value] of Object.entries(records)) snapshotRecords[id] = repositoryFor(value, null, value);
       return {ids: Object.keys(snapshotRecords).map(Number).sort((a,b)=>a-b), records: snapshotRecords,
-        user: user ? {...user} : null, configured, status, error: error || (storageFailed ? 'storage_unavailable' : null), pendingCount: 0};
+        user: user ? {...user} : null, configured, status, error: error || (storageFailed || sessionStorageFailed ? 'storage_unavailable' : null), pendingCount: 0};
     }
     function emit() { if (!destroyed) { try { onChange(getSnapshot()); } catch (_) { /* A renderer cannot undo a saved favorite. */ } } }
     function enqueue(work) { const task = tail.then(() => destroyed ? getSnapshot() : work()); tail = task.catch(() => {}); return task; }
     function failure(code, statusCode) { const exception = new Error(code); exception.code = code; exception.status = statusCode; return exception; }
-    async function request(path, {method = 'GET', body, userId} = {}) {
+    async function request(path, {method = 'GET', body, userId, authenticate = true} = {}) {
       if (!api || !fetcher) throw failure('api_unavailable');
+      const requestSession = authenticate ? activeSession() : null;
+      if (userId && !requestSession) throw failure('authentication_required', 401);
       const controller = new AbortController(); controllers.add(controller);
       const timer = setTimeout(() => controller.abort(), 10000);
       try {
         const headers = {};
+        if (requestSession) headers.Authorization = 'Bearer ' + requestSession.token;
         if (body !== undefined) headers['Content-Type'] = 'application/json';
         if (userId) headers['X-Favorites-User'] = userId;
-        const response = await fetcher(api + path, {method, credentials: 'same-origin', cache: 'no-store', headers,
+        const response = await fetcher(api + path, {method, credentials: 'omit', cache: 'no-store', headers,
           ...(body === undefined ? {} : {body: JSON.stringify(body)}), signal: controller.signal});
         let data = null; try { data = await response.json(); } catch (_) { /* An empty successful response is valid. */ }
-        if (!response.ok) throw failure(typeof data?.error === 'string' ? data.error : 'request_failed', response.status);
+        if (!response.ok) {
+          if (response.status === 401 && requestSession?.token === session?.token) clearSession();
+          throw failure(typeof data?.error === 'string' ? data.error : 'request_failed', response.status);
+        }
         return data;
       } catch (exception) {
         if (exception?.status) throw exception;
@@ -180,6 +219,8 @@
           if (!first || typeof first.authConfigured !== 'boolean' || !Array.isArray(first.favorites)) throw failure('invalid_response');
           const owner = safeUser(first.user);
           if (first.user && !owner) throw failure('invalid_response');
+          if (owner && (!activeSession() || owner.id !== session.user.id)) throw failure('account_changed', 409);
+          if (!owner && session) clearSession();
           const favorites = [...first.favorites];
           let cursor = first.nextCursor;
           let after = 0;
@@ -198,7 +239,7 @@
           }
           return {...first, favorites, nextCursor: null};
         } catch (exception) {
-          // A cookie can change in another tab between pages. Never combine identities.
+          // A revoked session between pages must never expose a partial account result.
           if (exception.code !== 'account_changed' || attempt !== 0) throw exception;
         }
       }
@@ -296,11 +337,41 @@
       try {
         const url = new URL(location.href), fragment = new URLSearchParams(url.hash.slice(1));
         const authError = url.searchParams.has('auth_error') || url.searchParams.has('error') || fragment.has('error');
-        for (const key of ['auth_error', 'code', 'error', 'error_description', 'error_code']) url.searchParams.delete(key);
+        for (const key of ['auth_error', 'code', 'error', 'error_description', 'error_code', 'access_token', 'refresh_token', 'provider_token', 'provider_refresh_token', 'token_type']) url.searchParams.delete(key);
         if (['error','error_description','error_code','access_token','refresh_token','provider_token','provider_refresh_token','token_type'].some(key => fragment.has(key))) url.hash = '';
+        const code = url.searchParams.get('login_code'), state = url.searchParams.get('login_state');
+        url.searchParams.delete('login_code'); url.searchParams.delete('login_state');
         if (url.href !== location.href) history?.replaceState(null, '', url.href);
-        return {url, authError};
+        return {url, authError, code, state};
       } catch (_) { return {url: null, authError: false}; }
+    }
+    async function exchangeLogin(auth) {
+      const pending = sessionValue(SESSION_KEYS.login);
+      if (pending || auth.code || auth.state || auth.authError) saveSessionValue(SESSION_KEYS.login, null);
+      if (auth.authError) throw failure('auth_failed');
+      if (!auth.code && !auth.state) return;
+      if (!api || !OPAQUE.test(auth.code || '') || !OPAQUE.test(auth.state || '') || pending?.api !== api
+          || pending.state !== auth.state || !OPAQUE.test(pending.verifier || '')
+          || !Number.isFinite(pending.createdAt) || pending.createdAt > now() || now() - pending.createdAt > 10 * 60 * 1000) throw failure('auth_failed');
+      clearSession(); epoch += 1; user = null; confirmed = {}; operations.length = 0; importBlocked = false;
+      const contextEpoch = epoch;
+      const payload = await request('/auth/exchange', {method: 'POST', authenticate: false,
+        body: {code: auth.code, verifier: pending.verifier, state: auth.state}});
+      if (destroyed || epoch !== contextEpoch) throw failure('stale_request');
+      const owner = safeUser(payload?.user);
+      if (!owner || !OPAQUE.test(payload?.token || '') || !Number.isFinite(Date.parse(payload?.expiresAt))
+          || Date.parse(payload.expiresAt) <= now() || Date.parse(payload.expiresAt) > now() + 8 * 60 * 60 * 1000 + 60000) throw failure('auth_failed');
+      const value = {api, token: payload.token, expiresAt: payload.expiresAt, user: owner};
+      if (!saveSessionValue(SESSION_KEYS.session, value)) throw failure('storage_unavailable');
+      session = value;
+    }
+    function randomValue() {
+      if (!webCrypto?.getRandomValues || !webCrypto?.subtle) throw failure('auth_failed');
+      const bytes = webCrypto.getRandomValues(new Uint8Array(32));
+      return base64url(bytes);
+    }
+    function base64url(bytes) {
+      return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     }
     function listen(type, callback) { if (target?.addEventListener) { target.addEventListener(type, callback); listeners.push([type, callback]); } }
     function init() {
@@ -311,8 +382,12 @@
         if (!user && !anonymousUnsaved && (event.key === KEYS.anonymous || event.key === null)) { anonymous = localRecords(json(KEYS.anonymous)); visibleRecords(); emit(); }
       });
       const auth = cleanAuthURL();
-      initialized = sync().then(snapshot => {
-        if (auth.authError) { error = 'auth_failed'; status = 'error'; emit(); return getSnapshot(); }
+      initialized = enqueue(async () => {
+        let authFailure = null;
+        try { await exchangeLogin(auth); } catch (exception) { authFailure = exception.code === 'storage_unavailable' ? 'storage_unavailable' : 'auth_failed'; }
+        if (destroyed) return getSnapshot();
+        const snapshot = await refresh();
+        if (authFailure) { error = authFailure; status = 'error'; emit(); return getSnapshot(); }
         return snapshot;
       });
       return initialized;
@@ -360,8 +435,10 @@
       await init();
       if (!configured || !api) throw failure('api_unavailable');
       const {url} = cleanAuthURL(); if (!url) throw failure('configuration_invalid');
-      url.search = '';
-      const destination = api + '/auth/github?return_to=' + encodeURIComponent(url.pathname + url.hash);
+      const verifier = randomValue(), state = randomValue();
+      const challenge = base64url(new Uint8Array(await webCrypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+      if (!saveSessionValue(SESSION_KEYS.login, {api, verifier, state, createdAt: now()})) { status = 'error'; emit(); throw failure('storage_unavailable'); }
+      const destination = api + '/auth/github?' + new URLSearchParams({client_challenge: challenge, client_state: state, return_to: url.pathname + url.search + url.hash});
       if (typeof location.assign === 'function') location.assign(destination); else location.href = destination;
       return {url: destination};
     }
@@ -372,7 +449,7 @@
         try {
           await request('/auth/logout', {method: 'POST', userId: context.id});
           if (epoch !== context.epoch) return getSnapshot();
-          epoch += 1; user = null; confirmed = {}; operations.length = 0; importBlocked = false;
+          clearSession(); epoch += 1; user = null; confirmed = {}; operations.length = 0; importBlocked = false;
           anonymous = localRecords(json(KEYS.anonymous)); status = 'local'; error = null; visibleRecords(); emit();
         } catch (exception) {
           error = exception.code === 'account_changed' ? 'account_changed' : 'auth_failed'; status = 'error'; emit();
@@ -389,5 +466,5 @@
     }
     return {init, getSnapshot, toggle, sync, signIn, signOut, destroy};
   }
-  return {createFavoritesStore, sanitizeRepository, validConfiguration, STORAGE_KEYS: KEYS};
+  return {createFavoritesStore, sanitizeRepository, validConfiguration, STORAGE_KEYS: KEYS, SESSION_KEYS};
 });

@@ -48,9 +48,9 @@ These are observed changes in the catalog, not real-time GitHub star events: inc
 
 ### GitHub sign-in and cloud favorites
 
-The website uses a small same-origin Cloudflare Worker and D1 database for GitHub sign-in and account favorites. Existing local favorites are merged on first sign-in; signed-in additions and removals save through the online API. Failed requests restore the previous state and show a retry message. Signing out or clearing browser data keeps successfully saved cloud favorites. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
+The website uses a small Cloudflare Worker on a separate `workers.dev` address and a D1 database for GitHub sign-in and account favorites. Existing local favorites are merged on first sign-in; signed-in additions and removals save through the online API. Failed requests restore the previous state and show a retry message. Signing out or clearing browser data keeps successfully saved cloud favorites. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
 
-Local favorites work without the API. Real sign-in requires a Cloudflare account and proxied domain, a GitHub OAuth App, D1 migration and Worker deployment; no plugin installation or frontend token is required. Secrets stay in Worker configuration and the browser uses an HttpOnly session cookie. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Code and mocked tests alone do not activate the production service.
+Local favorites work without the API. Real sign-in requires a Cloudflare account, a GitHub OAuth App, D1 migration and Worker deployment. DNS can remain with Tencent Cloud and the static site with GitHub Pages. GitHub credentials stay in Worker secrets; the browser stores only a short-lived site session in `sessionStorage`, with no GitHub token or session token in the URL. The session lasts up to eight hours; reopening a closed tab may require signing in again. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Code and mocked tests alone do not activate the production service.
 
 ## Chrome search extension
 

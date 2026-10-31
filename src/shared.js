@@ -576,6 +576,15 @@ function showFavoriteNotice(key) {
 function escapeFavoriteHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 }
+function catalogArgument(value) {
+  return escapeFavoriteHTML(JSON.stringify(String(value ?? '')));
+}
+function catalogClass(value) {
+  return /^[a-zA-Z0-9_-]+$/.test(value || '') ? value : '';
+}
+function catalogRepositoryURL(value) {
+  return /^https:\/\/github\.com\/[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+\/?$/.test(value || '') ? value : '#';
+}
 function applyFavoriteSnapshot(snapshot) {
   const before = [...app.favorites].sort((a, b) => a - b).join(',');
   const recordsChanged = Object.keys(snapshot.records).some(id => JSON.stringify(snapshot.records[id]) !== JSON.stringify(app.favoriteRecords[id]));
@@ -1046,9 +1055,9 @@ function renderTabs() {
   });
 
   tabs.innerHTML = items.map(it => `
-    <button class="tab${it.id === app.activeTab ? ' active' : ''}" data-id="${it.id}"
-            onclick="setTab('${it.id}')">
-      ${getBrandIcon(it.id)} ${it.label} <span class="cnt">${it.count}</span>
+    <button class="tab${it.id === app.activeTab ? ' active' : ''}" data-id="${escapeFavoriteHTML(it.id)}"
+            onclick="setTab(${catalogArgument(it.id)})">
+      ${getBrandIcon(it.id)} ${escapeFavoriteHTML(it.label)} <span class="cnt">${Number(it.count) || 0}</span>
     </button>`).join('');
   syncTabsScrollBtn();
   tabs.removeEventListener('scroll', syncTabsScrollBtn);
@@ -1108,7 +1117,7 @@ function renderBrandSpotlight() {
     <div class="brand-spotlight">
       <div class="bs-logo">${logo}</div>
       <div class="bs-body">
-        <div class="bs-name">${tCat(cats[id]?.label || id)}<span class="bs-count">${count ? ` · ${count} repos` : ''}</span></div>
+        <div class="bs-name">${escapeFavoriteHTML(tCat(cats[id]?.label || id))}<span class="bs-count">${count ? ` · ${Number(count) || 0} repos` : ''}</span></div>
         <div class="bs-desc">${desc}</div>
       </div>
       <div class="bs-links">${homeBtn}${skillsBtn}</div>
@@ -1121,7 +1130,7 @@ function renderLangSelect() {
   if (!sel || !app.data) return;
   const langs = [...new Set(app.allRepos.map(r => r.language).filter(Boolean))].sort();
   sel.innerHTML = `<option value="">${t('lang_all')}</option>` +
-    langs.map(l => `<option value="${l}"${app.language === l ? ' selected' : ''}>${l}</option>`).join('');
+    langs.map(l => `<option value="${escapeFavoriteHTML(l)}"${app.language === l ? ' selected' : ''}>${escapeFavoriteHTML(l)}</option>`).join('');
 }
 
 /* ── Use-case chips ─────────────────────────────────────────────── */
@@ -1133,8 +1142,8 @@ function renderUCChips() {
     .sort((a, b) => b[1] - a[1])
     .map(([uc, cnt]) => `
       <span class="uc-chip${app.selectedUCs.has(uc) ? ' active' : ''}"
-            onclick="toggleUC('${uc}')" data-uc="${uc}">
-        ${tUC(uc)} <span class="uc-cnt">${cnt}</span>
+            onclick="toggleUC(${catalogArgument(uc)})" data-uc="${escapeFavoriteHTML(uc)}">
+        ${escapeFavoriteHTML(tUC(uc))} <span class="uc-cnt">${Number(cnt) || 0}</span>
       </span>`).join('');
   syncUCScrollBtn();
   row.addEventListener('scroll', syncUCScrollBtn, { passive: true });
@@ -1344,7 +1353,7 @@ function renderActiveFilters() {
   bar.classList.remove('hidden');
   bar.innerHTML = `
     <span class="af-label">${t('af_label')}</span>
-    ${chips.map((c, i) => `<span class="af-chip" onclick="removeFilter(${i})">${c.label}</span>`).join('')}
+    ${chips.map((c, i) => `<span class="af-chip" onclick="removeFilter(${i})">${escapeFavoriteHTML(c.label)}</span>`).join('')}
     <button class="af-clear" onclick="clearFilters()">${t('af_clear')}</button>`;
   bar._chips = chips;
 }
@@ -1392,6 +1401,7 @@ function cardHTML(repo, gr) {
   const emoji    = gr === 1 ? '🥇' : gr === 2 ? '🥈' : gr === 3 ? '🥉' : null;
   const rankLbl  = emoji ? `${emoji} #${gr}` : `#${gr}`;
   const [owner, name] = repo.full_name.split('/');
+  const repoId = Number.isSafeInteger(repo.id) && repo.id > 0 ? repo.id : 0;
   const isSaved  = app.favorites.has(repo.id);
   const cats = app.data.categories;
   const isSkills = app.pageConfig?.page === 'skills';
@@ -1399,37 +1409,37 @@ function cardHTML(repo, gr) {
   if (isSkills) {
     const repoCats = repo.categories || [repo.category];
     catBadges = repoCats.map(c =>
-      `<span class="badge cat-badge ${c} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+      `<span class="badge cat-badge ${catalogClass(c)} clickable" onclick="event.preventDefault();event.stopPropagation();setTab(${catalogArgument(c)})">${getBrandIcon(c)} ${escapeFavoriteHTML(tCat(cats[c]?.label || c))}</span>`
     ).join('');
   } else {
     catBadges =
-      `<span class="badge cat-badge ${repo.category} clickable" onclick="event.preventDefault();event.stopPropagation();setTab('${repo.category}')">${getBrandIcon(repo.category)} ${tCat(cats[repo.category]?.label || repo.category)}</span>` +
+      `<span class="badge cat-badge ${catalogClass(repo.category)} clickable" onclick="event.preventDefault();event.stopPropagation();setTab(${catalogArgument(repo.category)})">${getBrandIcon(repo.category)} ${escapeFavoriteHTML(tCat(cats[repo.category]?.label || repo.category))}</span>` +
       (repo.agentTags || []).map(a => BRAND_LOGOS[a]
-        ? `<span class="agent-tag" title="${a}">${BRAND_LOGOS[a]}</span>`
+        ? `<span class="agent-tag" title="${escapeFavoriteHTML(a)}">${BRAND_LOGOS[a]}</span>`
         : ''
       ).join('');
   }
   const ucTags = (repo.use_cases || []).slice(0, 4).map(uc =>
     `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
-           onclick="event.preventDefault();toggleUC('${uc}')">${tUC(uc)}</span>`).join('');
+           onclick="event.preventDefault();toggleUC(${catalogArgument(uc)})">${escapeFavoriteHTML(tUC(uc))}</span>`).join('');
   const lang = repo.language
-    ? `<span class="badge lang-badge clickable" onclick="event.preventDefault();event.stopPropagation();setLang('${repo.language}')">${repo.language}</span>`
+    ? `<span class="badge lang-badge clickable" onclick="event.preventDefault();event.stopPropagation();setLang(${catalogArgument(repo.language)})">${escapeFavoriteHTML(repo.language)}</span>`
     : '';
 
   return `
-    <a class="card${rankCls}" href="${repo.url}" target="_blank" rel="noopener">
+    <a class="card${rankCls}" href="${escapeFavoriteHTML(catalogRepositoryURL(repo.url))}" target="_blank" rel="noopener noreferrer">
       <div class="card-header">
         <span class="rank-badge">${rankLbl}</span>
         <div class="card-actions">
-          <span class="star-box" style="color:var(--gold)">${STAR_SVG} ${fmtNum(repo.stars)}</span>
-          <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repo.id}"
-                  onclick="event.preventDefault();event.stopPropagation();toggleFav(${repo.id})">
+          <span class="star-box" style="color:var(--gold)">${STAR_SVG} ${fmtNum(Number(repo.stars) || 0)}</span>
+          <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repoId}"
+                  onclick="event.preventDefault();event.stopPropagation();toggleFav(${repoId})">
             ${isSaved ? '❤' : '♡'}
           </button>
         </div>
       </div>
-      <div class="card-name"><span class="owner">${owner}/</span>${name}</div>
-      <div class="card-desc" title="${(repo.description || '').replace(/"/g,'&quot;')}">${repo.description || t('no_desc')}</div>
+      <div class="card-name"><span class="owner">${escapeFavoriteHTML(owner)}/</span>${escapeFavoriteHTML(name)}</div>
+      <div class="card-desc" title="${escapeFavoriteHTML(repo.description)}">${escapeFavoriteHTML(repo.description || t('no_desc'))}</div>
       <div class="card-footer">
         <div class="card-ucs">${ucTags}</div>
         <div class="card-meta">
@@ -1477,42 +1487,43 @@ function renderList() {
     const emoji = gr === 1 ? '🥇' : gr === 2 ? '🥈' : gr === 3 ? '🥉' : `#${gr}`;
     const rkCls = gr <= 3 ? ` lt-rank-${gr}` : '';
     const [owner, name] = repo.full_name.split('/');
+    const repoId = Number.isSafeInteger(repo.id) && repo.id > 0 ? repo.id : 0;
     const isSaved = app.favorites.has(repo.id);
     const isSkillsL = app.pageConfig?.page === 'skills';
     let catBadgesL;
     if (isSkillsL) {
       const repoCatsL = repo.categories || [repo.category];
       catBadgesL = repoCatsL.map(c =>
-        `<span class="badge cat-badge ${c} clickable" onclick="setTab('${c}')">${getBrandIcon(c)} ${tCat(cats[c]?.label || c)}</span>`
+        `<span class="badge cat-badge ${catalogClass(c)} clickable" onclick="setTab(${catalogArgument(c)})">${getBrandIcon(c)} ${escapeFavoriteHTML(tCat(cats[c]?.label || c))}</span>`
       ).join('');
     } else {
       catBadgesL =
-        `<span class="badge cat-badge ${repo.category} clickable" onclick="setTab('${repo.category}')">${getBrandIcon(repo.category)} ${tCat(cats[repo.category]?.label || repo.category)}</span>` +
+        `<span class="badge cat-badge ${catalogClass(repo.category)} clickable" onclick="setTab(${catalogArgument(repo.category)})">${getBrandIcon(repo.category)} ${escapeFavoriteHTML(tCat(cats[repo.category]?.label || repo.category))}</span>` +
         (repo.agentTags || []).map(a => BRAND_LOGOS[a]
-          ? `<span class="agent-tag" title="${a}">${BRAND_LOGOS[a]}</span>`
+          ? `<span class="agent-tag" title="${escapeFavoriteHTML(a)}">${BRAND_LOGOS[a]}</span>`
           : ''
         ).join('');
     }
     const ucTags = (repo.use_cases || []).slice(0, 3).map(uc =>
       `<span class="uc-tag${app.selectedUCs.has(uc) ? ' active' : ''}"
-             onclick="toggleUC('${uc}')">${tUC(uc)}</span>`).join(' ');
+             onclick="toggleUC(${catalogArgument(uc)})">${escapeFavoriteHTML(tUC(uc))}</span>`).join(' ');
 
     return `<tr class="lt-row">
       <td class="lt-rank${rkCls}">${emoji}</td>
       <td class="lt-name">
-        <a href="${repo.url}" target="_blank" rel="noopener">
-          <span class="owner">${owner}/</span>${name}
+        <a href="${escapeFavoriteHTML(catalogRepositoryURL(repo.url))}" target="_blank" rel="noopener noreferrer">
+          <span class="owner">${escapeFavoriteHTML(owner)}/</span>${escapeFavoriteHTML(name)}
         </a>
-        <div class="desc" title="${(repo.description || '').replace(/"/g,'&quot;')}">${(repo.description || t('no_desc')).slice(0, 90)}</div>
+        <div class="desc" title="${escapeFavoriteHTML(repo.description)}">${escapeFavoriteHTML((repo.description || t('no_desc')).slice(0, 90))}</div>
       </td>
-      <td class="lt-stars">★ ${fmtNum(repo.stars)}</td>
+      <td class="lt-stars">★ ${fmtNum(Number(repo.stars) || 0)}</td>
       <td class="lt-ucs">${ucTags}</td>
       <td class="lt-cat">${catBadgesL}</td>
-      <td class="lt-lang">${repo.language ? `<span class="clickable" onclick="setLang('${repo.language}')">${repo.language}</span>` : '—'}</td>
+      <td class="lt-lang">${repo.language ? `<span class="clickable" onclick="setLang(${catalogArgument(repo.language)})">${escapeFavoriteHTML(repo.language)}</span>` : '—'}</td>
       <td class="lt-updated">${timeAgo(repo.created_at || repo.updated_at)}</td>
       <td class="lt-fav">
-        <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repo.id}"
-                onclick="toggleFav(${repo.id})">
+        <button class="fav-btn${isSaved ? ' saved' : ''}" data-id="${repoId}"
+                onclick="toggleFav(${repoId})">
           ${isSaved ? '❤' : '♡'}
         </button>
       </td>
@@ -1591,7 +1602,7 @@ function renderFilterBar() {
   bar.innerHTML = `
     <div class="filter-bar">
       <input type="search" id="searchInput" placeholder="${ph}" oninput="onSearch()"
-             value="${app.searchQ.replace(/"/g, '&quot;')}" />
+             value="${escapeFavoriteHTML(app.searchQ)}" />
       <select id="langSelect" onchange="onLangChange()">
         <option value="">${t('lang_all')}</option>
       </select>

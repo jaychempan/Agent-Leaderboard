@@ -1,16 +1,20 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "agent-leaderboard-api",
+  "account_id": "ecfd04e4b357650245c2b73aeb7e29c5",
   "main": "src/index.js",
   "compatibility_date": "2026-10-30",
-  "workers_dev": false,
+  "workers_dev": true,
   "preview_urls": false,
-  "vars": {"PUBLIC_ORIGIN": "https://agentskills.media"},
-  "routes": [{"pattern": "agentskills.media/api/*", "zone_name": "agentskills.media"}],
+  "vars": {
+    "PUBLIC_ORIGIN": "https://agentskills.media",
+    "API_ORIGIN": "https://agent-leaderboard-api.jaychempan.workers.dev"
+  },
+  "routes": [],
   "d1_databases": [{
     "binding": "DB",
     "database_name": "agent-leaderboard",
-    "database_id": "REPLACE_WITH_CREATED_D1_DATABASE_ID",
+    "database_id": "079472ef-8ec9-49ca-ab16-9a531674a6fb",
     "migrations_dir": "migrations"
   }],
   "observability": {"enabled": false}
