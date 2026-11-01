@@ -2,7 +2,7 @@
 export const API_BASE = 'https://agent-leaderboard-api.jaychempan.workers.dev/api';
 export const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
 export const WEBSITE_CONNECT_URL = 'https://agentskills.media/?extension_sync=1';
-export const STORAGE_KEYS = Object.freeze({session: 'agentFavoritesSessionV1', pending: 'agentFavoritesLoginV1',
+export const STORAGE_KEYS = Object.freeze({auth: 'agentFavoritesAuthV2', session: 'agentFavoritesSessionV1', pending: 'agentFavoritesLoginV1',
   cache: 'agentFavoritesCloudV1', autoConnectDisabled: 'agentFavoritesAutoConnectDisabledV1', migration: 'agentFavoritesMigrationV1'});
 const SOURCES = Object.freeze({skill: 'skills', mcp: 'mcp', prompt: 'prompts', framework: 'frameworks', auto_research: 'research'});
 const REVERSE_SOURCES = Object.fromEntries(Object.entries(SOURCES).map(([key, value]) => [value, key]));
@@ -89,9 +89,9 @@ export function createFavoritesSync(options = {}) {
   const now = options.now || Date.now;
   const website = options.website;
   const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
-  let loaded, initializing, syncTask, signInTask, completionTask, portTask, pendingLogin = null, autoConnectDisabled = false, tail = Promise.resolve(), sessionTail = Promise.resolve();
+  let loaded, initializing, syncTask, signInTask, completionTask, portTask, pendingLogin = null, completingAttempt = null, autoConnectDisabled = false, tail = Promise.resolve(), sessionTail = Promise.resolve();
   let session = null, cloud = {}, local = {}, migration = null, catalogByName = new Map(), catalogById = new Map();
-  let status = 'local', error = null, cacheFailed = false, epoch = 0, pendingKeys = new Set(), unresolvedKeys = new Set();
+  let status = 'local', error = null, cacheFailed = false, authStorageFailed = false, epoch = 0, pendingKeys = new Set(), unresolvedKeys = new Set();
   const controllers = new Set();
 
   function visibleLocal() {
@@ -114,7 +114,7 @@ export function createFavoritesSync(options = {}) {
       if (!cloudKeys.has(key) && !(id && cloud[id])) favorites[key] ||= clone(record);
     }
     const visible = new Set(Object.keys(visibleLocal()));
-    return {user: session ? {...session.user} : null, favorites, status, error: error || (cacheFailed ? 'storage_unavailable' : null),
+    return {user: session ? {...session.user} : null, favorites, status, error: error || (cacheFailed || authStorageFailed ? 'storage_unavailable' : null),
       autoConnectDisabled,
       pendingImportCount: session ? [...pendingKeys].filter(key => visible.has(key)).length : 0,
       localOnlyCount: session ? [...unresolvedKeys].filter(key => visible.has(key)).length : visible.size};
@@ -127,9 +127,9 @@ export function createFavoritesSync(options = {}) {
   function sessionWrite(work) {
     const promise = sessionTail.then(work); sessionTail = promise.catch(() => {}); return promise;
   }
-  function storageSet(area, value) {
-    const work = async () => { try { await chrome.storage[area].set(value); } catch { throw failure('storage_unavailable'); } };
-    return area === 'session' ? sessionWrite(work) : work();
+  function storageSet(area, value, guard) {
+    const work = async () => { if (guard && !guard()) throw failure('stale_request'); try { await chrome.storage[area].set(value); } catch { throw failure('storage_unavailable'); } };
+    return area === 'session' || (area === 'local' && (own(value, STORAGE_KEYS.auth) || own(value, STORAGE_KEYS.autoConnectDisabled))) ? sessionWrite(work) : work();
   }
   function storageRemove(area, key) {
     const work = async () => { try { await chrome.storage[area].remove(key); } catch { throw failure('storage_unavailable'); } };
@@ -201,22 +201,49 @@ export function createFavoritesSync(options = {}) {
     return Boolean(['website', 'port'].includes(value?.mode) && value.api === API_BASE && TOKEN.test(value.verifier || '') && TOKEN.test(value.state || '')
       && Number.isInteger(value.tabId) && value.tabId >= 0 && Number.isFinite(value.createdAt) && value.createdAt <= now() && now() - value.createdAt < 600000);
   }
+  function sameAttempt(left, right) {
+    return Boolean(left && right && ['state', 'verifier', 'tabId', 'mode', 'portId', 'documentId', 'expectedUserId', 'createdAt'].every(key => left[key] === right[key]));
+  }
+  function credential(value) {
+    const owner = publicUser(value?.user);
+    return value?.api === API_BASE && TOKEN.test(value.token || '') && owner && date(value.expiresAt) && Date.parse(value.expiresAt) > now()
+      ? {api: API_BASE, token: value.token, expiresAt: value.expiresAt, user: owner} : null;
+  }
+  async function persistCredential(value, context = {epoch}) {
+    try {
+      await storageSet('local', {[STORAGE_KEYS.auth]: {version: 2, status: 'active', ...value}},
+        () => context.epoch === epoch && !autoConnectDisabled && (!context.attempt || completingAttempt === context.attempt));
+      authStorageFailed = false;
+    } catch (exception) { if (exception.code === 'stale_request') throw exception; authStorageFailed = true; throw failure('storage_unavailable'); }
+    try { await storageRemove('session', STORAGE_KEYS.session); } catch { authStorageFailed = true; }
+  }
   async function load() {
     if (loaded) return loaded;
     loaded = (async () => {
       try {
+        if (typeof chrome.storage.local.setAccessLevel === 'function') await chrome.storage.local.setAccessLevel({accessLevel: 'TRUSTED_CONTEXTS'});
         const localSettings = await refreshLocal(); autoConnectDisabled = localSettings[STORAGE_KEYS.autoConnectDisabled] === true;
         await refreshCatalog();
         const values = await storageGet('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache, STORAGE_KEYS.pending]);
-        const value = values[STORAGE_KEYS.session], owner = publicUser(value?.user);
-        if (value?.api === API_BASE && TOKEN.test(value.token || '') && owner && date(value.expiresAt) && Date.parse(value.expiresAt) > now()) {
-          session = {api: API_BASE, token: value.token, expiresAt: value.expiresAt, user: owner};
+        const authExists = own(localSettings, STORAGE_KEYS.auth), saved = localSettings[STORAGE_KEYS.auth];
+        const value = authExists ? saved?.version === 2 && saved.status === 'active' ? credential(saved) : null : credential(values[STORAGE_KEYS.session]);
+        if (value && !autoConnectDisabled) {
+          session = value;
+          if (!authExists) { try { await persistCredential(value); } catch { error = 'storage_unavailable'; status = 'error'; } }
+          else if (values[STORAGE_KEYS.session]) await storageRemove('session', STORAGE_KEYS.session);
           const cache = values[STORAGE_KEYS.cache];
-          if (cache?.owner === owner.id && cache.api === API_BASE && Array.isArray(cache.records)) {
+          if (cache?.owner === value.user.id && cache.api === API_BASE && Array.isArray(cache.records)) {
             for (const value of cache.records) { const record = sanitizeExtensionRepository(value); if (record?.source_id) cloud[record.source_id] = record; }
           }
-        } else if (value || values[STORAGE_KEYS.cache]) await storageRemove('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache]);
-        pendingLogin = validPending(values[STORAGE_KEYS.pending]) ? values[STORAGE_KEYS.pending] : null;
+        } else if (autoConnectDisabled) {
+          await clearAuthentication(true);
+        } else {
+          if ((authExists && !['signed_out', 'cleared'].includes(saved?.status)) || values[STORAGE_KEYS.session]) {
+            await storageSet('local', {[STORAGE_KEYS.auth]: {version: 2, status: 'cleared', api: API_BASE}});
+          }
+          if (values[STORAGE_KEYS.session] || values[STORAGE_KEYS.cache]) await storageRemove('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache]);
+        }
+        pendingLogin = !autoConnectDisabled && validPending(values[STORAGE_KEYS.pending]) ? values[STORAGE_KEYS.pending] : null;
         if (pendingLogin) status = 'awaiting_website';
         unresolvedKeys = new Set(Object.keys(visibleLocal()));
       } catch { error = 'storage_unavailable'; status = 'error'; }
@@ -232,12 +259,20 @@ export function createFavoritesSync(options = {}) {
     } catch { if (context === epoch) cacheFailed = true; }
   }
   function invalidateMemory() {
-    epoch += 1; session = null; pendingLogin = null; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys = new Set(Object.keys(local));
+    epoch += 1; session = null; pendingLogin = null; completingAttempt = null; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys = new Set(Object.keys(local));
     for (const controller of controllers) controller.abort();
   }
-  async function clearAuthentication() {
+  async function clearAuthentication(explicit = false) {
     invalidateMemory();
+    if (explicit) autoConnectDisabled = true;
+    let failed = false;
+    try {
+      await storageSet('local', {[STORAGE_KEYS.auth]: {version: 2, status: explicit ? 'signed_out' : 'cleared', api: API_BASE},
+        ...(explicit ? {[STORAGE_KEYS.autoConnectDisabled]: true} : {})});
+      authStorageFailed = false;
+    } catch { authStorageFailed = true; failed = true; }
     await storageRemove('session', [STORAGE_KEYS.session, STORAGE_KEYS.pending, STORAGE_KEYS.cache]);
+    if (failed) throw failure('storage_unavailable');
   }
   async function request(path, {method = 'GET', body, userId, authentication = session} = {}) {
     if (!fetcher) throw failure('network_failed');
@@ -262,6 +297,7 @@ export function createFavoritesSync(options = {}) {
     const first = await request('/bootstrap');
     if (!current(context)) throw failure('stale_request');
     if (typeof first?.authConfigured !== 'boolean' || !Array.isArray(first.favorites)) throw failure('invalid_response');
+    if (session && !first.authConfigured) throw failure('auth_not_configured', 503);
     const owner = publicUser(first.user);
     if (!session) {
       if (owner) throw failure('account_changed', 409);
@@ -361,6 +397,7 @@ export function createFavoritesSync(options = {}) {
     try {
       await refreshLocal();
       if (!current(context)) return snapshot();
+      if (session && authStorageFailed) await persistCredential(session);
       cloud = await bootstrap(context);
       if (!current(context)) return snapshot();
       if (session) {
@@ -372,7 +409,7 @@ export function createFavoritesSync(options = {}) {
         if (!current(context)) return snapshot();
         await persistCloud(context.epoch);
       }
-      status = cacheFailed ? 'error' : validPending(pendingLogin) ? 'awaiting_website' : session && !Object.keys(visibleLocal()).length ? 'synced' : 'local'; error = cacheFailed ? 'storage_unavailable' : null;
+      status = cacheFailed || authStorageFailed ? 'error' : validPending(pendingLogin) ? 'awaiting_website' : session && !Object.keys(visibleLocal()).length ? 'synced' : 'local'; error = cacheFailed || authStorageFailed ? 'storage_unavailable' : null;
     } catch (exception) {
       if (context.epoch !== epoch || exception.code === 'stale_request') return snapshot();
       if (exception.status === 401 || exception.code === 'account_changed') {
@@ -467,7 +504,9 @@ export function createFavoritesSync(options = {}) {
     signInTask = (async () => {
       await load(); attemptEpoch = epoch;
       if (session) { const context = {epoch, id: session.user.id}; return enqueue(() => refresh(context)); }
-      await storageSet('local', {[STORAGE_KEYS.autoConnectDisabled]: false}); autoConnectDisabled = false;
+      await storageSet('local', {[STORAGE_KEYS.autoConnectDisabled]: false}, () => attemptEpoch === epoch);
+      if (attemptEpoch !== epoch) return snapshot();
+      autoConnectDisabled = false;
       const portResult = await connectPort(); if (portResult.handled) return snapshot();
       if (portResult.reason && portResult.reason !== 'website_not_signed_in') { error = portResult.reason; status = 'error'; return emit(); }
       if (chrome.runtime.id !== EXTENSION_ID) throw failure('auth_failed');
@@ -503,27 +542,33 @@ export function createFavoritesSync(options = {}) {
         || !TOKEN.test(message.code || '') || !TOKEN.test(message.state || '')) return Promise.resolve(rejected);
     return (async () => {
       await load(); const attemptEpoch = epoch;
+      if (autoConnectDisabled) return rejected;
       const stored = await storageGet('session', STORAGE_KEYS.pending), pending = stored[STORAGE_KEYS.pending];
-      if (attemptEpoch !== epoch || !validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state
+      if (autoConnectDisabled || attemptEpoch !== epoch || !validPending(pending) || !sameAttempt(pendingLogin, pending)
+          || pending.tabId !== sender.tab.id || pending.state !== message.state
           || (pending.mode === 'port' && (pending.portId !== bridge.portId || pending.documentId !== (sender.documentId || '')))
           || (pending.mode === 'website' && bridge.portId) || completionTask) return rejected;
       // Acquire the lock only after validating the transport and exact pending attempt.
+      completingAttempt = pending;
+      const live = () => !autoConnectDisabled && attemptEpoch === epoch && completingAttempt === pending;
       const operation = (async () => {
         await storageRemove('session', STORAGE_KEYS.pending); pendingLogin = null;
-        if (attemptEpoch !== epoch) return rejected;
+        if (!live()) return rejected;
         status = 'syncing'; error = null; emit();
         const payload = await request('/auth/exchange', {method: 'POST', authentication: null,
           body: {code: message.code, verifier: pending.verifier, state: pending.state}});
-        if (attemptEpoch !== epoch) return rejected;
+        if (!live()) return rejected;
         const user = publicUser(payload?.user);
         if (pending.expectedUserId && user?.id !== pending.expectedUserId) throw failure('website_account_changed');
         if (!user || !TOKEN.test(payload?.token || '') || !date(payload.expiresAt) || Date.parse(payload.expiresAt) <= now()) throw failure('auth_failed');
         const value = {api: API_BASE, token: payload.token, expiresAt: payload.expiresAt, user};
-        await storageSet('session', {[STORAGE_KEYS.session]: value, [STORAGE_KEYS.cache]: {api: API_BASE, owner: user.id, records: []}});
-        if (attemptEpoch !== epoch) return rejected;
+        await persistCredential(value, {epoch: attemptEpoch, attempt: pending});
+        if (!live()) return rejected;
         epoch += 1; session = value; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys.clear();
         for (const controller of controllers) controller.abort();
         const context = {epoch, id: user.id};
+        await persistCloud(context.epoch);
+        if (!current(context)) return rejected;
         await enqueue(() => refresh(context));
         return session?.user.id === user.id ? {ok: true, connected: true, user: {...session.user}} : rejected;
       })().catch(exception => {
@@ -531,7 +576,7 @@ export function createFavoritesSync(options = {}) {
           error = ['storage_unavailable', 'website_account_changed'].includes(exception.code) ? exception.code : 'auth_failed'; status = 'error'; emit();
         }
         return rejected;
-      }).finally(() => { if (completionTask === operation) completionTask = null; });
+      }).finally(() => { if (completionTask === operation) completionTask = null; if (completingAttempt === pending) completingAttempt = null; });
       completionTask = operation;
       return operation;
     })().catch(() => rejected);
@@ -539,9 +584,8 @@ export function createFavoritesSync(options = {}) {
   async function signOut() {
     await load(); const previous = session, logoutEpoch = epoch + 1;
     autoConnectDisabled = true; let suppressionFailed = false;
-    try { await storageSet('local', {[STORAGE_KEYS.autoConnectDisabled]: true}); } catch { suppressionFailed = true; }
-    try { await clearAuthentication(); status = 'local'; error = null; emit(); }
-    catch { status = 'error'; error = 'storage_unavailable'; emit(); return snapshot(); }
+    try { await clearAuthentication(true); status = 'local'; error = null; emit(); }
+    catch { suppressionFailed = true; status = 'error'; error = 'storage_unavailable'; emit(); }
     if (previous) {
       try { await request('/auth/logout', {method: 'POST', userId: previous.user.id, authentication: previous}); }
       catch (exception) { if (epoch === logoutEpoch && exception.status !== 401) { error = 'auth_failed'; status = exception.code === 'network_failed' ? 'offline' : 'error'; } }
@@ -591,7 +635,7 @@ export function createFavoritesSync(options = {}) {
           await persistCloud(context.epoch);
           status = cacheFailed ? 'error' : Object.keys(visibleLocal()).length ? 'local' : 'synced';
         } catch (exception) { if (current(context)) cloud = previous; throw exception; }
-        error = cacheFailed ? 'storage_unavailable' : null;
+        error = cacheFailed || authStorageFailed ? 'storage_unavailable' : null;
       } catch (exception) {
         if (!current(context) || exception.code === 'stale_request') return snapshot();
         if (exception.status === 401 || exception.code === 'account_changed') {

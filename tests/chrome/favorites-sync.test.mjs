@@ -18,13 +18,13 @@ function backend() {
   let sequence = 0;
   const server = {user: ALICE, rows: new Map(), sessions: new Map(), exchanges: new Map(), receipts: new Set(), requests: [],
     offline: false, failWrites: false, loseImportResponse: false, pageSize: 500, beforeRead: null, beforeWrite: null,
-    beforeExchange: null, resolvable: new Map()};
+    beforeExchange: null, sessionTTL: 8 * 3600000, resolvable: new Map()};
   const random = () => (++sequence).toString(36).padEnd(43, '_');
   server.put = (user, id, value = extensionToCloud(repo(id))) => server.rows.set(`${user.id}:${id}`, {repo_id: id, repository: copy(value)});
   server.remove = (user, id) => server.rows.delete(`${user.id}:${id}`);
   server.list = user => [...server.rows.entries()].filter(([key]) => key.startsWith(user.id + ':')).map(([, row]) => copy(row)).sort((a, b) => a.repo_id - b.repo_id);
   server.issue = user => { const token = random(); server.sessions.set(token, copy(user)); return {api: API_BASE, token,
-    expiresAt: new Date(Date.now() + 8 * 3600000).toISOString(), user: copy(user)}; };
+    expiresAt: new Date(Date.now() + server.sessionTTL).toISOString(), user: copy(user)}; };
   server.fetch = async (address, options = {}) => {
     const url = new URL(address), method = options.method || 'GET', body = options.body ? JSON.parse(options.body) : null;
     const headers = options.headers || {}, extension = headers['X-Favorites-Extension'];
@@ -221,10 +221,10 @@ test('ordinary writes roll back on failure, serialize rapid toggles, and never q
   assert.deepEqual(f.server.requests.filter(value => value.path === '/api/favorites/2').slice(-2).map(value => value.method), ['PUT', 'DELETE']);
 });
 
-test('tokens and PKCE never reach local storage, public snapshots or onChange broadcasts', async () => {
+test('only the dedicated credential persists locally and tokens never reach public snapshots or broadcasts', async () => {
   const f = fixture(); await f.store.init(); const result = await login(f); await f.store.toggle(repo(2));
-  const secret = f.mock.values.session[K.session].token; assert.match(secret, /^[A-Za-z0-9_-]{43}$/);
-  assert.equal(JSON.stringify(f.mock.values.local).includes(secret), false);
+  const secret = f.mock.values.local[K.auth].token; assert.match(secret, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(JSON.stringify(Object.fromEntries(Object.entries(f.mock.values.local).filter(([key])=>key!==K.auth))).includes(secret), false);
   for (const value of [result, ...f.changes, await f.store.getSnapshot()]) {
     assert.equal(JSON.stringify(value).includes(secret), false); assert.equal(own(value, 'token'), false);
   }
@@ -297,7 +297,7 @@ test('a local cleanup failure retries the confirmed receipt without reviving a l
 
 test('logout during authentication storage cannot leave a token or old account cache behind', {timeout: 5000}, async () => {
   const f = fixture(); await f.store.init(); const held = deferred(), entered = deferred();
-  f.mock.beforeSet = async (area, value) => { if (area === 'session' && value[K.session]) { entered.resolve(); await held.promise; } };
+  f.mock.beforeSet = async (area, value) => { if (area === 'local' && value[K.auth]?.status==='active') { entered.resolve(); await held.promise; } };
   const signingIn = login(f); let signingOut;
   try {
     await entered.promise;
@@ -306,6 +306,7 @@ test('logout during authentication storage cannot leave a token or old account c
   await Promise.all([signingIn, signingOut]);
   assert.equal((await f.store.getSnapshot()).user, null); assert.equal(f.mock.values.session[K.session], undefined);
   assert.equal(f.mock.values.session[K.cache], undefined); assert.equal(f.mock.values.session[K.pending], undefined);
+  assert.equal(f.mock.values.local[K.auth].status,'signed_out');assert.equal(f.mock.values.local[K.auth].token,undefined);
 });
 
 test('cache from a different account is ignored before any network request', async () => {
@@ -318,11 +319,11 @@ test('cache from a different account is ignored before any network request', asy
 
 test('cloud cache quota failure keeps confirmed favorites and authentication in memory', async () => {
   const f = fixture(); await f.store.init(); await login(f);
-  const token = f.mock.values.session[K.session].token;
+  const token = f.mock.values.local[K.auth].token;
   f.mock.fail = (operation, area, items) => operation === 'set' && area === 'session' && own(items, K.cache);
   const added = await f.store.toggle(repo(2)); assert.ok(added.favorites['team/repo-2']);
   assert.equal(added.error, 'storage_unavailable'); assert.equal(f.server.rows.has('101:2'), true);
-  assert.equal(f.mock.values.session[K.session].token, token);
+  assert.equal(f.mock.values.local[K.auth].token, token);
   const synced = await f.store.sync(); assert.ok(synced.favorites['team/repo-2']); assert.equal(synced.user.id, ALICE.id);
   assert.equal(synced.error, 'storage_unavailable'); assert.equal(synced.status, 'error');
   f.mock.fail = null; const recovered = await f.store.sync(); assert.equal(recovered.error, null); assert.equal(recovered.status, 'synced');
@@ -596,9 +597,9 @@ test('a passive port cannot replace a valid normal-website pending attempt',asyn
 });
 
 test('a mismatched legacy transport never holds the lock needed by a valid port completion',{timeout:5000},async()=>{
-  const f=fixture();await f.store.init();const verifier='v'.repeat(43),state='s'.repeat(43),code='c'.repeat(43);
+  const verifier='v'.repeat(43),state='s'.repeat(43),code='c'.repeat(43);
   const pending={api:API_BASE,verifier,state,createdAt:Date.now(),tabId:7,mode:'port',portId:'live-port',documentId:'doc-7',expectedUserId:ALICE.id};
-  f.mock.values.session[K.pending]=pending;f.server.exchanges.set(code,{challenge:createHash('sha256').update(verifier).digest('base64url'),state,user:ALICE});
+  const f=fixture({initial:{session:{[K.pending]:pending}}});await f.store.init();f.server.exchanges.set(code,{challenge:createHash('sha256').update(verifier).digest('base64url'),state,user:ALICE});
   const entered=deferred(),held=deferred();let first=true;
   f.mock.afterGet=async(area,key)=>{if(area==='session'&&key===K.pending&&first){first=false;entered.resolve();await held.promise;}};
   const sender={...websiteSender(7),documentId:'doc-7'},message={type:'favorites:connect',code,state};
@@ -629,4 +630,96 @@ test('main-page one-shot completion requires its exact marker while legacy conne
     assert.deepEqual(await f.store.completeWebsiteSignIn(message,{...websiteSender(pending.tabId),url:'https://agentskills.media'+path}),{ok:false,connected:false},path);
   }
   assert.equal(f.mock.calls.length,before,'disallowed root transports cannot touch storage or occupy a completion lock');assert.deepEqual(f.mock.values.session[K.pending],pending);
+});
+
+test('persistent credentials survive a fresh worker with empty browser-session storage and no website',async()=>{
+  const f=fixture();await f.store.init();await login(f);await f.store.toggle(repo(2));
+  const saved=copy(f.mock.values.local[K.auth]);assert.equal(saved.status,'active');assert.equal(f.mock.values.session[K.session],undefined);
+  f.mock.values.session={};f.mock.tabs=[];
+  const fresh=fixture({server:f.server,mock:f.mock});const result=await fresh.store.init();
+  assert.equal(result.user.id,ALICE.id);assert.ok(result.favorites['team/repo-2']);assert.equal(result.status,'synced');
+  assert.deepEqual(f.mock.values.local[K.auth],saved);assert.equal(f.mock.calls.filter(call=>call[0]==='tabs:create').length,1);
+});
+
+test('a cold offline or unavailable service retains the persistent account and does not erase credentials',async()=>{
+  const f=fixture();await f.store.init();await login(f);const saved=copy(f.mock.values.local[K.auth]);f.mock.values.session={};
+  f.server.offline=true;const offline=fixture({server:f.server,mock:f.mock});const result=await offline.store.init();
+  assert.equal(result.user.id,ALICE.id);assert.equal(result.status,'offline');assert.deepEqual(f.mock.values.local[K.auth],saved);
+  f.server.offline=false;const fetch=f.server.fetch;f.server.fetch=async()=>new Response(JSON.stringify({error:'temporarily_unavailable'}),{status:503});
+  const unavailable=fixture({server:f.server,mock:f.mock});assert.equal((await unavailable.store.init()).user.id,ALICE.id);
+  assert.deepEqual(f.mock.values.local[K.auth],saved);
+  f.server.fetch=async()=>Response.json({authConfigured:false,user:null,favorites:[],nextCursor:null});
+  const unconfigured=fixture({server:f.server,mock:f.mock});assert.equal((await unconfigured.store.init()).user.id,ALICE.id);
+  assert.deepEqual(f.mock.values.local[K.auth],saved);f.server.fetch=fetch;
+});
+
+test('legacy session migration preserves its eight-hour expiry and only removes the source after durable storage succeeds',async()=>{
+  const server=backend(),legacy=server.issue(ALICE),mock=chromeMock(server,{session:{[K.session]:legacy}});
+  mock.fail=(operation,area,items)=>operation==='set'&&area==='local'&&own(items,K.auth);
+  const blocked=fixture({server,mock});const failed=await blocked.store.init();assert.equal(failed.user.id,ALICE.id);assert.equal(failed.error,'storage_unavailable');
+  assert.deepEqual(mock.values.session[K.session],legacy);assert.equal(mock.values.local[K.auth],undefined);
+  mock.fail=null;await blocked.store.sync();assert.equal(mock.values.local[K.auth].expiresAt,legacy.expiresAt);assert.equal(mock.values.local[K.auth].token,legacy.token);
+  assert.equal(mock.values.session[K.session],undefined);
+});
+
+test('logout tombstones and suppression defeat leftover legacy credentials after a browser restart',async()=>{
+  const f=fixture();await f.store.init();await login(f);const previous=copy(f.mock.values.local[K.auth]);await f.store.signOut();
+  assert.equal(f.mock.values.local[K.auth].status,'signed_out');assert.equal(f.mock.values.local[K.auth].token,undefined);
+  f.mock.values.session={[K.session]:{api:API_BASE,token:previous.token,expiresAt:previous.expiresAt,user:previous.user}};
+  const fresh=fixture({server:f.server,mock:f.mock});const result=await fresh.store.init();assert.equal(result.user,null);assert.equal(result.autoConnectDisabled,true);
+  assert.equal(f.mock.values.session[K.session],undefined);assert.equal(f.mock.values.local[K.auth].token,undefined);
+});
+
+test('expired or malformed persistent auth never falls back to a different legacy account',async()=>{
+  for(const saved of [{version:2,status:'active',api:API_BASE,token:'bad',expiresAt:new Date(Date.now()+100000).toISOString(),user:BOB},
+    {version:2,status:'active',api:API_BASE,token:'x'.repeat(43),expiresAt:new Date(Date.now()-1000).toISOString(),user:BOB}]){
+    const server=backend(),legacy=server.issue(ALICE),f=fixture({server,initial:{local:{[K.auth]:saved},session:{[K.session]:legacy}}});
+    const result=await f.store.init();assert.equal(result.user,null);assert.equal(f.mock.values.local[K.auth].status,'cleared');assert.equal(f.mock.values.session[K.session],undefined);
+  }
+});
+
+test('revoked persistent credentials are cleared while cloud favorites and local migration plans remain intact',async()=>{
+  const f=fixture();await f.store.init();await login(f);await f.store.toggle(repo(2));const plan=copy(f.mock.values.local[K.migration]);
+  f.mock.values.session={};f.server.sessions.clear();const fresh=fixture({server:f.server,mock:f.mock});const result=await fresh.store.init();
+  assert.equal(result.user,null);assert.equal(f.mock.values.local[K.auth].status,'cleared');assert.equal(f.mock.values.local[K.auth].token,undefined);
+  assert.equal(f.server.rows.has('101:2'),true);assert.deepEqual(f.mock.values.local[K.migration],plan);
+});
+
+test('new explicit login pending survives a restart despite a prior signed-out credential tombstone',async()=>{
+  const f=fixture();await f.store.init();await login(f);await f.store.signOut();f.mock.tabs=[];await f.store.signIn();
+  const pending=copy(f.mock.values.session[K.pending]);assert.equal(f.mock.values.local[K.auth].status,'signed_out');assert.equal(f.mock.values.local[K.autoConnectDisabled],false);
+  const fresh=fixture({server:f.server,mock:f.mock});assert.equal((await fresh.store.init()).status,'awaiting_website');assert.deepEqual(f.mock.values.session[K.pending],pending);
+});
+
+test('persistent auth uses trusted-context storage access when the Chrome API is available',async()=>{
+  const f=fixture();const settings=[];f.mock.chrome.storage.local.setAccessLevel=async value=>settings.push(value);
+  await f.store.init();assert.deepEqual(settings,[{accessLevel:'TRUSTED_CONTEXTS'}]);
+});
+
+test('a new thirty-day server credential persists unchanged without sliding expiry on synchronization',async()=>{
+  const f=fixture();f.server.sessionTTL=30*24*3600000;await f.store.init();await login(f);
+  const saved=copy(f.mock.values.local[K.auth]);assert.ok(Date.parse(saved.expiresAt)>Date.now()+29*24*3600000);
+  await f.store.sync();assert.equal(f.mock.values.local[K.auth].expiresAt,saved.expiresAt);assert.equal(f.mock.values.local[K.auth].token,saved.token);
+});
+
+test('a late website completion cannot start after logout invalidates the attempt while its tombstone write is blocked',{timeout:5000},async()=>{
+  const f=fixture();await f.store.init();await f.store.signIn();const message=await handoff(f),sender=websiteSender(f.mock.values.session[K.pending].tabId);
+  const entered=deferred(),held=deferred();f.mock.beforeSet=async(area,value)=>{if(area==='local'&&value[K.auth]?.status==='signed_out'){entered.resolve();await held.promise;}};
+  const loggingOut=f.store.signOut();
+  try{await entered.promise;assert.deepEqual(await f.store.completeWebsiteSignIn(message,sender),{ok:false,connected:false});}
+  finally{held.resolve();}
+  await loggingOut;const snapshot=await f.store.getSnapshot();assert.equal(snapshot.user,null);assert.equal(snapshot.autoConnectDisabled,true);
+  assert.equal(f.mock.values.local[K.auth].status,'signed_out');assert.equal(f.mock.values.local[K.auth].token,undefined);assert.equal(f.mock.values.local[K.autoConnectDisabled],true);
+  assert.equal(f.server.requests.some(request=>request.path==='/api/auth/exchange'),false);
+});
+
+test('a delayed explicit reconnect preference write cannot undo a newer logout or start a new port grant',{timeout:5000},async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry});await f.store.init();const entered=deferred(),held=deferred();
+  f.mock.beforeSet=async(area,value)=>{if(area==='local'&&value[K.autoConnectDisabled]===false&&!value[K.auth]){entered.resolve();await held.promise;}};
+  const connecting=f.store.signIn();await entered.promise;attachWebsite(f,registry,ALICE);
+  const loggingOut=f.store.signOut();await settle();held.resolve();await Promise.all([connecting,loggingOut]);
+  const snapshot=await f.store.getSnapshot();assert.equal(snapshot.user,null);assert.equal(snapshot.autoConnectDisabled,true);
+  assert.equal(f.mock.values.local[K.autoConnectDisabled],true);assert.equal(f.mock.values.local[K.auth].status,'signed_out');
+  assert.equal(f.server.requests.some(request=>request.path==='/api/auth/exchange'),false);
+  assert.equal(f.mock.calls.some(call=>call[0]==='tabs:update'),false);
 });

@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {createHash,randomBytes} = require('node:crypto');
-const {SESSION_KEYS} = require('../src/favorites.js');
+const {SESSION_KEYS, STORAGE_KEYS} = require('../src/favorites.js');
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8765/';
 const baseURL = new URL(base);
 const writeArtifacts = ['localhost','127.0.0.1','[::1]'].includes(baseURL.hostname);
@@ -53,7 +53,7 @@ function backendFixture() {
   function openSession(user) {
     const token=randomBytes(32).toString('base64url');
     sessions.set(token,user);
-    return {api:apiBase,token,expiresAt:new Date(Date.now()+8*60*60*1000).toISOString(),user};
+    return {api:apiBase,token,expiresAt:new Date(Date.now()+30*24*60*60*1000).toISOString(),user};
   }
   const userFor=request=>sessions.get((request.headers().authorization||'').replace(/^Bearer /,''))||null;
   async function intercept(route,{configured=true}={}) {
@@ -205,15 +205,18 @@ function backendFixture() {
   await waitState(a.page,s=>s.user?.id===alice.id&&s.status==='synced'&&s.ids.includes(first.id),'first login imports existing local favorites');
   assert.equal(backend.rows.get(alice.id).has(first.id),true);
   assert.equal((await state(a.page)).ids.includes(existingCloudId),true,'first import preserves existing cloud favorites');
-  const sessionData=await a.page.evaluate(key=>JSON.parse(sessionStorage.getItem(key)),SESSION_KEYS.session);
-  assert.equal(sessionData.user.id,alice.id,'site session is kept in sessionStorage');
-  assert.equal(await a.page.evaluate(()=>Object.values(localStorage).some(value=>/"token"|"verifier"/.test(value))),false,'login tokens and verifier are absent from localStorage');
+  const authData=await a.page.evaluate(key=>JSON.parse(localStorage.getItem(key)),STORAGE_KEYS.auth);
+  const sessionData=authData.session;
+  assert.equal(authData.version,2);
+  assert.equal(sessionData.user.id,alice.id,'site login survives closing the tab through its bounded local credential');
+  assert.equal(await a.page.evaluate(key=>Object.entries(localStorage).filter(([name])=>name!==key).some(([,value])=>/"token"|"verifier"/.test(value)),STORAGE_KEYS.auth),false,'only the auth envelope persists its own site token; no verifier is persisted');
+  assert.equal(await a.page.evaluate(key=>sessionStorage.getItem(key),SESSION_KEYS.session),null,'legacy temporary login has been removed');
   assert.equal(await a.page.evaluate(key=>sessionStorage.getItem(key),SESSION_KEYS.login),null,'login verifier is cleared after exchange');
   assert.equal(new URL(a.page.url()).searchParams.has('login_code'),false,'one-time code is removed from URL');
   assert.equal(new URL(a.page.url()).searchParams.has('login_state'),false,'one-time state is removed from URL');
   assert.equal(a.page.url().includes(sessionData.token),false,'site session token never enters URL');
   await a.page.reload();await ready(a.page);
-  await waitState(a.page,s=>s.user?.id===alice.id&&s.status==='synced','sessionStorage restores sign-in after refresh');
+  await waitState(a.page,s=>s.user?.id===alice.id&&s.status==='synced','persistent site login restores sign-in after refresh');
   assert.equal(await a.page.evaluate(()=>Object.keys(localStorage).some(key=>/supabase|auth.token|access.token|refresh.token/i.test(key))),false,'account client does not persist provider tokens');
   const authRequest=backend.requests.find(request=>request.path==='/api/auth/github');
   assert.ok(authRequest,'sign-in uses the separate Worker address');
@@ -278,7 +281,8 @@ function backendFixture() {
   assert.deepEqual((await state(b.page)).ids,[],'account favorites are not exposed as anonymous data');
   assert.equal(backend.rows.get(alice.id).has(second.id),true,'sign-out retains cloud favorites');
   assert.equal(await b.page.locator('#githubSignIn').isVisible(),true);
-  assert.equal(await b.page.evaluate(key=>sessionStorage.getItem(key),SESSION_KEYS.session),null,'sign-out clears the tab session');
+  assert.equal(await b.page.evaluate(key=>sessionStorage.getItem(key),SESSION_KEYS.session),null,'sign-out clears the legacy tab session');
+  assert.equal(await b.page.evaluate(key=>JSON.parse(localStorage.getItem(key)).session,STORAGE_KEYS.auth),null,'sign-out persists a tombstone without credentials');
   backend.setLoginUser(bob);await b.page.locator('#githubSignIn').click();await ready(b.page);
   await waitState(b.page,s=>s.user?.id===bob.id&&s.status==='synced','another account can sign in');
   assert.deepEqual((await state(b.page)).ids,[],'new account does not inherit the previous account favorites');
@@ -291,6 +295,6 @@ function backendFixture() {
   assert.ok(laterPage,'large lists request the next bootstrap page');
   assert.equal(laterPage.headers['x-favorites-user'],bob.id,'subsequent page remains bound to the first-page account');
   assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({status:'passed',base,auth:'cross-origin HTTPS fixture; production GitHub OAuth, Worker security and D1 require separate verification',checks:['local migration and corrupt storage','cross-origin PKCE exchange, bearer and sessionStorage restoration','first import','online add/remove, visible failure and rollback','offline rollback without queue','second-browser and paginated restoration','out-of-catalog favorites plus escaped card, list and snapshot descriptions','account isolation and logout retention','bilingual light/dark 320–1366px layout and keyboard focus']}));
+  console.log(JSON.stringify({status:'passed',base,auth:'cross-origin HTTPS fixture; production GitHub OAuth, Worker security and D1 require separate verification',checks:['local migration and corrupt storage','cross-origin PKCE exchange, bearer and persistent login restoration','first import','online add/remove, visible failure and rollback','offline rollback without queue','second-browser and paginated restoration','out-of-catalog favorites plus escaped card, list and snapshot descriptions','account isolation and logout retention','bilingual light/dark 320–1366px layout and keyboard focus']}));
  }finally{await Promise.all(contexts.map(context=>context.close()));await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

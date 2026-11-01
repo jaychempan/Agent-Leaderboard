@@ -1,5 +1,6 @@
 /* Public API address. No credentials belong in browser configuration.
- * The Worker handles GitHub OAuth; the page keeps a short site session in sessionStorage.
+ * The Worker handles GitHub OAuth; a revocable site credential lasts at most 30 days.
+ * Only the temporary OAuth proof remains in same-tab sessionStorage.
  * Without a deployed API, favorites continue to work locally.
  */
 window.FAVORITES_CONFIG = Object.freeze({

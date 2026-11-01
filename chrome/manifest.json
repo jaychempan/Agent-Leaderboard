@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Agent Leaderboard",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "在侧边栏搜索 AI 工具，查看日周月趋势榜，使用 GitHub 账号同步网站与插件收藏。",
   "minimum_chrome_version": "116",
   "permissions": [

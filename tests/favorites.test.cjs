@@ -39,7 +39,7 @@ function fakeBackend(user = null) {
       assert.equal(options.headers.Authorization,undefined);
       const exchange=server.exchange;server.exchange=null;
       if(!exchange||body.code!==exchange.code||body.state!==exchange.state||body.verifier!==exchange.verifier)return respond(401,{error:'invalid_exchange'});
-      return respond(200,{token:server.tokenFor(exchange.user),expiresAt:new Date(Date.now()+8*60*60*1000).toISOString(),user:exchange.user});
+      return respond(200,{token:server.tokenFor(exchange.user),expiresAt:new Date(Date.now()+30*24*60*60*1000).toISOString(),user:exchange.user});
     }
     if(path==='/api/bootstrap') {
       const after=Number(url.searchParams.get('after')||0);
@@ -115,7 +115,7 @@ test('active-session capability requires configured service and a live store',as
 test('website extension connection uses its private bearer and returns only the short-lived handoff',async t=>{
   const f=fixture(t,{user:ALICE,config:CROSS_CONFIG});await f.store.init();
   const proof={extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)};
-  const siteToken=JSON.parse(f.sessionStorage.getItem(S.session)).token;
+  const siteToken=JSON.parse(f.storage.getItem(K.auth)).session.token;
   f.server.extensionReply={code:'h'.repeat(43),state:proof.client_state,expiresAt:new Date(Date.now()+90000).toISOString(),token:siteToken,user:ALICE,unsafe:'not exposed'};
   const handoff=await f.store.connectExtension({...proof,token:'caller-cannot-select-a-session',user_id:BOB.id});
   assert.deepEqual(Object.keys(handoff).sort(),['code','expiresAt','state']);assert.equal(handoff.state,proof.client_state);
@@ -126,7 +126,8 @@ test('website extension connection uses its private bearer and returns only the 
   assert.equal(request.credentials,'omit');
   assert.equal(JSON.stringify(f.store.getSnapshot()).includes(siteToken),false);
   assert.equal(JSON.stringify(f.changes).includes(siteToken),false);
-  assert.equal(JSON.stringify([...f.storage.values]).includes(siteToken),false);
+  assert.equal(JSON.parse(f.storage.getItem(K.auth)).session.token,siteToken);
+  assert.ok(!JSON.stringify([...f.storage.values]).includes('verifier'));
   assert.equal(f.store.getToken,undefined);assert.equal(f.store.token,undefined);assert.equal(f.store.session,undefined);
 });
 test('website extension connection rejects invalid proofs, anonymous or expired sessions, and account changes',async t=>{
@@ -140,7 +141,7 @@ test('website extension connection rejects invalid proofs, anonymous or expired 
   await assert.rejects(anonymous.store.connectExtension(proof),error=>error.code==='authentication_required');
   const expired=fixture(t,{user:ALICE,now:()=>Date.now()+9*3600000});await expired.store.init();
   await assert.rejects(expired.store.connectExtension(proof),error=>error.code==='authentication_required');
-  const token=JSON.parse(f.sessionStorage.getItem(S.session)).token;f.server.sessions.set(token,BOB);
+  const token=JSON.parse(f.storage.getItem(K.auth)).session.token;f.server.sessions.set(token,BOB);
   await assert.rejects(f.store.connectExtension(proof),error=>error.code==='account_changed');
 });
 test('website extension connection validates the returned proof and discards a late handoff after logout',async t=>{
@@ -288,9 +289,10 @@ test('a revoked tab session cannot write into a newly logged-in account',async t
 test('a second account does not import another account cache or its original local migration',async t=>{
   const server=fakeBackend(ALICE),storage=new MemoryStorage({[K.legacy]:'[1]'}),f=fixture(t,{server,storage});await f.store.init();
   await f.store.signOut();await f.store.toggle(repo(3));server.user=BOB;
+  storage.setItem(K.auth,JSON.stringify({version:2,revision:'new-bob-login',session:{api:'https://agentskills.media/api',token:server.tokenFor(BOB),expiresAt:new Date(Date.now()+8*3600000).toISOString(),user:BOB}}));
   const bob=fixture(t,{server,storage});await bob.store.init();
   assert.equal(bob.store.getSnapshot().user.id,BOB.id);assert.deepEqual(bob.store.getSnapshot().ids,[]);assert.equal(server.list(BOB).length,0);
-  server.user=ALICE;const alice=fixture(t,{server,storage});await alice.store.init();assert.deepEqual(alice.store.getSnapshot().ids,[1,3]);
+  server.user=ALICE;storage.setItem(K.auth,JSON.stringify({version:2,revision:'new-alice-login',session:{api:'https://agentskills.media/api',token:server.tokenFor(ALICE),expiresAt:new Date(Date.now()+8*3600000).toISOString(),user:ALICE}}));const alice=fixture(t,{server,storage});await alice.store.init();assert.deepEqual(alice.store.getSnapshot().ids,[1,3]);
 });
 test('out-of-catalog snapshots remain visible and untrusted fields cannot create arbitrary links',async t=>{
   const server=fakeBackend(ALICE);server.put(ALICE,77,repo(77,{description:'<img src=x onerror=alert(1)>',url:'javascript:alert(1)',sources:['skills','__proto__','unknown'],secret:'not retained'}));
@@ -359,10 +361,10 @@ test('destroying the store discards an old cursor-page response before it reache
   const held=deferred();server.beforeRead=async({after})=>{if(after===1)await held.promise;};
   const f=fixture(t,{server}),initializing=f.store.init();await settle();
   const previousChanges=f.changes.length;f.store.destroy();held.resolve();await initializing;
-  assert.equal(f.changes.length,previousChanges);assert.equal(f.store.getSnapshot().user,null);assert.deepEqual(f.store.getSnapshot().ids,[]);
+  assert.equal(f.changes.length,previousChanges);assert.equal(f.store.hasActiveSession(),false);assert.deepEqual(f.store.getSnapshot().ids,[]);
 });
 
-test('cross-origin callback exchanges PKCE once, cleans the URL before fetching and survives a same-tab reload',async t=>{
+test('cross-origin callback exchanges PKCE once, cleans the URL before fetching and survives a new tab without sessionStorage',async t=>{
   const server=fakeBackend(),sessionStorage=new MemoryStorage(),storage=new MemoryStorage({[K.legacy]:'[1]'});
   const location={href:'https://agentskills.media/?view=saved#mcp',assign(value){this.destination=value;}};
   const initial=fixture(t,{server,sessionStorage,storage,location,config:CROSS_CONFIG});await initial.store.init();await initial.store.signIn();
@@ -375,14 +377,15 @@ test('cross-origin callback exchanges PKCE once, cleans the URL before fetching 
   server.fetch=async(address,options)=>{assert.equal(new URL(location.href).searchParams.has('login_code'),false);assert.equal(sessionStorage.getItem(S.login),null);return original(address,options);};
   const callback=fixture(t,{server,sessionStorage,storage,location,config:CROSS_CONFIG});await callback.store.init();
   assert.equal(location.href,'https://agentskills.media/?view=saved#mcp');assert.equal(callback.store.getSnapshot().user.id,ALICE.id);assert.deepEqual(callback.store.getSnapshot().ids,[1]);
-  const stored=JSON.parse(sessionStorage.getItem(S.session));assert.equal(stored.api,CROSS_CONFIG.apiBase);assert.equal(stored.user.id,ALICE.id);
-  assert.ok(![...storage.values.values()].some(value=>value.includes(stored.token)),'site token never goes into localStorage');
+  const stored=JSON.parse(storage.getItem(K.auth)).session;assert.equal(stored.api,CROSS_CONFIG.apiBase);assert.equal(stored.user.id,ALICE.id);
+  assert.equal(sessionStorage.getItem(S.session),null,'only the temporary OAuth proof uses sessionStorage');
+  assert.ok(![...storage.values.values()].some(value=>value.includes(pending.verifier)),'OAuth verifier never persists in localStorage');
   assert.ok(!location.href.includes(stored.token));
   const exchange=server.requests.find(request=>request.path==='/api/auth/exchange');assert.deepEqual(exchange.body,{code,verifier:pending.verifier,state:pending.state});assert.equal(exchange.headers.Authorization,undefined);
   assert.equal(server.requests.find(request=>request.path==='/api/favorites/import').headers.Authorization,'Bearer '+stored.token);
   callback.store.destroy();server.fetch=original;
-  const reloaded=fixture(t,{server,sessionStorage,storage,location,config:CROSS_CONFIG});await reloaded.store.init();assert.equal(reloaded.store.getSnapshot().user.id,ALICE.id);
-  await reloaded.store.signOut();assert.equal(sessionStorage.getItem(S.session),null);assert.equal(server.sessions.has(stored.token),false);assert.equal(server.list(ALICE).length,1);
+  const reloaded=fixture(t,{server,sessionStorage:new MemoryStorage(),storage,location,config:CROSS_CONFIG});await reloaded.store.init();assert.equal(reloaded.store.getSnapshot().user.id,ALICE.id);
+  await reloaded.store.signOut();assert.equal(JSON.parse(storage.getItem(K.auth)).session,null);assert.equal(sessionStorage.getItem(S.session),null);assert.equal(server.sessions.has(stored.token),false);assert.equal(server.list(ALICE).length,1);
 });
 test('callback replay, missing PKCE, mismatched state and old pending logins cannot exchange',async t=>{
   const code='c'.repeat(43),state='s'.repeat(43),verifier='v'.repeat(43),api=CROSS_CONFIG.apiBase;
@@ -447,4 +450,146 @@ test('a failed sign-in releases its Promise guard so the user can retry',async t
   const sessionStorage=new MemoryStorage(),f=fixture(t,{sessionStorage});await f.store.init();sessionStorage.fail=()=>true;
   await assert.rejects(f.store.signIn(),{code:'storage_unavailable'});assert.equal(f.location.destination,undefined);
   sessionStorage.fail=null;await f.store.signIn();assert.ok(f.location.destination);assert.ok(sessionStorage.getItem(S.login));
+});
+
+function persistentSession(storage) { return JSON.parse(storage.getItem(K.auth) || 'null')?.session || null; }
+function persistLogin(storage, server, owner, expiresAt = new Date(Date.now() + 30 * 86400000).toISOString()) {
+  const session = {api:'https://agentskills.media/api',token:server.tokenFor(owner),expiresAt,user:owner};
+  storage.setItem(K.auth, JSON.stringify({version:2,revision:webcrypto.randomUUID(),session}));
+  return session;
+}
+function storageChanged(target, key = K.auth) {
+  const event = new Event('storage'); Object.defineProperty(event, 'key', {value:key}); target.dispatchEvent(event);
+}
+
+test('persistent credentials survive a fresh store and empty tab storage without extending the fixed expiry',async t=>{
+  const server=fakeBackend(ALICE),first=fixture(t,{server});await first.store.init();
+  const saved=persistentSession(first.storage),raw=first.storage.getItem(K.auth);
+  assert.equal(first.sessionStorage.getItem(S.session),null,'legacy session is removed after durable migration');
+  first.store.destroy();
+  const next=fixture(t,{server,storage:first.storage,sessionStorage:new MemoryStorage()});
+  assert.equal(next.store.getSnapshot().user.id,ALICE.id);assert.equal(next.store.hasActiveSession(),false);
+  await next.store.init();assert.equal(next.store.hasActiveSession(),true);
+  assert.deepEqual(persistentSession(next.storage),saved);assert.equal(next.storage.getItem(K.auth),raw);
+  assert.equal(server.requests.some(value=>value.path==='/api/auth/exchange'),false);
+});
+test('persistent restore validates API, token, public identity and the thirty-day absolute upper bound',async t=>{
+  const server=fakeBackend(ALICE),token=server.tokenFor(ALICE),clock=Date.now();
+  const valid={api:'https://agentskills.media/api',token,expiresAt:new Date(clock+30*86400000).toISOString(),user:ALICE};
+  for(const patch of [{expiresAt:new Date(clock-1).toISOString()},{expiresAt:new Date(clock+31*86400000).toISOString()},
+    {api:'https://another.example/api'},{token:'short'},{user:{id:'101',login:'<unsafe>'}}]){
+    const storage=new MemoryStorage({[K.auth]:JSON.stringify({version:2,revision:'existing-auth',session:{...valid,...patch}})});
+    const f=fixture(t,{server,storage,sessionStorage:new MemoryStorage(),now:()=>clock});await f.store.init();
+    assert.equal(f.store.getSnapshot().user,null);assert.equal(f.store.hasActiveSession(),false);
+    assert.equal(server.requests.at(-1).headers.Authorization,undefined);
+  }
+});
+test('old tab credentials retain their original expiry and cannot resurrect a durable logout',async t=>{
+  const server=fakeBackend(ALICE),legacy={api:'https://agentskills.media/api',token:server.tokenFor(ALICE),expiresAt:new Date(Date.now()+8*3600000).toISOString(),user:ALICE};
+  const first=fixture(t,{server,sessionStorage:new MemoryStorage({[S.session]:JSON.stringify(legacy)})});
+  await first.store.init();assert.equal(persistentSession(first.storage).expiresAt,legacy.expiresAt);
+  const staleTabStorage=new MemoryStorage({[S.session]:JSON.stringify(legacy)});
+  await first.store.signOut();
+  const tombstone=JSON.parse(first.storage.getItem(K.auth));assert.equal(tombstone.version,2);assert.equal(tombstone.session,null);
+  const stale=fixture(t,{server:first.server,storage:first.storage,sessionStorage:staleTabStorage});await stale.store.init();
+  assert.equal(stale.store.getSnapshot().user,null);assert.equal(staleTabStorage.getItem(S.session),null);
+  assert.equal(stale.storage.getItem(K.auth),JSON.stringify(tombstone));
+});
+test('an existing persistent account wins over a stale legacy tab credential',async t=>{
+  const server=fakeBackend(BOB),storage=new MemoryStorage(),saved=persistLogin(storage,server,BOB);
+  const sessionStorage=new MemoryStorage({[S.session]:JSON.stringify({...saved,token:server.tokenFor(ALICE),user:ALICE})});
+  const f=fixture(t,{server,storage,sessionStorage});await f.store.init();
+  assert.equal(f.store.getSnapshot().user.id,BOB.id);assert.equal(persistentSession(storage).token,saved.token);assert.equal(sessionStorage.getItem(S.session),null);
+});
+test('network and service outages preserve persisted identity, while bootstrap verification gates extension handoff',async t=>{
+  for(const mode of ['offline','unavailable','configured']){
+    const server=fakeBackend(ALICE),storage=new MemoryStorage(),saved=persistLogin(storage,server,ALICE);
+    if(mode==='configured')server.configured=false;else server[mode]=true;
+    const f=fixture(t,{server,storage,sessionStorage:new MemoryStorage()});await f.store.init();
+    assert.equal(f.store.getSnapshot().user.id,ALICE.id);assert.equal(f.store.getSnapshot().configured,true);
+    assert.equal(f.store.hasActiveSession(),false);assert.equal(persistentSession(storage).token,saved.token);
+    assert.equal(f.store.getSnapshot().status,mode==='offline'?'offline':'error');
+    server.offline=false;server.unavailable=false;server.configured=true;await f.store.sync();
+    assert.equal(f.store.hasActiveSession(),true);assert.equal(f.store.getSnapshot().status,'synced');
+    assert.equal(persistentSession(storage).expiresAt,saved.expiresAt);
+  }
+});
+test('offline explicit logout persists immediately, retains cloud favorites, and survives a new tab',async t=>{
+  const f=fixture(t,{user:ALICE});f.server.put(ALICE,1);await f.store.init();f.server.offline=true;
+  const logout=f.store.signOut();assert.equal(f.store.getSnapshot().user,null);assert.equal(persistentSession(f.storage),null);
+  await logout;assert.equal(f.store.getSnapshot().status,'local');assert.equal(f.server.list(ALICE).length,1);
+  f.server.offline=false;
+  const next=fixture(t,{server:f.server,storage:f.storage,sessionStorage:new MemoryStorage()});await next.store.init();
+  assert.equal(next.store.getSnapshot().user,null);assert.equal(next.store.hasActiveSession(),false);
+});
+test('storage logout clears another tab immediately and discards its delayed account response',async t=>{
+  const server=fakeBackend(ALICE);server.put(ALICE,1);const first=fixture(t,{server});await first.store.init();
+  const second=fixture(t,{server,storage:first.storage,sessionStorage:new MemoryStorage()});await second.store.init();
+  const held=deferred();server.beforeRead=async()=>held.promise;
+  const refreshing=second.store.sync();await settle();const changedAt=second.changes.length;
+  await first.store.signOut();storageChanged(second.eventTarget);
+  assert.equal(second.store.getSnapshot().user,null);assert.deepEqual(second.store.getSnapshot().ids,[]);
+  assert.equal(second.store.hasActiveSession(),false);held.resolve();server.beforeRead=null;await refreshing;await settle();
+  assert.ok(second.changes.slice(changedAt).every(snapshot=>snapshot.user===null&&snapshot.ids.length===0));
+});
+test('an auth replacement clears old rows and verifies the new account before adoption',async t=>{
+  const server=fakeBackend(ALICE);server.put(ALICE,1);server.put(BOB,2);const f=fixture(t,{server});await f.store.init();
+  const held=deferred();server.beforeRead=async()=>held.promise;persistLogin(f.storage,server,BOB);storageChanged(f.eventTarget);
+  assert.equal(f.store.getSnapshot().user,null);assert.deepEqual(f.store.getSnapshot().ids,[]);assert.equal(f.store.hasActiveSession(),false);
+  await settle();server.beforeRead=null;held.resolve();await settle();await f.store.sync();
+  assert.equal(f.store.getSnapshot().user.id,BOB.id);assert.deepEqual(f.store.getSnapshot().ids,[2]);assert.equal(f.store.hasActiveSession(),true);
+});
+test('a write rechecks persistent auth before its storage event and cannot write for the stale account',async t=>{
+  const server=fakeBackend(ALICE);server.put(ALICE,1);server.put(BOB,2);const f=fixture(t,{server});await f.store.init();
+  persistLogin(f.storage,server,BOB);await f.store.toggle(repo(9));
+  assert.equal(server.requests.some(value=>value.path==='/api/favorites/9'),false);
+  assert.equal(server.rows.has('101:9'),false);assert.equal(server.rows.has('202:9'),false);
+  assert.equal(f.store.getSnapshot().user.id,BOB.id);assert.deepEqual(f.store.getSnapshot().ids,[2]);
+});
+test('a late revoked-account response cannot clear a newer persistent login even without a storage event',async t=>{
+  const server=fakeBackend(ALICE),original=server.fetch,held=deferred();
+  server.fetch=async(address,options)=>{
+    if(new URL(address).pathname==='/api/favorites/9'){await held.promise;return new Response(JSON.stringify({error:'authentication_required'}),{status:401});}
+    return original(address,options);
+  };
+  const f=fixture(t,{server});await f.store.init();const pending=f.store.toggle(repo(9));await settle();
+  const bob=persistLogin(f.storage,server,BOB);held.resolve();await pending;
+  assert.equal(persistentSession(f.storage).token,bob.token);await f.store.sync();assert.equal(f.store.getSnapshot().user.id,BOB.id);
+});
+test('a confirmed server revocation clears only its current credential and persists the signed-out state',async t=>{
+  const f=fixture(t,{user:ALICE});await f.store.init();f.server.sessions.clear();await f.store.sync();
+  assert.equal(f.store.getSnapshot().user,null);assert.equal(persistentSession(f.storage),null);assert.equal(f.store.hasActiveSession(),false);
+  assert.equal(f.changes.at(-1).user,null,'the visible account receives the revocation immediately');
+  const next=fixture(t,{server:f.server,storage:f.storage,sessionStorage:new MemoryStorage()});await next.store.init();assert.equal(next.store.getSnapshot().user,null);
+});
+test('a new thirty-day login is bounded and does not persist an overlong server credential',async t=>{
+  for(const lifetime of [30*86400000,31*86400000]){
+    const server=fakeBackend(),original=server.fetch,sessionStorage=new MemoryStorage(),storage=new MemoryStorage();
+    const state='s'.repeat(43),code='c'.repeat(43),verifier='v'.repeat(43),clock=Date.now();
+    sessionStorage.setItem(S.login,JSON.stringify({api:'https://agentskills.media/api',state,verifier,createdAt:clock}));
+    server.fetch=async(address,options)=>new URL(address).pathname==='/api/auth/exchange'
+      ?new Response(JSON.stringify({token:server.tokenFor(ALICE),expiresAt:new Date(clock+lifetime).toISOString(),user:ALICE}),{status:200})
+      :original(address,options);
+    const f=fixture(t,{server,storage,sessionStorage,now:()=>clock,location:{href:`https://agentskills.media/?login_code=${code}&login_state=${state}`}});await f.store.init();
+    assert.equal(sessionStorage.getItem(S.login),null);
+    if(lifetime===30*86400000){assert.equal(f.store.hasActiveSession(),true);assert.equal(Date.parse(persistentSession(storage).expiresAt),clock+lifetime);}
+    else {assert.equal(f.store.getSnapshot().error,'auth_failed');assert.equal(persistentSession(storage),null);}
+  }
+});
+test('an offline auth replacement shows the new known label without old rows, writes or grants',async t=>{
+  const server=fakeBackend(ALICE);server.put(ALICE,1);const f=fixture(t,{server});await f.store.init();
+  server.offline=true;persistLogin(f.storage,server,BOB);storageChanged(f.eventTarget);await settle();
+  assert.equal(f.store.getSnapshot().user.id,BOB.id);assert.deepEqual(f.store.getSnapshot().ids,[]);
+  assert.equal(f.store.getSnapshot().status,'offline');assert.equal(f.store.hasActiveSession(),false);
+  const before=server.requests.length;await f.store.toggle(repo(9));
+  assert.equal(server.requests.slice(before).some(value=>value.method!=='GET'),false);
+  await assert.rejects(f.store.connectExtension({extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)}),{code:'authentication_required'});
+  assert.equal(server.requests.some(value=>value.path==='/api/auth/extension'),false);
+  server.offline=false;await f.store.sync();assert.equal(f.store.hasActiveSession(),true);
+});
+test('a delayed storage event still verifies auth already noticed by a synchronous capability read',async t=>{
+  const server=fakeBackend(ALICE);server.put(ALICE,1);server.put(BOB,2);const f=fixture(t,{server});await f.store.init();
+  persistLogin(f.storage,server,BOB);assert.equal(f.store.hasActiveSession(),false);assert.equal(f.store.getSnapshot().user,null);
+  storageChanged(f.eventTarget);await settle();
+  assert.equal(f.store.getSnapshot().user.id,BOB.id);assert.deepEqual(f.store.getSnapshot().ids,[2]);assert.equal(f.store.hasActiveSession(),true);
 });

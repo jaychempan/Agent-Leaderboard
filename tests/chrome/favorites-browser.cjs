@@ -9,6 +9,7 @@ const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 const websiteOrigin='https://agentskills.media';
 const siteSessionKey='st_favorites_session_v1';
+const siteAuthKey='st_favorites_auth_v2';
 
 const root = path.resolve(__dirname, '../..');
 const expectedId = 'medjijlfgmfeldlelkidiickdcnbicaf';
@@ -38,7 +39,7 @@ async function installBackendFixture({api,id,chosen,seed=true}){
       const hash=async value=>{let bytes='';for(const byte of new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))))bytes+=String.fromCharCode(byte);
         return btoa(bytes).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');};
       backend.openSession=(client,owner=user)=>{
-        const token=random(),expiresAt=new Date(Date.now()+8*3600000).toISOString();
+        const token=random(),expiresAt=new Date(Date.now()+30*86400000).toISOString();
         backend.sessions.set(token,{client,user:owner});return {api,token,expiresAt,user:owner};
       };
       const response=(status,json)=>({status,json});
@@ -249,15 +250,15 @@ async function configurePageRoutes(context,getWorker){
     const snapshot = await page.evaluate(() => chrome.runtime.sendMessage({type: 'favorites:snapshot'}));
     const secure = await worker.evaluate(async snapshot => {
       const values = await chrome.storage.session.get(null), local = await chrome.storage.local.get(null);
-      const value = values.agentFavoritesSessionV1, token = value?.token;
+      const value = local.agentFavoritesAuthV2, token = value?.token;
       return {handoffs: globalThis.__favoritesBrowserBackend.handoffs, pkce: globalThis.__favoritesBrowserBackend.extensionExchanges,
         imports: globalThis.__favoritesBrowserBackend.imports, importRows: globalThis.__favoritesBrowserBackend.importRows,
-        tokenValid: /^[A-Za-z0-9_-]{43}$/.test(token || ''), eightHours: Math.abs(Date.parse(value?.expiresAt) - Date.now() - 8 * 3600000) < 15000,
-        tokenAbsentFromLocal: Boolean(token) && !JSON.stringify(local).includes(token), tokenAbsentFromSnapshot: Boolean(token) && !JSON.stringify(snapshot).includes(token),
+        tokenValid: /^[A-Za-z0-9_-]{43}$/.test(token || ''), thirtyDays: Math.abs(Date.parse(value?.expiresAt) - Date.now() - 30 * 86400000) < 15000,
+        authPersistent: value?.version===2 && value?.status==='active', legacySessionGone:!values.agentFavoritesSessionV1, tokenAbsentFromSnapshot: Boolean(token) && !JSON.stringify(snapshot).includes(token),
         pendingCleared: !values.agentFavoritesLoginV1, oldKeysRemoved: !Object.keys(local).some(key => key.startsWith('favorite:'))};
     }, snapshot);
-    assert.deepEqual(secure, {handoffs: 1, pkce: 1, imports: 1, importRows: 1, tokenValid: true, eightHours: true,
-      tokenAbsentFromLocal: true, tokenAbsentFromSnapshot: true, pendingCleared: true, oldKeysRemoved: true});
+    assert.deepEqual(secure, {handoffs: 1, pkce: 1, imports: 1, importRows: 1, tokenValid: true, thirtyDays: true,
+      authPersistent: true, legacySessionGone:true, tokenAbsentFromSnapshot: true, pendingCleared: true, oldKeysRemoved: true});
     const bridgeSecurity=await worker.evaluate(()=>{
       const backend=globalThis.__favoritesBrowserBackend,entry=backend.externalPorts.find(entry=>entry.messages.some(message=>message.type==='favorites:connect'));
       return {origin:entry?.origin,url:new URL(entry?.url).pathname,frameId:entry?.frameId,hasSenderId:entry?.hasSenderId,
@@ -267,6 +268,55 @@ async function configurePageRoutes(context,getWorker){
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.find(entry=>entry.messages.some(message=>message.type==='favorites:connect'))?.tabId),websiteTabId,'native port belongs to the original website tab');
     assert.deepEqual(bridgeSecurity,{origin:websiteOrigin,url:'/',frameId:0,hasSenderId:false,name:'favorites:website',
       connectKeys:['code','state','type'],websiteTokenAbsent:true,websiteTokenUnsent:true,codeNotSession:true});
+    stage='full browser restart restores both durable credentials without a website tab or another login';
+    const durableWebsiteAuth=await website.evaluate(key=>localStorage.getItem(key),siteAuthKey);
+    const durableExtensionAuth=await worker.evaluate(async()=>((await chrome.storage.local.get('agentFavoritesAuthV2')).agentFavoritesAuthV2));
+    const restartBackend=await worker.evaluate(()=>{
+      const b=globalThis.__favoritesBrowserBackend;
+      return {rows:[...b.rows],sessions:[...b.sessions],receipts:[...b.receipts],
+        counters:Object.fromEntries(['handoffs','extensionExchanges','websiteExchanges','imports','importRows','writes','failedWrites'].map(key=>[key,b[key]]))};
+    });
+    // Close the complete Chrome process and reopen its disk profile. No auth
+    // addInitScript or storage seed is installed in the second process.
+    await website.close();await page.close();await context.close();
+    context=await chromium.launchPersistentContext(profile,{
+      executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      headless:true,colorScheme:'dark',viewport:{width:390,height:850},ignoreDefaultArgs:['--disable-extensions'],
+      args:['--enable-unsafe-extension-debugging','--host-resolver-rules=MAP * ~NOTFOUND'],
+    });context.setDefaultTimeout(10000);
+    await context.route('https://**/*',route=>route.abort('blockedbyclient'));
+    const restartCDP=await context.browser().newBrowserCDPSession();
+    const restartedExtension=await restartCDP.send('Extensions.loadUnpacked',{path:process.env.EXTENSION_PATH||path.join(root,'chrome')});
+    assert.equal(restartedExtension.id,id);
+    worker=context.serviceWorkers().find(value=>value.url().startsWith(`chrome-extension://${id}/`))
+      ||await context.waitForEvent('serviceworker',{predicate:value=>value.url().startsWith(`chrome-extension://${id}/`)});
+    await worker.evaluate(installBackendFixture,{api,id,chosen,seed:false});
+    // Reinstall only the external server fixture; credentials stay untouched in
+    // Chrome's persistent profile, just as they do across a production restart.
+    await worker.evaluate(saved=>{
+      const b=globalThis.__favoritesBrowserBackend;
+      b.rows=new Map(saved.rows);b.sessions=new Map(saved.sessions);b.receipts=new Set(saved.receipts);Object.assign(b,saved.counters);
+    },restartBackend);
+    await configurePageRoutes(context,()=>worker);
+    assert.deepEqual(await worker.evaluate(async()=>{
+      const session=await chrome.storage.session.get(['agentFavoritesSessionV1','agentFavoritesLoginV1','agentFavoritesCloudV1']);
+      return {legacy:!session.agentFavoritesSessionV1,pending:!session.agentFavoritesLoginV1,cloudCache:!session.agentFavoritesCloudV1,
+        websiteTabs:(await chrome.tabs.query({})).filter(tab=>tab.url?.startsWith('https://agentskills.media/')).length};
+    }),{legacy:true,pending:true,cloudCache:true,websiteTabs:0},'restart starts without a website tab or old session storage');
+    assert.deepEqual(await worker.evaluate(async()=>((await chrome.storage.local.get('agentFavoritesAuthV2')).agentFavoritesAuthV2)),durableExtensionAuth,
+      'the exact bounded extension credential survives on disk');
+    page=await context.newPage();page.on('pageerror',error=>errors.push(error.name));await page.goto(panelURL);
+    await page.locator('.repo').first().waitFor();await page.locator('#favorites').click();await waitSynced(page);await waitCount(page,1);
+    assert.equal(await page.locator('#account-user').textContent(),fixture.user);
+    assert.deepEqual(await worker.evaluate(()=>{
+      const b=globalThis.__favoritesBrowserBackend;return {website:b.websiteExchanges,extension:b.extensionExchanges,handoffs:b.handoffs,imports:b.imports,ports:b.externalPorts.length};
+    }),{website:0,extension:1,handoffs:1,imports:1,ports:0},'the fresh worker restores its own credential without OAuth, website handoff or reimport');
+    website=await context.newPage();website.on('pageerror',error=>errors.push(error.name));await website.goto(websiteOrigin+'/');
+    await website.waitForFunction(()=>typeof favoritesStore!=='undefined'&&favoritesStore.hasActiveSession());
+    assert.equal(await website.evaluate(key=>localStorage.getItem(key),siteAuthKey),durableWebsiteAuth,'the website restores its exact credential without extending expiry');
+    assert.deepEqual(await website.evaluate(key=>({legacy:sessionStorage.getItem(key),pending:sessionStorage.getItem('st_favorites_login_v1')}),siteSessionKey),
+      {legacy:null,pending:null},'the reopened website needs no prior tab sessionStorage');
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.websiteExchanges),0,'reopening the browser does not start GitHub OAuth');
     stage = 'reload and second panel';
     await page.reload(); await page.locator('.repo').first().waitFor(); await page.locator('#favorites').click(); await waitSynced(page);
     assert.equal(await page.locator('#account-user').textContent(), fixture.user); await waitCount(page, 1);
@@ -275,15 +325,24 @@ async function configurePageRoutes(context,getWorker){
     stage='existing plugin account survives another website account';
     const otherWebsite=await context.newPage();otherWebsite.on('pageerror',error=>errors.push(error.name));
     const otherSession=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.openSession('website',{id:'702',login:'other-browser-user',avatar_url:''}));
-    await otherWebsite.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!sessionStorage.getItem(key))sessionStorage.setItem(key,JSON.stringify(value));},
-      {key:siteSessionKey,value:otherSession,origin:websiteOrigin});
+    await otherWebsite.addInitScript(({key,value,origin})=>{
+      if(location.origin===origin&&!sessionStorage.getItem('fixtureAccountSelected')){
+        localStorage.setItem(key,JSON.stringify({version:2,revision:'fixture-other-account',session:value}));
+        sessionStorage.setItem('fixtureAccountSelected','1');
+      }
+    },{key:siteAuthKey,value:otherSession,origin:websiteOrigin});
     await otherWebsite.goto(websiteOrigin+'/');await otherWebsite.locator('#favBtn').waitFor();
     await otherWebsite.waitForFunction(()=>typeof favoritesStore!=='undefined'&&favoritesStore.getSnapshot().user?.id==='702');
+    await website.waitForFunction(()=>favoritesStore.getSnapshot().user?.id==='702','website tabs follow the same persistent account');
     await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.some(entry=>entry.messages.some(message=>message.type==='favorites:ready'&&message.userId==='702'))),'second website account publishes a real ready message');
     const handoffsBeforeAccountCheck=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.handoffs);
     await page.bringToFront();await page.locator('#account-sync').click();await waitSynced(page);
     assert.equal(await page.locator('#account-user').textContent(),fixture.user,'a ready website account never replaces an existing plugin account');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.handoffs),handoffsBeforeAccountCheck,'existing plugin session syncs without minting another account grant');
+    await otherWebsite.evaluate(({key,value})=>localStorage.setItem(key,value),{key:siteAuthKey,value:durableWebsiteAuth});
+    await otherWebsite.reload();
+    await otherWebsite.waitForFunction(()=>favoritesStore.getSnapshot().user?.id==='701');
+    await website.waitForFunction(()=>favoritesStore.getSnapshot().user?.id==='701');
     stage='real website port disconnect and recovery';
     const connectionsBefore=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.length);
     await website.reload();await website.locator('#favBtn').waitFor();
@@ -345,11 +404,12 @@ async function configurePageRoutes(context,getWorker){
     await page.locator('#account-sign-out').click(); await page.locator('#account-sign-in').waitFor();
     await waitCount(page, 0); await waitCount(second, 0);
     const loggedOut = await worker.evaluate(async () => {
-      const values = await chrome.storage.session.get(null), backend = globalThis.__favoritesBrowserBackend;
-      return {sessionGone: !values.agentFavoritesSessionV1, cacheGone: !values.agentFavoritesCloudV1, pendingGone: !values.agentFavoritesLoginV1,
+      const values = await chrome.storage.session.get(null), local=await chrome.storage.local.get('agentFavoritesAuthV2'), backend = globalThis.__favoritesBrowserBackend;
+      return {sessionGone: !values.agentFavoritesSessionV1, authSignedOut:local.agentFavoritesAuthV2?.status==='signed_out'&&!local.agentFavoritesAuthV2?.token,
+        cacheGone: !values.agentFavoritesCloudV1, pendingGone: !values.agentFavoritesLoginV1,
         activeSessions: [...backend.sessions.values()].filter(value=>value.client==='extension').length, rows: backend.rows.size};
     });
-    assert.deepEqual(loggedOut, {sessionGone: true, cacheGone: true, pendingGone: true, activeSessions: 0, rows: cloudBefore});
+    assert.deepEqual(loggedOut, {sessionGone: true, authSignedOut:true, cacheGone: true, pendingGone: true, activeSessions: 0, rows: cloudBefore});
     assert.equal(cloudBefore, 2);
     assert.equal(await worker.evaluate(token=>globalThis.__favoritesBrowserBackend.sessions.get(token)?.client,websiteSession.token),'website','extension sign-out preserves the website session');
     stage='sign-out suppresses automatic resurrection across page reloads';
@@ -362,14 +422,7 @@ async function configurePageRoutes(context,getWorker){
     assert.equal(suppressed.snapshot.user,null,'sync remains anonymous after explicit sign-out');
     assert.equal(await worker.evaluate(async()=>(await chrome.storage.local.get('agentFavoritesAutoConnectDisabledV1')).agentFavoritesAutoConnectDisabledV1),true,'non-sensitive sign-out suppression persists');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),exchangesAfterLogout,'website ready/reload does not restore a signed-out plugin');
-    stage='multiple website accounts require deliberate account selection';
-    await page.bringToFront();const ambiguousTabs=await worker.evaluate(async()=>chrome.tabs.query({}).then(tabs=>tabs.length));
     const accountUrls=[website.url(),otherWebsite.url()];
-    await page.locator('#account-sign-in').click();
-    await eventually(()=>page.evaluate(async()=>{const value=await chrome.runtime.sendMessage({type:'favorites:snapshot'});return value.snapshot.error==='website_account_selection_required';}),'different signed-in website accounts are not selected arbitrarily');
-    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),exchangesAfterLogout);
-    assert.deepEqual([website.url(),otherWebsite.url()],accountUrls,'ambiguous accounts are not navigated');
-    assert.equal(await worker.evaluate(async()=>chrome.tabs.query({}).then(tabs=>tabs.length)),ambiguousTabs,'account selection never creates a surprise tab');
     await otherWebsite.close();
     stage='explicit reconnect uses the available website port without navigation';
     await page.locator('#account-sign-in').click();await waitSynced(page);await waitCount(page,cloudBefore);
@@ -378,6 +431,7 @@ async function configurePageRoutes(context,getWorker){
     assert.equal(await worker.evaluate(async()=>(await chrome.storage.local.get('agentFavoritesAutoConnectDisabledV1')).agentFavoritesAutoConnectDisabledV1),false,'explicit sign-in is the action that clears suppression');
     await page.locator('#account-sign-out').click();await page.locator('#account-sign-in').waitFor();await waitCount(page,0);
     stage='create website tab and sign in through website OAuth';
+    await website.evaluate(async()=>favoritesStore.signOut());
     for(const tab of context.pages())if(tab.url().startsWith(websiteOrigin+'/'))await tab.close();
     await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.every(entry=>entry.disconnected)),'closing website tabs disconnects their native ports');
     const newWebsitePromise=context.waitForEvent('page');
@@ -391,7 +445,7 @@ async function configurePageRoutes(context,getWorker){
     stage='upgrade-equivalent empty session with a stale signed-in connect page';
     const staleState='S'.repeat(43),staleChallenge='C'.repeat(43);
     const staleUrl=websiteOrigin+'/extension/connect/#'+new URLSearchParams({extension_id:expectedId,client_challenge:staleChallenge,client_state:staleState});
-    const savedWebsiteSession=await freshWebsite.evaluate(key=>JSON.parse(sessionStorage.getItem(key)),siteSessionKey);
+    const savedWebsiteAuth=await freshWebsite.evaluate(key=>localStorage.getItem(key),siteAuthKey);
     const persistedFixture=await worker.evaluate(()=>{
       const b=globalThis.__favoritesBrowserBackend;
       return {rows:[...b.rows],sessions:[...b.sessions],receipts:[...b.receipts]};
@@ -424,8 +478,8 @@ async function configurePageRoutes(context,getWorker){
     });
     assert.deepEqual(cleared,{session:true,pending:true},'the recovery scenario starts with naturally empty extension authentication');
     const upgradeWebsite=await context.newPage();upgradeWebsite.on('pageerror',error=>errors.push(error.name));
-    await upgradeWebsite.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!sessionStorage.getItem(key))sessionStorage.setItem(key,JSON.stringify(value));},
-      {key:siteSessionKey,value:savedWebsiteSession,origin:websiteOrigin});
+    await upgradeWebsite.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!localStorage.getItem(key))localStorage.setItem(key,value);},
+      {key:siteAuthKey,value:savedWebsiteAuth,origin:websiteOrigin});
     await upgradeWebsite.goto(staleUrl);website=upgradeWebsite;
     await upgradeWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/'&&address.searchParams.get('extension_sync')==='1');
     await upgradeWebsite.locator('#favModal').waitFor({state:'visible'});

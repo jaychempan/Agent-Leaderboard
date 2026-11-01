@@ -157,7 +157,7 @@ test('OAuth uses backend PKCE and browser binding; handoff requires the website 
   const exchanged = await f.exchange(attempt, response);
   assert.equal(exchanged.status, 200);
   const site = await exchanged.json();
-  assert.equal(site.expiresAt, '2026-10-31T20:00:00.000Z');
+  assert.equal(site.expiresAt, '2026-11-30T12:00:00.000Z');
   assert.deepEqual(site.user, {id: '1', login: 'alice', avatar_url: 'https://avatars.githubusercontent.com/u/1'});
   assert.equal(exchanged.headers.get('Set-Cookie'), null);
   assert.equal(f.env.DB.sqlite.prepare('SELECT token_hash FROM sessions').get().token_hash, await hash(site.token));
@@ -502,6 +502,7 @@ test('website session mints only a 90-second PKCE handoff that creates a separat
   assert.equal((await exchange({verifier: random()})).status, 400);
   const exchanged = await exchange({}), extension = await exchanged.json();
   assert.equal(exchanged.status, 200); assert.equal(extension.user.id, alice.id);
+  assert.equal(extension.expiresAt, '2026-11-30T12:00:00.000Z');
   assert.notEqual(extension.token, alice.token);
   assert.equal((await exchange({})).status, 400);
   await f.write('/api/favorites/101', alice, 'PUT', {repository: repo()});
@@ -526,7 +527,7 @@ test('extension handoff minting requires the exact website Origin, bearer, and c
     assert.equal(preflight.status, Origin === origin ? 204 : 403);
   }
   assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 0);
-  f.advance(8 * 3600 + 1);
+  f.advance(30 * 24 * 3600);
   assert.equal((await f.write('/api/auth/extension', alice, 'POST', body)).status, 401);
 });
 
@@ -564,7 +565,7 @@ test('repository resolver requires the current account and returns only public n
   assert.equal(upstream.options.headers.Authorization, undefined); assert.equal(upstream.options.headers.Cookie, undefined);
   assert.doesNotMatch(JSON.stringify(upstream), /github-server-secret|github-access-token-never-persist/);
   assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM favorites').get().n, 0, 'resolution does not save or import a favorite');
-  f.advance(8 * 3600 + 1);
+  f.advance(30 * 24 * 3600);
   assert.equal((await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'})).status, 401);
   assert.equal(f.calls.length, before + 1);
 });
@@ -642,20 +643,58 @@ test('logout revokes the current session immediately, without deleting favorites
   const otherSession = await f.login();
   await f.write('/api/favorites/101', alice, 'PUT', {repository: repo()});
   const response = await f.write('/api/auth/logout', alice, 'POST');
+  assert.equal(response.status, 200);
   assert.equal(response.headers.get('Set-Cookie'), null);
   assert.equal((await f.bootstrap(alice)).data.user, null);
   assert.equal((await f.write('/api/favorites/101', alice, 'DELETE')).status, 401);
+  assert.equal((await f.write('/api/auth/logout', alice, 'POST')).status, 401, 'a revoked token cannot replay logout or authenticate again');
   assert.equal((await f.bootstrap(otherSession)).data.user.id, alice.id, 'logout revokes only the current token');
   const again = await f.login();
   assert.equal((await f.bootstrap(again)).data.favorites.length, 1);
 });
 
-test('expired sessions stop authorizing writes and bootstrap does not leak identity', async t => {
-  const f = fixture(t), alice = await f.login(); f.advance(7 * 3600);
-  assert.equal((await f.bootstrap(alice)).data.user.id, '1');
-  f.advance(3601);
-  assert.equal((await f.bootstrap(alice)).data.user, null);
-  assert.equal((await f.write('/api/favorites/101', alice, 'DELETE')).status, 401);
+test('new sessions have an absolute 30-day expiry that ordinary bootstrap and saves never extend', async t => {
+  const f = fixture(t), alice = await f.login(), tokenHash = await hash(alice.token);
+  const stored = () => f.env.DB.sqlite.prepare('SELECT created_at,expires_at FROM sessions WHERE token_hash=?').get(tokenHash);
+  const initial = stored();
+  assert.equal(initial.expires_at - initial.created_at, 30 * 24 * 3600);
+  f.advance(8 * 3600 + 1);
+  assert.equal((await f.bootstrap(alice)).data.user.id, '1', 'the former eight-hour expiry no longer applies to new logins');
+  assert.equal(stored().expires_at, initial.expires_at);
+  f.advance(30 * 24 * 3600 - 8 * 3600 - 2);
+  assert.equal((await f.bootstrap(alice)).data.user.id, '1', 'the token works one second before its fixed deadline');
+  assert.equal((await f.write('/api/favorites/101', alice, 'PUT', {repository: repo()})).status, 200);
+  assert.equal(stored().expires_at, initial.expires_at, 'activity never rolls the deadline forward');
+  f.advance(1);
+  assert.deepEqual((await f.bootstrap(alice)).data, {authConfigured: true, user: null, favorites: [], nextCursor: null});
+  assert.equal((await f.write('/api/favorites/101', alice, 'DELETE')).status, 401, 'the exact expiry boundary rejects writes');
+  assert.equal((await f.write('/api/auth/logout', alice, 'POST')).status, 401);
+  assert.equal(stored().expires_at, initial.expires_at);
+});
+
+test('existing eight-hour sessions keep their original expiry after the lifetime policy changes', async t => {
+  const f = fixture(t), legacy = await f.login(), tokenHash = await hash(legacy.token);
+  const row = f.env.DB.sqlite.prepare('SELECT created_at FROM sessions WHERE token_hash=?').get(tokenHash);
+  const oldDeadline = row.created_at + 8 * 3600;
+  f.env.DB.sqlite.prepare('UPDATE sessions SET expires_at=? WHERE token_hash=?').run(oldDeadline, tokenHash);
+  const newLogin = await f.login(2, 'bob');
+  f.advance(8 * 3600 - 1);
+  assert.equal((await f.bootstrap(legacy)).data.user.id, legacy.id);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT expires_at FROM sessions WHERE token_hash=?').get(tokenHash).expires_at, oldDeadline);
+  f.advance(1);
+  assert.equal((await f.bootstrap(legacy)).data.user, null);
+  assert.equal((await f.write('/api/favorites/101', legacy, 'DELETE')).status, 401);
+  assert.equal((await f.bootstrap(newLogin)).data.user.id, newLogin.id, 'new sessions retain their independently issued lifetime');
+});
+
+test('longer-lived sessions preserve the twenty-session cap per account', async t => {
+  const f = fixture(t), bob = await f.login(2, 'bob'), logins = [];
+  for (let index = 0; index < 21; index++) { f.advance(1); logins.push(await f.login()); }
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM sessions WHERE github_id=1').get().n, 20);
+  assert.equal((await f.bootstrap(logins[0])).data.user, null, 'the oldest account session is evicted');
+  assert.equal((await f.bootstrap(logins[1])).data.user.id, '1');
+  assert.equal((await f.bootstrap(logins.at(-1))).data.user.id, '1');
+  assert.equal((await f.bootstrap(bob)).data.user.id, '2', 'another account does not share the session cap');
 });
 
 test('local imports preserve existing cloud values and receipts prevent retry resurrection', async t => {
@@ -729,7 +768,7 @@ test('keyset pages restore more than 5000 favorites without truncation or cross-
     assert.equal((await f.handle(`/api/bootstrap?after=${value}`, {headers: {Origin: origin, Authorization: `Bearer ${alice.token}`, 'X-Favorites-User': alice.id}})).status, 400);
   }
   assert.equal((await f.handle('/api/bootstrap?after=500', {headers: {Origin: origin, Authorization: `Bearer ${alice.token}`}})).status, 400);
-  f.advance(8 * 3600 + 1);
+  f.advance(30 * 24 * 3600);
   const expired = await f.handle('/api/bootstrap?after=500', {headers: {Origin: origin, Authorization: `Bearer ${alice.token}`, 'X-Favorites-User': alice.id}});
   assert.equal(expired.status, 409);
 });

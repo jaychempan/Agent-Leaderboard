@@ -1,5 +1,5 @@
 /* GitHub identifies the visitor; D1 owns site sessions and private favorites. */
-const SESSION_TTL = 8 * 3600;
+const SESSION_TTL = 30 * 24 * 3600;
 const OAUTH_TTL = 600;
 const EXCHANGE_TTL = 90;
 const TOKEN = /^[A-Za-z0-9_-]{43}$/;

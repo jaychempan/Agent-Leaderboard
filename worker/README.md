@@ -160,12 +160,29 @@ redirect on `api.github.com`, and returns fixed `repository_not_found` or
    A matching SHA-256 challenge, state, unexpired code, and exact website Origin
    are required. D1 atomically consumes the code once. Codes expire in 90 seconds
    and only their hashes are stored. A stolen URL alone cannot redeem a code.
-5. Only the exchange JSON contains the random site session token. The website
-   keeps it in tab sessionStorage; the extension uses chrome.storage.session.
-   Never put it in URLs or persistent localStorage. D1 stores only its
-   hash. Sessions expire after a fixed eight hours with no rolling renewal.
-   Logout revokes the current token immediately; other sessions and favorites
-   remain. A login retains at most twenty active sessions per account.
+5. Only the exchange JSON contains the random opaque site session token. The
+   website persists its credential in localStorage; the extension persists its
+   separate credential in chrome.storage.local restricted to trusted extension
+   contexts. Never put either token in a URL. D1 stores only the token hash.
+   Newly issued sessions expire after a fixed 30 days, without rolling renewal
+   on bootstrap, favorites activity, or any other request. Existing eight-hour
+   sessions keep their original expiry and may require one more login afterward.
+   The API logout route revokes only the current token immediately; other
+   sessions and favorites remain. A login retains at most twenty active sessions
+   per account.
+
+Website OAuth PKCE pending data stays in sessionStorage; extension PKCE pending
+proofs and account-favorites caches stay in chrome.storage.session. Neither
+client persists an account cloud-favorites mirror. Closing a tab or browser,
+reloading, or updating the extension does not sign out a valid persisted
+credential. Website tabs synchronize account changes and logout through storage
+events. Temporary network or service errors retain credentials and known account
+identity with an offline or retry state. Explicit client logout removes or marks
+the local credential as signed out and calls the API to revoke it when reachable;
+extension logout also disables automatic connection until sync is chosen again.
+Clearing local login data, fixed expiry, or server-side revocation requires
+signing in again. No refresh-token endpoint or session-lifetime migration is
+used.
 
 OAuth failures return a safe `auth_error` code on the primary website. API errors
 contain generic codes, never upstream error text or secrets. Observability is

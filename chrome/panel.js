@@ -551,14 +551,13 @@ document.addEventListener('keydown', event => {
 
 async function init() {
   const [local, session, currentWindow, snapshot, bundledTrends] = await Promise.all([
-    chrome.storage.local.get(null), chrome.storage.session.get('viewState'), chrome.windows.getCurrent(),
+    chrome.storage.local.get(['catalogCache', 'trendsCache', 'themeMode', 'uiLocale', 'checkedAt']), chrome.storage.session.get('viewState'), chrome.windows.getCurrent(),
     fetch(chrome.runtime.getURL('data/catalog.json')).then(r => r.json()).then(compactCatalog),
     fetch(chrome.runtime.getURL('data/trends.json')).then(r => r.json()).then(compactTrends),
   ]);
   windowId = currentWindow.id;
   themeMode = ['light', 'dark'].includes(local.themeMode) ? local.themeMode : 'auto';
   applyLocale(local.uiLocale || 'zh-CN');
-  favorites = Object.fromEntries(Object.entries(local).filter(([key]) => key.startsWith('favorite:')).map(([key, value]) => [key.slice(9), value]));
   if (session.viewState) for (const key of Object.keys(state)) if (typeof session.viewState[key] === typeof state[key]) state[key] = session.viewState[key];
   if (!Array.isArray(state.useCases)) state.useCases = [];
   if (!Object.hasOwn(BOARDS, state.source) && state.source !== '') state.source = '';

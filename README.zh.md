@@ -48,19 +48,19 @@
 
 ### GitHub 登录与云收藏
 
-网站通过一个使用独立 `workers.dev` 地址的 Cloudflare Worker 与 D1 数据库接入 GitHub 登录和账号收藏。首次登录合并已有本地收藏；登录后的添加和取消通过在线 API 保存。请求失败时恢复原状态并提示重试。退出登录或清除浏览器数据保留已成功保存的云端收藏，不会自动修改 GitHub Stars。v1.7.4 Chrome 插件与官网使用同一 GitHub 账号和云收藏；官网已有有效登录时，插件可直接同步，两端会话互相独立。
+网站通过一个使用独立 `workers.dev` 地址的 Cloudflare Worker 与 D1 数据库接入 GitHub 登录和账号收藏。首次登录合并已有本地收藏；登录后的添加和取消通过在线 API 保存。请求失败时恢复原状态并提示重试。退出登录或清除浏览器数据保留已成功保存的云端收藏，不会自动修改 GitHub Stars。v1.7.5 Chrome 插件与官网使用同一 GitHub 账号和云收藏；官网已有有效登录时，插件可直接同步，两端会话互相独立。
 
-没有 API 时仍可使用本地收藏。真实登录需要 Cloudflare 账号、自有 GitHub OAuth App、D1 迁移和 Worker 部署。DNS 可以保留在腾讯云，静态网页继续由 GitHub Pages 托管。GitHub 密钥仅存于 Worker；浏览器只在 `sessionStorage` 保存短期本站会话，GitHub 令牌和会话令牌不会放进网址。会话最长八小时，关闭标签页后重新打开可能需要再次登录。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。代码与模拟测试通过不等于生产服务已开通。
+没有 API 时仍可使用本地收藏。真实登录需要 Cloudflare 账号、自有 GitHub OAuth App、D1 迁移和 Worker 部署。DNS 可以保留在腾讯云，静态网页继续由 GitHub Pages 托管。GitHub 密钥仅存于 Worker；浏览器在 `localStorage` 保存本站登录凭据，新登录固定有效 30 天，关闭标签页或重启后可恢复；登录校验资料仍仅保存在 `sessionStorage`。GitHub 令牌和会话令牌不会放进网址。主动退出或清除网站数据会清除本机登录。详见 [部署、隐私与验收步骤](docs/github-favorites-setup.md)。代码与模拟测试通过不等于生产服务已开通。
 
 ## Chrome 搜索插件
 
-可先下载 **[v1.7.4 趋势与云收藏版 ZIP](https://agentskills.media/dist/Chrome.zip)** 并加载已解压的扩展，或查看 [中英文展示与使用指南](https://agentskills.media/extension/)。**[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** 当前为 v1.6，v1.7.4 商店更新需审核。需要 Chrome 116 或更高版本。
+可先下载 **[v1.7.5 趋势与云收藏版 ZIP](https://agentskills.media/dist/Chrome.zip)** 并加载已解压的扩展，或查看 [中英文展示与使用指南](https://agentskills.media/extension/)。**[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** 当前为 v1.6，v1.7.5 商店更新需审核。需要 Chrome 116 或更高版本。
 
 在浏览器侧边栏搜索五大榜单，按分类、用途、平台、语言、Stars 和时间范围筛选，收藏项目、打开 README，并复制 AI 安装提示到编码助手。插件只生成提示，不会自动安装仓库。
 
 切换 **「趋势」**，可查看与官网一致的五大板块日榜、周榜和月榜前 20 名，按增长率或新增 Stars 排序。插件内置离线趋势快照，显示实际统计日期，并随目录一起更新。这些数字来自观测快照，并非 GitHub 实时事件；历史不足时会明确提示。
 
-支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。未登录的收藏保存在当前 Chrome 配置中。v1.7.4 在官网已登录时打开插件即可直接同步，不跳转或确认；未登录时点击“同步网页版收藏”，直接打开官网收藏弹窗，完成 GitHub 登录后自动同步。升级前已打开的旧官网页需刷新一次。原有本地收藏会合并到同一官网账号，与其他设备共享。登录后的操作需联网，失败会回滚。插件仅在 `chrome.storage.session` 保存八小时本站会话与账号缓存，重启浏览器或重载、升级插件后可能需要重新登录；D1 中的云收藏仍会保留。
+支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。未登录的收藏保存在当前 Chrome 配置中。v1.7.5 在官网已登录时打开插件即可直接同步，不跳转或确认；未登录时点击“同步网页版收藏”，直接打开官网收藏弹窗，完成 GitHub 登录后自动同步。升级前已打开的旧官网页需刷新一次。原有本地收藏会合并到同一官网账号，与其他设备共享。登录后的操作需联网，失败会回滚。插件在仅限可信扩展上下文的 `chrome.storage.local` 保存最长 30 天的本站登录凭据，重启浏览器或升级后可恢复；账号缓存和 PKCE 校验资料仍在 `chrome.storage.session`。主动退出后不会自动登录，已保存的云收藏仍会保留。旧版八小时会话保持原期限，到期后再登录一次即可使用新期限。
 
 开发时可以打开 `chrome://extensions` → **开发者模式** → **加载已解压的扩展程序**，选择 **`chrome/`** 文件夹。更新内置目录并生成 `dist/Chrome.zip`：
 
