@@ -138,7 +138,7 @@ function backendFixture() {
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
  const contexts=[],errors=[],backend=backendFixture();
- async function device({cloud=true,user=null,legacy=[],language='en',broken=false}={}) {
+ async function device({cloud=true,user=null,legacy=[],language='en',broken=false,authError=null}={}) {
   const context=await browser.newContext({viewport:{width:1366,height:900},colorScheme:'light',reducedMotion:'reduce'});
   context.setDefaultTimeout(10000);contexts.push(context);
   await context.route('**/src/auth-config.js*',route=>route.fulfill({contentType:'application/javascript',body:`window.FAVORITES_CONFIG={apiBase:${JSON.stringify(apiBase)}};`}));
@@ -153,7 +153,9 @@ function backendFixture() {
    sessionStorage.setItem('favorites_fixture_seeded','1');
   },{legacy,language,broken,session,sessionKey:SESSION_KEYS.session});
   const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
-  await page.goto(base);await ready(page);return {context,page};
+  const destination=new URL(base);
+  if(authError)destination.searchParams.set('auth_error',authError);
+  await page.goto(destination.href);await ready(page);return {context,page};
  }
  try {
   const local=await device({cloud:false,legacy:[first.id]});
@@ -166,6 +168,17 @@ function backendFixture() {
   const bad=await device({cloud:false,broken:true});
   assert.deepEqual((await state(bad.page)).ids,[],'corrupt legacy JSON does not stop the page');
   assert.equal(backend.requests.some(request=>request.path.startsWith('/api/auth/')),false);
+
+  const credentialsError=await device({authError:'oauth_client_configuration',language:'zh'});
+  await openFavorites(credentialsError.page);
+  assert.equal((await state(credentialsError.page)).error,'oauth_client_configuration');
+  assert.match(await credentialsError.page.locator('.favorite-account-error').innerText(),/登录配置无效/,'known provider failures show an actionable localized message');
+  assert.equal(new URL(credentialsError.page.url()).searchParams.has('auth_error'),false,'callback failure is removed from browser URL');
+  const unknownError=await device({authError:'untrusted-upstream-secret-value<img src=x onerror=alert(1)>'});
+  await openFavorites(unknownError.page);
+  assert.equal((await state(unknownError.page)).error,'auth_failed');
+  assert.match(await unknownError.page.locator('.favorite-account-error').innerText(),/sign-in did not finish/i);
+  assert.equal((await unknownError.page.locator('.favorite-account-error').innerText()).includes('untrusted-upstream'),false,'raw callback errors never enter UI');
 
   const catalogSafety=await local.page.evaluate(()=>{
     const payload='<img src=x onerror="window.catalogFavoriteXSS=1">';

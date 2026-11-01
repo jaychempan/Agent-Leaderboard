@@ -30,13 +30,14 @@ function d1() {
     } catch (error) { sqlite.exec('ROLLBACK'); throw error; }
   }};
 }
-function fixture(t, extras = {}) {
+function fixture(t, extras = {}, behavior = {}) {
   const DB = d1(); t.after(() => DB.sqlite.close());
   let time = Date.parse('2026-10-31T12:00:00Z');
   let identity = {id: 1, login: 'alice', avatar_url: 'https://avatars.githubusercontent.com/u/1'};
   const calls = [];
   const worker = createWorker({now: () => time, fetch: async (url, options) => {
     calls.push({url, options});
+    if (behavior.fetch) return behavior.fetch(url, options);
     if (url === 'https://github.com/login/oauth/access_token') {
       const body = new URLSearchParams(options.body);
       assert.equal(body.get('client_secret'), 'github-server-secret');
@@ -177,6 +178,98 @@ test('OAuth rejects modified, expired and other-browser state before calling Git
   const expired = await f.complete(first);
   assert.match(expired.headers.get('Location'), /auth_error=invalid_state/);
   assert.equal(f.calls.length, 0);
+});
+
+test('OAuth trims configured client credentials before authorization and token exchange', async t => {
+  const f = fixture(t, {GITHUB_CLIENT_ID: '  public-client-id\n', GITHUB_CLIENT_SECRET: '\tgithub-server-secret  '});
+  const attempt = await f.begin();
+  assert.equal(attempt.url.searchParams.get('client_id'), 'public-client-id');
+  const response = await f.complete(attempt);
+  assert.ok(new URL(response.headers.get('Location')).searchParams.has('login_code'));
+  const body = new URLSearchParams(f.calls[0].options.body);
+  assert.equal(body.get('client_id'), 'public-client-id');
+  assert.equal(body.get('client_secret'), 'github-server-secret');
+});
+
+test('OAuth token error responses expose fixed categories only and consume state once', async t => {
+  const categories = [
+    ['incorrect_client_credentials', 'oauth_client_configuration'],
+    ['redirect_uri_mismatch', 'oauth_redirect_configuration'],
+    ['bad_verification_code', 'oauth_code_rejected'],
+    ['unverified_user_email', 'oauth_email_unverified'],
+    ['unknown_error_containing_sensitive_details', 'oauth_token_unavailable']
+  ];
+  for (const [error, expected] of categories) {
+    const f = fixture(t, {}, {fetch: async () => Response.json({error,
+      access_token: 'upstream-access-token-must-not-leak', error_description: 'github-server-secret and sensitive callback code',
+      error_uri: 'https://upstream.example/?token=upstream-access-token-must-not-leak'})});
+    const attempt = await f.begin('/?view=saved#skills'), response = await f.complete(attempt);
+    const location = response.headers.get('Location'), destination = new URL(location);
+    assert.equal(destination.origin, origin); assert.equal(destination.hash, '#skills');
+    assert.equal(destination.searchParams.get('view'), 'saved');
+    assert.equal(destination.searchParams.get('auth_error'), expected);
+    assert.deepEqual([...destination.searchParams.keys()].sort(), ['auth_error', 'view']);
+    assert.doesNotMatch(location, /github-server-secret|upstream-access-token|sensitive|upstream\.example|error_description|unknown_error/);
+    assert.match(response.headers.get('Set-Cookie'), /Max-Age=0/);
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM users').get().n, 0);
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM sessions').get().n, 0);
+    const replay = await f.complete(attempt);
+    assert.equal(new URL(replay.headers.get('Location')).searchParams.get('auth_error'), 'invalid_state');
+    assert.equal(f.calls.length, 1, 'replayed state never repeats token exchange');
+  }
+});
+
+test('OAuth upstream HTTP failures and aborts return safe token or identity categories', async t => {
+  const failures = [
+    () => Response.json({error: 'unknown_error', error_description: 'sensitive-upstream-detail'}, {status: 401}),
+    () => { throw new DOMException('sensitive-upstream-detail', 'AbortError'); },
+    () => new Response('sensitive-upstream-detail', {status: 200}),
+    () => Response.json(null)
+  ];
+  for (const stage of ['token', 'identity']) {
+    for (const fail of failures) {
+      const f = fixture(t, {}, {fetch: async url => url === 'https://github.com/login/oauth/access_token' && stage === 'identity'
+        ? Response.json({access_token: 'upstream-access-token-must-not-leak'}) : fail()});
+      const attempt = await f.begin(), response = await f.complete(attempt), location = response.headers.get('Location');
+      // A valid JSON null from /user is a validation error, not a network error.
+      const expected = stage === 'identity' && fail === failures[3] ? 'oauth_identity_invalid' : `oauth_${stage}_unavailable`;
+      assert.equal(new URL(location).searchParams.get('auth_error'), expected);
+      assert.doesNotMatch(location, /sensitive-upstream-detail|upstream-access-token|github-server-secret|error_description/);
+      assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM users').get().n, 0);
+      assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 0);
+      assert.equal((await f.complete(attempt)).headers.get('Location'), origin + '/?auth_error=invalid_state');
+    }
+  }
+});
+
+test('OAuth token HTTP 400/401 responses recognize only known JSON errors without leaking response details', async t => {
+  for (const status of [400, 401]) {
+    const f = fixture(t, {}, {fetch: async () => Response.json({error: 'incorrect_client_credentials',
+      error_description: 'github-server-secret and sensitive-upstream-detail',
+      access_token: 'upstream-access-token-must-not-leak', error_uri: 'https://upstream.example/private'}, {status})});
+    const attempt = await f.begin(), response = await f.complete(attempt), location = response.headers.get('Location');
+    assert.equal(new URL(location).searchParams.get('auth_error'), 'oauth_client_configuration');
+    assert.doesNotMatch(location, /github-server-secret|sensitive-upstream-detail|upstream-access-token|upstream\.example|error_description/);
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM oauth_states').get().n, 0);
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM users').get().n, 0);
+    assert.equal(new URL((await f.complete(attempt)).headers.get('Location')).searchParams.get('auth_error'), 'invalid_state');
+    assert.equal(f.calls.length, 1);
+  }
+});
+
+test('OAuth identity validation and storage failures have separate fixed categories', async t => {
+  for (const identity of [{id: 0, login: 'alice'}, {id: 1, login: 'invalid login'}, {id: 1, login: 'alice', unexpected: true}]) {
+    const storage = identity.unexpected === true;
+    const f = fixture(t, {}, {fetch: async url => Response.json(url === 'https://github.com/login/oauth/access_token'
+      ? {access_token: 'upstream-access-token-must-not-leak'} : identity)});
+    const attempt = await f.begin();
+    if (storage) f.env.DB.sqlite.exec('DROP TABLE login_exchanges');
+    const response = await f.complete(attempt), location = response.headers.get('Location');
+    assert.equal(new URL(location).searchParams.get('auth_error'), storage ? 'oauth_storage_unavailable' : 'oauth_identity_invalid');
+    assert.doesNotMatch(location, /upstream-access-token|github-server-secret|no.such.table|login_exchanges|sqlite/i);
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM users').get().n, 0, 'failed handoff transaction rolls back identity upsert');
+    assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM oauth_states').get().n, 0);
+  }
 });
 
 test('login handoff resists wrong proof, state, code theft, replay and expiry without cookies', async t => {

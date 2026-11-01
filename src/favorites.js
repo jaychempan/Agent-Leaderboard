@@ -10,6 +10,10 @@
     cloud: 'st_favorites_cloud_v2'});
   const SESSION_KEYS = Object.freeze({session: 'st_favorites_session_v1', login: 'st_favorites_login_v1'});
   const OPAQUE = /^[A-Za-z0-9_-]{43}$/;
+  const AUTH_ERRORS = new Set(['invalid_state', 'access_denied', 'oauth_client_configuration',
+    'oauth_redirect_configuration', 'oauth_code_rejected', 'oauth_email_unverified',
+    'oauth_token_unavailable', 'oauth_identity_unavailable', 'oauth_identity_invalid', 'oauth_storage_unavailable']);
+  const safeAuthError = value => AUTH_ERRORS.has(value) ? value : 'auth_failed';
   const SOURCES = new Set(['skills', 'mcp', 'research', 'prompts', 'frameworks']);
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   const text = (value, limit) => typeof value === 'string' ? value.slice(0, limit) : '';
@@ -78,7 +82,7 @@
     const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
     let user = null, configured = false, status = 'local', error = null, storageFailed = false;
     let session = null, sessionStorageFailed = false;
-    let epoch = 0, destroyed = false, initialized = null, syncTask = null, tail = Promise.resolve();
+    let epoch = 0, destroyed = false, initialized = null, syncTask = null, signInTask = null, tail = Promise.resolve();
     let confirmed = {}, records = {}, anonymous = {}, migration = null, importBlocked = false, anonymousUnsaved = false;
     let catalogReference = null, catalogIndex = new Map();
     const operations = [], listeners = [], controllers = new Set();
@@ -336,7 +340,8 @@
     function cleanAuthURL() {
       try {
         const url = new URL(location.href), fragment = new URLSearchParams(url.hash.slice(1));
-        const authError = url.searchParams.has('auth_error') || url.searchParams.has('error') || fragment.has('error');
+        const hasAuthError = url.searchParams.has('auth_error') || url.searchParams.has('error') || fragment.has('error');
+        const authError = hasAuthError ? safeAuthError(url.searchParams.get('auth_error')) : null;
         for (const key of ['auth_error', 'code', 'error', 'error_description', 'error_code', 'access_token', 'refresh_token', 'provider_token', 'provider_refresh_token', 'token_type']) url.searchParams.delete(key);
         if (['error','error_description','error_code','access_token','refresh_token','provider_token','provider_refresh_token','token_type'].some(key => fragment.has(key))) url.hash = '';
         const code = url.searchParams.get('login_code'), state = url.searchParams.get('login_state');
@@ -348,7 +353,7 @@
     async function exchangeLogin(auth) {
       const pending = sessionValue(SESSION_KEYS.login);
       if (pending || auth.code || auth.state || auth.authError) saveSessionValue(SESSION_KEYS.login, null);
-      if (auth.authError) throw failure('auth_failed');
+      if (auth.authError) throw failure(auth.authError);
       if (!auth.code && !auth.state) return;
       if (!api || !OPAQUE.test(auth.code || '') || !OPAQUE.test(auth.state || '') || pending?.api !== api
           || pending.state !== auth.state || !OPAQUE.test(pending.verifier || '')
@@ -378,13 +383,14 @@
       if (initialized) return initialized;
       listen('online', () => { void sync(); });
       listen('focus', () => { void sync(); });
+      listen('pageshow', event => { if (event.persisted) signInTask = null; });
       listen('storage', event => {
         if (!user && !anonymousUnsaved && (event.key === KEYS.anonymous || event.key === null)) { anonymous = localRecords(json(KEYS.anonymous)); visibleRecords(); emit(); }
       });
       const auth = cleanAuthURL();
       initialized = enqueue(async () => {
         let authFailure = null;
-        try { await exchangeLogin(auth); } catch (exception) { authFailure = exception.code === 'storage_unavailable' ? 'storage_unavailable' : 'auth_failed'; }
+        try { await exchangeLogin(auth); } catch (exception) { authFailure = exception.code === 'storage_unavailable' ? 'storage_unavailable' : safeAuthError(exception.code); }
         if (destroyed) return getSnapshot();
         const snapshot = await refresh();
         if (authFailure) { error = authFailure; status = 'error'; emit(); return getSnapshot(); }
@@ -431,16 +437,21 @@
         return getSnapshot();
       });
     }
-    async function signIn() {
-      await init();
-      if (!configured || !api) throw failure('api_unavailable');
-      const {url} = cleanAuthURL(); if (!url) throw failure('configuration_invalid');
-      const verifier = randomValue(), state = randomValue();
-      const challenge = base64url(new Uint8Array(await webCrypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
-      if (!saveSessionValue(SESSION_KEYS.login, {api, verifier, state, createdAt: now()})) { status = 'error'; emit(); throw failure('storage_unavailable'); }
-      const destination = api + '/auth/github?' + new URLSearchParams({client_challenge: challenge, client_state: state, return_to: url.pathname + url.search + url.hash});
-      if (typeof location.assign === 'function') location.assign(destination); else location.href = destination;
-      return {url: destination};
+    function signIn() {
+      if (signInTask) return signInTask;
+      signInTask = (async () => {
+        await init();
+        if (!configured || !api) throw failure('api_unavailable');
+        const {url} = cleanAuthURL(); if (!url) throw failure('configuration_invalid');
+        const verifier = randomValue(), state = randomValue();
+        const challenge = base64url(new Uint8Array(await webCrypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+        if (!saveSessionValue(SESSION_KEYS.login, {api, verifier, state, createdAt: now()})) { status = 'error'; emit(); throw failure('storage_unavailable'); }
+        const destination = api + '/auth/github?' + new URLSearchParams({client_challenge: challenge, client_state: state, return_to: url.pathname + url.search + url.hash});
+        if (typeof location.assign === 'function') location.assign(destination); else location.href = destination;
+        // Keep the same attempt while the browser is waiting for navigation.
+        return {url: destination};
+      })().catch(exception => { signInTask = null; throw exception; });
+      return signInTask;
     }
     function signOut() {
       return enqueue(async () => {

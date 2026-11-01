@@ -4,6 +4,12 @@ const OAUTH_TTL = 600;
 const EXCHANGE_TTL = 90;
 const TOKEN = /^[A-Za-z0-9_-]{43}$/;
 const isToken = value => typeof value === 'string' && TOKEN.test(value);
+const TOKEN_ERRORS = new Map([
+  ['incorrect_client_credentials', 'oauth_client_configuration'],
+  ['redirect_uri_mismatch', 'oauth_redirect_configuration'],
+  ['bad_verification_code', 'oauth_code_rejected'],
+  ['unverified_user_email', 'oauth_email_unverified']
+]);
 const FAVORITES_PAGE_SIZE = 500;
 const SOURCE_NAMES = new Set(['skills', 'mcp', 'research', 'prompts', 'frameworks']);
 const encoder = new TextEncoder();
@@ -172,7 +178,15 @@ export function createWorker(options = {}) {
     const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
     try {
       const response = await upstreamFetch(url, {...init, redirect: 'error', signal: controller.signal});
-      if (!response.ok) throw new Error('upstream');
+      if (!response.ok) {
+        if (url === 'https://github.com/login/oauth/access_token') {
+          let body;
+          try { body = await response.json(); } catch { /* non-JSON failures stay generic */ }
+          const code = TOKEN_ERRORS.get(body?.error);
+          if (code) throw new ApiError(400, code);
+        }
+        throw new Error('upstream');
+      }
       return await response.json();
     } finally { clearTimeout(timeout); }
   }
@@ -208,7 +222,7 @@ export function createWorker(options = {}) {
     ]);
     const unsigned = `${nonce}.${expires}`, state = `${unsigned}.${await sign(env.SESSION_SECRET, `oauth:${unsigned}`)}`;
     const target = new URL('https://github.com/login/oauth/authorize');
-    target.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
+    target.searchParams.set('client_id', env.GITHUB_CLIENT_ID.trim());
     target.searchParams.set('redirect_uri', `${apiOrigin}/api/auth/github/callback`);
     target.searchParams.set('state', state);
     target.searchParams.set('code_challenge', await sha256(verifier));
@@ -217,7 +231,7 @@ export function createWorker(options = {}) {
   }
   async function callback(request, env, origin, apiOrigin) {
     const names = cookieNames(apiOrigin), clear = cookie(names.oauth, '', 0, apiOrigin);
-    let returnTo = '/', consumed = false;
+    let returnTo = '/', consumed = false, failureCode = 'invalid_state';
     try {
       const url = new URL(request.url), state = url.searchParams.get('state') || '';
       const match = /^([A-Za-z0-9_-]{43})\.(\d{10})\.([A-Za-z0-9_-]{43})$/.exec(state);
@@ -225,6 +239,7 @@ export function createWorker(options = {}) {
       if (!match || !/^[A-Za-z0-9_-]{43}$/.test(binding) || Number(match[2]) <= now() || Number(match[2]) > now() + OAUTH_TTL
           || !equal(match[3], await sign(env.SESSION_SECRET, `oauth:${match[1]}.${match[2]}`))) throw new ApiError(400, 'invalid_state');
       // DELETE ... RETURNING atomically consumes the attempt before any token exchange.
+      failureCode = 'oauth_storage_unavailable';
       const attempt = await env.DB.prepare(`DELETE FROM oauth_states WHERE nonce_hash = ?1 AND browser_hash = ?2
         AND expires_at > ?3 RETURNING verifier,return_to,client_challenge,client_state`).bind(await sha256(match[1]), await sha256(binding), now()).first();
       if (!attempt) throw new ApiError(400, 'invalid_state');
@@ -233,22 +248,27 @@ export function createWorker(options = {}) {
       if (!isToken(attempt.client_challenge) || !isToken(attempt.client_state)) throw new ApiError(400, 'invalid_state');
       if (url.searchParams.has('error')) throw new ApiError(400, 'access_denied');
       const code = url.searchParams.get('code');
-      if (!code || code.length > 500 || /[\u0000-\u0020\u007f]/.test(code)) throw new ApiError(400, 'oauth_failed');
+      if (!code || code.length > 500 || /[\u0000-\u0020\u007f]/.test(code)) throw new ApiError(400, 'oauth_code_rejected');
+      failureCode = 'oauth_token_unavailable';
       const tokenResponse = await githubJSON('https://github.com/login/oauth/access_token', {
         method: 'POST', headers: {Accept: 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'},
-        body: new URLSearchParams({client_id: env.GITHUB_CLIENT_ID, client_secret: env.GITHUB_CLIENT_SECRET,
+        body: new URLSearchParams({client_id: env.GITHUB_CLIENT_ID.trim(), client_secret: env.GITHUB_CLIENT_SECRET.trim(),
           code, redirect_uri: `${apiOrigin}/api/auth/github/callback`, code_verifier: attempt.verifier}).toString()
       });
-      if (typeof tokenResponse.access_token !== 'string' || !tokenResponse.access_token || tokenResponse.error) throw new Error('token');
+      if (tokenResponse?.error) throw new ApiError(400, TOKEN_ERRORS.get(tokenResponse.error) || 'oauth_token_unavailable');
+      if (typeof tokenResponse?.access_token !== 'string' || !tokenResponse.access_token) throw new ApiError(400, 'oauth_token_unavailable');
+      failureCode = 'oauth_identity_unavailable';
       const identity = await githubJSON('https://api.github.com/user', {headers: {
         Accept: 'application/vnd.github+json', Authorization: `Bearer ${tokenResponse.access_token}`,
         'User-Agent': 'Agent-Leaderboard', 'X-GitHub-Api-Version': '2022-11-28'
       }});
+      failureCode = 'oauth_identity_invalid';
       const githubId = idOf(identity.id), login = text(identity.login, 39);
-      if (!githubId || !/^[A-Za-z0-9-]{1,39}$/.test(login)) throw new Error('identity');
+      if (!githubId || !/^[A-Za-z0-9-]{1,39}$/.test(login)) throw new ApiError(400, 'oauth_identity_invalid');
       let avatar = '';
       try { const value = new URL(identity.avatar_url); if (value.protocol === 'https:' && value.hostname === 'avatars.githubusercontent.com') avatar = value.href.slice(0, 1000); } catch { /* optional public image */ }
       const exchangeCode = randomToken(), time = now();
+      failureCode = 'oauth_storage_unavailable';
       await env.DB.batch([
         env.DB.prepare(`INSERT INTO users (github_id,login,avatar_url,created_at,updated_at) VALUES (?1,?2,?3,?4,?4)
           ON CONFLICT(github_id) DO UPDATE SET login=excluded.login,avatar_url=excluded.avatar_url,updated_at=excluded.updated_at`).bind(githubId, login, avatar, time),
@@ -262,7 +282,9 @@ export function createWorker(options = {}) {
       return redirect(target.href, [clear]);
     } catch (error) {
       const target = new URL(returnTo, origin);
-      target.searchParams.set('auth_error', error instanceof ApiError ? error.code : 'oauth_failed');
+      // Only fixed categories cross the redirect. Never include upstream bodies,
+      // error descriptions, credentials, URLs, or request headers in diagnostics.
+      target.searchParams.set('auth_error', error instanceof ApiError ? error.code : failureCode);
       return redirect(target.href, consumed ? [clear] : []);
     }
   }

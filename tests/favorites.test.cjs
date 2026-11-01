@@ -143,7 +143,7 @@ test('missing or unconfigured APIs retain local mode instead of advertising clou
 });
 test('sign-in uses PKCE and cleans callback errors without tokens or secrets',async t=>{
   const f=fixture(t,{location:{href:'https://agentskills.media/?auth_error=access_denied&code=old#mcp',assign(value){this.destination=value;}}});
-  await f.store.init();assert.equal(f.store.getSnapshot().error,'auth_failed');assert.equal(f.location.href,'https://agentskills.media/#mcp');
+  await f.store.init();assert.equal(f.store.getSnapshot().error,'access_denied');assert.equal(f.location.href,'https://agentskills.media/#mcp');
   await f.store.signIn();
   const url=new URL(f.location.destination);assert.equal(url.origin,'https://agentskills.media');assert.equal(url.pathname,'/api/auth/github');
   assert.equal(url.searchParams.get('return_to'),'/#mcp');
@@ -346,4 +346,39 @@ test('blocked sessionStorage and unavailable secure randomness stop sign-in befo
   const blocked=new MemoryStorage();blocked.fail=()=>true;
   const f=fixture(t,{sessionStorage:blocked});await f.store.init();await assert.rejects(f.store.signIn(),{code:'storage_unavailable'});assert.equal(f.location.destination,undefined);assert.equal(f.store.getSnapshot().error,'storage_unavailable');
   const weak=fixture(t,{crypto:{}});await weak.store.init();await assert.rejects(weak.store.signIn(),{code:'auth_failed'});assert.equal(weak.location.destination,undefined);assert.equal(weak.sessionStorage.getItem(S.login),null);
+});
+
+test('fixed callback failure codes survive URL cleanup without retaining callback metadata',async t=>{
+  const allowed=['invalid_state','access_denied','oauth_client_configuration','oauth_redirect_configuration','oauth_code_rejected','oauth_email_unverified','oauth_token_unavailable','oauth_identity_unavailable','oauth_identity_invalid','oauth_storage_unavailable'];
+  for(const code of allowed){
+    const pending={api:CROSS_CONFIG.apiBase,verifier:'v'.repeat(43),state:'s'.repeat(43),createdAt:Date.now()};
+    const sessionStorage=new MemoryStorage({[S.login]:JSON.stringify(pending)});
+    const location={href:`https://agentskills.media/?view=saved&auth_error=${code}&code=private-code&login_code=${'c'.repeat(43)}&login_state=${pending.state}&error_description=private-description#skills`};
+    const f=fixture(t,{sessionStorage,location,config:CROSS_CONFIG});await f.store.init();
+    assert.equal(f.store.getSnapshot().error,code);assert.equal(f.store.getSnapshot().status,'error');assert.equal(f.store.getSnapshot().user,null);
+    assert.equal(location.href,'https://agentskills.media/?view=saved#skills');assert.equal(sessionStorage.getItem(S.login),null);assert.equal(sessionStorage.getItem(S.session),null);
+    assert.equal(f.server.requests.some(request=>request.path==='/api/auth/exchange'),false);
+    assert.ok(!JSON.stringify(f.store.getSnapshot()).includes('private-'));
+  }
+});
+test('unknown callback errors and raw provider errors only expose the generic auth failure',async t=>{
+  for(const query of ['auth_error=oauth_failed','auth_error=secret-token-value','auth_error=%3Cimg%20src%3Dx%3E','auth_error=invalid_state%26token%3Dprivate','error=oauth_client_configuration','auth_error=']){
+    const location={href:'https://agentskills.media/?'+query+'#mcp'},f=fixture(t,{location});await f.store.init();
+    assert.equal(f.store.getSnapshot().error,'auth_failed');assert.equal(location.href,'https://agentskills.media/#mcp');
+    assert.equal(f.sessionStorage.getItem(S.login),null);assert.equal(f.sessionStorage.getItem(S.session),null);
+  }
+});
+test('sign-in double clicks share one PKCE attempt until navigation or a restored page can retry',async t=>{
+  const f=fixture(t);await f.store.init();let navigations=0;
+  f.location.assign=function(value){navigations+=1;this.destination=value;};
+  const first=f.store.signIn(),second=f.store.signIn();assert.equal(first,second);
+  const result=await first,pending=f.sessionStorage.getItem(S.login);assert.equal(navigations,1);
+  assert.equal(await f.store.signIn(),result);assert.equal(f.sessionStorage.getItem(S.login),pending);assert.equal(navigations,1);
+  const restored=new Event('pageshow');Object.defineProperty(restored,'persisted',{value:true});f.eventTarget.dispatchEvent(restored);
+  await f.store.signIn();assert.equal(navigations,2);assert.notEqual(f.sessionStorage.getItem(S.login),pending);
+});
+test('a failed sign-in releases its Promise guard so the user can retry',async t=>{
+  const sessionStorage=new MemoryStorage(),f=fixture(t,{sessionStorage});await f.store.init();sessionStorage.fail=()=>true;
+  await assert.rejects(f.store.signIn(),{code:'storage_unavailable'});assert.equal(f.location.destination,undefined);
+  sessionStorage.fail=null;await f.store.signIn();assert.ok(f.location.destination);assert.ok(sessionStorage.getItem(S.login));
 });
