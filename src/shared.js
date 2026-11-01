@@ -21,6 +21,12 @@ const I18N = {
     fav_sign_in: '使用 GitHub 登录',
     fav_sign_out: '退出登录',
     fav_sync: '立即同步',
+    fav_extension_sign_in: '登录后自动同步插件收藏',
+    fav_extension_connecting: '正在同步插件收藏…',
+    fav_extension_connected: '插件收藏已同步',
+    fav_extension_invalid_request: '请从插件重新点击“同步网页版收藏”。',
+    fav_extension_connection_failed: '插件同步未完成，请从插件重试。',
+    fav_extension_unavailable: '请加载新版插件后，从插件重新发起同步。',
     fav_local: '收藏保存在此浏览器',
     fav_not_configured: 'GitHub 云同步暂未启用，现有收藏仍会保存在此浏览器。',
     fav_syncing: '正在同步收藏…',
@@ -55,7 +61,7 @@ const I18N = {
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
     announcement_label: '功能更新',
-    announcement_extension: 'Chrome 插件 v1.7.3：收藏页账号信息更精简，官网已登录即可直接同步。',
+    announcement_extension: 'Chrome 插件 v1.7.4：直接在官网收藏弹窗登录并同步。',
     announcement_link: '获取新版',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
@@ -123,6 +129,12 @@ const I18N = {
     fav_sign_in: 'Sign in with GitHub',
     fav_sign_out: 'Sign out',
     fav_sync: 'Sync now',
+    fav_extension_sign_in: 'Sign in to sync extension favorites automatically',
+    fav_extension_connecting: 'Syncing extension favorites…',
+    fav_extension_connected: 'Extension favorites synced',
+    fav_extension_invalid_request: 'Choose “Sync website favorites” again in the extension.',
+    fav_extension_connection_failed: 'Extension sync did not finish. Try again from the extension.',
+    fav_extension_unavailable: 'Load the updated extension, then start sync from the extension again.',
     fav_local: 'Favorites saved in this browser',
     fav_not_configured: 'GitHub cloud sync is not enabled yet. Your existing favorites stay saved in this browser.',
     fav_syncing: 'Syncing favorites…',
@@ -157,7 +169,7 @@ const I18N = {
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
     announcement_label: 'Product update',
-    announcement_extension: 'Chrome extension v1.7.3 has a compact favorites account bar and syncs directly with website sign-in.',
+    announcement_extension: 'Chrome extension v1.7.4 signs in and syncs through the website’s Favorites dialog.',
     announcement_link: 'Get v1.7',
     skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
@@ -310,6 +322,7 @@ function getFavoriteCatalog() {
 }
 
 let websiteFavoritesBridge = null;
+let websiteExtensionSync = null;
 const favoritesStore = FavoritesSync.createFavoritesStore({
   storage: localStorage,
   config: window.FAVORITES_CONFIG,
@@ -319,9 +332,13 @@ const favoritesStore = FavoritesSync.createFavoritesStore({
   location: window.location,
   eventTarget: window,
 });
+if (typeof WebsiteExtensionSync !== 'undefined') {
+  websiteExtensionSync = WebsiteExtensionSync.start({store: favoritesStore, location: window.location,
+    history: window.history, chrome: globalThis.chrome, onChange: renderFavoritesAccount});
+}
 if (typeof WebsiteFavoritesBridge !== 'undefined') {
   websiteFavoritesBridge = WebsiteFavoritesBridge.start({store: favoritesStore, eventTarget: window,
-    location: window.location, chrome: globalThis.chrome});
+    location: window.location, chrome: globalThis.chrome, onConnected() { websiteExtensionSync?.connected(); }});
 }
 applyFavoriteSnapshot(favoritesStore.getSnapshot());
 
@@ -621,6 +638,7 @@ function catalogRepositoryURL(value) {
 }
 function applyFavoriteSnapshot(snapshot) {
   websiteFavoritesBridge?.update(snapshot);
+  websiteExtensionSync?.update();
   const before = [...app.favorites].sort((a, b) => a - b).join(',');
   const recordsChanged = Object.keys(snapshot.records).some(id => JSON.stringify(snapshot.records[id]) !== JSON.stringify(app.favoriteRecords[id]));
   app.favorites = new Set(snapshot.ids);
@@ -675,19 +693,26 @@ function renderFavoritesAccount() {
   const container = document.getElementById('favoritesAccount');
   if (!container) return;
   const snapshot = favoritesStore.getSnapshot();
-  const busy = snapshot.status === 'initializing' || snapshot.status === 'syncing';
+  const extension = websiteExtensionSync?.getSnapshot();
+  const busy = snapshot.status === 'initializing' || snapshot.status === 'syncing' || extension?.busy;
   const storageError = snapshot.error === 'storage_unavailable';
   let status = t('fav_local');
   if (snapshot.user) {
     status = t(busy ? 'fav_syncing' : snapshot.error ? favoriteErrorKey(snapshot.error) : snapshot.status === 'synced' ? 'fav_synced' : snapshot.status === 'offline' ? 'fav_offline' : 'fav_sync_failed');
   }
   if (storageError) status = t('fav_storage_failed');
+  if (extension?.active && !snapshot.error) {
+    const key = {sign_in: 'fav_extension_sign_in', connecting: 'fav_extension_connecting', connected: 'fav_extension_connected',
+      invalid_request: 'fav_extension_invalid_request', connection_failed: 'fav_extension_connection_failed',
+      extension_unavailable: 'fav_extension_unavailable', account_changed: 'fav_account_changed'}[extension.status];
+    if (key) status = t(key);
+  }
   const activeId = document.activeElement?.id;
   const hadFocus = container.contains(document.activeElement);
   container.innerHTML = snapshot.user ? `
     <div class="favorite-account-copy">
       <strong>${FAVORITE_GITHUB_ICON}<span>${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}</span></strong>
-      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${escapeFavoriteHTML(status)}</p>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" aria-busy="${Boolean(extension?.busy)}" data-state="${snapshot.status}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>${escapeFavoriteHTML(status)}</p>
       <p class="favorite-account-note">${t('fav_logout_note')}</p>
     </div>
     <div class="favorite-account-actions">
@@ -696,7 +721,7 @@ function renderFavoritesAccount() {
     </div>` : `
     <div class="favorite-account-copy">
       <strong>${FAVORITE_GITHUB_ICON}<span>${t(snapshot.configured ? 'fav_account_title' : 'fav_local')}</span></strong>
-      <p id="favoritesSyncStatus" role="status" aria-live="polite" data-state="${snapshot.status}">${t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" aria-busy="${Boolean(extension?.busy)}" data-state="${snapshot.status}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>${extension?.active && snapshot.configured ? escapeFavoriteHTML(status) : t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
     </div>
     ${snapshot.configured ? `<button type="button" class="nav-extension" id="githubSignIn" onclick="signInGithub()" ${busy ? 'disabled' : ''}>${t('fav_sign_in')}</button>` : ''}`;
   if (favoriteAccountActionError || (snapshot.error && !snapshot.user)) {
@@ -710,7 +735,7 @@ function renderFavoritesAccount() {
 }
 async function signInGithub() {
   favoriteAccountActionError = '';
-  try { await favoritesStore.signIn(); }
+  try { websiteExtensionSync?.prepareSignIn(); await favoritesStore.signIn(); }
   catch { favoriteAccountActionError = 'fav_auth_failed'; }
   renderFavoritesAccount();
 }
@@ -724,6 +749,7 @@ async function syncFavoritesNow() {
   favoriteAccountActionError = '';
   try { await favoritesStore.sync(); }
   catch { favoriteAccountActionError = 'fav_sync_failed'; }
+  websiteExtensionSync?.retry();
   renderFavoritesAccount();
 }
 
@@ -1671,7 +1697,8 @@ function renderFilterBar() {
 /* ── Boot ───────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   router();
-  favoritesStore.init().catch(() => {
+  if (websiteExtensionSync?.getSnapshot().active) openFavModal();
+  favoritesStore.init().then(() => { websiteExtensionSync?.ready(); }).catch(() => {
     favoriteAccountActionError = 'fav_auth_failed';
     renderFavoritesAccount();
   });

@@ -1,7 +1,7 @@
 // The service worker owns authentication. Only public snapshots may reach panels.
 export const API_BASE = 'https://agent-leaderboard-api.jaychempan.workers.dev/api';
 export const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
-export const WEBSITE_CONNECT_URL = 'https://agentskills.media/extension/connect/';
+export const WEBSITE_CONNECT_URL = 'https://agentskills.media/?extension_sync=1';
 export const STORAGE_KEYS = Object.freeze({session: 'agentFavoritesSessionV1', pending: 'agentFavoritesLoginV1',
   cache: 'agentFavoritesCloudV1', autoConnectDisabled: 'agentFavoritesAutoConnectDisabledV1', migration: 'agentFavoritesMigrationV1'});
 const SOURCES = Object.freeze({skill: 'skills', mcp: 'mcp', prompt: 'prompts', framework: 'frameworks', auto_research: 'research'});
@@ -37,7 +37,10 @@ export function isWebsiteSender(sender) {
 }
 
 export function isWebsiteConnectSender(sender) {
-  return isWebsiteSender(sender) && new URL(sender.url).pathname === '/extension/connect/';
+  if (!isWebsiteSender(sender)) return false;
+  const url = new URL(sender.url);
+  return url.pathname === '/extension/connect/' || (['/', '/index.html'].includes(url.pathname)
+    && url.searchParams.getAll('extension_sync').length === 1 && url.searchParams.get('extension_sync') === '1');
 }
 
 export function sanitizeExtensionRepository(value, forcedId) {

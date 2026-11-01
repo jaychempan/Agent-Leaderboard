@@ -89,7 +89,7 @@ async function installBackendFixture({api,id,chosen,seed=true}){
           const code=random();backend.exchanges.set(code,{client:'extension',challenge:body.client_challenge,state:body.client_state,user:owner});backend.handoffs++;
           backend.handoffCodesExcludeTokens&&=!backend.sessions.has(code);
           const handoff=response(200,{code,state:body.client_state,expiresAt:new Date(Date.now()+90000).toISOString()});
-          if(backend.delayHandoffState===body.client_state)return new Promise(resolve=>{backend.releaseDelayedHandoff=()=>resolve(handoff);});
+          if(backend.delayHandoffState===body.client_state)return new Promise(resolve=>{backend.releaseDelayedHandoff=()=>resolve(response(503,{error:'temporarily_unavailable'}));});
           return handoff;
         }
         if(url.pathname==='/api/auth/logout'){backend.sessions.delete(token);return response(200,{ok:true});}
@@ -184,7 +184,7 @@ async function configurePageRoutes(context,getWorker){
     let worker = context.serviceWorkers().find(value => value.url().startsWith(`chrome-extension://${id}/`))
       || await context.waitForEvent('serviceworker', {predicate: value => value.url().startsWith(`chrome-extension://${id}/`)});
     const transport=await worker.evaluate(()=>{const manifest=chrome.runtime.getManifest();return {identity:manifest.permissions.includes('identity'),matches:manifest.externally_connectable?.matches};});
-    assert.deepEqual(transport,{identity:false,matches:[websiteOrigin+'/',websiteOrigin+'/index.html',websiteOrigin+'/extension/connect/*']},'website bridge needs no identity permission and allows only the official homepage and connection page');
+    assert.deepEqual(transport,{identity:false,matches:[websiteOrigin+'/',websiteOrigin+'/?*',websiteOrigin+'/index.html',websiteOrigin+'/index.html?*',websiteOrigin+'/extension/connect/*']},'website bridge needs no identity permission and allows only the official homepage and connection page');
     stage = 'worker fixtures';
     const core = await import(pathToFileURL(path.join(root, 'chrome/core.mjs')).href);
     const catalog = JSON.parse(fs.readFileSync(path.join(root, 'chrome/data/catalog.json'), 'utf8'));
@@ -198,9 +198,12 @@ async function configurePageRoutes(context,getWorker){
     const fixture = await worker.evaluate(installBackendFixture,{api,id,chosen});
     await configurePageRoutes(context,()=>worker);
     async function finishWebsiteConnection(website,{signIn=false}={}){
-      if(signIn){await website.locator('#connect-sign-in').waitFor({state:'visible'});await website.locator('#connect-sign-in').click();}
-      assert.equal(await website.locator('#connect-approve').count(),0,'website sign-in connects without a confirmation action');
-      await website.waitForFunction(()=>document.getElementById('connect-status').textContent.includes('已连接'));
+      await website.locator('#navbar').waitFor();await website.locator('#favModal').waitFor({state:'visible'});
+      assert.equal(await website.locator('#connect-title,#connect-approve,.connect-main').count(),0,'connection uses the existing website and favorites modal without an interstitial or confirm action');
+      if(signIn){await website.locator('#githubSignIn').waitFor({state:'visible'});await website.locator('#githubSignIn').click();}
+      await website.locator('#favModal').waitFor({state:'visible'});
+      await website.locator('#githubSignOut').waitFor({state:'visible'});
+      await website.waitForFunction(()=>document.getElementById('favoritesSyncStatus')?.dataset.extensionState==='connected'&&document.getElementById('favoritesSyncStatus').getAttribute('aria-busy')==='false');
     }
 
     const panelURL = `chrome-extension://${id}/panel.html`;
@@ -380,7 +383,7 @@ async function configurePageRoutes(context,getWorker){
     const newWebsitePromise=context.waitForEvent('page');
     await page.locator('#account-sign-in').click();const freshWebsite=await newWebsitePromise;website=freshWebsite;
     freshWebsite.on('pageerror',error=>errors.push(error.name));
-    await freshWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/extension/connect/');
+    await freshWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/'&&address.searchParams.get('extension_sync')==='1');
     await finishWebsiteConnection(freshWebsite,{signIn:true});await waitSynced(page);await waitCount(page,cloudBefore);await waitCount(second,cloudBefore);
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.websiteExchanges),1,'new website tab completes ordinary website OAuth');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),3,'new-tab fallback completes its own extension PKCE exchange');
@@ -424,40 +427,53 @@ async function configurePageRoutes(context,getWorker){
     await upgradeWebsite.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!sessionStorage.getItem(key))sessionStorage.setItem(key,JSON.stringify(value));},
       {key:siteSessionKey,value:savedWebsiteSession,origin:websiteOrigin});
     await upgradeWebsite.goto(staleUrl);website=upgradeWebsite;
+    await upgradeWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/'&&address.searchParams.get('extension_sync')==='1');
+    await upgradeWebsite.locator('#favModal').waitFor({state:'visible'});
+    assert.equal(await upgradeWebsite.locator('#connect-title,.connect-main').count(),0,'legacy links redirect to the existing homepage instead of a standalone hero');
     await eventually(()=>worker.evaluate(()=>typeof globalThis.__favoritesBrowserBackend.releaseDelayedHandoff==='function'),'stale legacy handoff is held while the passive website port stays available');
     const staleBefore={url:upgradeWebsite.url(),history:await upgradeWebsite.evaluate(()=>history.length)};
     page=await context.newPage();page.on('pageerror',error=>errors.push(error.name));await page.bringToFront();
     const tabsBeforeUpgradeSync=await worker.evaluate(async()=>({count:(await chrome.tabs.query({})).length,active:(await chrome.tabs.query({active:true,currentWindow:true}))[0]?.id}));
     await page.goto(panelURL);await page.locator('#favorites').waitFor();await page.locator('#favorites').click();await waitSynced(page);await waitCount(page,cloudBefore);
-    await upgradeWebsite.waitForFunction(()=>document.getElementById('connect-status').textContent.includes('已连接'));
-    assert.equal(upgradeWebsite.url(),staleBefore.url,'stale connect page synchronizes without a new navigation');
-    assert.equal(await upgradeWebsite.evaluate(()=>history.length),staleBefore.history,'stale connect page history remains unchanged');
+    await upgradeWebsite.waitForFunction(()=>document.getElementById('favoritesSyncStatus')?.dataset.extensionState==='connected');
+    assert.equal(upgradeWebsite.url(),websiteOrigin+'/','successful legacy recovery cleans proof parameters on the homepage without an interstitial');
+    assert.equal(await upgradeWebsite.evaluate(()=>history.length),staleBefore.history,'successful proof cleanup replaces history without adding a page');
     assert.deepEqual(await worker.evaluate(async()=>({count:(await chrome.tabs.query({})).length,active:(await chrome.tabs.query({active:true,currentWindow:true}))[0]?.id})),tabsBeforeUpgradeSync,'upgrade recovery neither creates nor activates another tab');
+    const delayedFailure=upgradeWebsite.waitForResponse(response=>response.url()===api+'/auth/extension'&&response.status()===503
+      &&response.request().postDataJSON()?.client_state===staleState);
     await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.releaseDelayedHandoff());
-    await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalMessages.some(message=>message.type==='favorites:connect')),'the delayed stale legacy attempt actually returns after successful port sync');
-    await upgradeWebsite.waitForFunction(()=>document.getElementById('connect-switch').disabled===false);
+    await(await delayedFailure).finished();
+    // Flush response microtasks and the resulting render before checking that
+    // a genuinely late API failure leaves the connected state intact.
+    await upgradeWebsite.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    await upgradeWebsite.waitForFunction(()=>document.getElementById('favoritesSyncStatus')?.getAttribute('aria-busy')==='false');
     assert.equal(await page.locator('#account-user').textContent(),fixture.user);
-    assert.equal(await upgradeWebsite.locator('#connect-error').isVisible(),false,'a late stale legacy failure cannot overwrite the successful native-port connection');
-    assert.match(await upgradeWebsite.locator('#connect-title').textContent(),/已同步|synced/i);
+    assert.equal(await upgradeWebsite.locator('#favoritesSyncStatus').getAttribute('data-extension-state'),'connected','a late stale legacy failure cannot overwrite the successful native-port connection');
+    assert.match(await upgradeWebsite.locator('#favoritesSyncStatus').textContent(),/插件收藏已同步|Extension favorites synced/i);
+    assert.equal(await upgradeWebsite.locator('#favModal').isVisible(),true,'the normal favorites modal stays open after recovery');
     await upgradeWebsite.screenshot({path:path.join(artifacts,'upgrade-stale-connect-390.png')});
     const upgradePort=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.find(entry=>entry.messages.some(message=>message.type==='favorites:connect')));
-    assert.equal(new URL(upgradePort.url).pathname,'/extension/connect/');
+    assert.equal(new URL(upgradePort.url).pathname,'/','legacy recovery uses a native port from the homepage');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),1,'upgrade recovery uses a new PKCE exchange rather than the stale proof');
     stage='connect page with an invalid old fragment still exposes the signed-in passive port';
     const invalidUrl=websiteOrigin+'/extension/connect/#staleproof';
-    await upgradeWebsite.goto(invalidUrl);await upgradeWebsite.reload();
-    await upgradeWebsite.locator('#connect-account').filter({hasText:fixture.user}).waitFor();
+    await upgradeWebsite.goto(invalidUrl);
+    await upgradeWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/'&&address.searchParams.get('extension_sync')==='1');
+    await upgradeWebsite.reload();await upgradeWebsite.locator('#favModal').waitFor({state:'visible'});
+    await upgradeWebsite.locator('#favoritesAccount').filter({hasText:fixture.user}).waitFor();
     await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.some(entry=>entry.url.endsWith('#staleproof')&&entry.messages.some(message=>message.type==='favorites:ready'&&message.userId==='701'))),'an invalid old fragment still initializes website identity and the passive native port');
     const invalidHistory=await upgradeWebsite.evaluate(()=>history.length);
     await page.bringToFront();await page.locator('#account-sync').click();await waitSynced(page);await waitCount(page,cloudBefore);
-    assert.equal(upgradeWebsite.url(),invalidUrl);assert.equal(await upgradeWebsite.evaluate(()=>history.length),invalidHistory);
+    assert.equal(new URL(upgradeWebsite.url()).pathname,'/');assert.equal(new URL(upgradeWebsite.url()).searchParams.get('extension_sync'),'1');
+    assert.equal(await upgradeWebsite.evaluate(()=>history.length),invalidHistory);
 
     assert.deepEqual(errors, []);
     console.log(JSON.stringify({status: 'passed', runtime: 'real unpacked Chrome MV3', extensionId: id, accountIntegration: 'real signed-in website + native external port; API/OAuth navigation fixtures',
-      pkce: 'S256 verified for website and extension', nativeTabs:'automatic sync without navigation, activation, history change or new tab; explicit fallback creates normal website tab', panels: 2, upgradeRecovery:'fresh empty extension session, stale page port sync, late legacy failure ignored', screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
+      pkce: 'S256 verified for website and extension', nativeTabs:'automatic sync leaves the website unchanged; explicit fallback uses the existing homepage favorites modal', panels: 2, upgradeRecovery:'old links redirect to homepage, fresh empty extension session recovers by native port, late failure ignored', screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
   } catch(error) {
     if(website&&!website.isClosed())error.message+='\nWebsite: '+JSON.stringify(await website.evaluate(()=>({url:location.href,path:location.pathname,
-      status:document.getElementById('connect-status')?.textContent,error:document.getElementById('connect-error')?.textContent,
+      status:document.getElementById('favoritesSyncStatus')?.textContent,error:document.getElementById('favoritesSyncStatus')?.dataset.extensionState,
+      native:{runtime:typeof globalThis.chrome?.runtime,connect:typeof globalThis.chrome?.runtime?.connect,sendMessage:typeof globalThis.chrome?.runtime?.sendMessage},
       store:typeof favoritesStore==='undefined'?null:{user:favoritesStore.getSnapshot().user,status:favoritesStore.getSnapshot().status,error:favoritesStore.getSnapshot().error}})).catch(()=>({unavailable:true})));
     const diagnosticWorker=context.serviceWorkers().find(value=>value.url().startsWith(`chrome-extension://${expectedId}/`));
     if(diagnosticWorker)error.message+='\nBridge: '+JSON.stringify(await diagnosticWorker.evaluate(async()=>{

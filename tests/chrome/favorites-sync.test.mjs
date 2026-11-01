@@ -120,7 +120,7 @@ function fixture(settings = {}) {
   return {server, mock, store, changes};
 }
 
-const websiteSender = tabId => ({origin:'https://agentskills.media',url:'https://agentskills.media/extension/connect/',frameId:0,tab:{id:tabId}});
+const websiteSender = tabId => ({origin:'https://agentskills.media',url:'https://agentskills.media/?extension_sync=1',frameId:0,tab:{id:tabId}});
 async function handoff(f, owner = f.server.user) {
   const pending=f.mock.values.session[K.pending],tab=f.mock.tabs.find(tab=>tab.id===pending.tabId),fragment=new URLSearchParams(new URL(tab.url).hash.slice(1));
   assert.equal(fragment.get('extension_id'),EXTENSION_ID);
@@ -607,4 +607,26 @@ test('a mismatched legacy transport never holds the lock needed by a valid port 
   finally{held.resolve();}
   assert.deepEqual(await wrong,{ok:false,connected:false});assert.equal((await f.store.getSnapshot()).user.id,ALICE.id);
   assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,1);
+});
+
+test('explicit fallback opens the main website with one public connection marker and PKCE fields',async()=>{
+  const f=fixture();await f.store.init();const result=await f.store.signIn();assert.equal(result.status,'awaiting_website');
+  const pending=f.mock.values.session[K.pending],url=new URL(f.mock.tabs.find(tab=>tab.id===pending.tabId).url),fields=new URLSearchParams(url.hash.slice(1));
+  assert.equal(url.origin+url.pathname,'https://agentskills.media/');assert.deepEqual(url.searchParams.getAll('extension_sync'),['1']);
+  assert.deepEqual([...fields.keys()].sort(),['client_challenge','client_state','extension_id']);assert.equal(fields.get('extension_id'),EXTENSION_ID);
+  assert.equal(fields.get('client_state'),pending.state);assert.equal(fields.get('client_challenge'),createHash('sha256').update(pending.verifier).digest('base64url'));
+  assert.equal(url.href.includes(pending.verifier),false);assert.equal(url.href.includes('/extension/connect/'),false);
+});
+
+test('main-page one-shot completion requires its exact marker while legacy connection pages remain valid',async()=>{
+  for(const path of['/?extension_sync=1','/index.html?extension_sync=1','/extension/connect/']){
+    const f=fixture();await f.store.init();await f.store.signIn();const pending=f.mock.values.session[K.pending],message=await handoff(f);
+    const result=await f.store.completeWebsiteSignIn(message,{...websiteSender(pending.tabId),url:'https://agentskills.media'+path});
+    assert.equal(result.connected,true,path);assert.equal((await f.store.getSnapshot()).user.id,ALICE.id);
+  }
+  const f=fixture();await f.store.init();await f.store.signIn();const pending=copy(f.mock.values.session[K.pending]),message=await handoff(f),before=f.mock.calls.length;
+  for(const path of['/','/index.html','/?extension_sync=0','/?extension_sync=true','/?extension_sync=1&extension_sync=1','/?extension_sync=1&extension_sync=0','/#extension_sync=1']){
+    assert.deepEqual(await f.store.completeWebsiteSignIn(message,{...websiteSender(pending.tabId),url:'https://agentskills.media'+path}),{ok:false,connected:false},path);
+  }
+  assert.equal(f.mock.calls.length,before,'disallowed root transports cannot touch storage or occupy a completion lock');assert.deepEqual(f.mock.values.session[K.pending],pending);
 });

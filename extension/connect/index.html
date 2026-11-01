@@ -1,40 +1,15 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex">
-  <title>登录并同步收藏 · Agent Leaderboard</title>
+  <title>Agent Leaderboard</title>
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../showcase.css?v=20261101-compact-account">
-  <link rel="stylesheet" href="connect.css?v=20261101-compact-account">
-  <script src="../../src/auth-config.js?v=20261031-cross-origin" defer></script>
-  <script src="../../src/favorites.js?v=20261101-compact-account" defer></script>
-  <script src="../../src/extension-favorites.js?v=20261101-compact-account" defer></script>
-  <script src="connect.js?v=20261101-compact-account" defer></script>
+  <link rel="stylesheet" href="connect.css?v=20261101-website-modal">
+  <script src="../../src/extension-sync.js?v=20261101-website-modal" defer></script>
+  <script src="connect.js?v=20261101-website-modal" defer></script>
 </head>
-<body>
-  <header class="connect-header">
-    <a class="brand" href="../../"><img src="../assets/logo.svg" width="36" height="36" alt=""><span>Agent Leaderboard</span></a>
-    <button id="connect-language" type="button" aria-label="Switch to English">EN</button>
-  </header>
-  <main class="connect-main">
-    <p id="connect-label" class="connect-label">官网与插件，共用一份收藏</p>
-    <h1 id="connect-title">登录后，自动同步收藏。</h1>
-    <p id="connect-intro">使用官网的 GitHub 账号，把已保存的收藏同步到当前 Chrome 插件。</p>
-    <section class="connect-card" aria-labelledby="connect-account">
-      <strong id="connect-account">正在读取官网账号…</strong>
-      <p id="connect-status" role="status" aria-live="polite">请稍候。</p>
-      <div class="connect-actions">
-        <button id="connect-sign-in" class="button primary" type="button" hidden>在官网登录 GitHub</button>
-        <button id="connect-retry" class="button primary" type="button" hidden>重试同步</button>
-        <button id="connect-switch" class="button secondary" type="button" hidden>切换账号</button>
-      </div>
-      <p id="connect-error" role="alert" hidden></p>
-    </section>
-    <p id="connect-note" class="connect-note">连接后，两端使用同一份云收藏；原有插件本地收藏会合并。退出插件不会退出官网或删除收藏。</p>
-    <p class="connect-links"><a href="../../" id="connect-open-site">返回官网</a><a id="connect-download" href="../../dist/Chrome.zip?v=1.7.3-compact-account" download="Chrome.zip">下载 v1.7.3 插件</a></p>
-  </main>
-</body>
+<body><a href="../../?extension_sync=1">返回官网收藏 · Open website favorites</a></body>
 </html>

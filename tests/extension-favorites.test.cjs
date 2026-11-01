@@ -1,6 +1,7 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const {start} = require('../src/extension-favorites.js');
+const ExtensionSync = require('../src/extension-sync.js');
 
 const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
 const ALICE = {id: '101', login: 'alice', token: 'private-site-token', avatar_url: 'private-avatar-field'};
@@ -278,4 +279,175 @@ test('the website remains usable without Chrome extension messaging', () => {
     location: 'https://agentskills.media/', setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout,
     setInterval: timers.setInterval, clearInterval: timers.clearInterval});
   assert.doesNotThrow(() => bridge.update({user: ALICE})); bridge.destroy(); assert.equal(timers.jobs.size, 0);
+});
+
+const proofFragment = new URLSearchParams({extension_id: EXTENSION_ID,
+  client_challenge: challenge.client_challenge, client_state: challenge.client_state}).toString();
+const syncURL = 'https://agentskills.media/?extension_sync=1#' + proofFragment;
+function mainSyncFixture(settings = {}) {
+  const timers = clock(), messages = [], requests = [], changes = [];
+  let active = settings.active !== false, current = {user: ALICE};
+  const location = {href: settings.href || syncURL};
+  const history = {replaceState(_state, _title, value) { location.href = value; }};
+  let callback;
+  const chrome = {runtime: {sendMessage(id, message, done) {
+    messages.push({id, message: structuredClone(message), senderURL: location.href}); callback = done;
+    if (settings.sendMessage) settings.sendMessage(done);
+  }}};
+  const store = {hasActiveSession: () => active, getSnapshot: () => current,
+    async connectExtension(input) {
+      requests.push(structuredClone(input));
+      return settings.connectExtension ? settings.connectExtension(input)
+        : {code: 'h'.repeat(43), state: input.client_state, token: 'private-site-token', verifier: 'private-verifier'};
+    }};
+  const sync = ExtensionSync.start({store, chrome, location, history,
+    setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout, onChange: value => changes.push(value)});
+  return {sync, store, chrome, location, history, timers, messages, requests, changes,
+    respond(value) { callback?.(value); }, setActive(value) { active = value; }, setUser(value) { current = {user: value}; }};
+}
+
+test('main-site extension entry requires its exact marker, origin, and one valid public proof', () => {
+  assert.deepEqual(ExtensionSync.readRequest(syncURL), {active: true, request: {
+    extension_id: EXTENSION_ID, client_challenge: challenge.client_challenge, client_state: challenge.client_state}});
+  assert.equal(ExtensionSync.readRequest(syncURL.replace('/?', '/index.html?')).active, true);
+  for (const href of [syncURL.replace('https:', 'http:'), syncURL.replace('agentskills.media', 'evil.example'),
+    syncURL.replace('/?', '/extension/?'), syncURL.replace('extension_sync=1', 'extension_sync=1&extension_sync=1'),
+    syncURL.replace('extension_sync=1', 'extension_sync=0'), syncURL.replace('?extension_sync=1', '')]) {
+    assert.equal(ExtensionSync.readRequest(href).active, false);
+  }
+  for (const fragment of ['staleproof', proofFragment + '&client_state=' + challenge.client_state,
+    proofFragment.replace(EXTENSION_ID, 'a'.repeat(32)), proofFragment.replace(challenge.client_challenge, 'short')]) {
+    assert.deepEqual(ExtensionSync.readRequest('https://agentskills.media/?extension_sync=1#' + fragment), {active: true, request: null});
+  }
+});
+
+test('legacy connect redirects in the same tab, preserving OAuth return and public proof without credentials', () => {
+  const code = 'o'.repeat(43), state = 'p'.repeat(43);
+  const legacy = `https://agentskills.media/extension/connect/?login_code=${code}&login_state=${state}&auth_error=access_denied#${proofFragment}`;
+  const destination = new URL(ExtensionSync.legacyDestination(legacy));
+  assert.equal(destination.origin, 'https://agentskills.media'); assert.equal(destination.pathname, '/');
+  assert.equal(destination.searchParams.get('extension_sync'), '1');
+  assert.equal(destination.searchParams.get('login_code'), code); assert.equal(destination.searchParams.get('login_state'), state);
+  assert.equal(destination.searchParams.get('auth_error'), 'access_denied'); assert.equal(destination.hash, '#' + proofFragment);
+  const {runInNewContext} = require('node:vm'), {readFileSync} = require('node:fs');
+  const replacements = [];
+  runInNewContext(readFileSync(require.resolve('../extension/connect/connect.js'), 'utf8'), {
+    WebsiteExtensionSync: ExtensionSync, location: {href: legacy, replace: value => replacements.push(value)}});
+  assert.deepEqual(replacements, [destination.href]);
+  assert.equal(ExtensionSync.legacyDestination(legacy.replace('agentskills.media', 'evil.example')), null);
+  assert.equal(ExtensionSync.legacyDestination(legacy.replace('/extension/connect/', '/')), null);
+  assert.equal(new URL(ExtensionSync.legacyDestination('https://agentskills.media/extension/connect/#staleproof')).search, '?extension_sync=1');
+  const safe = ExtensionSync.legacyDestination(legacy.replace('?login_code=', '?access_token=private-token&login_code=') + '&access_token=private-fragment');
+  assert.doesNotMatch(safe, /private-token|private-fragment|access_token/);
+  assert.equal(new URL(safe).searchParams.get('login_code'), code);
+});
+
+test('main Favorites entry waits for store initialization and sign-in, then sends only opaque handoff data', async t => {
+  const f = mainSyncFixture({active: false}); t.after(() => f.sync.destroy());
+  f.sync.update(); await settle(); assert.equal(f.requests.length, 0);
+  f.sync.ready(); await settle(); assert.equal(f.sync.getSnapshot().status, 'sign_in'); assert.equal(f.requests.length, 0);
+  f.setActive(true); f.sync.update(); await settle();
+  assert.equal(f.sync.getSnapshot().status, 'connecting'); assert.equal(f.messages.length, 1);
+  assert.deepEqual(f.requests, [{extension_id: EXTENSION_ID, client_challenge: challenge.client_challenge, client_state: challenge.client_state}]);
+  assert.deepEqual(f.messages[0], {id: EXTENSION_ID, message: {type: 'favorites:connect', code: 'h'.repeat(43), state: challenge.client_state}, senderURL: syncURL});
+  assert.equal(new URL(f.location.href).searchParams.get('extension_sync'), '1', 'native sender validation still sees the explicit marker');
+  f.respond({ok: true, connected: true}); await settle();
+  assert.deepEqual(f.sync.getSnapshot(), {active: true, status: 'connected', busy: false});
+  assert.equal(f.location.href, 'https://agentskills.media/'); assert.equal(f.timers.jobs.size, 0);
+  assert.doesNotMatch(JSON.stringify({messages: f.messages, changes: f.changes}), /private-|token|verifier/);
+  f.sync.update(); f.sync.retry(); await settle(); assert.equal(f.requests.length, 1);
+});
+
+test('main entry restores its public proof before OAuth and preserves a later real board route after success', async t => {
+  const f = mainSyncFixture({active: false}); t.after(() => f.sync.destroy());
+  f.location.href = 'https://agentskills.media/?extension_sync=1#mcp'; f.sync.prepareSignIn();
+  assert.equal(f.location.href, syncURL);
+  f.setActive(true); f.sync.ready(); await settle();
+  f.location.href = 'https://agentskills.media/?extension_sync=1#mcp';
+  f.respond({ok: true, connected: true}); await settle();
+  assert.equal(f.location.href, 'https://agentskills.media/#mcp');
+});
+
+test('invalid main proofs never mint a grant, but an authenticated passive bridge can complete the entry', async t => {
+  const f = mainSyncFixture({href: 'https://agentskills.media/?extension_sync=1#staleproof'}); t.after(() => f.sync.destroy());
+  f.sync.ready(); await settle(); assert.equal(f.sync.getSnapshot().status, 'invalid_request');
+  assert.equal(f.requests.length, 0); f.sync.connected();
+  assert.deepEqual(f.sync.getSnapshot(), {active: true, status: 'connected', busy: false});
+  assert.equal(f.location.href, 'https://agentskills.media/');
+});
+
+test('passive connection success cancels a pending one-shot wait and wins over its late failure', async t => {
+  const f = mainSyncFixture(); t.after(() => f.sync.destroy());
+  f.sync.ready(); await settle(); assert.equal(f.messages.length, 1);
+  f.sync.connected(); assert.deepEqual(f.sync.getSnapshot(), {active: true, status: 'connected', busy: false});
+  assert.equal(f.timers.jobs.size, 0, 'successful passive sync immediately releases the old callback timeout');
+  f.respond({ok: false, connected: false}); await settle();
+  assert.deepEqual(f.sync.getSnapshot(), {active: true, status: 'connected', busy: false});
+  assert.equal(f.location.href, 'https://agentskills.media/');
+});
+
+test('main entry never delivers late account grants, reports fixed failures, and cancels delivery on destroy', async t => {
+  const held = deferred(), changed = mainSyncFixture({connectExtension: () => held.promise});
+  t.after(() => changed.sync.destroy()); changed.sync.ready(); await settle(); changed.setUser(BOB);
+  held.resolve({code: 'h'.repeat(43), state: challenge.client_state}); await settle();
+  assert.equal(changed.messages.length, 0); assert.equal(changed.sync.getSnapshot().status, 'account_changed');
+  const failing = mainSyncFixture({connectExtension: async () => { throw new Error('private-token-provider-detail'); }});
+  t.after(() => failing.sync.destroy()); failing.sync.ready(); await settle();
+  assert.equal(failing.sync.getSnapshot().status, 'connection_failed');
+  assert.doesNotMatch(JSON.stringify(failing.changes), /private-|token|provider/);
+  const destroyed = mainSyncFixture(); destroyed.sync.ready(); await settle();
+  assert.equal(destroyed.timers.jobs.size, 1); destroyed.sync.destroy(); await settle();
+  assert.equal(destroyed.timers.jobs.size, 0); destroyed.respond({ok: true, connected: true}); await settle();
+  assert.equal(destroyed.location.href, syncURL, 'destroyed work cannot report connection success or clean the current URL');
+});
+
+test('main entry rejects non-boolean acknowledgements and times out with a retryable fixed state', async t => {
+  const f = mainSyncFixture(); t.after(() => f.sync.destroy());
+  f.sync.ready(); await settle(); f.respond({ok: true, connected: 'true'}); await settle();
+  assert.equal(f.sync.getSnapshot().status, 'connection_failed'); assert.equal(f.location.href, syncURL);
+  f.sync.retry(); await settle(); assert.equal(f.messages.length, 2);
+  await f.timers.advance(30000);
+  assert.deepEqual(f.sync.getSnapshot(), {active: true, status: 'connection_failed', busy: false});
+});
+
+test('real website OAuth retains same-tab PKCE and extension proof before automatically handing off', async t => {
+  const FavoritesSync = require('../src/favorites.js'), {webcrypto, createHash} = require('node:crypto');
+  class MemoryStorage { constructor() { this.values = new Map(); } getItem(key) { return this.values.get(key) ?? null; }
+    setItem(key, value) { this.values.set(key, String(value)); } removeItem(key) { this.values.delete(key); } }
+  const storage = new MemoryStorage(), sessionStorage = new MemoryStorage(), calls = [], external = [];
+  const location = {href: syncURL, assign(value) { this.destination = value; }};
+  const history = {replaceState(_state, _title, value) { location.href = value; }};
+  const user = {id: ALICE.id, login: ALICE.login, avatar_url: 'https://avatars.githubusercontent.com/u/101'};
+  let signedIn = false, extensionReply;
+  const fetch = async (address, options) => {
+    const url = new URL(address), body = options.body ? JSON.parse(options.body) : null;
+    calls.push({path: url.pathname, body});
+    if (url.pathname === '/api/auth/exchange') { signedIn = true; return Response.json({token: 'z'.repeat(43), expiresAt: new Date(Date.now() + 8 * 3600000).toISOString(), user}); }
+    if (url.pathname === '/api/auth/extension') return Response.json({code: 'h'.repeat(43), state: body.client_state, expiresAt: new Date(Date.now() + 90000).toISOString()});
+    if (url.pathname === '/api/bootstrap') return Response.json({authConfigured: true, user: signedIn ? user : null, favorites: [], nextCursor: null});
+    assert.fail('Unexpected API path: ' + url.pathname);
+  };
+  const createStore = () => FavoritesSync.createFavoritesStore({storage, sessionStorage, config: {apiBase: 'https://favorites-api.test/api'},
+    location, history, fetch, crypto: webcrypto, catalog: () => []});
+  let store = createStore(); await store.init();
+  const initial = ExtensionSync.start({store, location, history}); t.after(() => initial.destroy());
+  initial.ready(); initial.prepareSignIn(); await store.signIn();
+  const github = new URL(location.destination), pending = JSON.parse(sessionStorage.getItem(FavoritesSync.SESSION_KEYS.login));
+  assert.equal(github.searchParams.get('return_to'), '/?extension_sync=1#' + proofFragment);
+  assert.equal(github.searchParams.get('client_challenge'), createHash('sha256').update(pending.verifier).digest('base64url'));
+  store.destroy(); initial.destroy();
+  location.href = `https://agentskills.media/?extension_sync=1&login_code=${'o'.repeat(43)}&login_state=${pending.state}#${proofFragment}`;
+  store = createStore(); t.after(() => store.destroy());
+  const completed = ExtensionSync.start({store, location, history, chrome: {runtime: {sendMessage(id, message, callback) {
+    external.push({id, message, senderURL: location.href}); extensionReply = callback;
+  }}}}); t.after(() => completed.destroy());
+  assert.equal(calls.filter(call => call.path === '/api/auth/extension').length, 0);
+  await store.init(); assert.equal(new URL(location.href).searchParams.has('login_code'), false);
+  assert.equal(calls.filter(call => call.path === '/api/auth/extension').length, 0, 'website auth is consumed before the handoff begins');
+  completed.ready(); await settle();
+  assert.equal(external.length, 1); assert.equal(new URL(external[0].senderURL).searchParams.get('extension_sync'), '1');
+  assert.deepEqual(calls.find(call => call.path === '/api/auth/exchange').body, {code: 'o'.repeat(43), state: pending.state, verifier: pending.verifier});
+  assert.doesNotMatch(JSON.stringify(external), new RegExp(pending.verifier + '|' + 'z'.repeat(43)));
+  extensionReply({ok: true, connected: true}); await settle();
+  assert.equal(completed.getSnapshot().status, 'connected'); assert.equal(location.href, 'https://agentskills.media/');
 });

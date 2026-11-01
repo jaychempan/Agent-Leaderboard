@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {registerFavoritesMessages, createWebsiteRegistry} from '../../chrome/favorites-background.mjs';
 
 const id='medjijlfgmfeldlelkidiickdcnbicaf';
@@ -85,4 +86,26 @@ test('registry challenges bind the actual port and late replies on disconnected 
   const pending=registry.request(candidate,challenge);assert.deepEqual(port.sent[0],{type:'favorites:challenge',...challenge});
   port.receive({type:'favorites:connect',code:'x'.repeat(43),state:'wrong'});port.disconnect();await assert.rejects(pending,{code:'website_connection_lost'});
   port.receive({type:'favorites:connect',code:'x'.repeat(43),state:challenge.client_state});assert.deepEqual(registry.list(),[]);
+});
+
+test('external one-shot main-page completion requires one extension_sync=1 marker',async()=>{
+  let calls=0;const h=harness({completeWebsiteSignIn:async()=>{calls++;return{connected:true};}});
+  for(const path of['/','/index.html','/?extension_sync=0','/?extension_sync=1&extension_sync=1','/#extension_sync=1']){
+    assert.equal(await h.sendExternal(completion,{...website,url:'https://agentskills.media'+path}),null,path);
+  }
+  assert.equal(calls,0);
+  for(const path of['/?extension_sync=1','/index.html?extension_sync=1']){
+    assert.deepEqual(await h.sendExternal(completion,{...website,url:'https://agentskills.media'+path}),{ok:true,connected:true},path);
+  }
+  assert.equal(calls,2);
+});
+
+test('native website messaging patterns include root query URLs without broadening to other website paths',()=>{
+  const manifest=JSON.parse(readFileSync(new URL('../../chrome/manifest.json',import.meta.url),'utf8'));
+  assert.deepEqual(new Set(manifest.externally_connectable.matches),new Set([
+    'https://agentskills.media/','https://agentskills.media/?*',
+    'https://agentskills.media/index.html','https://agentskills.media/index.html?*',
+    'https://agentskills.media/extension/connect/*',
+  ]));
+  assert.equal(manifest.externally_connectable.ids,undefined,'other extensions are not permitted as website bridge senders');
 });

@@ -181,8 +181,8 @@ async function checkMenuResize(page,header,buttonSelector,navSelector,breakpoint
   for(const locale of ['zh','en']){
    if(locale==='en')await page.locator('#language').click();
    const download=page.locator('.hero-actions .primary');
-   assert.equal(await download.getAttribute('href'),'../dist/Chrome.zip?v=1.7.3-compact-account');
-   assert.equal(await download.innerText(),locale==='zh'?'下载 v1.7.3 ZIP':'Download v1.7.3 ZIP');
+   assert.equal(await download.getAttribute('href'),'../dist/Chrome.zip?v=1.7.4-website-modal');
+   assert.equal(await download.innerText(),locale==='zh'?'下载 v1.7.4 ZIP':'Download v1.7.4 ZIP');
    assert.equal(await page.locator('.store-install').getAttribute('href'),storeURL);
    assert.equal(await page.locator('.store-install').getAttribute('target'),'_blank');
    assert.match(await page.locator('.store-install').innerText(),/v1\.6/);
