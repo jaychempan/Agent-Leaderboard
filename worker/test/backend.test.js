@@ -37,6 +37,7 @@ function fixture(t, extras = {}, behavior = {}) {
   const calls = [];
   const worker = createWorker({now: () => time, fetch: async (url, options) => {
     calls.push({url, options});
+    assert.equal(options.redirect, 'manual');
     if (behavior.fetch) return behavior.fetch(url, options);
     if (url === 'https://github.com/login/oauth/access_token') {
       const body = new URLSearchParams(options.body);
@@ -255,6 +256,22 @@ test('OAuth token HTTP 400/401 responses recognize only known JSON errors withou
     assert.equal(new URL((await f.complete(attempt)).headers.get('Location')).searchParams.get('auth_error'), 'invalid_state');
     assert.equal(f.calls.length, 1);
   }
+});
+
+test('OAuth fetches use manual redirects and reject 3xx without reading bodies or forwarding credentials', async t => {
+  let cancelled = 0, read = 0;
+  const f = fixture(t, {}, {fetch: async () => ({status: 302, ok: false,
+    headers: new Headers({Location: 'https://untrusted.example/?token=upstream-access-token-must-not-leak'}),
+    body: {async cancel() { cancelled++; }}, async json() { read++; throw new Error('sensitive-upstream-detail'); }})});
+  const attempt = await f.begin(), response = await f.complete(attempt), location = response.headers.get('Location');
+  assert.equal(new URL(location).searchParams.get('auth_error'), 'oauth_token_unavailable');
+  assert.equal(cancelled, 1); assert.equal(read, 0, 'redirect response bodies are never parsed');
+  assert.equal(f.calls.length, 1, 'redirect is not followed and identity is not requested');
+  assert.equal(f.calls[0].url, 'https://github.com/login/oauth/access_token');
+  assert.doesNotMatch(location, /untrusted\.example|upstream-access-token|sensitive-upstream-detail|github-server-secret/);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 0);
+  assert.equal(new URL((await f.complete(attempt)).headers.get('Location')).searchParams.get('auth_error'), 'invalid_state');
+  assert.equal(f.calls.length, 1);
 });
 
 test('OAuth identity validation and storage failures have separate fixed categories', async t => {

@@ -177,7 +177,13 @@ export function createWorker(options = {}) {
   async function githubJSON(url, init) {
     const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
     try {
-      const response = await upstreamFetch(url, {...init, redirect: 'error', signal: controller.signal});
+      // workerd supports manual/follow, but rejects redirect: 'error'. Never
+      // follow an upstream redirect with a client secret or bearer token.
+      const response = await upstreamFetch(url, {...init, redirect: 'manual', signal: controller.signal});
+      if (response.status >= 300 && response.status < 400) {
+        try { await response.body?.cancel(); } catch { /* reject regardless of cancellation outcome */ }
+        throw new Error('upstream_redirect');
+      }
       if (!response.ok) {
         if (url === 'https://github.com/login/oauth/access_token') {
           let body;
