@@ -1,12 +1,12 @@
 # GitHub 登录与网站云收藏部署
 
-更新日期：2026-10-31。
+更新日期：2026-11-01。
 
 网站继续由 GitHub Pages 托管，DNS 保留在腾讯云。登录与收藏使用独立 `workers.dev` 地址的 Cloudflare Worker 和 D1 数据库，不需要迁移域名或更改现有 DNS。这个结构参考了 [CCFDDL 的公开实现](https://github.com/ccfddl/ccf-deadlines/tree/main/worker)，并适配独立 API 地址。
 
 GitHub 只确认登录身份，站内收藏不会自动给 GitHub 仓库点 Star。Chrome 插件仍使用自己的本地收藏，不接入网站账号。
 
-**代码和模拟测试通过不代表真实登录已开通。** 正式启用需要自有 GitHub OAuth App、Worker secrets、D1 迁移和部署，最后验证真实登录及跨设备恢复。API 未部署或认证未配置时，网站仍可使用本地收藏。
+**代码和模拟测试通过不代表真实登录已开通。** 正式启用需要自有 GitHub 应用（GitHub App 或 OAuth App）、Worker secrets、D1 迁移和部署，最后验证真实登录及跨设备恢复。API 未部署或认证未配置时，网站仍可使用本地收藏。
 
 ## 1. 确认 Worker 地址并迁移 D1
 
@@ -38,15 +38,21 @@ npm run db:migrate:remote
 
 D1 保存 GitHub 用户标识、用户名和公开头像资料、本站会话令牌的哈希、短期登录校验与一次性交换记录、本地导入去重标识，以及按用户隔离的仓库收藏与显示快照。客户端不能指定其他账号来读写收藏。参见 [D1 创建与绑定](https://developers.cloudflare.com/d1/get-started/) 和 [workers.dev 地址](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/)。
 
-## 2. 创建 GitHub OAuth App
+## 2. 创建 GitHub 应用
 
-在 GitHub [New OAuth App](https://github.com/settings/applications/new) 注册：
+GitHub App 和 OAuth App 均支持当前登录流程，二选一即可。当前项目采用 **GitHub App**，可在 [New GitHub App](https://github.com/settings/apps/new) 注册：
 
-- Application name：`Agent Leaderboard`
+- GitHub App name：`Agent Leaderboard by jaychempan`，避免与已有 GitHub 账号占用的名称冲突。
 - Homepage URL：`https://agentskills.media/`
-- Authorization callback URL：`https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`。
+- Callback URL：`https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`
+- Webhook 的 **Active** 不勾选，Webhook URL 留空。
+- 不增加仓库、组织或账号权限；可设置的权限保留 **No access**。
+- **Where can this GitHub App be installed?** 选择 **Any account**，让其他 GitHub 用户也能授权登录。
+- 保留 **Expire user authorization tokens**；无需勾选安装时授权或 Device Flow。
 
-普通登录不申请 `repo`、`public_repo` 或 `gist` 权限。Worker 用授权码读取 GitHub 用户身份后丢弃 GitHub access token，GitHub 令牌不会发送到官网前端。参见 [GitHub OAuth App 创建说明](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)。
+创建后生成 Client Secret，使用详情页的 **Client ID**，不是 App ID。本站只验证身份，不要求用户安装应用，也不需要生成私钥。GitHub App 支持 OAuth/PKCE 用户授权，`GET /user` 不要求额外权限。参见 [GitHub App 注册说明](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app)、[用户令牌流程](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app)、[授权与安装的区别](https://docs.github.com/en/apps/using-github-apps/authorizing-github-apps)及[用户接口权限](https://docs.github.com/en/rest/users/users#get-the-authenticated-user)。
+
+也可复用或创建 [OAuth App](https://github.com/settings/applications/new)，填写同样的 Homepage URL 和 Authorization callback URL，应用名可用 `Agent Leaderboard`。普通登录不申请 `repo`、`public_repo`、`gist` 或邮箱 scope。参见 [OAuth App 创建说明](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)。两种应用下，Worker 都在读取身份后丢弃 GitHub access token，不把它发送到官网前端。
 
 ## 3. 配置 secrets 与前端
 
@@ -58,7 +64,7 @@ npx wrangler secret put GITHUB_CLIENT_SECRET
 npx wrangler secret put SESSION_SECRET
 ```
 
-也可在 Cloudflare 控制台对应 Worker 的 **Settings → Variables and Secrets** 添加加密 secret。`SESSION_SECRET` 使用密码学安全随机生成、至少 32 字节的独立值；已有值不必重复生成。不要把 Client Secret 或会话密钥放入前端、仓库、Issue、聊天记录或命令行参数。参见 [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/)。
+也可在 Cloudflare 控制台对应 Worker 的 **Settings → Variables and Secrets** 添加这三个值，类型选加密 **Secret**，不是明文 Text；Wrangler 中应显示为 `secret_text`。`SESSION_SECRET` 使用密码学安全随机生成、至少 32 字节的独立值；已有值不必重复生成。不要把 Client Secret 或会话密钥放入前端、仓库、Issue、聊天记录或命令行参数。参见 [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/)。
 
 前端 `src/auth-config.js` 使用实际 API 地址：
 
@@ -74,7 +80,7 @@ Worker 只允许 `PUBLIC_ORIGIN` 精确匹配的网页来源。CORS 允许必要
 
 本站会话令牌只保存在当前标签页的 `sessionStorage`，最长八小时，用于 `Authorization: Bearer` API 请求；刷新页面可以恢复会话，关闭标签页或到期后可能需要重新登录。浏览器不在 `localStorage` 保存登录令牌。收藏本身长期保存在 D1，不随标签页关闭或会话到期丢失。
 
-本地测试可用未提交的 `.dev.vars`，并将 `PUBLIC_ORIGIN`、`API_ORIGIN` 和 GitHub App 回调改为实际测试地址；本地允许 localhost HTTP，生产使用 HTTPS。建议测试与生产使用不同 OAuth App。
+本地测试可用未提交的 `.dev.vars`，并将 `PUBLIC_ORIGIN`、`API_ORIGIN` 和 GitHub 应用回调改为实际测试地址；本地允许 localhost HTTP，生产使用 HTTPS。建议测试与生产使用不同 GitHub 应用。
 
 ## 4. 测试并部署
 

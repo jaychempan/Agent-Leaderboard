@@ -32,10 +32,26 @@ the frontend login proof and the one-time login handoff table without changing
 existing users, favorites, sessions, or import receipts. Previously pending
 OAuth attempts lack the new proof and must be restarted.
 
-Create a GitHub OAuth App with homepage `https://agentskills.media/` and callback
+Use a GitHub App or OAuth App with homepage `https://agentskills.media/` and callback
 `https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`
-(using the actual `API_ORIGIN`). It needs no extra scope. Set the credentials
-and a random server secret of at least 32 bytes using interactive prompts:
+(using the actual `API_ORIGIN`). The current registration is a **GitHub App**:
+
+- Name: `Agent Leaderboard by jaychempan`, avoiding a name reserved by an existing GitHub account.
+- Set **Where can this GitHub App be installed?** to **Any account** (public).
+- Leave additional repository, organization, and account permissions disabled; uncheck webhook **Active** and leave its URL blank.
+- Generate a **Client Secret** and use the **Client ID**, which differs from the App ID. Keep token expiration enabled; installation-time authorization and Device Flow are unnecessary.
+
+This identity flow requires no installation or private key. GitHub App user
+authorization supports the same OAuth/PKCE endpoints, and `GET /user` needs no
+additional permissions. See [GitHub App registration](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app),
+[user-token flow](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app),
+[authorization without installation](https://docs.github.com/en/apps/using-github-apps/authorizing-github-apps),
+and [user endpoint permissions](https://docs.github.com/en/rest/users/users#get-the-authenticated-user).
+
+An [OAuth App](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
+is also supported with the same homepage/callback and no additional scopes.
+Set either application's credentials and a random server secret of at least
+32 bytes using interactive prompts:
 
 ```sh
 npx wrangler secret put GITHUB_CLIENT_ID
@@ -45,11 +61,13 @@ npm run check
 npm run deploy
 ```
 
+In the Cloudflare dashboard, store all three values as encrypted **Secret**
+variables (`secret_text` in Wrangler), rather than plain Text variables.
 Configure the same public API origin in the website's client configuration.
 Client ID/secret, SESSION_SECRET, and GitHub access tokens must never be placed
 in static assets. Ignored `.dev.vars` can hold local test values. For local
 HTTP development only, origin validation also accepts localhost, 127.0.0.1,
-and [::1]; use a separate OAuth App and matching origin configuration. When both
+and [::1]; use a separate GitHub application and matching origin configuration. When both
 origins equal the same local HTTP origin, a browser bootstrap GET may omit
 Origin if `Sec-Fetch-Site: same-origin` or its Referer proves that exact origin.
 This exception does not apply to production or cross-origin calls.
@@ -58,7 +76,7 @@ Before enabling login, check `/api/health` returns
 `{"ok":true,"authConfigured":true}`, then perform a real GitHub login, save,
 reload, and sign in in a second browser to restore the same favorites. Health
 checks that credentials exist and all required database tables are accessible;
-it does not prove the OAuth App credentials or callback are correct. See
+it does not prove the GitHub application's credentials or callback are correct. See
 [the site setup guide](../docs/github-favorites-setup.md).
 
 ## API contract
