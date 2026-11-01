@@ -1,6 +1,7 @@
 // The service worker owns authentication. Only public snapshots may reach panels.
 export const API_BASE = 'https://agent-leaderboard-api.jaychempan.workers.dev/api';
 export const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
+export const WEBSITE_CONNECT_URL = 'https://agentskills.media/extension/connect/';
 export const STORAGE_KEYS = Object.freeze({session: 'agentFavoritesSessionV1', pending: 'agentFavoritesLoginV1',
   cache: 'agentFavoritesCloudV1', migration: 'agentFavoritesMigrationV1'});
 const SOURCES = Object.freeze({skill: 'skills', mcp: 'mcp', prompt: 'prompts', framework: 'frameworks', auto_research: 'research'});
@@ -25,6 +26,15 @@ const failure = (code, status) => Object.assign(new Error(code), {code, status})
 const publicUser = value => value && typeof value.login === 'string' && /^[1-9]\d{0,15}$/.test(String(value.id)) && Number.isSafeInteger(Number(value.id))
   && /^[A-Za-z0-9-]{1,39}$/.test(value.login || '') ? {id: String(value.id), login: value.login,
     avatar_url: /^https:\/\/avatars\.githubusercontent\.com\//.test(value.avatar_url || '') ? value.avatar_url.slice(0, 1000) : ''} : null;
+
+export function isWebsiteConnectSender(sender) {
+  if (!sender || sender.id !== undefined || sender.origin !== 'https://agentskills.media' || sender.frameId !== 0
+      || !Number.isInteger(sender.tab?.id) || sender.tab.id < 0) return false;
+  try {
+    const url = new URL(sender.url);
+    return url.origin === 'https://agentskills.media' && url.pathname === '/extension/connect/' && !url.username && !url.password && !url.port;
+  } catch { return false; }
+}
 
 export function sanitizeExtensionRepository(value, forcedId) {
   if (!value || typeof value !== 'object') return null;
@@ -71,7 +81,7 @@ export function createFavoritesSync(options = {}) {
   const crypto = options.crypto || globalThis.crypto;
   const now = options.now || Date.now;
   const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
-  let loaded, initializing, syncTask, signInTask, tail = Promise.resolve(), sessionTail = Promise.resolve();
+  let loaded, initializing, syncTask, signInTask, completionTask, pendingLogin = null, tail = Promise.resolve(), sessionTail = Promise.resolve();
   let session = null, cloud = {}, local = {}, migration = null, catalogByName = new Map(), catalogById = new Map();
   let status = 'local', error = null, cacheFailed = false, epoch = 0, pendingKeys = new Set(), unresolvedKeys = new Set();
   const controllers = new Set();
@@ -178,12 +188,16 @@ export function createFavoritesSync(options = {}) {
       }
     } catch { /* Out-of-catalog records can still be resolved by the API. */ }
   }
+  function validPending(value) {
+    return Boolean(value?.mode === 'website' && value.api === API_BASE && TOKEN.test(value.verifier || '') && TOKEN.test(value.state || '')
+      && Number.isInteger(value.tabId) && value.tabId >= 0 && Number.isFinite(value.createdAt) && value.createdAt <= now() && now() - value.createdAt < 600000);
+  }
   async function load() {
     if (loaded) return loaded;
     loaded = (async () => {
       try {
         await refreshLocal(); await refreshCatalog();
-        const values = await storageGet('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache]);
+        const values = await storageGet('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache, STORAGE_KEYS.pending]);
         const value = values[STORAGE_KEYS.session], owner = publicUser(value?.user);
         if (value?.api === API_BASE && TOKEN.test(value.token || '') && owner && date(value.expiresAt) && Date.parse(value.expiresAt) > now()) {
           session = {api: API_BASE, token: value.token, expiresAt: value.expiresAt, user: owner};
@@ -192,6 +206,8 @@ export function createFavoritesSync(options = {}) {
             for (const value of cache.records) { const record = sanitizeExtensionRepository(value); if (record?.source_id) cloud[record.source_id] = record; }
           }
         } else if (value || values[STORAGE_KEYS.cache]) await storageRemove('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache]);
+        pendingLogin = validPending(values[STORAGE_KEYS.pending]) ? values[STORAGE_KEYS.pending] : null;
+        if (pendingLogin) status = 'awaiting_website';
         unresolvedKeys = new Set(Object.keys(visibleLocal()));
       } catch { error = 'storage_unavailable'; status = 'error'; }
       return emit();
@@ -206,7 +222,7 @@ export function createFavoritesSync(options = {}) {
     } catch { if (context === epoch) cacheFailed = true; }
   }
   function invalidateMemory() {
-    epoch += 1; session = null; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys = new Set(Object.keys(local));
+    epoch += 1; session = null; pendingLogin = null; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys = new Set(Object.keys(local));
     for (const controller of controllers) controller.abort();
   }
   async function clearAuthentication() {
@@ -346,7 +362,7 @@ export function createFavoritesSync(options = {}) {
         if (!current(context)) return snapshot();
         await persistCloud(context.epoch);
       }
-      status = cacheFailed ? 'error' : session && !Object.keys(visibleLocal()).length ? 'synced' : 'local'; error = cacheFailed ? 'storage_unavailable' : null;
+      status = cacheFailed ? 'error' : validPending(pendingLogin) ? 'awaiting_website' : session && !Object.keys(visibleLocal()).length ? 'synced' : 'local'; error = cacheFailed ? 'storage_unavailable' : null;
     } catch (exception) {
       if (context.epoch !== epoch || exception.code === 'stale_request') return snapshot();
       if (exception.status === 401 || exception.code === 'account_changed') {
@@ -361,6 +377,11 @@ export function createFavoritesSync(options = {}) {
   }
   async function getSnapshot() {
     await load();
+    if (pendingLogin && !validPending(pendingLogin)) {
+      pendingLogin = null;
+      try { await storageRemove('session', STORAGE_KEYS.pending); error = 'auth_failed'; } catch { error = 'storage_unavailable'; }
+      status = 'error'; emit();
+    }
     if (session && Date.parse(session.expiresAt) <= now()) {
       try { await clearAuthentication(); error = 'auth_failed'; } catch { error = 'storage_unavailable'; }
       status = 'local'; emit();
@@ -380,48 +401,68 @@ export function createFavoritesSync(options = {}) {
     if (signInTask) return signInTask;
     let attemptEpoch;
     signInTask = (async () => {
-      await load();
-      const startEpoch = epoch; attemptEpoch = startEpoch;
-      const verifier = random(), state = random(), returnTo = chrome.identity.getRedirectURL('github');
-      if (chrome.runtime.id !== EXTENSION_ID || returnTo !== `https://${EXTENSION_ID}.chromiumapp.org/github`) throw failure('auth_failed');
-      const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
-      await storageSet('session', {[STORAGE_KEYS.pending]: {api: API_BASE, verifier, state, createdAt: now()}});
+      await load(); attemptEpoch = epoch;
+      if (chrome.runtime.id !== EXTENSION_ID) throw failure('auth_failed');
+      const stored = await storageGet('session', STORAGE_KEYS.pending);
+      const reusable = validPending(stored[STORAGE_KEYS.pending]) ? stored[STORAGE_KEYS.pending] : null;
+      const eligible = (await chrome.tabs.query({url: 'https://agentskills.media/*'})).filter(tab => {
+        try { const url = new URL(tab.url); return url.origin === 'https://agentskills.media' && !url.username && !url.password && !url.port && ['/', '/extension/connect/'].includes(url.pathname); }
+        catch { return false; }
+      });
+      let tab = reusable && eligible.find(tab => tab.id === reusable.tabId);
+      const reuse = Boolean(tab);
+      if (!tab) tab = eligible.sort((a, b) => Number(b.active) - Number(a.active) || (b.lastAccessed || 0) - (a.lastAccessed || 0))[0];
+      if (!tab) tab = await chrome.tabs.create({url: 'about:blank', active: true});
+      if (!Number.isInteger(tab?.id) || tab.id < 0 || attemptEpoch !== epoch) throw failure('stale_request');
+      const pending = reuse ? reusable : {api: API_BASE, verifier: random(), state: random(), createdAt: now(), tabId: tab.id, mode: 'website'};
+      const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pending.verifier))));
+      if (attemptEpoch !== epoch) throw failure('stale_request');
+      await storageSet('session', {[STORAGE_KEYS.pending]: pending});
+      if (attemptEpoch !== epoch) throw failure('stale_request');
+      pendingLogin = pending; status = 'awaiting_website'; error = null; emit();
+      const fragment = new URLSearchParams({extension_id: EXTENSION_ID, client_challenge: challenge, client_state: pending.state});
+      await chrome.tabs.update(tab.id, {url: WEBSITE_CONNECT_URL + '#' + fragment, active: true});
+      return snapshot();
+    })().catch(async exception => {
+      if (attemptEpoch !== undefined && attemptEpoch !== epoch) return snapshot();
+      pendingLogin = null;
+      try { await storageRemove('session', STORAGE_KEYS.pending); } catch { /* Report only fixed public error codes. */ }
+      error = exception.code === 'storage_unavailable' ? 'storage_unavailable' : 'auth_failed'; status = 'error'; return emit();
+    }).finally(() => { signInTask = null; });
+    return signInTask;
+  }
+  function completeWebsiteSignIn(message, sender) {
+    const rejected = {ok: false, connected: false};
+    if (!isWebsiteConnectSender(sender) || message?.type !== 'favorites:connect'
+        || !TOKEN.test(message.code || '') || !TOKEN.test(message.state || '') || completionTask) return Promise.resolve(rejected);
+    let attemptEpoch;
+    completionTask = (async () => {
+      await load(); attemptEpoch = epoch;
+      const stored = await storageGet('session', STORAGE_KEYS.pending), pending = stored[STORAGE_KEYS.pending];
+      if (!validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state) return rejected;
+      await storageRemove('session', STORAGE_KEYS.pending); pendingLogin = null;
+      if (attemptEpoch !== epoch) return rejected;
       status = 'syncing'; error = null; emit();
-      const address = API_BASE + '/auth/github?' + new URLSearchParams({client: 'extension', return_to: returnTo, client_challenge: challenge, client_state: state});
-      let returned;
-      try { returned = await chrome.identity.launchWebAuthFlow({url: address, interactive: true}); }
-      catch { throw failure('auth_cancelled'); }
-      if (epoch !== startEpoch) throw failure('stale_request');
-      const values = await storageGet('session', STORAGE_KEYS.pending), pending = values[STORAGE_KEYS.pending];
-      await storageRemove('session', STORAGE_KEYS.pending);
-      let url; try { url = new URL(returned); } catch { throw failure('auth_failed'); }
-      if (url.origin !== new URL(returnTo).origin || url.pathname !== new URL(returnTo).pathname || url.hash || url.username || url.password) throw failure('auth_failed');
-      if (url.searchParams.has('auth_error')) throw failure(AUTH_ERRORS.has(url.searchParams.get('auth_error')) ? url.searchParams.get('auth_error') : 'auth_failed');
-      const code = url.searchParams.get('login_code');
-      if (!TOKEN.test(code || '') || url.searchParams.get('login_state') !== state || pending?.state !== state
-          || pending.verifier !== verifier || pending.api !== API_BASE || !Number.isFinite(pending.createdAt)
-          || now() - pending.createdAt < 0 || now() - pending.createdAt > 600000) throw failure('auth_failed');
-      const payload = await request('/auth/exchange', {method: 'POST', authentication: null, body: {code, verifier, state}});
-      if (epoch !== startEpoch) throw failure('stale_request');
+      const payload = await request('/auth/exchange', {method: 'POST', authentication: null,
+        body: {code: message.code, verifier: pending.verifier, state: pending.state}});
+      if (attemptEpoch !== epoch) return rejected;
       const user = publicUser(payload?.user);
       if (!user || !TOKEN.test(payload?.token || '') || !date(payload.expiresAt) || Date.parse(payload.expiresAt) <= now()) throw failure('auth_failed');
       const value = {api: API_BASE, token: payload.token, expiresAt: payload.expiresAt, user};
       await storageSet('session', {[STORAGE_KEYS.session]: value, [STORAGE_KEYS.cache]: {api: API_BASE, owner: user.id, records: []}});
-      if (epoch !== startEpoch) throw failure('stale_request');
+      if (attemptEpoch !== epoch) return rejected;
       epoch += 1; session = value; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys.clear();
       for (const controller of controllers) controller.abort();
       const context = {epoch, id: user.id};
-      return enqueue(() => refresh(context));
-    })().catch(async exception => {
-      if (attemptEpoch !== undefined && attemptEpoch !== epoch) return snapshot();
-      try { await storageRemove('session', STORAGE_KEYS.pending); } catch { /* Report the storage failure below when it caused this attempt. */ }
-      if (exception.code !== 'stale_request') {
-        error = AUTH_ERRORS.has(exception.code) || ['storage_unavailable', 'auth_cancelled'].includes(exception.code) ? exception.code : 'auth_failed';
-        status = exception.code === 'auth_cancelled' ? (session ? 'synced' : 'local') : 'error'; emit();
+      await enqueue(() => refresh(context));
+      return session?.user.id === user.id ? {ok: true, connected: true, user: {...session.user}} : rejected;
+    })().catch(exception => {
+      if (attemptEpoch === undefined || attemptEpoch === epoch) {
+        error = exception.code === 'storage_unavailable' ? 'storage_unavailable' : 'auth_failed'; status = 'error'; emit();
       }
-      return snapshot();
-    }).finally(() => { signInTask = null; });
-    return signInTask;
+      return rejected;
+    }).finally(() => { completionTask = null; });
+    return completionTask;
   }
   async function signOut() {
     await load(); const previous = session, logoutEpoch = epoch + 1;
@@ -489,5 +530,5 @@ export function createFavoritesSync(options = {}) {
       return emit();
     });
   }
-  return {init, getSnapshot, signIn, signOut, sync, toggle};
+  return {init, getSnapshot, signIn, completeWebsiteSignIn, signOut, sync, toggle};
 }

@@ -6,7 +6,7 @@
 
 ## 安装
 
-v1.7 趋势与云收藏版可先[下载 ZIP](https://agentskills.media/dist/Chrome.zip)，按下方步骤加载。[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf) 当前仍为 v1.6，商店更新需提交审核；商店旧版不包含本页的趋势和账号同步功能。
+v1.7.1 趋势与云收藏版可先[下载 ZIP](https://agentskills.media/dist/Chrome.zip)，按下方步骤加载。[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf) 当前仍为 v1.6，商店更新需提交审核；商店旧版不包含本页的趋势和账号同步功能。
 
 如需本地开发或手动加载，按以下步骤操作：
 
@@ -17,7 +17,7 @@ v1.7 趋势与云收藏版可先[下载 ZIP](https://agentskills.media/dist/Chro
 3. 选择项目根目录下的 **`chrome/`** 文件夹。
 4. 在 Chrome 工具栏的扩展程序菜单中固定本插件，点击图标打开搜索侧边栏。
 
-本地安装也可直接复制整个 `chrome/` 文件夹，或运行 `python3 scripts/chrome/build.py`，将生成的 `dist/Chrome.zip` 解压后加载。需要云收藏时使用 v1.7 ZIP；商店版本号更新到 v1.7 后也可从商店安装。
+本地安装也可直接复制整个 `chrome/` 文件夹，或运行 `python3 scripts/chrome/build.py`，将生成的 `dist/Chrome.zip` 解压后加载。需要云收藏时使用 v1.7.1 ZIP；商店版本号更新到 v1.7.1 后也可从商店安装。
 
 ## 目录结构
 
@@ -58,13 +58,13 @@ artifacts/extension/    # 本地测试截图和检查结果（不提交 Git）
 - **独立标签页**：地址栏搜索或右键搜索回退可使用独立标签页，宽屏使用双列结果。底部网站链接跳转到当前榜单。
 - **主题**：默认跟随系统明暗模式，并在系统切换时自动更新。点击搜索栏右侧的主题按钮，依次切换“跟随系统 → 浅色 → 深色”；手动模式不随系统变化，再次切回“跟随系统”即可恢复自动。选择会记住并同步到其他插件页面。
 
-## 趋势榜（v1.7）
+## 趋势榜（v1.7.1）
 
 点击“趋势”，在五个来源之间切换，选择日榜 / 周榜 / 月榜，按增长率或新增 Stars 查看前 20 名。顶部搜索可缩小当前趋势列表；发现页的分类、用途和高级筛选不会影响趋势。仓库仍可收藏、查看详情和复制安装提示。
 
 插件与官网使用同一份历史快照和排序规则：新增 Stars 为期末减期初，增长率为增量除以期初 Stars。概览中的净增包含下降项目；榜单只列正增长，期初为零的项目不参与增长率排序。显示实际观测起止日期，缺少历史时明确提示，不能将缺失数据当作零增长。这些数字反映站内观测变化，并非 GitHub 实时新增。
 
-内置目录和趋势可以离线查看。更新时核对每个来源的采集时间，避免将不同日期的目录 Stars 和历史增量混算。JSON 更新只刷新数据；已手动安装旧版 v1.7 的用户仍需下载新包、覆盖原文件夹并在扩展管理页重新加载。
+内置目录和趋势可以离线查看。更新时核对每个来源的采集时间，避免将不同日期的目录 Stars 和历史增量混算。JSON 更新只刷新数据；已手动安装旧版 v1.7.1 的用户仍需下载新包、覆盖原文件夹并在扩展管理页重新加载。
 
 ## 数据与隐私
 
@@ -72,11 +72,11 @@ artifacts/extension/    # 本地测试截图和检查结果（不提交 Git）
 
 目录过大或浏览器存储空间不足时，本次联网数据仍可使用，但不能缓存；界面会提示，下次使用此前缓存或内置快照。未登录收藏和偏好保存在插件本地；主动登录后，收藏通过与官网相同的 Cloudflare Worker 和 D1 按 GitHub 账号保存。卸载删除插件本地数据，不删除已成功保存的云收藏。
 
-权限为 `storage`、`sidePanel`、`contextMenus`、`identity`，以及目录站点 `https://agentskills.media/*` 和收藏 API `https://agent-leaderboard-api.jaychempan.workers.dev/*`。`identity.launchWebAuthFlow` 仅在你选择登录时打开 GitHub 授权流程，不读取 Google 账号；API host permission 与 CSP 的 `connect-src` 用于登录交换和收藏读写。不使用内容脚本，不读取历史、Cookie 或网页正文。搜索在本地进行；右键选中文字仅传入插件，不发送至服务端。插件无统计追踪和远程执行代码。
+权限为 `storage`、`sidePanel`、`contextMenus`，以及官网和收藏 API 的现有来源权限。点击“在官网登录并同步”后，插件用普通标签页打开官网连接页；优先复用已打开的官网主页以保留该标签页的登录状态。官网在你确认后只交接一次性 PKCE 授权码，网站登录令牌不会传给插件。`externally_connectable` 只允许正式官网连接路径；没有 `identity` 或 Cookie 读取权限。不使用内容脚本，不读取历史或网页正文，搜索词不上传。
 
 ## GitHub 账号与云收藏
 
-本节适用于 v1.7。先切换“收藏”，选择 GitHub 登录；在授权窗口完成后返回插件。官网与插件需要各自登录，同一 GitHub 账号对应同一份云收藏。无需新建 GitHub 应用或填写密钥，也不需要安装 GitHub App、申请仓库权限或修改 GitHub Stars。
+本节适用于 v1.7.1。先切换“收藏”，点击“在官网登录并同步”。在普通官网页面登录 GitHub；已登录时直接确认“连接插件并同步收藏”，随后回到插件。同一官网账号对应同一份云收藏，插件使用独立的短期会话。不需要填写密钥、安装 GitHub App、申请仓库权限或修改 GitHub Stars。
 
 - 首次登录将当前插件已有的本地收藏合并到当前账号。使用稳定的 GitHub 仓库 ID 和可重试的导入记录去重；切换账号不会把上一个账号的云收藏合并进新账号。
 - 已退出榜单的仓库通过收藏快照保留。缺少 ID 的旧收藏会由 Worker 查询 GitHub 公开仓库元数据解析名称和 ID，不申请额外仓库权限。仓库已删除或无法解析时，仍留在本地并显示尚未导入的数量，不会假装已经上传。
@@ -85,7 +85,7 @@ artifacts/extension/    # 本地测试截图和检查结果（不提交 Git）
 - 插件只在 `chrome.storage.session` 保存 PKCE 校验资料、最长八小时的本站 Bearer 会话及当前账号收藏缓存，不在 `chrome.storage.local` 保存账号令牌或账号收藏镜像。GitHub access token 由 Worker 读取身份后丢弃，不进入插件。本地导入去重记录可能包含原本地收藏快照、归属账号和分批导入/清理回执，退出后可能继续保留；它不是云端账号列表的持久镜像。
 - 浏览器重启、扩展重新加载、禁用或升级会清除会话存储，可能需要重新登录；关闭一个侧边栏不一定退出。退出登录撤销当前插件会话并清除会话缓存，不删除云收藏，也不会让官网会话退出。卸载前请确认本地收藏已导入成功。
 
-两端使用同一 Worker、D1 和 GitHub 应用。GitHub callback 仍为 `https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`；Worker 只允许返回正式扩展的 `https://medjijlfgmfeldlelkidiickdcnbicaf.chromiumapp.org/github`。这个 Chrome 回跳地址不需要另加到 GitHub 应用配置。自建、改 ID 或改后端的版本需由维护者明确配置允许来源，不能放宽成任意扩展来源。
+两端使用同一 Worker、D1 和 GitHub 应用。GitHub callback 仍为 `https://agent-leaderboard-api.jaychempan.workers.dev/api/auth/github/callback`，无需修改配置。已登录官网通过 `POST /api/auth/extension`，用自己的会话和当前账号校验换取绑定插件 PKCE 的 90 秒一次性码；只有来源、顶层页面、发起标签页和状态全部匹配，正式插件才接受交接。网站令牌不会进入网址或扩展消息。自建、改 ID 或改后端的版本需明确配置允许来源，不能放宽成任意网站或扩展。
 
 云端部署与删除说明见 [GitHub 登录与收藏部署](github-favorites-setup.md) 和 [隐私政策](https://agentskills.media/privacy/)。代码测试与模拟授权不代替真实 GitHub 登录及官网、插件双向恢复的验收。
 
@@ -111,6 +111,6 @@ node tests/chrome/browser.cjs
 
 图标复用项目根目录 `favicon.svg` 的领奖台、排名数字和星标，保留主体比例，通过收紧画布留白使主体较原始透明版放大约 14%，移除底板和背景光晕，使用透明背景，原始 SVG 位于 `extension/assets/logo.svg`。原图与 [官网 favicon](https://agentskills.media/favicon.svg) 一致。Chrome 侧边栏标题、工具栏和扩展管理页统一使用从该 SVG 导出的 `chrome/icons/icon-*.png` 透明图标；清单中同时指定扩展图标和工具栏图标。只有修改 Logo 时，才需要配置与浏览器测试相同的 `PLAYWRIGHT_MODULE` / `CHROME_PATH`，运行 `node scripts/chrome/render_icons.cjs` 重新导出，再打包。
 
-Chrome API 依据：[Side Panel](https://developer.chrome.com/docs/extensions/reference/api/sidePanel)、[Omnibox](https://developer.chrome.com/docs/extensions/reference/api/omnibox)、[权限声明](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions)、[Identity](https://developer.chrome.com/docs/extensions/reference/api/identity) 与 [Storage](https://developer.chrome.com/docs/extensions/reference/api/storage)。
+Chrome API 依据：[Side Panel](https://developer.chrome.com/docs/extensions/reference/api/sidePanel)、[Omnibox](https://developer.chrome.com/docs/extensions/reference/api/omnibox)、[权限声明](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions)、[官网消息连接](https://developer.chrome.com/docs/extensions/develop/concepts/messaging#external-webpage) 与 [Storage](https://developer.chrome.com/docs/extensions/reference/api/storage)。
 
 官网通过 `.github/workflows/deploy.yml` 在部署前运行构建脚本，发布最新 ZIP 到 `dist/Chrome.zip`。展示页复用插件的安装提示生成逻辑；更新界面后，可用相同的浏览器环境运行 `node scripts/chrome/capture_showcase.cjs` 重新生成 `extension/assets/` 中英文、明暗截图。官网测试入口为 `node tests/extension-showcase.cjs`（默认本地端口 8765，或设置 `SITE_BASE_URL`）。

@@ -136,9 +136,10 @@ function withCors(response, request, origin) {
 function preflight(request, url, origin) {
   if (!request.headers.has('Origin')) throw new ApiError(403, 'origin_rejected');
   assertClientOrigin(request, origin);
+  if (url.pathname === '/api/auth/extension' && request.headers.get('Origin') !== origin) throw new ApiError(403, 'origin_rejected');
   const method = request.headers.get('Access-Control-Request-Method');
   const methods = url.pathname === '/api/health' || url.pathname === '/api/bootstrap' ? ['GET']
-    : ['/api/auth/exchange', '/api/auth/logout', '/api/favorites/import', '/api/favorites/resolve'].includes(url.pathname) ? ['POST']
+    : ['/api/auth/exchange', '/api/auth/extension', '/api/auth/logout', '/api/favorites/import', '/api/favorites/resolve'].includes(url.pathname) ? ['POST']
     : /^\/api\/favorites\/[1-9]\d{0,15}$/.test(url.pathname) ? ['PUT', 'DELETE'] : [];
   const requested = (request.headers.get('Access-Control-Request-Headers') || '').split(',').map(value => value.trim().toLowerCase()).filter(Boolean);
   if (!methods.includes(method) || requested.some(value => !['authorization', 'content-type', 'x-favorites-user', 'x-favorites-extension'].includes(value))
@@ -348,6 +349,17 @@ export function createWorker(options = {}) {
     return json({token, expiresAt: new Date(expires * 1000).toISOString(),
       user: {id: String(identity.github_id), login: identity.login, avatar_url: identity.avatar_url}});
   }
+  async function extensionHandoff(request, env, found) {
+    const body = await readJSON(request, 4096);
+    if (!EXTENSION_IDS.has(body.extension_id) || !isToken(body.client_challenge) || !isToken(body.client_state)) throw new ApiError(400, 'invalid_login_request');
+    const code = randomToken(), time = now(), expires = time + EXCHANGE_TTL;
+    await env.DB.batch([
+      env.DB.prepare('DELETE FROM login_exchanges WHERE expires_at <= ?1').bind(time),
+      env.DB.prepare(`INSERT INTO login_exchanges (code_hash,github_id,client_challenge,client_state,expires_at,created_at)
+        VALUES (?1,?2,?3,?4,?5,?6)`).bind(await sha256(code), Number(found.user.id), body.client_challenge, body.client_state, expires, time)
+    ]);
+    return json({code, state: body.client_state, expiresAt: new Date(expires * 1000).toISOString()});
+  }
   async function bootstrap(request, env) {
     const found = await session(request, env);
     const expected = request.headers.get('X-Favorites-User');
@@ -451,6 +463,12 @@ export function createWorker(options = {}) {
     if (url.pathname === '/api/auth/exchange' && request.method === 'POST') {
       assertClientOrigin(request, origin);
       return await exchange(request, env);
+    }
+    if (url.pathname === '/api/auth/extension' && request.method === 'POST') {
+      // Only an explicit website action may mint this handoff. The native
+      // extension/no-Origin compatibility path must never authorize it.
+      if (request.headers.get('Origin') !== origin) throw new ApiError(403, 'origin_rejected');
+      return await extensionHandoff(request, env, await requireSession(request, env));
     }
     const favoriteMatch = /^\/api\/favorites\/([1-9]\d{0,15})$/.exec(url.pathname);
     const importRoute = url.pathname === '/api/favorites/import' && request.method === 'POST';

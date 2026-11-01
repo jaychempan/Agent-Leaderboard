@@ -1,6 +1,5 @@
-/* Real MV3 account integration in an isolated Chrome profile. Authentication and
- * API responses are fixtures inside its service worker; GitHub and production
- * are never contacted. Run with PLAYWRIGHT_MODULE=/path/to/playwright-core.
+/* Real MV3 account integration in an isolated Chrome profile. The real website/controller and native external messages are exercised.
+ * Only API responses and GitHub redirects are fixtures; production is never contacted. Run with PLAYWRIGHT_MODULE=/path/to/playwright-core.
  */
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright-core');
 const assert = require('node:assert/strict');
@@ -8,19 +7,21 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
+const websiteOrigin='https://agentskills.media';
+const siteSessionKey='st_favorites_session_v1';
 
 const root = path.resolve(__dirname, '../..');
 const expectedId = 'medjijlfgmfeldlelkidiickdcnbicaf';
 const api = 'https://agent-leaderboard-api.jaychempan.workers.dev/api';
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-favorites-browser-'));
 const artifacts = path.join(root, 'artifacts/extension');
-let stage = 'launch', context;
+let stage = 'launch', context, page, website;
 
 (async () => {
   context = await chromium.launchPersistentContext(profile, {
     executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     headless: true, colorScheme: 'dark', viewport: {width: 390, height: 850},
-    ignoreDefaultArgs: ['--disable-extensions'], args: ['--enable-unsafe-extension-debugging'],
+    ignoreDefaultArgs: ['--disable-extensions'], args: ['--enable-unsafe-extension-debugging','--host-resolver-rules=MAP * ~NOTFOUND'],
   });
   context.setDefaultTimeout(10000);
   try {
@@ -33,6 +34,8 @@ let stage = 'launch', context;
     assert.equal(id, expectedId, 'the checked-in public key must preserve the Web Store extension ID');
     const worker = context.serviceWorkers().find(value => value.url().startsWith(`chrome-extension://${id}/`))
       || await context.waitForEvent('serviceworker', {predicate: value => value.url().startsWith(`chrome-extension://${id}/`)});
+    const transport=await worker.evaluate(()=>{const manifest=chrome.runtime.getManifest();return {identity:manifest.permissions.includes('identity'),matches:manifest.externally_connectable?.matches};});
+    assert.deepEqual(transport,{identity:false,matches:[websiteOrigin+'/extension/connect/*']},'website bridge needs no identity permission and allows only the connection page');
     stage = 'worker fixtures';
     const core = await import(pathToFileURL(path.join(root, 'chrome/core.mjs')).href);
     const catalog = JSON.parse(fs.readFileSync(path.join(root, 'chrome/data/catalog.json'), 'utf8'));
@@ -43,92 +46,142 @@ let stage = 'launch', context;
       if (chosen.length === 3) break;
     }
     assert.equal(chosen.length, 3, 'the packaged catalog needs three numeric repository IDs');
-    const fixture = await worker.evaluate(async ({api, id, chosen}) => {
-      const nativeRedirect = chrome.identity.getRedirectURL('github');
-      if (chrome.runtime.id !== id || nativeRedirect !== `https://${id}.chromiumapp.org/github`) throw new Error('native_identity_mismatch');
-      const originalFetch = globalThis.fetch.bind(globalThis);
-      const bundled = await (await originalFetch(chrome.runtime.getURL('data/catalog.json'))).json();
-      const bundledTrends = await (await originalFetch(chrome.runtime.getURL('data/trends.json'))).json();
-      const user = {id: '701', login: 'browser-fixture-user', avatar_url: ''};
-      const backend = globalThis.__favoritesBrowserBackend = {user, rows: new Map(), sessions: new Map(), exchanges: new Map(),
-        receipts: new Set(), authWindows: 0, pkceExchanges: 0, imports: 0, importRows: 0, writes: 0, failedWrites: 0,
-        failNextWrite: false, requests: [], catalog: chosen};
-      const random = () => {
-        let bytes = ''; for (const value of crypto.getRandomValues(new Uint8Array(32))) bytes += String.fromCharCode(value);
-        return btoa(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const fixture = await worker.evaluate(async ({api,id,chosen}) => {
+      if(chrome.runtime.id!==id)throw new Error('native_extension_id_mismatch');
+      const originalFetch=globalThis.fetch.bind(globalThis);
+      const bundled=await(await originalFetch(chrome.runtime.getURL('data/catalog.json'))).json();
+      const bundledTrends=await(await originalFetch(chrome.runtime.getURL('data/trends.json'))).json();
+      const user={id:'701',login:'browser-fixture-user',avatar_url:''};
+      const backend=globalThis.__favoritesBrowserBackend={user,rows:new Map(),sessions:new Map(),exchanges:new Map(),oauthStates:new Map(),
+        receipts:new Set(),handoffs:0,extensionExchanges:0,websiteExchanges:0,imports:0,importRows:0,writes:0,failedWrites:0,
+        failNextWrite:false,requests:[],externalMessages:[],extensionTokensExcludeWebsite:true,handoffCodesExcludeTokens:true};
+      const random=()=>{let bytes='';for(const value of crypto.getRandomValues(new Uint8Array(32)))bytes+=String.fromCharCode(value);
+        return btoa(bytes).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');};
+      const hash=async value=>{let bytes='';for(const byte of new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))))bytes+=String.fromCharCode(byte);
+        return btoa(bytes).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');};
+      backend.openSession=client=>{
+        const token=random(),expiresAt=new Date(Date.now()+8*3600000).toISOString();
+        backend.sessions.set(token,{client,user});return {api,token,expiresAt,user};
       };
-      const hash = async value => {
-        let bytes = ''; for (const byte of new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)))) bytes += String.fromCharCode(byte);
-        return btoa(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-      };
-      const response = (status, data) => Response.json(data, {status});
-      globalThis.fetch = async (input, options = {}) => {
-        const url = new URL(typeof input === 'string' ? input : input.url);
-        if (url.href === 'https://agentskills.media/data/discovery_index.json') return Response.json(bundled);
-        if (url.href === 'https://agentskills.media/data/trends.json') return Response.json(bundledTrends);
-        if (url.protocol === 'chrome-extension:') return originalFetch(input, options);
-        if (url.origin + '/api' !== api) throw new Error('external_network_blocked');
-        const headers = new Headers(options.headers), method = options.method || 'GET';
-        if (headers.get('X-Favorites-Extension') !== id || options.credentials !== 'omit') throw new Error('invalid_extension_transport');
-        const body = options.body ? JSON.parse(options.body) : null;
-        backend.requests.push({path: url.pathname, method});
-        if (url.pathname === '/api/auth/exchange') {
-          if (headers.has('Authorization')) throw new Error('exchange_has_old_bearer');
-          const exchange = backend.exchanges.get(body?.code);
-          if (!exchange || body.state !== exchange.state || await hash(body.verifier) !== exchange.challenge) return response(400, {error: 'invalid_login_exchange'});
-          backend.exchanges.delete(body.code); backend.pkceExchanges++;
-          const token = random(), expiresAt = new Date(Date.now() + 8 * 3600000).toISOString();
-          backend.sessions.set(token, user);
-          return response(200, {token, expiresAt, user});
+      const response=(status,json)=>({status,json});
+      backend.request=async({url:address,method='GET',headers:rawHeaders={},body=null})=>{
+        const url=new URL(address),headers=new Headers(rawHeaders),hint=headers.get('X-Favorites-Extension');
+        backend.requests.push({path:url.pathname,method,extension:hint===id});
+        if(method==='OPTIONS')return response(204,null);
+        if(url.pathname==='/api/auth/github'){
+          const challenge=url.searchParams.get('client_challenge'),state=url.searchParams.get('client_state'),returnTo=url.searchParams.get('return_to');
+          if(!/^[A-Za-z0-9_-]{43}$/.test(challenge||'')||!/^[A-Za-z0-9_-]{43}$/.test(state||'')||!returnTo?.startsWith('/')||returnTo.startsWith('//'))return response(400,{error:'invalid_login_request'});
+          const nonce=random();backend.oauthStates.set(nonce,{challenge,state,returnTo});
+          return {status:302,location:'https://github.com/login/oauth/authorize?'+new URLSearchParams({state:nonce,client_id:'browser-fixture'})};
         }
-        const token = (headers.get('Authorization') || '').replace(/^Bearer /, ''), owner = backend.sessions.get(token);
-        if (url.pathname === '/api/bootstrap') {
-          const after = Number(url.searchParams.get('after') || 0);
-          if (after && (!owner || headers.get('X-Favorites-User') !== owner.id)) return response(409, {error: 'account_changed'});
-          const rows = owner ? [...backend.rows].filter(([key]) => key.startsWith(owner.id + ':')).map(([, value]) => value)
-            .filter(value => value.repo_id > after).sort((a, b) => a.repo_id - b.repo_id) : [];
-          return response(200, {authConfigured: true, user: owner || null, favorites: rows.slice(0, 500), nextCursor: rows.length > 500 ? rows[499].repo_id : null});
+        if(url.pathname==='/api/auth/github/callback'){
+          const pending=backend.oauthStates.get(url.searchParams.get('state'));
+          if(!pending)return response(400,{error:'invalid_state'});
+          backend.oauthStates.delete(url.searchParams.get('state'));
+          const code=random();backend.exchanges.set(code,{...pending,client:'website'});
+          const target=new URL(pending.returnTo,'https://agentskills.media');
+          target.searchParams.set('login_code',code);target.searchParams.set('login_state',pending.state);
+          return {status:302,location:target.href};
         }
-        if (!owner) return response(401, {error: 'authentication_required'});
-        if (headers.get('X-Favorites-User') !== owner.id) return response(409, {error: 'account_changed'});
-        if (url.pathname === '/api/auth/logout') { backend.sessions.delete(token); return response(200, {ok: true}); }
-        if (url.pathname === '/api/favorites/resolve') return response(404, {error: 'repository_not_found'});
-        if (url.pathname === '/api/favorites/import') {
-          const receipt = `${owner.id}:${body.migration_id}:${body.batch_id}`;
-          if (!backend.receipts.has(receipt)) {
-            for (const value of body.favorites) {
-              const key = `${owner.id}:${value.repo_id}`;
-              if (!backend.rows.has(key)) backend.rows.set(key, value);
-            }
-            backend.receipts.add(receipt); backend.imports++; backend.importRows += body.favorites.length;
+        if(url.pathname==='/api/auth/exchange'){
+          if(headers.has('Authorization'))throw new Error('exchange_has_old_bearer');
+          const exchange=backend.exchanges.get(body?.code);
+          if(!exchange||body.state!==exchange.state||await hash(body.verifier)!==exchange.challenge)return response(400,{error:'invalid_login_exchange'});
+          if((exchange.client==='extension')!==(hint===id))return response(403,{error:'origin_rejected'});
+          backend.exchanges.delete(body.code);
+          if(exchange.client==='extension')backend.extensionExchanges++;else backend.websiteExchanges++;
+          const session=backend.openSession(exchange.client);
+          return response(200,{token:session.token,expiresAt:session.expiresAt,user:session.user});
+        }
+        const token=(headers.get('Authorization')||'').replace(/^Bearer /,''),session=backend.sessions.get(token),owner=session?.user;
+        if(hint===id&&session?.client==='website')backend.extensionTokensExcludeWebsite=false;
+        if(hint===id&&session&&session.client!=='extension')return response(401,{error:'authentication_required'});
+        if(url.pathname==='/api/bootstrap'){
+          const after=Number(url.searchParams.get('after')||0);
+          if(after&&(!owner||headers.get('X-Favorites-User')!==owner.id))return response(409,{error:'account_changed'});
+          const rows=owner?[...backend.rows].filter(([key])=>key.startsWith(owner.id+':')).map(([,row])=>row)
+            .filter(row=>row.repo_id>after).sort((a,b)=>a.repo_id-b.repo_id):[];
+          return response(200,{authConfigured:true,user:owner||null,favorites:rows.slice(0,500),nextCursor:rows.length>500?rows[499].repo_id:null});
+        }
+        if(!owner)return response(401,{error:'authentication_required'});
+        if(headers.get('X-Favorites-User')!==owner.id)return response(409,{error:'account_changed'});
+        if(url.pathname==='/api/auth/extension'){
+          if(hint||session.client!=='website'||headers.get('Origin')!=='https://agentskills.media')return response(403,{error:'origin_rejected'});
+          if(body.extension_id!==id||!/^[A-Za-z0-9_-]{43}$/.test(body.client_challenge||'')||!/^[A-Za-z0-9_-]{43}$/.test(body.client_state||''))return response(400,{error:'invalid_login_request'});
+          const code=random();backend.exchanges.set(code,{client:'extension',challenge:body.client_challenge,state:body.client_state});backend.handoffs++;
+          backend.handoffCodesExcludeTokens&&=!backend.sessions.has(code);
+          return response(200,{code,state:body.client_state,expiresAt:new Date(Date.now()+90000).toISOString()});
+        }
+        if(url.pathname==='/api/auth/logout'){backend.sessions.delete(token);return response(200,{ok:true});}
+        if(url.pathname==='/api/favorites/resolve')return response(404,{error:'repository_not_found'});
+        if(url.pathname==='/api/favorites/import'){
+          const receipt=`${owner.id}:${body.migration_id}:${body.batch_id}`;
+          if(!backend.receipts.has(receipt)){
+            for(const value of body.favorites){const key=`${owner.id}:${value.repo_id}`;if(!backend.rows.has(key))backend.rows.set(key,value);}
+            backend.receipts.add(receipt);backend.imports++;backend.importRows+=body.favorites.length;
           }
-          return response(200, {ok: true});
+          return response(200,{ok:true});
         }
-        const match = /^\/api\/favorites\/([1-9]\d*)$/.exec(url.pathname);
-        if (!match || !['PUT', 'DELETE'].includes(method)) return response(404, {error: 'not_found'});
-        if (backend.failNextWrite) { backend.failNextWrite = false; backend.failedWrites++; return response(503, {error: 'unavailable'}); }
-        const repoId = Number(match[1]), key = `${owner.id}:${repoId}`;
-        if (method === 'PUT') backend.rows.set(key, {repo_id: repoId, repository: body.repository});
-        else backend.rows.delete(key);
-        backend.writes++;
-        return response(200, {ok: true});
+        const match=/^\/api\/favorites\/([1-9]\d*)$/.exec(url.pathname);
+        if(!match||!['PUT','DELETE'].includes(method))return response(404,{error:'not_found'});
+        if(backend.failNextWrite){backend.failNextWrite=false;backend.failedWrites++;return response(503,{error:'unavailable'});}
+        const repoId=Number(match[1]),key=`${owner.id}:${repoId}`;
+        if(method==='PUT')backend.rows.set(key,{repo_id:repoId,repository:body.repository});else backend.rows.delete(key);
+        backend.writes++;return response(200,{ok:true});
       };
-      chrome.identity.launchWebAuthFlow = async ({url, interactive}) => {
-        const address = new URL(url), returnTo = address.searchParams.get('return_to');
-        if (!interactive || address.origin + address.pathname !== api + '/auth/github' || address.searchParams.get('client') !== 'extension'
-            || returnTo !== nativeRedirect || !/^[A-Za-z0-9_-]{43}$/.test(address.searchParams.get('client_state') || '')
-            || !/^[A-Za-z0-9_-]{43}$/.test(address.searchParams.get('client_challenge') || '')) throw new Error('invalid_identity_request');
-        const code = random(), state = address.searchParams.get('client_state');
-        backend.exchanges.set(code, {state, challenge: address.searchParams.get('client_challenge')}); backend.authWindows++;
-        return returnTo + '?' + new URLSearchParams({login_code: code, login_state: state});
+      globalThis.fetch=async(input,options={})=>{
+        const url=new URL(typeof input==='string'?input:input.url);
+        if(url.protocol==='chrome-extension:')return originalFetch(input,options);
+        if(url.href==='https://agentskills.media/data/discovery_index.json')return Response.json(bundled);
+        if(url.href==='https://agentskills.media/data/trends.json')return Response.json(bundledTrends);
+        if(url.origin+'/api'!==api)throw new Error('external_network_blocked');
+        const headers=new Headers(options.headers);
+        if(headers.get('X-Favorites-Extension')!==id||options.credentials!=='omit')throw new Error('invalid_extension_transport');
+        const value=await backend.request({url:url.href,method:options.method||'GET',headers:Object.fromEntries(headers),body:options.body?JSON.parse(options.body):null});
+        return Response.json(value.json,{status:value.status});
       };
-      await chrome.storage.local.set({[`favorite:${chosen[0].key}`]: chosen[0], checkedAt: Date.now(), uiLocale: 'zh-CN', themeMode: 'light'});
-      return {id: chrome.runtime.id, nativeRedirect, user: user.login,
-        records: chosen.map(({key, full_name, source_id}) => ({key, full_name, id: source_id}))};
-    }, {api, id, chosen});
-    assert.equal(fixture.nativeRedirect, `https://${expectedId}.chromiumapp.org/github`);
+      // Observe native sender metadata without responding or replacing the runtime API.
+      chrome.runtime.onMessageExternal.addListener((message,sender)=>{
+        backend.externalMessages.push({type:message.type,origin:sender.origin,url:sender.url,tabId:sender.tab?.id,frameId:sender.frameId,hasSenderId:Boolean(sender.id),keys:Object.keys(message).sort(),
+          websiteTokenAbsent:[...backend.sessions].filter(([,value])=>value.client==='website').every(([token])=>!JSON.stringify(message).includes(token))});
+      });
+      await chrome.storage.local.set({[`favorite:${chosen[0].key}`]:chosen[0],checkedAt:Date.now(),uiLocale:'zh-CN',themeMode:'light'});
+      return {id:chrome.runtime.id,user:user.login,records:chosen.map(({key,full_name,source_id})=>({key,full_name,id:source_id}))};
+    },{api,id,chosen});
+    await context.route(websiteOrigin+'/**',async route=>{
+      const url=new URL(route.request().url());
+      const pathname=url.pathname.endsWith('/')?url.pathname+'index.html':url.pathname;
+      const file=path.resolve(root,'.'+decodeURIComponent(pathname));
+      if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile())return route.fulfill({status:404,body:'Not found'});
+      const types={'.html':'text/html','.js':'application/javascript','.mjs':'application/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'};
+      return route.fulfill({status:200,contentType:types[path.extname(file)]||'application/octet-stream',body:fs.readFileSync(file)});
+    });
+    await context.route(api+'/**',async route=>{
+      const request=route.request(),headers=await request.allHeaders();
+      const value=await worker.evaluate(request=>globalThis.__favoritesBrowserBackend.request(request),{
+        url:request.url(),method:request.method(),headers,body:request.postData()?JSON.parse(request.postData()):null});
+      const cors={'access-control-allow-origin':websiteOrigin,'access-control-allow-methods':'GET, POST, PUT, DELETE, OPTIONS',
+        'access-control-allow-headers':'Authorization, Content-Type, X-Favorites-User'};
+      // route interception follows only the first URL in an HTTP redirect
+      // chain. A fixture document starts each navigation independently, keeping
+      // GitHub and callbacks entirely intercepted instead of touching the network.
+      if(value.location)return route.fulfill({status:200,contentType:'text/html',body:`<script>location.replace(${JSON.stringify(value.location)})</script>`});
+      return route.fulfill({status:value.status,headers:cors,...(value.status===204?{}:{json:value.json})});
+    });
+    await context.route(/^https:\/\/github\.com\/login\/oauth\/authorize(?:\?|$)/,route=>{
+      const source=new URL(route.request().url());
+      const target=api+'/auth/github/callback?'+new URLSearchParams({state:source.searchParams.get('state'),code:'browser-fixture-only'});
+      return route.fulfill({status:200,contentType:'text/html',body:`<script>location.replace(${JSON.stringify(target)})</script>`});
+    });
+    async function finishWebsiteConnection(website,{signIn=false}={}){
+      if(signIn){await website.locator('#connect-sign-in').waitFor({state:'visible'});await website.locator('#connect-sign-in').click();}
+      await website.locator('#connect-approve').waitFor({state:'visible'});
+      await website.locator('#connect-approve').click();
+      await website.waitForFunction(()=>document.getElementById('connect-status').textContent.includes('已连接'));
+    }
+
     const panelURL = `chrome-extension://${id}/panel.html`;
-    const page = await context.newPage(), errors = [];
+    page = await context.newPage(); const errors = [];
     page.on('pageerror', error => errors.push(error.name));
     const row = (page, key) => page.locator(`.repo[data-repo=${JSON.stringify(key)}]`);
     const backendHas = repoId => worker.evaluate(repoId => {
@@ -153,21 +206,44 @@ let stage = 'launch', context;
     await page.locator('#favorites').click(); await waitCount(page, 1);
     assert.equal(await page.locator('#account-sign-in').isVisible(), true);
     assert.equal(await row(page, fixture.records[0].key).count(), 1);
-    stage = 'sign in and migrate';
-    await page.locator('#account-sign-in').click(); await waitSynced(page);
+    stage = 'reuse signed-in website tab and migrate';
+    website=await context.newPage();website.on('pageerror',error=>errors.push(error.name));
+    const websiteSession=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.openSession('website'));
+    await website.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!sessionStorage.getItem(key))sessionStorage.setItem(key,JSON.stringify(value));},
+      {key:siteSessionKey,value:websiteSession,origin:websiteOrigin});
+    await website.goto(websiteOrigin+'/');await website.locator('#favBtn').waitFor();
+    await website.waitForFunction(()=>typeof favoritesStore!=='undefined'&&favoritesStore.getSnapshot().user?.id==='701');
+    const websiteTabId=await worker.evaluate(async origin=>(await chrome.tabs.query({})).find(tab=>tab.url===origin+'/')?.id,websiteOrigin);
+    assert.ok(Number.isInteger(websiteTabId),'normal website tab exists before sign-in');
+    const tabsBefore=await worker.evaluate(async()=>chrome.tabs.query({}).then(tabs=>tabs.length));
+    await page.locator('#account-sign-in').click();
+    await website.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/extension/connect/');
+    await finishWebsiteConnection(website);
+    await waitSynced(page);
+    assert.equal(await worker.evaluate(async()=>chrome.tabs.query({}).then(tabs=>tabs.length)),tabsBefore,'sign-in reuses the existing website tab');
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalMessages.at(-1)?.tabId),websiteTabId,'native sender is the reused website tab');
     assert.equal(await page.locator('#account-user').textContent(), fixture.user);
     const snapshot = await page.evaluate(() => chrome.runtime.sendMessage({type: 'favorites:snapshot'}));
     const secure = await worker.evaluate(async snapshot => {
       const values = await chrome.storage.session.get(null), local = await chrome.storage.local.get(null);
       const value = values.agentFavoritesSessionV1, token = value?.token;
-      return {authWindows: globalThis.__favoritesBrowserBackend.authWindows, pkce: globalThis.__favoritesBrowserBackend.pkceExchanges,
+      return {handoffs: globalThis.__favoritesBrowserBackend.handoffs, pkce: globalThis.__favoritesBrowserBackend.extensionExchanges,
         imports: globalThis.__favoritesBrowserBackend.imports, importRows: globalThis.__favoritesBrowserBackend.importRows,
         tokenValid: /^[A-Za-z0-9_-]{43}$/.test(token || ''), eightHours: Math.abs(Date.parse(value?.expiresAt) - Date.now() - 8 * 3600000) < 15000,
         tokenAbsentFromLocal: Boolean(token) && !JSON.stringify(local).includes(token), tokenAbsentFromSnapshot: Boolean(token) && !JSON.stringify(snapshot).includes(token),
         pendingCleared: !values.agentFavoritesLoginV1, oldKeysRemoved: !Object.keys(local).some(key => key.startsWith('favorite:'))};
     }, snapshot);
-    assert.deepEqual(secure, {authWindows: 1, pkce: 1, imports: 1, importRows: 1, tokenValid: true, eightHours: true,
+    assert.deepEqual(secure, {handoffs: 1, pkce: 1, imports: 1, importRows: 1, tokenValid: true, eightHours: true,
       tokenAbsentFromLocal: true, tokenAbsentFromSnapshot: true, pendingCleared: true, oldKeysRemoved: true});
+    const bridgeSecurity=await worker.evaluate(()=>{
+      const backend=globalThis.__favoritesBrowserBackend,entry=backend.externalMessages.at(-1);
+      return {origin:entry?.origin,url:new URL(entry?.url).pathname,frameId:entry?.frameId,hasSenderId:entry?.hasSenderId,
+        type:entry?.type,keys:entry?.keys,websiteTokenAbsent:entry?.websiteTokenAbsent,websiteTokenUnsent:backend.extensionTokensExcludeWebsite,codeNotSession:backend.handoffCodesExcludeTokens};
+    });
+    assert.deepEqual(bridgeSecurity,{origin:websiteOrigin,url:'/extension/connect/',frameId:0,hasSenderId:false,
+      type:'favorites:connect',keys:['code','state','type'],websiteTokenAbsent:true,websiteTokenUnsent:true,codeNotSession:true});
+    const replay=await website.evaluate(id=>new Promise(resolve=>chrome.runtime.sendMessage(id,{type:'favorites:connect',code:'A'.repeat(43),state:'B'.repeat(43)},value=>{void chrome.runtime.lastError;resolve(value||null);})),expectedId);
+    assert.deepEqual(replay,{ok:false,connected:false},'completed flow rejects replay without exposing session data');
     stage = 'reload and second panel';
     await page.reload(); await page.locator('.repo').first().waitFor(); await page.locator('#favorites').click(); await waitSynced(page);
     assert.equal(await page.locator('#account-user').textContent(), fixture.user); await waitCount(page, 1);
@@ -182,12 +258,14 @@ let stage = 'launch', context;
     stage = 'website favorite and missing repository details';
     await page.locator('#query').fill(''); await page.locator('#favorites').click(); await waitSynced(page);
     const websiteId = 910000991, unknownId = 910000992;
-    await worker.evaluate(({websiteId, unknownId}) => {
-      const backend = globalThis.__favoritesBrowserBackend;
-      backend.rows.set(`${backend.user.id}:${websiteId}`, {repo_id: websiteId, repository: {id: websiteId, full_name: 'browser-fixture/shared-site-repository',
-        description: 'Saved on the website fixture', sources: ['skills'], stars: 1}});
-      backend.rows.set(`${backend.user.id}:${unknownId}`, {repo_id: unknownId, repository: {id: unknownId, full_name: '', description: '', sources: []}});
-    }, {websiteId, unknownId});
+    await website.goto(websiteOrigin+'/');await website.locator('#favBtn').waitFor();
+    await website.waitForFunction(()=>typeof favoritesStore!=='undefined'&&favoritesStore.getSnapshot().user?.id==='701');
+    await website.evaluate(async({websiteId,unknownId})=>{
+      await favoritesStore.sync();
+      await favoritesStore.toggle({id:websiteId,full_name:'browser-fixture/shared-site-repository',
+        description:'Saved through the real website store',sources:['skills'],stars:1});
+      await favoritesStore.toggle({id:unknownId,full_name:'',description:'',sources:[]});
+    },{websiteId,unknownId});
     await page.locator('#account-sync').click(); await waitSynced(page); await waitCount(page, 3); await waitCount(second, 3);
     assert.equal(await row(page, 'browser-fixture/shared-site-repository').count(), 1);
     const unknown = row(page, `repo-id:${unknownId}`);
@@ -226,13 +304,36 @@ let stage = 'launch', context;
     const loggedOut = await worker.evaluate(async () => {
       const values = await chrome.storage.session.get(null), backend = globalThis.__favoritesBrowserBackend;
       return {sessionGone: !values.agentFavoritesSessionV1, cacheGone: !values.agentFavoritesCloudV1, pendingGone: !values.agentFavoritesLoginV1,
-        activeSessions: backend.sessions.size, rows: backend.rows.size};
+        activeSessions: [...backend.sessions.values()].filter(value=>value.client==='extension').length, rows: backend.rows.size};
     });
     assert.deepEqual(loggedOut, {sessionGone: true, cacheGone: true, pendingGone: true, activeSessions: 0, rows: cloudBefore});
-    assert.equal(cloudBefore, 2); assert.deepEqual(errors, []);
-    console.log(JSON.stringify({status: 'passed', runtime: 'real unpacked Chrome MV3', extensionId: id, accountIntegration: 'fixture API + identity completion',
-      pkce: 'S256 verified', panels: 2, screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
+    assert.equal(cloudBefore, 2);
+    assert.equal(await worker.evaluate(token=>globalThis.__favoritesBrowserBackend.sessions.get(token)?.client,websiteSession.token),'website','extension sign-out preserves the website session');
+    stage='create website tab and sign in through website OAuth';
+    for(const tab of context.pages())if(tab.url().startsWith(websiteOrigin+'/'))await tab.close();
+    const newWebsitePromise=context.waitForEvent('page');
+    await page.locator('#account-sign-in').click();const freshWebsite=await newWebsitePromise;website=freshWebsite;
+    freshWebsite.on('pageerror',error=>errors.push(error.name));
+    await freshWebsite.waitForURL(address=>address.origin===websiteOrigin&&address.pathname==='/extension/connect/');
+    await finishWebsiteConnection(freshWebsite,{signIn:true});await waitSynced(page);await waitCount(page,cloudBefore);await waitCount(second,cloudBefore);
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.websiteExchanges),1,'new website tab completes ordinary website OAuth');
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),2,'second bridge completes its own extension PKCE exchange');
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.importRows),1,'reconnecting does not reimport or resurrect removed local favorites');
+    assert.deepEqual(errors, []);
+    console.log(JSON.stringify({status: 'passed', runtime: 'real unpacked Chrome MV3', extensionId: id, accountIntegration: 'real website tab + native externally_connectable sender; API/OAuth redirect fixtures',
+      pkce: 'S256 verified for website and extension', nativeTabs:'existing website reused and fresh website created', panels: 2, screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
+  } catch(error) {
+    if(website&&!website.isClosed())error.message+='\nWebsite: '+JSON.stringify(await website.evaluate(()=>({url:location.href,path:location.pathname,
+      status:document.getElementById('connect-status')?.textContent,error:document.getElementById('connect-error')?.textContent,
+      store:typeof favoritesStore==='undefined'?null:{user:favoritesStore.getSnapshot().user,status:favoritesStore.getSnapshot().status,error:favoritesStore.getSnapshot().error}})).catch(()=>({unavailable:true})));
+    const diagnosticWorker=context.serviceWorkers().find(value=>value.url().startsWith(`chrome-extension://${expectedId}/`));
+    if(diagnosticWorker)error.message+='\nBridge: '+JSON.stringify(await diagnosticWorker.evaluate(async()=>{
+      const b=globalThis.__favoritesBrowserBackend,p=(await chrome.storage.session.get('agentFavoritesLoginV1')).agentFavoritesLoginV1;
+      return {handoffs:b?.handoffs,extensionExchanges:b?.extensionExchanges,externalMessages:b?.externalMessages,requests:b?.requests?.slice(-8),
+        pending:p?{mode:p.mode,tabId:p.tabId}:null};
+    }).catch(()=>({unavailable:true})));
+    throw error;
   } finally { await context.close(); }
 })().catch(error => {
-  console.error(JSON.stringify({status: 'failed', stage, error: error.name, message: error.message})); process.exitCode = 1;
+  console.error(JSON.stringify({status: 'failed', stage, error: error.name, message: error.message, location:error.stack?.split('\n').find(line=>line.includes(__filename))})); process.exitCode = 1;
 }).finally(() => { try { fs.rmSync(profile, {recursive: true, force: true}); } catch { /* Chrome may briefly retain a profile file. */ } });

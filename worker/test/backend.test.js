@@ -480,6 +480,72 @@ test('extension request hints never authorize writes or override an untrusted ex
     'Access-Control-Request-Method': 'POST'}})).status, 403, 'preflight still requires a trusted explicit Origin');
 });
 
+test('website session mints only a 90-second PKCE handoff that creates a separate extension session once', async t => {
+  const f = fixture(t), alice = await f.login(), verifier = random(), state = random(), challenge = await hash(verifier);
+  f.env.DB.sqlite.prepare('INSERT INTO login_exchanges VALUES (?,?,?,?,?,?)').run('expired-code-hash', 1, challenge, state, 1, 0);
+  const minted = await f.write('/api/auth/extension', alice, 'POST', {extension_id: extensionId, client_challenge: challenge, client_state: state});
+  assert.equal(minted.status, 200); assert.equal(minted.headers.get('Location'), null); assert.equal(minted.headers.get('Set-Cookie'), null);
+  assert.equal(minted.headers.get('Cache-Control'), 'no-store');
+  const handoff = await minted.json();
+  assert.deepEqual(Object.keys(handoff).sort(), ['code', 'expiresAt', 'state']);
+  assert.match(handoff.code, /^[A-Za-z0-9_-]{43}$/); assert.equal(handoff.state, state);
+  assert.equal(handoff.expiresAt, '2026-10-31T12:01:30.000Z');
+  assert.ok(!JSON.stringify(handoff).includes(alice.token));
+  const row = f.env.DB.sqlite.prepare('SELECT * FROM login_exchanges').get();
+  assert.equal(row.code_hash, await hash(handoff.code)); assert.equal(row.github_id, 1);
+  assert.equal(row.client_challenge, challenge); assert.equal(row.client_state, state);
+  assert.equal(row.expires_at - row.created_at, 90);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 1, 'expired handoffs are cleaned');
+  const exchange = extra => f.handle('/api/auth/exchange', {method: 'POST', headers: {'X-Favorites-Extension': extensionId, 'Content-Type': 'application/json'},
+    body: JSON.stringify({code: handoff.code, state, verifier, ...extra})});
+  assert.equal((await exchange({state: random()})).status, 400);
+  assert.equal((await exchange({verifier: random()})).status, 400);
+  const exchanged = await exchange({}), extension = await exchanged.json();
+  assert.equal(exchanged.status, 200); assert.equal(extension.user.id, alice.id);
+  assert.notEqual(extension.token, alice.token);
+  assert.equal((await exchange({})).status, 400);
+  await f.write('/api/favorites/101', alice, 'PUT', {repository: repo()});
+  assert.deepEqual((await f.bootstrap({token: extension.token})).data.favorites.map(value => value.repo_id), [101]);
+  assert.equal((await f.bootstrap(alice)).data.user.id, alice.id, 'website session remains independent');
+});
+
+test('extension handoff minting requires the exact website Origin, bearer, and current expected account', async t => {
+  const f = fixture(t), alice = await f.login(), body = {extension_id: extensionId, client_challenge: random(), client_state: random()};
+  for (const Origin of [extensionOrigin, 'null', 'https://evil.example', '']) {
+    assert.equal((await f.write('/api/auth/extension', alice, 'POST', body, {Origin, 'X-Favorites-Extension': extensionId})).status, 403);
+  }
+  const native = await f.handle('/api/auth/extension', {method: 'POST', headers: {Authorization: `Bearer ${alice.token}`,
+    'X-Favorites-User': alice.id, 'X-Favorites-Extension': extensionId, 'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+  assert.equal(native.status, 403, 'native-client Origin omission cannot mint a website approval');
+  assert.equal((await f.write('/api/auth/extension', alice, 'POST', body, {Authorization: ''})).status, 401);
+  assert.equal((await f.write('/api/auth/extension', alice, 'POST', body, {'X-Favorites-User': '2'})).status, 409);
+  assert.equal((await f.write('/api/auth/extension', alice, 'POST', body, {'X-Favorites-User': ''})).status, 400);
+  for (const Origin of [origin, extensionOrigin]) {
+    const preflight = await f.handle('/api/auth/extension', {method: 'OPTIONS', headers: {Origin,
+      'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'authorization,content-type,x-favorites-user'}});
+    assert.equal(preflight.status, Origin === origin ? 204 : 403);
+  }
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 0);
+  f.advance(8 * 3600 + 1);
+  assert.equal((await f.write('/api/auth/extension', alice, 'POST', body)).status, 401);
+});
+
+test('website extension handoffs reject invalid or oversized proofs before storage and expire independently', async t => {
+  const f = fixture(t), alice = await f.login(), verifier = random(), body = {extension_id: extensionId, client_challenge: await hash(verifier), client_state: random()};
+  for (const extra of [{extension_id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}, {extension_id: [extensionId]},
+    {client_challenge: 'short'}, {client_challenge: [body.client_challenge]}, {client_state: ''}, {client_state: null}]) {
+    const response = await f.write('/api/auth/extension', alice, 'POST', {...body, ...extra});
+    assert.equal(response.status, 400); assert.deepEqual(await response.json(), {error: 'invalid_login_request'});
+  }
+  assert.equal((await f.write('/api/auth/extension', alice, 'POST', {...body, extra: 'x'.repeat(4096)})).status, 413);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM login_exchanges').get().n, 0);
+  const handoff = await (await f.write('/api/auth/extension', alice, 'POST', body)).json();
+  f.advance(91);
+  const expired = await f.handle('/api/auth/exchange', {method: 'POST', headers: {'X-Favorites-Extension': extensionId, 'Content-Type': 'application/json'},
+    body: JSON.stringify({code: handoff.code, state: handoff.state, verifier})});
+  assert.equal(expired.status, 400); assert.equal((await f.bootstrap(alice)).data.user.id, alice.id);
+});
+
 test('repository resolver requires the current account and returns only public numeric identity without credentials upstream', async t => {
   const f = fixture(t, {}, {fetch: async url => url.startsWith('https://api.github.com/repos/')
     ? Response.json({id: 555, full_name: 'new-owner/canonical', private: false, token: 'private-upstream-metadata'}) : undefined});

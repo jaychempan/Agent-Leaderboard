@@ -23,7 +23,7 @@
         <div class="view-switch" role="group" aria-label="查看范围"><div class="view-tabs"><button id="all" class="active" aria-pressed="true">发现</button><button id="favorites" aria-pressed="false">收藏 <span id="favorite-count">0</span></button><button id="trending" aria-pressed="false">趋势</button></div><button id="filter-toggle" aria-expanded="false" aria-controls="filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>筛选 <span id="filter-count"></span></button></div>
         <section id="favorites-account" class="favorites-account" aria-label="收藏账号" hidden>
           <div class="account-copy"><strong id="account-user">收藏随账号同步</strong><p id="account-status" role="status" aria-live="polite">本地收藏可合并到 GitHub 账号</p></div>
-          <div class="account-actions"><button id="account-sign-in">GitHub 登录</button><button id="account-sync" hidden>同步</button><button id="account-sign-out" hidden>退出</button></div>
+          <div class="account-actions"><button id="account-sign-in">在官网登录并同步</button><button id="account-sync" hidden>同步</button><button id="account-sign-out" hidden>退出</button></div>
           <p id="account-message" role="alert" hidden></p>
         </section>
         <div id="sources" class="sources" role="group" aria-label="榜单"></div>
@@ -63,7 +63,7 @@
         <span id="page-status" class="sr-only" role="status"></span>
       </nav>
     </main>
-    <footer><div class="sync-row"><span class="status-dot" aria-hidden="true"></span><span id="data-status" role="status">正在读取离线快照</span><button id="refresh" title="更新数据" aria-label="更新数据">↻</button></div><div class="footer-links"><a id="website" href="https://agentskills.media" target="_blank" rel="noreferrer">完整榜单 ↗</a><a id="help" href="help.html" target="_blank" rel="noreferrer" aria-label="使用说明" title="使用说明">?</a></div></footer>
+    <footer><div class="sync-row"><span class="status-dot" aria-hidden="true"></span><span id="data-status" role="status">正在读取离线快照</span><button id="refresh" title="更新数据" aria-label="更新数据">↻</button></div><div class="footer-links"><span id="extension-version" class="extension-version" title="插件版本"></span><a id="website" href="https://agentskills.media" target="_blank" rel="noreferrer">完整榜单 ↗</a><a id="help" href="help.html" target="_blank" rel="noreferrer" aria-label="使用说明" title="使用说明">?</a></div></footer>
   </div>
   <div id="toast" role="status" hidden></div>
 </body>

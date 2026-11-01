@@ -7,6 +7,7 @@ const {webcrypto, createHash} = require('node:crypto');
 const OLD_ACCOUNT_PREFIX = 'st_favorites_worker_account_v1:';
 const ALICE = {id: '101', login: 'alice', avatar_url: 'https://avatars.githubusercontent.com/u/101'};
 const BOB = {id: '202', login: 'bob', avatar_url: 'https://avatars.githubusercontent.com/u/202'};
+const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
 const repo = (id, extra = {}) => ({id, full_name: `team/repo-${id}`, url: `https://github.com/team/repo-${id}`,
   description: `Repository ${id}`, stars: id, sources: ['skills'], ...extra});
 const clone = value => JSON.parse(JSON.stringify(value));
@@ -55,6 +56,8 @@ function fakeBackend(user = null) {
     if(server.beforeWrite)await server.beforeWrite({path,method,body});
     if(server.offline)throw new TypeError('Failed to fetch');
     if(server.failWrites)return respond(503,{error:'temporarily_unavailable'});
+    if(path==='/api/auth/extension'&&method==='POST')return respond(200,server.extensionReply || {
+      code:'h'.repeat(43),state:body.client_state,expiresAt:new Date(Date.now()+90000).toISOString()});
     if(path==='/api/auth/logout'&&method==='POST'){server.sessions.delete(token);server.user=null;return respond(200,{ok:true});}
     if(path==='/api/favorites/import'&&method==='POST') {
       assert.ok(body.favorites.length<=100);
@@ -91,6 +94,52 @@ function fixture(t, settings = {}) {
   return {store,storage,sessionStorage,server,eventTarget,location,changes};
 }
 async function settle(){await new Promise(resolve=>setImmediate(resolve));}
+
+test('website extension connection uses its private bearer and returns only the short-lived handoff',async t=>{
+  const f=fixture(t,{user:ALICE,config:CROSS_CONFIG});await f.store.init();
+  const proof={extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)};
+  const siteToken=JSON.parse(f.sessionStorage.getItem(S.session)).token;
+  f.server.extensionReply={code:'h'.repeat(43),state:proof.client_state,expiresAt:new Date(Date.now()+90000).toISOString(),token:siteToken,user:ALICE,unsafe:'not exposed'};
+  const handoff=await f.store.connectExtension({...proof,token:'caller-cannot-select-a-session',user_id:BOB.id});
+  assert.deepEqual(Object.keys(handoff).sort(),['code','expiresAt','state']);assert.equal(handoff.state,proof.client_state);
+  assert.equal(JSON.stringify(handoff).includes(siteToken),false);
+  const request=f.server.requests.find(value=>value.path==='/api/auth/extension');
+  assert.equal(request.method,'POST');assert.equal(request.headers.Authorization,'Bearer '+siteToken);
+  assert.equal(request.headers['X-Favorites-User'],ALICE.id);assert.deepEqual(request.body,proof);
+  assert.equal(request.credentials,'omit');
+  assert.equal(JSON.stringify(f.store.getSnapshot()).includes(siteToken),false);
+  assert.equal(JSON.stringify(f.changes).includes(siteToken),false);
+  assert.equal(JSON.stringify([...f.storage.values]).includes(siteToken),false);
+  assert.equal(f.store.getToken,undefined);assert.equal(f.store.token,undefined);assert.equal(f.store.session,undefined);
+});
+test('website extension connection rejects invalid proofs, anonymous or expired sessions, and account changes',async t=>{
+  const proof={extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)};
+  const f=fixture(t,{user:ALICE});await f.store.init();
+  for(const extra of [{extension_id:'another-extension'},{client_challenge:['c'.repeat(43)]},{client_state:'short'}]){
+    await assert.rejects(f.store.connectExtension({...proof,...extra}),error=>error.code==='invalid_login_request');
+  }
+  assert.equal(f.server.requests.some(value=>value.path==='/api/auth/extension'),false);
+  const anonymous=fixture(t);await anonymous.store.init();
+  await assert.rejects(anonymous.store.connectExtension(proof),error=>error.code==='authentication_required');
+  const expired=fixture(t,{user:ALICE,now:()=>Date.now()+9*3600000});await expired.store.init();
+  await assert.rejects(expired.store.connectExtension(proof),error=>error.code==='authentication_required');
+  const token=JSON.parse(f.sessionStorage.getItem(S.session)).token;f.server.sessions.set(token,BOB);
+  await assert.rejects(f.store.connectExtension(proof),error=>error.code==='account_changed');
+});
+test('website extension connection validates the returned proof and discards a late handoff after logout',async t=>{
+  const proof={extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)};
+  const f=fixture(t,{user:ALICE});await f.store.init();
+  for(const reply of [{code:'short',state:proof.client_state,expiresAt:new Date(Date.now()+90000).toISOString()},
+    {code:'h'.repeat(43),state:'wrong',expiresAt:new Date(Date.now()+90000).toISOString()},
+    {code:'h'.repeat(43),state:proof.client_state,expiresAt:new Date(Date.now()-1000).toISOString()}]){
+    f.server.extensionReply=reply;await assert.rejects(f.store.connectExtension(proof),error=>error.code==='invalid_response');
+  }
+  f.server.extensionReply=null;const held=deferred();let started=false;
+  f.server.beforeWrite=async value=>{if(value.path==='/api/auth/extension'){started=true;await held.promise;}};
+  const connecting=f.store.connectExtension(proof);await settle();assert.equal(started,true);
+  await f.store.signOut();held.resolve();
+  await assert.rejects(connecting,error=>error.code==='account_changed');assert.equal(f.store.getSnapshot().user,null);
+});
 
 test('legacy numeric IDs and old anonymous snapshots migrate without loss or resurrection', async t=>{
   const storage=new MemoryStorage({[K.legacy]:'[1,1,2,"3",999,null,-1]',[K.anonymous]:JSON.stringify({entries:{7:{repository:repo(7),deleted:false},8:{repository:repo(8),deleted:true}}})});

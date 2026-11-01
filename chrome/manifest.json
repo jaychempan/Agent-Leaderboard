@@ -1,14 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Agent Leaderboard",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "在侧边栏搜索 AI 工具，查看日周月趋势榜，使用 GitHub 账号同步网站与插件收藏。",
   "minimum_chrome_version": "116",
   "permissions": [
     "storage",
     "sidePanel",
-    "contextMenus",
-    "identity"
+    "contextMenus"
   ],
   "host_permissions": [
     "https://agentskills.media/*",
@@ -51,5 +50,10 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'self' https://agentskills.media https://agent-leaderboard-api.jaychempan.workers.dev; base-uri 'none'"
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyztm9ai0MQo0qBnVaGfsLncU3mxHeyJZ1GbBEZDUbTbP46SPWu79rWrtI+Dv5pN39dz605HKWCpEjm61k+4xQmoHgax8fJnGZktunJ+sSaUTviRbNKDaioq/JH+/IrkvWPEtPbSHGhLkIRVrEP0cn4k/2vrbr7StAeXu+U3q/M2ZkSy671n90Io5ctPf83Qu0Fx4NFADx9yUenxlaR3AFeZGw+zsr1t0xg22aXLuIMoSZyCRyrkLi78V1QCuYUloFekgJJpmUBVgBuvroG4GYSk9XMu0PqywQRfgwGIqR+ZrY2KaRn74kLWEi0Z49kKODeJ1VdkqKY3G+0gLpGUN7QIDAQAB"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyztm9ai0MQo0qBnVaGfsLncU3mxHeyJZ1GbBEZDUbTbP46SPWu79rWrtI+Dv5pN39dz605HKWCpEjm61k+4xQmoHgax8fJnGZktunJ+sSaUTviRbNKDaioq/JH+/IrkvWPEtPbSHGhLkIRVrEP0cn4k/2vrbr7StAeXu+U3q/M2ZkSy671n90Io5ctPf83Qu0Fx4NFADx9yUenxlaR3AFeZGw+zsr1t0xg22aXLuIMoSZyCRyrkLi78V1QCuYUloFekgJJpmUBVgBuvroG4GYSk9XMu0PqywQRfgwGIqR+ZrY2KaRn74kLWEi0Z49kKODeJ1VdkqKY3G+0gLpGUN7QIDAQAB",
+  "externally_connectable": {
+    "matches": [
+      "https://agentskills.media/extension/connect/*"
+    ]
+  }
 }

@@ -10,6 +10,7 @@
     cloud: 'st_favorites_cloud_v2'});
   const SESSION_KEYS = Object.freeze({session: 'st_favorites_session_v1', login: 'st_favorites_login_v1'});
   const OPAQUE = /^[A-Za-z0-9_-]{43}$/;
+  const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
   const AUTH_ERRORS = new Set(['invalid_state', 'access_denied', 'oauth_client_configuration',
     'oauth_redirect_configuration', 'oauth_code_rejected', 'oauth_email_unverified',
     'oauth_token_unavailable', 'oauth_identity_unavailable', 'oauth_identity_invalid', 'oauth_storage_unavailable']);
@@ -470,12 +471,28 @@
         return getSnapshot();
       });
     }
+    async function connectExtension(options = {}) {
+      if (options?.extension_id !== EXTENSION_ID || typeof options.client_challenge !== 'string' || !OPAQUE.test(options.client_challenge)
+          || typeof options.client_state !== 'string' || !OPAQUE.test(options.client_state)) throw failure('invalid_login_request', 400);
+      await init();
+      const authentication = activeSession();
+      if (!user || !authentication || authentication.user.id !== user.id) throw failure('authentication_required', 401);
+      const context = {epoch, id: user.id, token: authentication.token};
+      const payload = await request('/auth/extension', {method: 'POST', userId: context.id,
+        body: {extension_id: EXTENSION_ID, client_challenge: options.client_challenge, client_state: options.client_state}});
+      if (destroyed || context.epoch !== epoch || user?.id !== context.id || activeSession()?.token !== context.token) throw failure('account_changed', 409);
+      if (typeof payload?.code !== 'string' || !OPAQUE.test(payload.code) || payload.state !== options.client_state
+          || typeof payload.expiresAt !== 'string' || !Number.isFinite(Date.parse(payload.expiresAt)) || Date.parse(payload.expiresAt) <= now()) throw failure('invalid_response');
+      // No session getter or upstream payload escapes this closure. The caller
+      // receives only the short-lived proof bound to the extension's verifier.
+      return {code: payload.code, state: payload.state, expiresAt: new Date(payload.expiresAt).toISOString()};
+    }
     function destroy() {
       destroyed = true; epoch += 1;
       for (const controller of controllers) controller.abort();
       for (const [type, callback] of listeners) target?.removeEventListener(type, callback);
     }
-    return {init, getSnapshot, toggle, sync, signIn, signOut, destroy};
+    return {init, getSnapshot, toggle, sync, signIn, signOut, connectExtension, destroy};
   }
   return {createFavoritesStore, sanitizeRepository, validConfiguration, STORAGE_KEYS: KEYS, SESSION_KEYS};
 });

@@ -195,3 +195,4 @@ footer { display:flex; align-items:center; justify-content:space-between; flex-s
 
 .trend-explainer { margin-top:5px; }
 .trend-explainer>summary { min-height:23px; font-size:10px; }
+.extension-version { font-size:9px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }

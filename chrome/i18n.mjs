@@ -3,6 +3,8 @@ let locale = 'zh-CN';
 export const getLocale = () => locale;
 export const setLocale = value => { locale = value === 'en' ? 'en' : 'zh-CN'; };
 export const MESSAGES_EN = {
+  '在官网登录并同步':'Sign in on website', '继续在官网连接':'Continue on website', '取消连接':'Cancel connection',
+  '请在官网完成登录，再点击连接插件':'Sign in on the website, then confirm the extension connection', '插件版本':'Extension version',
   '趋势':'Trending', '趋势时间和排序':'Trend period and sorting', '趋势周期':'Trend period', '趋势排序':'Trend sorting',
   '日':'Day', '周':'Week', '月':'Month', '增长率':'Growth rate', '新增 Stars':'Stars gained',
   '第 {rank} 名':'Rank {rank}', '趋势前 {count} 名':'Top {count} rising repositories', '暂无可用趋势':'Trends unavailable',

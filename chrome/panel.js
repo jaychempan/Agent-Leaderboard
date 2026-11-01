@@ -8,6 +8,7 @@ const translateStatic = bindStaticTranslations(document.documentElement);
 let statusKey = '正在读取离线快照', statusError = '';
 
 const $ = id => document.getElementById(id);
+$('extension-version').textContent = `v${chrome.runtime.getManifest().version}`;
 const state = {query: '', source: '', category: '', useCases: [], maxDays: 0, platform: '', language: '', minStars: 0, sort: 'relevance', favoritesOnly: false, trendsOnly: false, trendDays: 1, trendSort: 'rate'};
 let showAllUses = false;
 let themeMode = 'auto';
@@ -109,15 +110,20 @@ function accountMessage(error) { return t(accountErrors[error] || '暂时无法�
 function renderAccount() {
   const container=$('favorites-account'); container.hidden=!state.favoritesOnly;
   const snapshot=accountSnapshot, user=snapshot?.user;
+  const waiting = snapshot?.status === 'awaiting_website';
   const busy=accountBusy || ['initializing','syncing'].includes(snapshot?.status);
   container.dataset.state=snapshot?.status || 'local';
   $('account-user').textContent=user ? user.login : t('收藏随账号同步');
   let status='本地收藏可合并到 GitHub 账号';
   if(busy) status=accountBusy ? '正在处理账号操作…' : '正在同步收藏…';
+  else if(waiting) status='请在官网完成登录，再点击连接插件';
   else if(user) status=(snapshot.localOnlyCount || snapshot.pendingImportCount) ? '部分收藏仅保存在本机' : snapshot.status==='synced' ? '已与官网同步' : snapshot.status==='offline' ? '离线显示上次同步的收藏' : '请同步以获取最新收藏';
   $('account-status').textContent=t(status);
   $('account-sign-in').hidden=Boolean(user);
-  for(const id of ['account-sync','account-sign-out']) $(id).hidden=!user;
+  $('account-sign-in').textContent=t(waiting ? '继续在官网连接' : '在官网登录并同步');
+  $('account-sync').hidden=!user;
+  $('account-sign-out').hidden=!user && !waiting;
+  $('account-sign-out').textContent=t(waiting && !user ? '取消连接' : '退出');
   for(const id of ['account-sign-in','account-sync','account-sign-out']) $(id).disabled=busy;
   let message='';
   if(snapshot?.error) message=accountMessage(snapshot.error);

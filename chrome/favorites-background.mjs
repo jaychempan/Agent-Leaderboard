@@ -1,5 +1,5 @@
 import {compactCatalog, prepareCatalog} from './core.mjs';
-import {createFavoritesSync} from './favorites-sync.mjs';
+import {createFavoritesSync, isWebsiteConnectSender} from './favorites-sync.mjs';
 
 let catalogTask;
 async function catalog() {
@@ -19,6 +19,21 @@ async function catalog() {
 const methods = new Set(['snapshot', 'init', 'signIn', 'signOut', 'sync', 'toggle']);
 
 export function registerFavoritesMessages(chrome, favorites) {
+chrome.runtime.onMessageExternal.addListener((message, sender, respond) => {
+  if (!isWebsiteConnectSender(sender) || message?.type !== 'favorites:connect'
+      || typeof message.code !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(message.code)
+      || typeof message.state !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(message.state)) return false;
+  (async () => {
+    try {
+      const result = await favorites.completeWebsiteSignIn(message, sender);
+      if (!result?.connected) { respond({ok: false, connected: false}); return; }
+      const user = result.user;
+      respond({ok: true, connected: true, ...(user && typeof user.id === 'string' && typeof user.login === 'string'
+        ? {user: {id: user.id, login: user.login, avatar_url: typeof user.avatar_url === 'string' ? user.avatar_url : ''}} : {})});
+    } catch { respond({ok: false, connected: false}); }
+  })();
+  return true;
+});
 chrome.runtime.onMessage.addListener((message, sender, respond) => {
   if (!message || typeof message.type !== 'string' || !message.type.startsWith('favorites:')) return false;
   const method = message.type.slice('favorites:'.length);
