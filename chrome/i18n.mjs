@@ -3,6 +3,8 @@ let locale = 'zh-CN';
 export const getLocale = () => locale;
 export const setLocale = value => { locale = value === 'en' ? 'en' : 'zh-CN'; };
 export const MESSAGES_EN = {
+  '本地收藏':'Local favorites', '同步中':'Syncing', '待登录':'Sign-in pending', '离线':'Offline', '未同步':'Not synced',
+  '同步收藏':'Sync favorites', '退出插件账号':'Sign out of extension',
   '同步网页版收藏':'Sync website favorites', '继续登录官网':'Continue website sign-in',
   '官网已登录时，直接同步收藏':'Sync directly when signed in on the website', '已退出，点击同步可重新连接':'Signed out. Click sync to reconnect',
   '请在官网完成登录，完成后将自动同步':'Finish website sign-in; favorites will sync automatically',

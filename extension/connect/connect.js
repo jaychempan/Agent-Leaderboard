@@ -15,7 +15,7 @@
   const available = () => typeof globalThis.chrome?.runtime?.sendMessage === 'function';
   const errors = {
     invalid_request: ['请从插件“收藏”页点击“同步网页版收藏”重新打开此页。', 'Open this page from “Sync website favorites” in the extension’s Favorites tab.'],
-    extension_unavailable: ['未找到新版插件。请加载 v1.7.2，在扩展管理页重新加载，再从插件发起同步。', 'The updated extension is unavailable. Load v1.7.2, reload it in Chrome’s extension settings, and start again from the extension.'],
+    extension_unavailable: ['未找到新版插件。请加载 v1.7.3，在扩展管理页重新加载，再从插件发起同步。', 'The updated extension is unavailable. Load v1.7.3, reload it in Chrome’s extension settings, and start again from the extension.'],
     connection_failed: ['同步未完成或已过期。请返回插件重新点击“同步网页版收藏”。', 'Sync was not completed or expired. Start again from “Sync website favorites” in the extension.'],
     connection_timeout: ['连接响应超时。可先返回插件查看状态；尚未连接时，请从插件重新发起。', 'The connection response timed out. Check the extension first; if it is not connected, start again there.'],
     authentication_required: ['官网登录已过期，请重新登录后连接。', 'Website sign-in expired. Sign in again before connecting.'],
@@ -49,7 +49,7 @@
     for (const id of ['sign-in', 'retry', 'switch']) $(id).disabled = busy;
     $('note').textContent = text('连接后，两端使用同一份云收藏；原有插件本地收藏会合并。退出插件不会退出官网或删除收藏。', 'Both use the same cloud favorites. Existing local extension favorites merge on connection. Signing out of the extension keeps website sign-in and saved favorites.');
     $('open-site').textContent = text('返回官网', 'Return to website');
-    $('download').textContent = text('下载 v1.7.2 插件', 'Download extension v1.7.2');
+    $('download').textContent = text('下载 v1.7.3 插件', 'Download extension v1.7.3');
     const key = connected ? '' : problem || (!valid ? 'invalid_request' : initialized && !available() ? 'extension_unavailable' : snapshot?.error ? 'auth_failed' : '');
     $('error').hidden = !key; $('error').textContent = key ? (errors[key] || errors.unavailable)[language === 'en' ? 1 : 0] : '';
   }

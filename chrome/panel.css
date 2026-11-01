@@ -18,15 +18,20 @@ svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.7;
 header { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px 8px; background:var(--surface); flex-shrink:0; }
 h1 { font-size:14px; line-height:1.4; margin:0; font-weight:650; letter-spacing:.1px; }
 .header-actions { display:flex; gap:2px; flex-shrink:0; }
-.favorites-account { display:flex; flex-wrap:wrap; align-items:center; gap:7px 10px; margin:7px 0 3px; padding:9px 10px; border:1px solid var(--line); border-radius:7px; background:var(--bg); }
-.account-copy { flex:1; min-width:120px; }
-.account-copy strong { display:block; font-size:12px; overflow-wrap:anywhere; }
-.account-copy p { margin:3px 0 0; color:var(--muted); font-size:11px; }
-.account-actions { display:flex; flex-wrap:wrap; gap:4px; }
-.account-actions button { font-size:11px; min-height:28px; padding:3px 7px; }
-#account-sign-in { background:var(--blue); color:var(--surface); }
+.favorites-account { display:flex; flex-wrap:wrap; align-items:center; gap:3px 7px; min-height:26px; margin:2px 0 0; padding:0; }
+.account-dot { width:5px; height:5px; border-radius:50%; background:var(--muted); flex-shrink:0; }
+.account-copy { display:flex; align-items:center; gap:6px; flex:1; min-width:0; }
+.account-copy strong { min-width:0; font-size:11px; font-weight:500; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.account-short { flex-shrink:0; color:var(--muted); font-size:10px; }
+.account-actions { display:flex; align-items:center; flex-shrink:0; gap:2px; }
+.account-actions button { font-size:11px; min-height:24px; padding:2px 6px; white-space:nowrap; }
+.account-actions .account-icon { display:grid; place-items:center; width:24px; height:24px; min-width:24px; padding:4px; border:0; background:transparent; color:var(--muted); }
+.account-icon svg { width:14px; height:14px; }
+.account-actions .account-icon:hover { background:var(--soft); color:var(--blue); }
+#account-sign-in { background:var(--soft); color:var(--blue); }
 #account-message { flex:1 0 100%; color:var(--gold); margin:0; font-size:11px; line-height:1.5; overflow-wrap:anywhere; }
-.favorites-account[data-state="synced"] #account-status { color:var(--blue); }
+.favorites-account[data-state="synced"] .account-dot { background:var(--blue); }
+.favorites-account[data-state="error"] .account-dot,.favorites-account[data-state="offline"] .account-dot { background:var(--gold); }
 .search-row { display:flex; align-items:center; gap:6px; }
 #search-form { flex:1; min-width:0; }
 .icon { display:grid; place-items:center; background:transparent; padding:4px; min-width:28px; min-height:28px; color:var(--muted); }
