@@ -95,6 +95,23 @@ function fixture(t, settings = {}) {
 }
 async function settle(){await new Promise(resolve=>setImmediate(resolve));}
 
+test('active-session capability is only a boolean and becomes false on expiry or sign-out',async t=>{
+  let now=Date.now();const f=fixture(t,{user:ALICE,now:()=>now});
+  assert.equal(f.store.hasActiveSession(),false,'restored credentials need verified bootstrap identity');
+  await f.store.init();assert.equal(f.store.hasActiveSession(),true);
+  assert.equal(typeof f.store.hasActiveSession(),'boolean');assert.equal(f.store.getToken,undefined);assert.equal(f.store.token,undefined);
+  now+=9*3600000;assert.equal(f.store.hasActiveSession(),false);
+  assert.equal(f.sessionStorage.getItem(S.session),null,'expired authentication is cleared by the capability check');
+  const signedIn=fixture(t,{user:ALICE});await signedIn.store.init();assert.equal(signedIn.store.hasActiveSession(),true);
+  await signedIn.store.signOut();assert.equal(signedIn.store.hasActiveSession(),false);
+  const anonymous=fixture(t);await anonymous.store.init();assert.equal(anonymous.store.hasActiveSession(),false);
+});
+test('active-session capability requires configured service and a live store',async t=>{
+  const server=fakeBackend(ALICE);server.configured=false;const unavailable=fixture(t,{server});
+  await unavailable.store.init();assert.equal(unavailable.store.hasActiveSession(),false);
+  const f=fixture(t,{user:ALICE});await f.store.init();f.store.destroy();assert.equal(f.store.hasActiveSession(),false);
+});
+
 test('website extension connection uses its private bearer and returns only the short-lived handoff',async t=>{
   const f=fixture(t,{user:ALICE,config:CROSS_CONFIG});await f.store.init();
   const proof={extension_id:EXTENSION_ID,client_challenge:'c'.repeat(43),client_state:'s'.repeat(43)};

@@ -3,6 +3,15 @@ let locale = 'zh-CN';
 export const getLocale = () => locale;
 export const setLocale = value => { locale = value === 'en' ? 'en' : 'zh-CN'; };
 export const MESSAGES_EN = {
+  '同步网页版收藏':'Sync website favorites', '继续登录官网':'Continue website sign-in',
+  '官网已登录时，直接同步收藏':'Sync directly when signed in on the website', '已退出，点击同步可重新连接':'Signed out. Click sync to reconnect',
+  '请在官网完成登录，完成后将自动同步':'Finish website sign-in; favorites will sync automatically',
+  '请刷新一次已登录的官网页面，再同步收藏':'Refresh your signed-in website page once, then sync favorites',
+  '请先在官网登录 GitHub':'Sign in with GitHub on the website first',
+  '检测到多个官网账号，请先选中要同步的官网页面':'Multiple website accounts found. Select the website tab you want to sync',
+  '官网连接已断开，请稍后重新同步':'Website connection lost. Try syncing again',
+  '官网暂未响应，请稍后重新同步':'Website did not respond. Try syncing again',
+  '官网账号已变化，请重新同步':'The website account changed. Sync again',
   '在官网登录并同步':'Sign in on website', '继续在官网连接':'Continue on website', '取消连接':'Cancel connection',
   '请在官网完成登录，再点击连接插件':'Sign in on the website, then confirm the extension connection', '插件版本':'Extension version',
   '趋势':'Trending', '趋势时间和排序':'Trend period and sorting', '趋势周期':'Trend period', '趋势排序':'Trend sorting',

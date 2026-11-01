@@ -113,6 +113,10 @@
       if (session && Date.parse(session.expiresAt) <= now()) clearSession();
       return session;
     }
+    function hasActiveSession() {
+      const authentication = activeSession();
+      return Boolean(!destroyed && configured && user && authentication && authentication.user.id === user.id);
+    }
     function restoreSession() {
       const value = sessionValue(SESSION_KEYS.session), owner = safeUser(value?.user);
       if (value?.api === api && OPAQUE.test(value.token) && owner && Number.isFinite(Date.parse(value.expiresAt))
@@ -492,7 +496,7 @@
       for (const controller of controllers) controller.abort();
       for (const [type, callback] of listeners) target?.removeEventListener(type, callback);
     }
-    return {init, getSnapshot, toggle, sync, signIn, signOut, connectExtension, destroy};
+    return {init, getSnapshot, hasActiveSession, toggle, sync, signIn, signOut, connectExtension, destroy};
   }
   return {createFavoritesStore, sanitizeRepository, validConfiguration, STORAGE_KEYS: KEYS, SESSION_KEYS};
 });

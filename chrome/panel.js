@@ -105,6 +105,10 @@ const accountErrors = {
   storage_unavailable:'浏览器暂时无法保存数据，请重试', account_changed:'账号已变化，请重新同步收藏',
   authentication_required:'登录已过期，请重新登录', network_failed:'暂时无法连接，收藏修改未保存',
   save_failed:'收藏修改未保存，请联网后重试', local_import_failed:'部分本地收藏尚未导入，请重试同步',
+  website_refresh_required:'请刷新一次已登录的官网页面，再同步收藏',
+  website_not_signed_in:'请先在官网登录 GitHub', website_account_selection_required:'检测到多个官网账号，请先选中要同步的官网页面',
+  website_connection_lost:'官网连接已断开，请稍后重新同步', website_connection_timeout:'官网暂未响应，请稍后重新同步',
+  website_account_changed:'官网账号已变化，请重新同步',
 };
 function accountMessage(error) { return t(accountErrors[error] || '暂时无法同步收藏，请稍后重试'); }
 function renderAccount() {
@@ -114,13 +118,13 @@ function renderAccount() {
   const busy=accountBusy || ['initializing','syncing'].includes(snapshot?.status);
   container.dataset.state=snapshot?.status || 'local';
   $('account-user').textContent=user ? user.login : t('收藏随账号同步');
-  let status='本地收藏可合并到 GitHub 账号';
+  let status=snapshot?.autoConnectDisabled ? '已退出，点击同步可重新连接' : '官网已登录时，直接同步收藏';
   if(busy) status=accountBusy ? '正在处理账号操作…' : '正在同步收藏…';
-  else if(waiting) status='请在官网完成登录，再点击连接插件';
+  else if(waiting) status='请在官网完成登录，完成后将自动同步';
   else if(user) status=(snapshot.localOnlyCount || snapshot.pendingImportCount) ? '部分收藏仅保存在本机' : snapshot.status==='synced' ? '已与官网同步' : snapshot.status==='offline' ? '离线显示上次同步的收藏' : '请同步以获取最新收藏';
   $('account-status').textContent=t(status);
   $('account-sign-in').hidden=Boolean(user);
-  $('account-sign-in').textContent=t(waiting ? '继续在官网连接' : '在官网登录并同步');
+  $('account-sign-in').textContent=t(waiting ? '继续登录官网' : '同步网页版收藏');
   $('account-sync').hidden=!user;
   $('account-sign-out').hidden=!user && !waiting;
   $('account-sign-out').textContent=t(waiting && !user ? '取消连接' : '退出');
@@ -133,9 +137,10 @@ function renderAccount() {
 }
 function applyAccountSnapshot(snapshot) {
   if(!snapshot || typeof snapshot.favorites!=='object' || !snapshot.favorites) return;
+  const favoritesChanged = JSON.stringify(favorites) !== JSON.stringify(snapshot.favorites);
   accountSnapshot=snapshot; accountInitialized=true; favorites=snapshot.favorites;
   if(snapshot.status==='synced') accountLastSync=Date.now();
-  if(ready) update(false); else renderAccount();
+  if(ready && favoritesChanged) update(false); else renderAccount();
 }
 async function accountAction(method,repository) {
   if(accountBusy && !['snapshot','toggle'].includes(method)) return;
@@ -154,9 +159,10 @@ async function accountAction(method,repository) {
 }
 chrome.runtime.onMessage.addListener((message,sender)=>{
   if(sender.id===chrome.runtime.id && message?.type==='favorites:changed') applyAccountSnapshot(message.snapshot);
+  if(sender.id===chrome.runtime.id && message?.type==='favorites:website-ready' && accountInitialized && !accountSnapshot?.user && !accountBusy) void accountAction('sync');
 });
 window.addEventListener('focus',()=>{
-  if(accountSnapshot?.user && !accountBusy && Date.now()-accountLastSync>30000) void accountAction('sync');
+  if((accountSnapshot?.user || state.favoritesOnly) && !accountBusy && Date.now()-accountLastSync>30000) void accountAction('sync');
 });
 function persistState() {
   clearTimeout(saveTimer);
@@ -499,7 +505,7 @@ for (const id of ['all', 'favorites', 'trending']) $(id).addEventListener('click
   state.favoritesOnly = id === 'favorites'; state.trendsOnly = id === 'trending';
   if (state.trendsOnly) { showAllUses = false; if (!state.source) state.source = 'skill'; }
   update();
-  if(state.favoritesOnly && accountSnapshot?.user && !accountBusy) void accountAction('sync');
+  if(state.favoritesOnly && !accountBusy) void accountAction('sync');
 });
 for (const button of $('trend-periods').children) button.addEventListener('click', () => { state.trendDays = Number(button.dataset.days); update(); });
 $('trend-sort').addEventListener('change', () => { state.trendSort = $('trend-sort').value; update(); });

@@ -85,13 +85,15 @@ it does not prove the GitHub application's credentials or callback are correct. 
 | --- | --- |
 | `GET /api/health` | `{ok, authConfigured}` |
 | `GET /api/bootstrap?after=<repo_id>` | `{authConfigured, user, favorites, nextCursor}`; omit `after` for the first page |
-| `GET /api/auth/github?client_challenge=<S256>&client_state=<random>&return_to=/#mcp` | Starts browser-bound GitHub authorization |
-| `GET /api/auth/github/callback` | Identifies the user, redirects to the primary website with `login_code` and `login_state` |
+| `GET /api/auth/github?client_challenge=<S256>&client_state=<random>&return_to=/#mcp` | Starts browser-bound GitHub authorization; legacy `client=extension` accepts only the fixed extension callback |
+| `GET /api/auth/github/callback` | Identifies the user and redirects to a validated website path or allowlisted legacy extension callback with `login_code` and `login_state` |
+| `POST /api/auth/extension` | Website-only authenticated handoff: `{extension_id, client_challenge, client_state}` → `{code, state, expiresAt}` |
 | `POST /api/auth/exchange` | `{code, verifier, state}` → `{token, expiresAt, user}` |
 | `POST /api/auth/logout` | Revokes the current site bearer session |
 | `PUT /api/favorites/:repo_id` | Saves `{repository: <public display snapshot>}` |
 | `DELETE /api/favorites/:repo_id` | Removes that user's favorite |
 | `POST /api/favorites/import` | First-login merge: `{migration_id, batch_id, favorites:[{repo_id,repository}]}` |
+| `POST /api/favorites/resolve` | Authenticated legacy-name lookup: `{full_name}` → `{repo_id, full_name}` using public GitHub metadata |
 
 `user` contains its string GitHub ID, login, and public avatar URL. `expiresAt`
 is an ISO 8601 timestamp. Each favorite has numeric `repo_id` and a sanitized
@@ -99,20 +101,42 @@ is an ISO 8601 timestamp. Each favorite has numeric `repo_id` and a sanitized
 Old local IDs without a snapshot remain valid but have no invented repository
 link. A snapshot is not proof that a repository exists.
 
-Browser API calls use `credentials: 'omit'`, an exact `Origin: PUBLIC_ORIGIN`,
-and `Authorization: Bearer <site token>` when authenticated. Bootstrap requires
-the website Origin even when anonymous. Authenticated writes additionally
-require `X-Favorites-User: <GitHub ID shown by the client>`. An account mismatch
+Website API calls use `credentials: 'omit'`, exact `Origin: PUBLIC_ORIGIN`,
+and `Authorization: Bearer <site token>` when authenticated. The official
+extension sends `X-Favorites-Extension: medjijlfgmfeldlelkidiickdcnbicaf`.
+Its exact `chrome-extension://medjijlfgmfeldlelkidiickdcnbicaf` Origin is also
+allowed; native extension requests may omit Origin only with that matching
+hint. The hint never replaces bearer authentication or the exchange PKCE proof.
+Bootstrap requires an allowed client origin or this native-client hint, apart
+from the same-origin local preview exception described above. Authenticated
+writes, including handoff minting and name resolution, additionally require
+`X-Favorites-User: <GitHub ID shown by the client>`. An account mismatch
 returns `409 account_changed`; a missing expected user returns `400`, and a
 missing or expired session returns `401` on writes. A first-page bootstrap with
 no valid session returns `user: null`, empty favorites, and a null cursor.
 Session cookies are not accepted as API credentials.
 
-CORS allows only `PUBLIC_ORIGIN`, never `*` or credentialed cookies. Preflight
-checks the route's method and allows only `Authorization`, `Content-Type`, and
-`X-Favorites-User`; other headers and origins are rejected. The API also rejects
-requests addressed to any origin other than `API_ORIGIN`. A plain health check
-and top-level OAuth navigations may omit Origin. All responses disable caching.
+CORS echoes only the exact website or official extension Origin, never `*` or
+credentialed cookies. Preflight requires an allowed explicit Origin, checks the
+route's method, and permits only `Authorization`, `Content-Type`,
+`X-Favorites-User`, and `X-Favorites-Extension`. Other explicit origins, including
+`null`, are rejected even with an extension hint. `POST /api/auth/extension`
+and its preflight require the exact website Origin: the extension and the
+no-Origin compatibility path cannot mint a website handoff. Requests addressed
+to any origin other than `API_ORIGIN` are rejected. A plain health check and
+top-level OAuth navigations may omit Origin. All responses disable caching.
+
+For v1.7.2 automatic sync, the website uses its own bearer session to call
+`/api/auth/extension` with the fixed production extension ID and the extension's
+public SHA-256 challenge and state. It receives a 90-second single-use code,
+bound to that verifier and the current account, and returns only code/state
+through the restricted Chrome channel. The extension redeems it at
+`/api/auth/exchange` for its own session; the website token stays on the website.
+No new GitHub callback configuration or database migration is required.
+Name-resolution bodies are limited to 4 KiB. Resolution sends no bearer or
+GitHub credential upstream, follows at most one validated HTTPS repository
+redirect on `api.github.com`, and returns fixed `repository_not_found` or
+`repository_unavailable` errors without retrying GitHub rate limits.
 
 ## Login handoff and sessions
 
@@ -128,14 +152,17 @@ and top-level OAuth navigations may omit Origin. All responses disable caching.
    verifies the public GitHub identity, and discards the GitHub token. It redirects
    to a validated relative path on `PUBLIC_ORIGIN`, preserving path/query/hash,
    with a random opaque `login_code` and the tab's `login_state`. Return paths
-   cannot target another origin or API endpoint. No site session exists yet.
+   cannot target another origin or API endpoint; the legacy extension flow has
+   one fixed allowlisted `chromiumapp.org/github` destination. No site session
+   exists yet.
 4. The primary tab removes callback parameters from its URL, verifies the state,
    and posts the code, state, and retained verifier to `/api/auth/exchange`.
    A matching SHA-256 challenge, state, unexpired code, and exact website Origin
    are required. D1 atomically consumes the code once. Codes expire in 90 seconds
    and only their hashes are stored. A stolen URL alone cannot redeem a code.
-5. Only the exchange JSON contains the random site session token. Keep it in
-   sessionStorage, never URLs or persistent localStorage. D1 stores only its
+5. Only the exchange JSON contains the random site session token. The website
+   keeps it in tab sessionStorage; the extension uses chrome.storage.session.
+   Never put it in URLs or persistent localStorage. D1 stores only its
    hash. Sessions expire after a fixed eight hours with no rolling renewal.
    Logout revokes the current token immediately; other sessions and favorites
    remain. A login retains at most twenty active sessions per account.

@@ -55,7 +55,7 @@ const I18N = {
     nav_extension:  '安装 Chrome 插件',
     nav_extension_short: '安装插件',
     announcement_label: '功能更新',
-    announcement_extension: 'Chrome 插件 v1.7.1：在官网登录并同步收藏，支持日、周、月趋势榜。',
+    announcement_extension: 'Chrome 插件 v1.7.2：官网已登录即可直接同步收藏，支持日、周、月趋势榜。',
     announcement_link: '获取新版',
     skills_title:   'Agent Skills 排行榜',
     skills_sub:     '一站式发现最值得用的 AI Agent Skills · 告别四处翻找，搜索即上手',
@@ -157,7 +157,7 @@ const I18N = {
     nav_extension:  'Get extension',
     nav_extension_short: 'Install',
     announcement_label: 'Product update',
-    announcement_extension: 'Chrome extension v1.7.1: sign in on the website to sync favorites, with daily, weekly and monthly trends.',
+    announcement_extension: 'Chrome extension v1.7.2 syncs directly when signed in on the website, with daily, weekly and monthly trends.',
     announcement_link: 'Get v1.7',
     skills_title:   'Agent Skills Leaderboard',
     skills_sub:     'One-stop discovery for the best AI Agent Skills — search, filter, and find the right tool instantly.',
@@ -309,6 +309,7 @@ function getFavoriteCatalog() {
   return favoriteCatalog;
 }
 
+let websiteFavoritesBridge = null;
 const favoritesStore = FavoritesSync.createFavoritesStore({
   storage: localStorage,
   config: window.FAVORITES_CONFIG,
@@ -318,6 +319,10 @@ const favoritesStore = FavoritesSync.createFavoritesStore({
   location: window.location,
   eventTarget: window,
 });
+if (typeof WebsiteFavoritesBridge !== 'undefined') {
+  websiteFavoritesBridge = WebsiteFavoritesBridge.start({store: favoritesStore, eventTarget: window,
+    location: window.location, chrome: globalThis.chrome});
+}
 applyFavoriteSnapshot(favoritesStore.getSnapshot());
 
 /* ── Official brand links (Skills page) ─────────────────────────── */
@@ -615,6 +620,7 @@ function catalogRepositoryURL(value) {
   return /^https:\/\/github\.com\/[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+\/?$/.test(value || '') ? value : '#';
 }
 function applyFavoriteSnapshot(snapshot) {
+  websiteFavoritesBridge?.update(snapshot);
   const before = [...app.favorites].sort((a, b) => a - b).join(',');
   const recordsChanged = Object.keys(snapshot.records).some(id => JSON.stringify(snapshot.records[id]) !== JSON.stringify(app.favoriteRecords[id]));
   app.favorites = new Set(snapshot.ids);

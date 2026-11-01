@@ -3,7 +3,7 @@ export const API_BASE = 'https://agent-leaderboard-api.jaychempan.workers.dev/ap
 export const EXTENSION_ID = 'medjijlfgmfeldlelkidiickdcnbicaf';
 export const WEBSITE_CONNECT_URL = 'https://agentskills.media/extension/connect/';
 export const STORAGE_KEYS = Object.freeze({session: 'agentFavoritesSessionV1', pending: 'agentFavoritesLoginV1',
-  cache: 'agentFavoritesCloudV1', migration: 'agentFavoritesMigrationV1'});
+  cache: 'agentFavoritesCloudV1', autoConnectDisabled: 'agentFavoritesAutoConnectDisabledV1', migration: 'agentFavoritesMigrationV1'});
 const SOURCES = Object.freeze({skill: 'skills', mcp: 'mcp', prompt: 'prompts', framework: 'frameworks', auto_research: 'research'});
 const REVERSE_SOURCES = Object.fromEntries(Object.entries(SOURCES).map(([key, value]) => [value, key]));
 const TOKEN = /^[A-Za-z0-9_-]{43}$/;
@@ -27,13 +27,17 @@ const publicUser = value => value && typeof value.login === 'string' && /^[1-9]\
   && /^[A-Za-z0-9-]{1,39}$/.test(value.login || '') ? {id: String(value.id), login: value.login,
     avatar_url: /^https:\/\/avatars\.githubusercontent\.com\//.test(value.avatar_url || '') ? value.avatar_url.slice(0, 1000) : ''} : null;
 
-export function isWebsiteConnectSender(sender) {
+export function isWebsiteSender(sender) {
   if (!sender || sender.id !== undefined || sender.origin !== 'https://agentskills.media' || sender.frameId !== 0
       || !Number.isInteger(sender.tab?.id) || sender.tab.id < 0) return false;
   try {
     const url = new URL(sender.url);
-    return url.origin === 'https://agentskills.media' && url.pathname === '/extension/connect/' && !url.username && !url.password && !url.port;
+    return url.origin === 'https://agentskills.media' && ['/', '/index.html', '/extension/connect/'].includes(url.pathname) && !url.username && !url.password && !url.port;
   } catch { return false; }
+}
+
+export function isWebsiteConnectSender(sender) {
+  return isWebsiteSender(sender) && new URL(sender.url).pathname === '/extension/connect/';
 }
 
 export function sanitizeExtensionRepository(value, forcedId) {
@@ -80,8 +84,9 @@ export function createFavoritesSync(options = {}) {
   const catalog = options.catalog || (async () => []);
   const crypto = options.crypto || globalThis.crypto;
   const now = options.now || Date.now;
+  const website = options.website;
   const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
-  let loaded, initializing, syncTask, signInTask, completionTask, pendingLogin = null, tail = Promise.resolve(), sessionTail = Promise.resolve();
+  let loaded, initializing, syncTask, signInTask, completionTask, portTask, pendingLogin = null, autoConnectDisabled = false, tail = Promise.resolve(), sessionTail = Promise.resolve();
   let session = null, cloud = {}, local = {}, migration = null, catalogByName = new Map(), catalogById = new Map();
   let status = 'local', error = null, cacheFailed = false, epoch = 0, pendingKeys = new Set(), unresolvedKeys = new Set();
   const controllers = new Set();
@@ -107,6 +112,7 @@ export function createFavoritesSync(options = {}) {
     }
     const visible = new Set(Object.keys(visibleLocal()));
     return {user: session ? {...session.user} : null, favorites, status, error: error || (cacheFailed ? 'storage_unavailable' : null),
+      autoConnectDisabled,
       pendingImportCount: session ? [...pendingKeys].filter(key => visible.has(key)).length : 0,
       localOnlyCount: session ? [...unresolvedKeys].filter(key => visible.has(key)).length : visible.size};
   }
@@ -174,7 +180,7 @@ export function createFavoritesSync(options = {}) {
   async function refreshLocal() {
     const values = await storageGet('local', null);
     const records = readLocal(values), nextMigration = readMigration(values[STORAGE_KEYS.migration], records);
-    local = records; migration = nextMigration;
+    local = records; migration = nextMigration; return values;
   }
   async function refreshCatalog() {
     try {
@@ -189,14 +195,15 @@ export function createFavoritesSync(options = {}) {
     } catch { /* Out-of-catalog records can still be resolved by the API. */ }
   }
   function validPending(value) {
-    return Boolean(value?.mode === 'website' && value.api === API_BASE && TOKEN.test(value.verifier || '') && TOKEN.test(value.state || '')
+    return Boolean(['website', 'port'].includes(value?.mode) && value.api === API_BASE && TOKEN.test(value.verifier || '') && TOKEN.test(value.state || '')
       && Number.isInteger(value.tabId) && value.tabId >= 0 && Number.isFinite(value.createdAt) && value.createdAt <= now() && now() - value.createdAt < 600000);
   }
   async function load() {
     if (loaded) return loaded;
     loaded = (async () => {
       try {
-        await refreshLocal(); await refreshCatalog();
+        const localSettings = await refreshLocal(); autoConnectDisabled = localSettings[STORAGE_KEYS.autoConnectDisabled] === true;
+        await refreshCatalog();
         const values = await storageGet('session', [STORAGE_KEYS.session, STORAGE_KEYS.cache, STORAGE_KEYS.pending]);
         const value = values[STORAGE_KEYS.session], owner = publicUser(value?.user);
         if (value?.api === API_BASE && TOKEN.test(value.token || '') && owner && date(value.expiresAt) && Date.parse(value.expiresAt) > now()) {
@@ -390,27 +397,77 @@ export function createFavoritesSync(options = {}) {
   }
   function sync() {
     if (syncTask) return syncTask;
-    syncTask = (async () => { await load(); const context = {epoch, id: session?.user.id}; return enqueue(() => refresh(context)); })()
+    syncTask = (async () => {
+      await load();
+      if (!session && !autoConnectDisabled) {
+        const result = await connectPort(); if (result.handled) return snapshot();
+        if (result.reason && result.reason !== 'website_not_signed_in') { error = result.reason; status = 'error'; return emit(); }
+      }
+      const context = {epoch, id: session?.user.id}; return enqueue(() => refresh(context));
+    })()
       .finally(() => { syncTask = null; });
     return syncTask;
   }
   function init() { return initializing ||= sync(); }
   function base64url(bytes) { return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   function random() { return base64url(crypto.getRandomValues(new Uint8Array(32))); }
+  async function websiteTabs() {
+    return (await chrome.tabs.query({url: 'https://agentskills.media/*'})).filter(tab => {
+      try { const url = new URL(tab.url); return url.origin === 'https://agentskills.media' && !url.username && !url.password && !url.port && ['/', '/index.html', '/extension/connect/'].includes(url.pathname); }
+      catch { return false; }
+    });
+  }
+  function connectPort() {
+    if (portTask) return portTask;
+    portTask = (async () => {
+      const startEpoch = epoch, tabs = await websiteTabs(), entries = website?.list() || [], candidates = entries.filter(entry => entry.ready && entry.user && tabs.some(tab => tab.id === entry.tabId));
+      let candidate;
+      const active = candidates.filter(entry => tabs.some(tab => tab.id === entry.tabId && tab.active));
+      if (active.length && new Set(active.map(entry => entry.user.id)).size === 1) candidate = active[0];
+      else if (new Set(candidates.map(entry => entry.user.id)).size === 1) candidate = candidates[0];
+      else if (candidates.length) return {handled: false, reason: 'website_account_selection_required'};
+      if (!candidate) {
+        const pending = validPending(pendingLogin) && pendingLogin.mode === 'website';
+        return {handled: false, reason: tabs.some(tab => !entries.some(entry => entry.tabId === tab.id)) && !pending ? 'website_refresh_required' : 'website_not_signed_in'};
+      }
+      if (startEpoch !== epoch || session || autoConnectDisabled) return {handled: true};
+      const pending = {api: API_BASE, verifier: random(), state: random(), createdAt: now(), tabId: candidate.tabId,
+        mode: 'port', portId: candidate.portId, documentId: candidate.documentId, expectedUserId: candidate.user.id};
+      const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pending.verifier))));
+      if (startEpoch !== epoch || session || autoConnectDisabled) return {handled: true};
+      await storageSet('session', {[STORAGE_KEYS.pending]: pending});
+      if (startEpoch !== epoch) return {handled: true};
+      pendingLogin = pending; status = 'syncing'; error = null; emit();
+      try {
+        const response = await website.request(candidate, {client_challenge: challenge, client_state: pending.state, expected_user_id: pending.expectedUserId});
+        const result = await completeWebsiteSignIn(response.message, response.sender, {portId: response.portId});
+        website.acknowledge?.(candidate, pending.state, result.connected === true);
+      } catch (exception) {
+        if (startEpoch === epoch) {
+          pendingLogin = null; await storageRemove('session', STORAGE_KEYS.pending);
+          error = ['website_not_signed_in', 'website_connection_lost', 'website_connection_timeout', 'website_account_changed'].includes(exception.code) ? exception.code : 'auth_failed'; status = 'error'; emit();
+        }
+      }
+      return {handled: true};
+    })().finally(() => { portTask = null; });
+    return portTask;
+  }
   function signIn() {
     if (signInTask) return signInTask;
     let attemptEpoch;
     signInTask = (async () => {
       await load(); attemptEpoch = epoch;
+      if (session) { const context = {epoch, id: session.user.id}; return enqueue(() => refresh(context)); }
+      await storageSet('local', {[STORAGE_KEYS.autoConnectDisabled]: false}); autoConnectDisabled = false;
+      const portResult = await connectPort(); if (portResult.handled) return snapshot();
+      if (portResult.reason && portResult.reason !== 'website_not_signed_in') { error = portResult.reason; status = 'error'; return emit(); }
       if (chrome.runtime.id !== EXTENSION_ID) throw failure('auth_failed');
       const stored = await storageGet('session', STORAGE_KEYS.pending);
       const reusable = validPending(stored[STORAGE_KEYS.pending]) ? stored[STORAGE_KEYS.pending] : null;
-      const eligible = (await chrome.tabs.query({url: 'https://agentskills.media/*'})).filter(tab => {
-        try { const url = new URL(tab.url); return url.origin === 'https://agentskills.media' && !url.username && !url.password && !url.port && ['/', '/extension/connect/'].includes(url.pathname); }
-        catch { return false; }
-      });
+      const eligible = await websiteTabs();
       let tab = reusable && eligible.find(tab => tab.id === reusable.tabId);
       const reuse = Boolean(tab);
+      if (reuse && reusable.mode === 'website') { pendingLogin = reusable; status = 'awaiting_website'; error = null; return emit(); }
       if (!tab) tab = eligible.sort((a, b) => Number(b.active) - Number(a.active) || (b.lastAccessed || 0) - (a.lastAccessed || 0))[0];
       if (!tab) tab = await chrome.tabs.create({url: 'about:blank', active: true});
       if (!Number.isInteger(tab?.id) || tab.id < 0 || attemptEpoch !== epoch) throw failure('stale_request');
@@ -431,15 +488,17 @@ export function createFavoritesSync(options = {}) {
     }).finally(() => { signInTask = null; });
     return signInTask;
   }
-  function completeWebsiteSignIn(message, sender) {
+  function completeWebsiteSignIn(message, sender, bridge = {}) {
     const rejected = {ok: false, connected: false};
-    if (!isWebsiteConnectSender(sender) || message?.type !== 'favorites:connect'
+    if (!(bridge.portId ? isWebsiteSender(sender) : isWebsiteConnectSender(sender)) || message?.type !== 'favorites:connect'
         || !TOKEN.test(message.code || '') || !TOKEN.test(message.state || '') || completionTask) return Promise.resolve(rejected);
     let attemptEpoch;
     completionTask = (async () => {
       await load(); attemptEpoch = epoch;
       const stored = await storageGet('session', STORAGE_KEYS.pending), pending = stored[STORAGE_KEYS.pending];
-      if (!validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state) return rejected;
+      if (!validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state
+          || (pending.mode === 'port' && (pending.portId !== bridge.portId || pending.documentId !== (sender.documentId || '')))
+          || (pending.mode === 'website' && bridge.portId)) return rejected;
       await storageRemove('session', STORAGE_KEYS.pending); pendingLogin = null;
       if (attemptEpoch !== epoch) return rejected;
       status = 'syncing'; error = null; emit();
@@ -447,6 +506,7 @@ export function createFavoritesSync(options = {}) {
         body: {code: message.code, verifier: pending.verifier, state: pending.state}});
       if (attemptEpoch !== epoch) return rejected;
       const user = publicUser(payload?.user);
+      if (pending.expectedUserId && user?.id !== pending.expectedUserId) throw failure('website_account_changed');
       if (!user || !TOKEN.test(payload?.token || '') || !date(payload.expiresAt) || Date.parse(payload.expiresAt) <= now()) throw failure('auth_failed');
       const value = {api: API_BASE, token: payload.token, expiresAt: payload.expiresAt, user};
       await storageSet('session', {[STORAGE_KEYS.session]: value, [STORAGE_KEYS.cache]: {api: API_BASE, owner: user.id, records: []}});
@@ -458,7 +518,7 @@ export function createFavoritesSync(options = {}) {
       return session?.user.id === user.id ? {ok: true, connected: true, user: {...session.user}} : rejected;
     })().catch(exception => {
       if (attemptEpoch === undefined || attemptEpoch === epoch) {
-        error = exception.code === 'storage_unavailable' ? 'storage_unavailable' : 'auth_failed'; status = 'error'; emit();
+        error = ['storage_unavailable', 'website_account_changed'].includes(exception.code) ? exception.code : 'auth_failed'; status = 'error'; emit();
       }
       return rejected;
     }).finally(() => { completionTask = null; });
@@ -466,12 +526,15 @@ export function createFavoritesSync(options = {}) {
   }
   async function signOut() {
     await load(); const previous = session, logoutEpoch = epoch + 1;
+    autoConnectDisabled = true; let suppressionFailed = false;
+    try { await storageSet('local', {[STORAGE_KEYS.autoConnectDisabled]: true}); } catch { suppressionFailed = true; }
     try { await clearAuthentication(); status = 'local'; error = null; emit(); }
     catch { status = 'error'; error = 'storage_unavailable'; emit(); return snapshot(); }
     if (previous) {
       try { await request('/auth/logout', {method: 'POST', userId: previous.user.id, authentication: previous}); }
       catch (exception) { if (epoch === logoutEpoch && exception.status !== 401) { error = 'auth_failed'; status = exception.code === 'network_failed' ? 'offline' : 'error'; } }
     }
+    if (suppressionFailed) { error = 'storage_unavailable'; status = 'error'; }
     return emit();
   }
   async function toggle(input) {

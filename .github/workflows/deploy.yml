@@ -35,7 +35,7 @@ jobs:
           node-version: '22'
 
       - name: Verify website, extension trends and account favorites
-        run: node --test tests/visit-counter.test.cjs tests/favorites.test.cjs tests/chrome/*.test.mjs worker/test/*.test.js
+        run: node --test tests/visit-counter.test.cjs tests/favorites.test.cjs tests/extension-favorites.test.cjs tests/chrome/*.test.mjs worker/test/*.test.js
 
       - name: Build Chrome extension download
         run: python3 scripts/chrome/build.py

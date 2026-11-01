@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {registerFavoritesMessages} from '../../chrome/favorites-background.mjs';
+import {registerFavoritesMessages, createWebsiteRegistry} from '../../chrome/favorites-background.mjs';
 
 const id='medjijlfgmfeldlelkidiickdcnbicaf';
 const sender={id,url:`chrome-extension://${id}/panel.html`};
@@ -62,4 +62,27 @@ test('external responses never return account favorites, tokens, or private erro
   assert.deepEqual(await failed.sendExternal(completion,website),{ok:false,connected:false});
   const rejected=harness({completeWebsiteSignIn:async()=>({connected:false,error:'private-upstream-detail'})});
   assert.deepEqual(await rejected.sendExternal(completion,website),{ok:false,connected:false});
+});
+
+function websitePort(source={...website,url:'https://agentskills.media/'}){
+  const received=[],closed=[],sent=[];
+  return{name:'favorites:website',sender:source,sent,disconnected:false,onMessage:{addListener:fn=>received.push(fn)},onDisconnect:{addListener:fn=>closed.push(fn)},
+    postMessage:message=>sent.push(message),receive:message=>received.forEach(fn=>fn(message)),disconnect(){this.disconnected=true;closed.forEach(fn=>fn());}};
+}
+test('website registry rejects invalid ports and treats repeated ready heartbeats as no change',()=>{
+  let updates=0;const registry=createWebsiteRegistry({onReady:()=>updates++});
+  for(const sender of [{...website,id:'other'},{...website,origin:'https://evil.example'},{...website,frameId:1},{...website,url:'https://agentskills.media/privacy/'}]){
+    const port=websitePort(sender);assert.equal(registry.register(port),false);assert.equal(port.disconnected,true);
+  }
+  assert.deepEqual(registry.list(),[]);const port=websitePort();registry.register(port);
+  port.receive({type:'favorites:ready',user:{id:'101',login:'alice'}});port.receive({type:'favorites:ready',user:{id:'101',login:'alice'}});
+  assert.equal(updates,1);assert.equal(registry.list()[0].user.id,'101');
+  port.receive({type:'favorites:ready',user:null});assert.equal(updates,2);port.disconnect();assert.deepEqual(registry.list(),[]);
+});
+test('registry challenges bind the actual port and late replies on disconnected ports cannot resolve new requests',async()=>{
+  const registry=createWebsiteRegistry(),port=websitePort();registry.register(port);port.receive({type:'favorites:ready',user:{id:'101',login:'alice'}});
+  const candidate=registry.list()[0],challenge={client_state:'s'.repeat(43),client_challenge:'c'.repeat(43),expected_user_id:'101'};
+  const pending=registry.request(candidate,challenge);assert.deepEqual(port.sent[0],{type:'favorites:challenge',...challenge});
+  port.receive({type:'favorites:connect',code:'x'.repeat(43),state:'wrong'});port.disconnect();await assert.rejects(pending,{code:'website_connection_lost'});
+  port.receive({type:'favorites:connect',code:'x'.repeat(43),state:challenge.client_state});assert.deepEqual(registry.list(),[]);
 });

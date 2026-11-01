@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash, webcrypto} from 'node:crypto';
+import {createWebsiteRegistry} from '../../chrome/favorites-background.mjs';
 import {createFavoritesSync, API_BASE, EXTENSION_ID, STORAGE_KEYS as K,
   sanitizeExtensionRepository, extensionToCloud, cloudToExtension} from '../../chrome/favorites-sync.mjs';
 
@@ -91,7 +92,8 @@ function chromeMock(server, initial = {}) {
   const area = name => ({
     async get(keys) {
       calls.push(['get', name, keys]); if (mock.fail?.('get', name, keys)) throw Error('storage');
-      return copy(keys === null ? values[name] : Object.fromEntries((Array.isArray(keys) ? keys : [keys]).filter(key => own(values[name], key)).map(key => [key, values[name][key]])));
+      const result=copy(keys === null ? values[name] : Object.fromEntries((Array.isArray(keys) ? keys : [keys]).filter(key => own(values[name], key)).map(key => [key, values[name][key]])));
+      if(mock.afterGet)await mock.afterGet(name,keys,result);return result;
     },
     async set(items) {
       calls.push(['set', name, copy(items)]); if (mock.beforeSet) await mock.beforeSet(name, items);
@@ -114,7 +116,7 @@ const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
 function fixture(settings = {}) {
   const server = settings.server || backend(), mock = settings.mock || chromeMock(server, settings.initial);
   const changes = [], store = createFavoritesSync({chrome: mock.chrome, fetch: server.fetch, crypto: webcrypto,
-    catalog: settings.catalog || (async () => [repo(1), repo(2), repo(3)]), onChange: value => changes.push(value)});
+    website:settings.website, catalog: settings.catalog || (async () => [repo(1), repo(2), repo(3)]), onChange: value => changes.push(value)});
   return {server, mock, store, changes};
 }
 
@@ -128,7 +130,8 @@ async function handoff(f, owner = f.server.user) {
 }
 async function login(f) {
   const pending=await f.store.signIn();if(pending.status!=='awaiting_website')return pending;
-  const message=await handoff(f);await f.store.completeWebsiteSignIn(message,websiteSender(f.mock.values.session[K.pending].tabId));
+  const message=await handoff(f),tabId=f.mock.values.session[K.pending].tabId;await f.store.completeWebsiteSignIn(message,websiteSender(tabId));
+  f.mock.tabs=f.mock.tabs.filter(tab=>tab.id!==tabId);
   return f.store.getSnapshot();
 }
 
@@ -345,7 +348,7 @@ test('old website completions and old logout failures cannot overwrite a newer a
   const oldLogin=f.store.completeWebsiteSignIn(message,sender);
   try{await entered.promise;await f.store.signOut();}finally{held.resolve();}await oldLogin;
   assert.equal((await f.store.getSnapshot()).user,null);assert.equal((await f.store.getSnapshot()).error,null);
-  f.server.beforeExchange=null;await login(f);
+  f.mock.tabs=[];f.server.beforeExchange=null;await login(f);
   const logoutHeld=deferred(),logoutEntered=deferred();
   f.server.beforeWrite=async request=>{if(request.path==='/api/auth/logout'){logoutEntered.resolve();await logoutHeld.promise;throw TypeError('Offline');}};
   const oldLogout=f.store.signOut();
@@ -453,18 +456,11 @@ test('catalog IDs hydrate matching placeholders while unknown IDs remain removab
   assert.ok((await f.store.getSnapshot()).favorites['repo-id:456']);
 });
 
-test('website sign-in reuses an exact website tab and never opens the identity webview',async()=>{
-  const f=fixture();f.mock.tabs.push({id:10,url:'https://agentskills.media/privacy/',active:true},
-    {id:11,url:'https://agentskills.media/#mcp',active:false,lastAccessed:123});
-  await f.store.init();const result=await f.store.signIn();assert.equal(result.status,'awaiting_website');
-  const pending=f.mock.values.session[K.pending];assert.equal(pending.tabId,11);assert.equal(pending.mode,'website');
-  assert.equal(f.mock.calls.some(call=>call[0]==='tabs:create'),false);
-  assert.deepEqual(f.mock.calls.find(call=>call[0]==='tabs:query')[1],{url:'https://agentskills.media/*'});
-  const url=new URL(f.mock.tabs.find(tab=>tab.id===11).url);assert.equal(url.origin+url.pathname,'https://agentskills.media/extension/connect/');
-  const fragment=new URLSearchParams(url.hash.slice(1));assert.equal(fragment.get('client_state'),pending.state);
-  assert.equal(fragment.has('verifier'),false);assert.equal(url.href.includes(pending.verifier),false);
-  assert.equal(f.server.requests.some(request=>request.path==='/api/auth/github'),false);
-  assert.equal(JSON.stringify(result).includes(pending.verifier),false);
+test('an existing old website tab is never navigated or focused without a live bridge',async()=>{
+  const f=fixture();f.mock.tabs.push({id:11,url:'https://agentskills.media/#mcp',active:false,lastAccessed:123});
+  await f.store.init();const result=await f.store.signIn();assert.equal(result.error,'website_refresh_required');
+  assert.equal(f.mock.calls.some(call=>call[0]==='tabs:create'||call[0]==='tabs:update'),false);
+  assert.equal(f.mock.values.session[K.pending],undefined);assert.equal(f.mock.tabs[0].url,'https://agentskills.media/#mcp');
 });
 
 test('new tabs stay blank until proof is persisted and a worker restart resumes the same pending connection',async()=>{
@@ -500,7 +496,7 @@ test('website handoffs are consumed once under concurrent messages and cancellat
     assert.deepEqual(await f.store.completeWebsiteSignIn(message,sender),{ok:false,connected:false});
   }finally{held.resolve();}
   assert.equal((await completing).connected,true);assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,1);
-  await f.store.signOut();await f.store.signIn();const cancelled=await handoff(f),cancelledSender=websiteSender(f.mock.values.session[K.pending].tabId);
+  await f.store.signOut();f.mock.tabs=[];await f.store.signIn();const cancelled=await handoff(f),cancelledSender=websiteSender(f.mock.values.session[K.pending].tabId);
   await f.store.signOut();assert.deepEqual(await f.store.completeWebsiteSignIn(cancelled,cancelledSender),{ok:false,connected:false});
   assert.equal(f.mock.values.session[K.session],undefined);
 });
@@ -512,4 +508,78 @@ test('expired website attempts cannot connect and blocked proof storage never na
   const blocked=fixture();await blocked.store.init();blocked.mock.fail=(operation,area,items)=>operation==='set'&&area==='session'&&own(items,K.pending);
   const result=await blocked.store.signIn();assert.equal(result.error,'storage_unavailable');
   assert.equal(blocked.mock.calls.some(call=>call[0]==='tabs:update'),false);assert.equal(blocked.mock.values.session[K.pending],undefined);
+});
+
+function attachWebsite(f, registry, user, tabId=50, active=true) {
+  const incoming=[],disconnected=[];
+  const port={name:'favorites:website',sender:{origin:'https://agentskills.media',url:'https://agentskills.media/',frameId:0,tab:{id:tabId},documentId:'doc-'+tabId},
+    onMessage:{addListener:fn=>incoming.push(fn)},onDisconnect:{addListener:fn=>disconnected.push(fn)},messages:[],
+    postMessage(message){this.messages.push(message);if(message.type==='favorites:challenge')this.handle?.(message);},
+    receive(message){for(const listener of incoming)listener(message);},disconnect(){for(const listener of disconnected)listener();}};
+  f.mock.tabs.push({id:tabId,url:'https://agentskills.media/#mcp',active});registry.register(port);port.receive({type:'favorites:ready',user});
+  port.handle=async message=>{
+    const pending=f.mock.values.session[K.pending];assert.equal(pending.state,message.client_state);assert.equal(pending.expectedUserId,message.expected_user_id);
+    const response=await f.server.web(user,'/auth/extension','POST',{extension_id:EXTENSION_ID,client_challenge:message.client_challenge,client_state:message.client_state});
+    port.receive({type:'favorites:connect',...(await response.json())});
+  };
+  return port;
+}
+
+test('a logged-in homepage connects automatically without opening, navigating, focusing or confirming',async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry});const port=attachWebsite(f,registry,ALICE);
+  f.server.put(ALICE,2);const result=await f.store.init();assert.equal(result.user.id,ALICE.id);assert.ok(result.favorites['team/repo-2']);
+  assert.equal(f.mock.calls.some(call=>['tabs:create','tabs:update'].includes(call[0])),false);assert.equal(f.mock.tabs[0].url,'https://agentskills.media/#mcp');
+  const message=port.messages.find(message=>message.type==='favorites:challenge');assert.equal(message.expected_user_id,ALICE.id);assert.equal(message.verifier,undefined);
+  const count=port.messages.length;await f.store.sync();assert.equal(port.messages.length,count,'an existing extension session needs no new website handoff');
+});
+
+test('multiple website accounts require an active website and never randomly switch an existing extension account',async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry});attachWebsite(f,registry,ALICE,50,false);attachWebsite(f,registry,BOB,51,false);
+  const ambiguous=await f.store.init();assert.equal(ambiguous.error,'website_account_selection_required');assert.equal(ambiguous.user,null);
+  assert.equal(f.mock.calls.some(call=>call[0]==='tabs:update'||call[0]==='tabs:create'),false);
+  f.mock.tabs.find(tab=>tab.id===51).active=true;const bob=await f.store.sync();assert.equal(bob.user.id,BOB.id);
+  f.mock.tabs.find(tab=>tab.id===51).active=false;f.mock.tabs.find(tab=>tab.id===50).active=true;
+  const count=f.server.requests.filter(request=>request.path==='/api/auth/exchange').length;await f.store.sync();
+  assert.equal((await f.store.getSnapshot()).user.id,BOB.id);assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,count);
+});
+
+test('explicit logout persists automatic reconnection suppression across ready heartbeats and worker restarts',async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry}),port=attachWebsite(f,registry,ALICE);await f.store.init();await f.store.signOut();
+  assert.equal(f.mock.values.local[K.autoConnectDisabled],true);const count=f.server.requests.filter(request=>request.path==='/api/auth/exchange').length;
+  port.receive({type:'favorites:ready',user:ALICE});await f.store.sync();assert.equal((await f.store.getSnapshot()).user,null);
+  const restarted=fixture({server:f.server,mock:f.mock,website:registry});assert.equal((await restarted.store.init()).user,null);
+  assert.equal((await restarted.store.getSnapshot()).autoConnectDisabled,true);assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,count);
+  assert.equal((await restarted.store.signIn()).user.id,ALICE.id);assert.equal(f.mock.values.local[K.autoConnectDisabled],false);
+});
+
+test('lost website ports, timeout and unavailable replies fail without navigation or saving credentials',async()=>{
+  for(const mode of['disconnect','timeout','unavailable']){
+    const registry=createWebsiteRegistry({timeoutMs:10}),f=fixture({website:registry}),port=attachWebsite(f,registry,ALICE);
+    port.handle=message=>{if(mode==='disconnect')port.disconnect();if(mode==='unavailable')port.receive({type:'favorites:unavailable',state:message.client_state,reason:'not_signed_in'});};
+    const result=await f.store.init();assert.equal(result.user,null);assert.equal(result.error,{disconnect:'website_connection_lost',timeout:'website_connection_timeout',unavailable:'website_not_signed_in'}[mode]);
+    assert.equal(f.mock.values.session[K.session],undefined);assert.equal(f.mock.values.session[K.pending],undefined);
+    assert.equal(f.mock.calls.some(call=>call[0]==='tabs:update'||call[0]==='tabs:create'),false);
+  }
+});
+
+test('a website account change during a grant cannot adopt the wrong exchanged identity',async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry}),port=attachWebsite(f,registry,ALICE);
+  port.handle=async message=>{const response=await f.server.web(BOB,'/auth/extension','POST',{extension_id:EXTENSION_ID,client_challenge:message.client_challenge,client_state:message.client_state});port.receive({type:'favorites:connect',...(await response.json())});};
+  const result=await f.store.init();assert.equal(result.user,null);assert.equal(result.error,'website_account_changed');assert.equal(f.mock.values.session[K.session],undefined);
+});
+
+test('logout cancels an in-flight homepage challenge and a late port response cannot revive it',{timeout:5000},async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry}),port=attachWebsite(f,registry,ALICE),entered=deferred();let challenge;
+  port.handle=message=>{challenge=message;entered.resolve();};const initializing=f.store.init();await entered.promise;await f.store.signOut();
+  const response=await f.server.web(ALICE,'/auth/extension','POST',{extension_id:EXTENSION_ID,client_challenge:challenge.client_challenge,client_state:challenge.client_state});
+  port.receive({type:'favorites:connect',...(await response.json())});await initializing;assert.equal((await f.store.getSnapshot()).user,null);assert.equal(f.mock.values.session[K.session],undefined);
+});
+
+test('an old local settings read cannot undo logout suppression in memory',{timeout:5000},async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry});attachWebsite(f,registry,ALICE);await f.store.init();
+  const entered=deferred(),held=deferred();let hold=true;
+  f.mock.afterGet=async(area,keys)=>{if(area==='local'&&keys===null&&hold){hold=false;entered.resolve();await held.promise;}};
+  const syncing=f.store.sync();await entered.promise;await f.store.signOut();held.resolve();await syncing;
+  assert.equal((await f.store.getSnapshot()).autoConnectDisabled,true);const count=f.server.requests.filter(request=>request.path==='/api/auth/exchange').length;
+  await f.store.sync();assert.equal((await f.store.getSnapshot()).user,null);assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,count);
 });
