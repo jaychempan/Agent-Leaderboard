@@ -20,14 +20,19 @@
         </form>
         <div class="header-actions"><button id="theme" class="icon" title="切换明暗主题" aria-label="切换明暗主题"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.5 8.5 0 0 1 9.8 4a8.5 8.5 0 1 0 10.2 10.2Z"/></svg></button><button id="locale-toggle" class="icon" title="Switch to English" aria-label="Switch to English">EN</button></div>
         </div>
-        <div class="view-switch" role="group" aria-label="查看范围"><div class="view-tabs"><button id="all" class="active" aria-pressed="true">发现</button><button id="favorites" aria-pressed="false">收藏 <span id="favorite-count">0</span></button></div><button id="filter-toggle" aria-expanded="false" aria-controls="filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>筛选 <span id="filter-count"></span></button></div>
+        <div class="view-switch" role="group" aria-label="查看范围"><div class="view-tabs"><button id="all" class="active" aria-pressed="true">发现</button><button id="favorites" aria-pressed="false">收藏 <span id="favorite-count">0</span></button><button id="trending" aria-pressed="false">趋势</button></div><button id="filter-toggle" aria-expanded="false" aria-controls="filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>筛选 <span id="filter-count"></span></button></div>
         <section id="favorites-account" class="favorites-account" aria-label="收藏账号" hidden>
           <div class="account-copy"><strong id="account-user">收藏随账号同步</strong><p id="account-status" role="status" aria-live="polite">本地收藏可合并到 GitHub 账号</p></div>
           <div class="account-actions"><button id="account-sign-in">GitHub 登录</button><button id="account-sync" hidden>同步</button><button id="account-sign-out" hidden>退出</button></div>
           <p id="account-message" role="alert" hidden></p>
         </section>
         <div id="sources" class="sources" role="group" aria-label="榜单"></div>
-        <div class="facet-row">
+        <section id="trend-controls" class="trend-controls" aria-label="趋势时间和排序" hidden>
+          <div class="trend-control-row"><div id="trend-periods" class="trend-periods" role="group" aria-label="趋势周期"><button type="button" data-days="1" aria-pressed="true">日</button><button type="button" data-days="7" aria-pressed="false">周</button><button type="button" data-days="30" aria-pressed="false">月</button></div><label class="trend-sort-label"><span class="sr-only">趋势排序</span><select id="trend-sort"><option value="rate">增长率</option><option value="delta">新增 Stars</option></select></label></div>
+          <p id="trend-range" class="trend-range"></p><p id="trend-summary" class="trend-summary"></p>
+          <details class="trend-explainer"><summary>计算方法</summary><p id="trend-method" class="trend-method">按每日快照比较 Stars，仅展示正增长；增长率不包含起点为 0 的仓库。快照可能沿用较早记录，并非 GitHub 实时事件。</p></details>
+        </section>
+        <div id="discovery-facets" class="facet-row">
           <label class="quick-category" for="category"><span class="sr-only">分类</span><select id="category"><option value="">全部分类</option></select></label>
           <button id="toggle-uses" aria-expanded="false" aria-controls="use-picker"><span id="use-label">全部用途</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
         </div>
@@ -46,10 +51,10 @@
         </div>
         <div id="active-filters" class="active-filters" aria-label="已选条件" hidden></div>
       </section>
-      <div class="result-toolbar"><p id="result-count" role="status">正在载入目录…</p><label class="sort-label"><span class="sr-only">排序</span><select id="sort"><option value="relevance">相关度优先</option><option value="stars">Stars 最多</option><option value="recent">最近更新</option></select></label></div>
+      <div class="result-toolbar"><p id="result-count" role="status">正在载入目录…</p><label id="discovery-sort" class="sort-label"><span class="sr-only">排序</span><select id="sort"><option value="relevance">相关度优先</option><option value="stars">Stars 最多</option><option value="recent">最近更新</option></select></label></div>
       <div id="results-scroll" class="results-scroll">
       <section id="results" aria-label="仓库搜索结果" aria-busy="true"></section>
-      <div id="empty" hidden><h2>没有找到匹配的仓库</h2><p id="empty-hint">试试更短的关键词，或清除筛选条件。</p><button id="clear-search">清除搜索和筛选</button></div>
+      <div id="empty" hidden><h2 id="empty-title">没有找到匹配的仓库</h2><p id="empty-hint">试试更短的关键词，或清除筛选条件。</p><button id="clear-search">清除搜索和筛选</button></div>
       </div>
       <nav id="pagination" class="pagination" aria-label="仓库分页" hidden>
         <button id="previous-page" aria-label="上一页">‹ 上一页</button>

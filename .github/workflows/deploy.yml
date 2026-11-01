@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Verify website and extension account favorites
+      - name: Verify website, extension trends and account favorites
         run: node --test tests/visit-counter.test.cjs tests/favorites.test.cjs tests/chrome/*.test.mjs worker/test/*.test.js
 
       - name: Build Chrome extension download

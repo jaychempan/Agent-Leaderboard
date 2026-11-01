@@ -22,9 +22,14 @@ const root = path.resolve(__dirname, '../..');
     const {id} = await cdp.send('Extensions.loadUnpacked', {path: process.env.EXTENSION_PATH || path.join(root, 'chrome')});
     let mode = 'offline';
     const remote = JSON.parse(fs.readFileSync(path.join(root, 'data/discovery_index.json')));
+    const remoteTrends = JSON.parse(fs.readFileSync(path.join(root, 'data/trends.json')));
     await context.route('https://agentskills.media/data/discovery_index.json', async route => {
       if (mode === 'offline') return route.abort('internetdisconnected');
       return route.fulfill({contentType: 'application/json', body: JSON.stringify(mode === 'invalid' ? {items: []} : remote)});
+    });
+    await context.route('https://agentskills.media/data/trends.json', async route => {
+      if (mode === 'offline') return route.abort('internetdisconnected');
+      return route.fulfill({contentType: 'application/json', body: JSON.stringify(remoteTrends)});
     });
     const page = await context.newPage();
     await page.addInitScript(() => {
@@ -98,7 +103,7 @@ const root = path.resolve(__dirname, '../..');
     assert.equal(await page.locator('#favorite-count').textContent(), '1');
     await page.locator('#favorites').click();
     assert.equal(await page.locator('.repo').first().getAttribute('data-repo'), name);
-    await page.locator('summary').first().click();
+    await page.locator('.repo summary').first().click();
     assert.ok((await page.locator('.links a').first().getAttribute('href')).endsWith('#readme'));
     await page.bringToFront();
     await page.locator('.links button').first().click();
@@ -348,6 +353,7 @@ const root = path.resolve(__dirname, '../..');
     assert.ok(await page.locator('.repo').count() > 0);
     if (process.env.TEST_LIVE_INDEX === '1') {
       await context.unroute('https://agentskills.media/data/discovery_index.json');
+      await context.unroute('https://agentskills.media/data/trends.json');
       await page.locator('#refresh').click();
       await page.waitForFunction(() => !document.getElementById('refresh').disabled);
       assert.ok((await page.locator('#data-status').textContent()).startsWith('已更新'), 'live catalog fetch succeeds');

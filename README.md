@@ -54,9 +54,11 @@ Local favorites work without the API. Real sign-in requires a Cloudflare account
 
 ## Chrome search extension
 
-Download the **[v1.7 cloud-favorites ZIP](https://agentskills.media/dist/Chrome.zip)** and load it unpacked, or visit the [bilingual showcase and usage guide](https://agentskills.media/extension/). The **[Chrome Web Store](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** currently provides v1.6; the v1.7 store update requires review. Requires Chrome 116 or later.
+Download the **[v1.7 ZIP with trends and cloud favorites](https://agentskills.media/dist/Chrome.zip)** and load it unpacked, or visit the [bilingual showcase and usage guide](https://agentskills.media/extension/). The **[Chrome Web Store](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** currently provides v1.6; the v1.7 store update requires review. Requires Chrome 116 or later.
 
 Search all five boards in a side panel with categories, use cases, platform, language, stars and time filters. Save favorites, open READMEs, and copy an AI installation prompt to paste into your coding assistant. The extension generates the prompt; it does not install repositories automatically.
+
+Choose **Trending** for the same daily, weekly and monthly top 20 as the website, ranked by growth rate or stars gained across all five boards. The extension includes an offline trend snapshot, shows its observation dates, and updates it alongside the catalog. These are recorded changes, not live GitHub events; missing history is shown explicitly.
 
 It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Anonymous favorites stay local to this Chrome profile. In v1.7, choose GitHub sign-in in Favorites to merge local favorites and share saved favorites with the website and other devices. Signed-in saves require the network; failed changes roll back. The extension keeps its eight-hour site session and account cache only in `chrome.storage.session`, so a browser restart or extension reload/update may require signing in again. Cloud favorites remain saved in D1.
 

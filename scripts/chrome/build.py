@@ -11,8 +11,8 @@ CHROME = ROOT / 'chrome'
 RUNTIME_FILES = (
     'manifest.json', 'background.js', 'core.mjs', 'taxonomy.mjs',
     'panel.html', 'panel.js', 'panel.css', 'i18n.mjs', 'install-prompt.mjs',
-    'service-worker.mjs', 'favorites-background.mjs', 'favorites-sync.mjs',
-    'help.html', 'help-en.html', 'data/catalog.json', 'LICENSE',
+    'service-worker.mjs', 'favorites-background.mjs', 'favorites-sync.mjs', 'trends.mjs',
+    'help.html', 'help-en.html', 'data/catalog.json', 'data/trends.json', 'LICENSE',
     'icons/icon-16.png', 'icons/icon-32.png', 'icons/icon-48.png', 'icons/icon-128.png',
 )
 FIELDS = 'source_id full_name description source_type category categories stars language topics platforms use_cases updated_at'.split()
@@ -27,8 +27,11 @@ def build():
     payload = json.loads((ROOT / 'data/discovery_index.json').read_text())
     if not payload.get('items'):
         raise ValueError('The discovery index is empty. Run scripts/build_discovery_index.py first.')
-    catalog = {'meta': payload['meta'], 'items': [{key: item.get(key, [] if key in ('topics', 'platforms', 'use_cases', 'categories') else '')
-                                               for key in FIELDS} for item in payload['items']]}
+    catalog = {'schema': 4, 'meta': payload['meta'],
+               'sources': {source: {'updated_at': metadata.get('meta', {}).get('updated_at', '')}
+                           for source, metadata in payload.get('sources', {}).items() if source in BOARDS},
+               'items': [{key: item.get(key, [] if key in ('topics', 'platforms', 'use_cases', 'categories') else '')
+                          for key in FIELDS} for item in payload['items']]}
     out = CHROME
     out.mkdir(parents=True, exist_ok=True)
     # Website data and navigation text are the source of truth, not a second hand-written taxonomy.
@@ -49,6 +52,7 @@ def build():
                   for name, values in translations.items()), encoding='utf-8')
     (out / 'data').mkdir(exist_ok=True)
     (out / 'data/catalog.json').write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    shutil.copy2(ROOT / 'data/trends.json', out / 'data/trends.json')
     # Icon assets are rendered from the checked-in SVG, never redrawn as opaque blocks.
     for name in ['icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-128.png']:
         path = f'icons/{name}'

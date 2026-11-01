@@ -25,7 +25,15 @@ export function compactCatalog(payload) {
       topics: list(item.topics), platforms: list(item.platforms), use_cases: list(item.use_cases),
     };
   });
-  return {schema: 3, meta: {updated_at: payload.meta.updated_at, total: items.length}, items};
+  const sources = {};
+  for (const source of Object.keys(SOURCE_LABELS)) {
+    const metadata = payload.sources?.[source];
+    const updatedAt = metadata?.updated_at ?? metadata?.meta?.updated_at;
+    // Keep the exact source timestamp, including microseconds. A global build
+    // timestamp cannot establish that a repository snapshot matches history.
+    if (typeof updatedAt === 'string' && Number.isFinite(Date.parse(updatedAt))) sources[source] = {updated_at: updatedAt};
+  }
+  return {schema: 4, meta: {updated_at: payload.meta.updated_at, total: items.length}, sources, items};
 }
 
 export function categoriesOf(item) {
@@ -37,7 +45,7 @@ export function prepareCatalog(catalog) {
   for (const item of catalog.items) {
     const key = item.full_name.toLowerCase();
     const existing = repos.get(key);
-    const facet = {categories: categoriesOf(item), use_cases: item.use_cases, stars: item.stars,
+    const facet = {source_id: item.source_id, categories: categoriesOf(item), use_cases: item.use_cases, stars: item.stars,
       language: item.language, updated_at: item.updated_at, platforms: item.platforms};
     if (!existing) {
       repos.set(key, {...item, key, facets: {[item.source_type]: facet}, sources: [item.source_type], descriptions: [item.description]});
@@ -49,6 +57,7 @@ export function prepareCatalog(catalog) {
     const previous = existing.facets[item.source_type];
     existing.facets[item.source_type] = previous ? {
       ...previous, stars: Math.max(previous.stars, facet.stars),
+      source_id: facet.stars > previous.stars ? (facet.source_id || previous.source_id) : (previous.source_id || facet.source_id),
       updated_at: Date.parse(facet.updated_at) > Date.parse(previous.updated_at) ? facet.updated_at : previous.updated_at,
       categories: [...new Set([...previous.categories, ...facet.categories])],
       use_cases: [...new Set([...previous.use_cases, ...facet.use_cases])],

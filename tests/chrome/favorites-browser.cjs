@@ -48,6 +48,7 @@ let stage = 'launch', context;
       if (chrome.runtime.id !== id || nativeRedirect !== `https://${id}.chromiumapp.org/github`) throw new Error('native_identity_mismatch');
       const originalFetch = globalThis.fetch.bind(globalThis);
       const bundled = await (await originalFetch(chrome.runtime.getURL('data/catalog.json'))).json();
+      const bundledTrends = await (await originalFetch(chrome.runtime.getURL('data/trends.json'))).json();
       const user = {id: '701', login: 'browser-fixture-user', avatar_url: ''};
       const backend = globalThis.__favoritesBrowserBackend = {user, rows: new Map(), sessions: new Map(), exchanges: new Map(),
         receipts: new Set(), authWindows: 0, pkceExchanges: 0, imports: 0, importRows: 0, writes: 0, failedWrites: 0,
@@ -64,6 +65,7 @@ let stage = 'launch', context;
       globalThis.fetch = async (input, options = {}) => {
         const url = new URL(typeof input === 'string' ? input : input.url);
         if (url.href === 'https://agentskills.media/data/discovery_index.json') return Response.json(bundled);
+        if (url.href === 'https://agentskills.media/data/trends.json') return Response.json(bundledTrends);
         if (url.protocol === 'chrome-extension:') return originalFetch(input, options);
         if (url.origin + '/api' !== api) throw new Error('external_network_blocked');
         const headers = new Headers(options.headers), method = options.method || 'GET';

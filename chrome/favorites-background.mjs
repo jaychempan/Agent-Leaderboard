@@ -10,7 +10,7 @@ async function catalog() {
     if (!response.ok) throw new Error('catalog_unavailable');
     const bundled = compactCatalog(await response.json());
     let cached;
-    try { if (local.catalogCache?.schema === 3) cached = compactCatalog(local.catalogCache); } catch { /* use bundled data */ }
+    try { if (local.catalogCache?.schema === 4) cached = compactCatalog(local.catalogCache); } catch { /* use bundled data */ }
     return prepareCatalog(cached && Date.parse(cached.meta.updated_at) >= Date.parse(bundled.meta.updated_at) ? cached : bundled);
   })().catch(error => { catalogTask = null; throw error; });
   return catalogTask;

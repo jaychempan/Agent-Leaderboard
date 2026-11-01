@@ -6,7 +6,7 @@
 
 ## 安装
 
-v1.7 云收藏版可先[下载 ZIP](https://agentskills.media/dist/Chrome.zip)，按下方步骤加载。[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf) 当前仍为 v1.6，商店更新需提交审核；商店旧版不包含本页的账号同步功能。
+v1.7 趋势与云收藏版可先[下载 ZIP](https://agentskills.media/dist/Chrome.zip)，按下方步骤加载。[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf) 当前仍为 v1.6，商店更新需提交审核；商店旧版不包含本页的趋势和账号同步功能。
 
 如需本地开发或手动加载，按以下步骤操作：
 
@@ -27,9 +27,9 @@ chrome/                  # 仅插件运行文件，可直接加载
 ├── service-worker.mjs / background.js
 ├── favorites-sync.mjs / favorites-background.mjs
 ├── panel.html/js/css
-├── core.mjs / i18n.mjs / install-prompt.mjs / taxonomy.mjs
+├── core.mjs / trends.mjs / i18n.mjs / install-prompt.mjs / taxonomy.mjs
 ├── help.html / help-en.html
-├── data/catalog.json
+├── data/catalog.json / trends.json
 ├── icons/               # Chrome 使用的 PNG 图标
 └── LICENSE
 scripts/chrome/          # 构建、图标导出、官网截图脚本
@@ -58,9 +58,17 @@ artifacts/extension/    # 本地测试截图和检查结果（不提交 Git）
 - **独立标签页**：地址栏搜索或右键搜索回退可使用独立标签页，宽屏使用双列结果。底部网站链接跳转到当前榜单。
 - **主题**：默认跟随系统明暗模式，并在系统切换时自动更新。点击搜索栏右侧的主题按钮，依次切换“跟随系统 → 浅色 → 深色”；手动模式不随系统变化，再次切回“跟随系统”即可恢复自动。选择会记住并同步到其他插件页面。
 
+## 趋势榜（v1.7）
+
+点击“趋势”，在五个来源之间切换，选择日榜 / 周榜 / 月榜，按增长率或新增 Stars 查看前 20 名。顶部搜索可缩小当前趋势列表；发现页的分类、用途和高级筛选不会影响趋势。仓库仍可收藏、查看详情和复制安装提示。
+
+插件与官网使用同一份历史快照和排序规则：新增 Stars 为期末减期初，增长率为增量除以期初 Stars。概览中的净增包含下降项目；榜单只列正增长，期初为零的项目不参与增长率排序。显示实际观测起止日期，缺少历史时明确提示，不能将缺失数据当作零增长。这些数字反映站内观测变化，并非 GitHub 实时新增。
+
+内置目录和趋势可以离线查看。更新时核对每个来源的采集时间，避免将不同日期的目录 Stars 和历史增量混算。JSON 更新只刷新数据；已手动安装旧版 v1.7 的用户仍需下载新包、覆盖原文件夹并在扩展管理页重新加载。
+
 ## 数据与隐私
 
-构建会使用 `data/discovery_index.json` 生成完整精简快照。首次打开或距上次成功更新超过 24 小时时，从 `https://agentskills.media/data/discovery_index.json` 更新；也可手动点击“更新数据”。离线、请求失败、目录格式无效或远程目录更旧时保留已有数据。底部明确显示数据日期和状态。
+构建会使用 `data/discovery_index.json` 生成完整精简快照，并打包 `data/trends.json`。首次打开或距上次成功更新超过 24 小时时，从官网对应 JSON 地址更新目录和趋势；也可手动点击“更新数据”。趋势需要与每个来源的目录采集时间一致；离线、请求失败、格式无效、时间不匹配或远程目录更旧时保留已有可用快照。底部明确显示数据日期和状态。
 
 目录过大或浏览器存储空间不足时，本次联网数据仍可使用，但不能缓存；界面会提示，下次使用此前缓存或内置快照。未登录收藏和偏好保存在插件本地；主动登录后，收藏通过与官网相同的 Cloudflare Worker 和 D1 按 GitHub 账号保存。卸载删除插件本地数据，不删除已成功保存的云收藏。
 

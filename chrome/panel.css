@@ -164,3 +164,34 @@ footer { display:flex; align-items:center; justify-content:space-between; flex-s
 @media (min-width:650px) { #results { display:grid; grid-template-columns:1fr 1fr; column-gap:12px; align-items:start; } .filters { grid-template-columns:1fr 1fr 1fr 1fr auto; } .facet-row { max-width:620px; } .panel-page .search-area { max-height:45dvh; } }
 @media (max-width:340px) { header { padding-left:10px; padding-right:10px; } .search-area { padding-left:10px; padding-right:10px; } .result-toolbar,footer { padding-left:10px; padding-right:10px; } #results { padding:0 3px; } .repo { grid-template-columns:30px minmax(0,1fr) auto; column-gap:6px; padding-left:7px; padding-right:7px; } .repo::after { left:43px; } .meta { gap:5px; } }
 @media (prefers-reduced-motion:reduce) { .refreshing { animation:none; } }
+
+/* Rankings share repository cards; growth is the only added emphasis. */
+.view-switch { gap:6px; }
+.view-tabs { min-width:0; }
+.view-tabs button { padding:2px 9px; font-size:11px; white-space:nowrap; }
+.trends-view .sources { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.trend-controls { padding:9px 0 1px; }
+.trend-control-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.trend-periods { display:flex; gap:2px; padding:2px; border-radius:6px; background:var(--raised); }
+.trend-periods button { min-width:38px; min-height:27px; background:transparent; color:var(--muted); padding:3px 9px; font-size:11px; }
+.trend-periods button[aria-pressed="true"] { background:var(--surface); color:var(--text); font-weight:650; }
+.trend-sort-label { min-width:0; }
+#trend-sort { font-size:11px; min-height:30px; max-width:145px; background:var(--surface); }
+.trend-range { margin:8px 0 3px; color:var(--text); font-size:11px; font-variant-numeric:tabular-nums; }
+.trend-summary,.trend-method { margin:3px 0; color:var(--muted); font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+.trend-method { max-width:76ch; }
+.trend-repo { padding-top:9px; padding-bottom:9px; }
+.trend-metrics { grid-column:1/-1; grid-row:1; display:flex; align-items:baseline; gap:8px; margin-bottom:4px; min-width:0; }
+.trend-rank { min-width:32px; font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.trend-growth { display:flex; align-items:baseline; flex-wrap:wrap; gap:3px 9px; min-width:0; font-variant-numeric:tabular-nums; }
+.trend-primary { color:var(--blue); font-size:18px; font-weight:650; line-height:1.25; }
+.trend-secondary { color:var(--muted); font-size:11px; }
+.trend-repo .repo-mark { grid-row:2/5; }
+.trend-repo .repo-heading { grid-row:2; }
+.trend-repo .description { grid-row:3; }
+.trend-repo .meta,.trend-repo>details { grid-row:4; }
+.trend-repo>details[open] { grid-row:5; }
+@media (max-width:340px) { .view-tabs button { padding-left:7px; padding-right:7px; } .trend-rank { min-width:30px; } .trend-summary,.trend-method { font-size:10px; } }
+
+.trend-explainer { margin-top:5px; }
+.trend-explainer>summary { min-height:23px; font-size:10px; }

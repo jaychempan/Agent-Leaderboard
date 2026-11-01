@@ -20,11 +20,31 @@ test('merges duplicate repositories but preserves all categories and platforms',
 });
 test('keeps numeric GitHub IDs across source merging for account favorites', () => {
   const data = compactCatalog(payload([item('team/shared'), item('team/shared', {source_type:'mcp',source_id:123}), item('other/tool',{source_id:'bad'})]));
-  assert.equal(data.schema,3);
+  assert.equal(data.schema,4);
   const merged = prepareCatalog(data);
   assert.equal(merged[0].source_id,123);
   assert.equal(favoriteRecord(merged[0]).source_id,123);
   assert.equal(merged[1].source_id,null);
+});
+test('preserves exact per-source collection times from discovery and compact metadata without a global fallback', () => {
+  const skill = '2026-10-09T01:00:00.123456+00:00', mcp = '2026-10-09T02:00:00.654321+00:00';
+  const data = compactCatalog({...payload([item('team/tool')]), sources: {
+    skill: {meta: {updated_at: skill, unrelated: 'not cached'}}, mcp: {updated_at: mcp},
+    framework: {meta: {updated_at: 'invalid'}}, unknown: {meta: {updated_at: skill}},
+  }});
+  assert.deepEqual(data.sources, {skill: {updated_at: skill}, mcp: {updated_at: mcp}});
+  assert.deepEqual(compactCatalog(data), data);
+  assert.deepEqual(compactCatalog(payload([item('team/tool')])).sources, {});
+});
+test('source-scoped searches retain the selected source ID with its stars after cross-source merging', () => {
+  const data = prepareCatalog(compactCatalog(payload([
+    item('team/shared', {source_type: 'skill', source_id: 11, stars: 200}),
+    item('team/shared', {source_type: 'mcp', source_id: 22, stars: 900}),
+  ])));
+  assert.equal(searchCatalog(data, {source: 'skill'})[0].source_id, 11);
+  assert.equal(searchCatalog(data, {source: 'skill'})[0].stars, 200);
+  assert.equal(searchCatalog(data, {source: 'mcp'})[0].source_id, 22);
+  assert.equal(searchCatalog(data, {source: 'mcp'})[0].stars, 900);
 });
 test('keyword relevance precedes popularity; all words must match; Chinese supported', () => {
   assert.equal(searchCatalog(repos, {query: 'browser'})[0].full_name, 'team/browser');

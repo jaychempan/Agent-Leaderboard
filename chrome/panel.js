@@ -3,16 +3,18 @@ import {SOURCE_LABELS, INDEX_URL, DAY, compactCatalog, prepareCatalog, searchCat
 
 import {t, setLocale, getLocale, boardLabel, localizedCategory as categoryLabel, useLabel, bindStaticTranslations} from './i18n.mjs';
 import {installationPrompt} from './install-prompt.mjs';
+import {TRENDS_URL, compactTrends, rankTrends} from './trends.mjs';
 const translateStatic = bindStaticTranslations(document.documentElement);
 let statusKey = '正在读取离线快照', statusError = '';
 
 const $ = id => document.getElementById(id);
-const state = {query: '', source: '', category: '', useCases: [], maxDays: 0, platform: '', language: '', minStars: 0, sort: 'relevance', favoritesOnly: false};
+const state = {query: '', source: '', category: '', useCases: [], maxDays: 0, platform: '', language: '', minStars: 0, sort: 'relevance', favoritesOnly: false, trendsOnly: false, trendDays: 1, trendSort: 'rate'};
 let showAllUses = false;
 let themeMode = 'auto';
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
 const PAGE_SIZE = 30;
 let currentPage = 1, totalPages = 1;
+let trendCatalog, trends, trendStatusKey = '内置快照';
 let catalog, repos = [], favorites = {}, ready = false, refreshing = false, toastTimer, saveTimer;
 let accountSnapshot = null, accountBusy = false, accountPending = 0, accountInitialized = false, accountLastSync = 0;
 let windowId, pendingRequest, lastRequest;
@@ -64,7 +66,8 @@ function applyTheme() {
 }
 systemTheme.addEventListener('change', () => { if (themeMode === 'auto') applyTheme(); });
 function renderStatus() {
-  $('data-status').textContent = `${t(statusKey)}${catalog ? ' · ' + date(catalog.meta.updated_at) : ''}`;
+  const updatedAt = state.trendsOnly ? trendCatalog?.sources?.[state.source]?.updated_at : catalog?.meta.updated_at;
+  $('data-status').textContent = `${t(state.trendsOnly ? trendStatusKey : statusKey)}${updatedAt ? ' · ' + date(updatedAt) : ''}`;
   $('data-status').title = $('data-status').textContent + (statusError ? '\n' + t(statusError) : '');
 }
 function applyLocale(value) {
@@ -160,15 +163,27 @@ function update(resetPage = true) {
   $('platform').value = state.platform; $('language').value = state.language;
   $('min-stars').value = String(state.minStars); $('sort').value = state.sort;
   $('max-days').value = String(state.maxDays);
-  $('all').classList.toggle('active', !state.favoritesOnly);
+  if (state.trendsOnly && !Object.hasOwn(BOARDS, state.source)) state.source = 'skill';
+  document.body.classList.toggle('trends-view', state.trendsOnly);
+  $('trending').classList.toggle('active', state.trendsOnly);
+  $('trending').setAttribute('aria-pressed', String(state.trendsOnly));
+  $('all').classList.toggle('active', !state.favoritesOnly && !state.trendsOnly);
   $('favorites').classList.toggle('active', state.favoritesOnly);
-  $('all').setAttribute('aria-pressed', String(!state.favoritesOnly));
+  $('all').setAttribute('aria-pressed', String(!state.favoritesOnly && !state.trendsOnly));
   $('favorites').setAttribute('aria-pressed', String(state.favoritesOnly));
   $('favorite-count').textContent = number(Object.keys(favorites).length);
   renderAccount();
   const filterCount = [state.category, state.platform, state.language, state.minStars, state.maxDays].filter(Boolean).length + state.useCases.length;
   $('filter-count').textContent = filterCount ? `(${filterCount})` : '';
-  for (const button of $('sources').children) button.setAttribute('aria-pressed', String(button.dataset.source === state.source));
+  for (const button of $('sources').children) { button.setAttribute('aria-pressed', String(button.dataset.source === state.source)); button.hidden = state.trendsOnly && !button.dataset.source; }
+  $('filter-toggle').hidden = state.trendsOnly; $('discovery-facets').hidden = state.trendsOnly;
+  $('discovery-sort').hidden = state.trendsOnly; $('trend-controls').hidden = !state.trendsOnly;
+  if (state.trendsOnly) {
+    $('filters').hidden = true; $('filter-toggle').setAttribute('aria-expanded', 'false');
+    $('use-picker').hidden = true; $('active-filters').hidden = true;
+    renderTrends(); renderStatus(); persistState(); return;
+  }
+  $('empty-title').textContent = t('没有找到匹配的仓库'); $('clear-search').hidden = false; $('clear-search').textContent = t('清除搜索和筛选');
   const all = state.favoritesOnly ? includeFavorites(repos, favorites) : repos;
   renderFacets(all);
   renderActiveFilters();
@@ -192,13 +207,14 @@ function update(resetPage = true) {
   $('page-number').max = String(totalPages);
   $('page-total').textContent = number(totalPages);
   $('page-status').textContent = results.length ? t('第 {page} 页，共 {total} 页，显示第 {start} 至 {end} 个仓库', {page: currentPage, total: totalPages, start: start + 1, end: Math.min(start + PAGE_SIZE, results.length)}) : t('没有匹配的仓库');
-  persistState();
+  renderStatus(); persistState();
 }
 function chooseSource(source) {
-  state.source = source; state.category = ''; state.useCases = []; showAllUses = false;
+  state.source = state.trendsOnly && !source ? 'skill' : source; state.category = ''; state.useCases = []; showAllUses = false;
   $('use-search').value = '';
 }
 function toggleUse(useCase) {
+  state.trendsOnly = false; state.favoritesOnly = false;
   const focusedUse = document.activeElement?.dataset.use;
   state.useCases = state.useCases.includes(useCase) ? state.useCases.filter(value => value !== useCase) : [...state.useCases, useCase];
   update();
@@ -322,7 +338,7 @@ function renderRepo(repo) {
   if (category) {
     const button = el('button', '', categoryLabel(source, category));
     button.title = `${boardLabel(source)} / ${categoryLabel(source, category)}`;
-    button.addEventListener('click', () => { chooseSource(source); state.category = `${source}:${category}`; update(); });
+    button.addEventListener('click', () => { state.trendsOnly = false; state.favoritesOnly = false; chooseSource(source); state.category = `${source}:${category}`; update(); });
     quickTags.append(button);
   }
   for (const useCase of repo.use_cases.filter(value => value !== categoryLabel(source, category)).slice(0, 2)) {
@@ -349,6 +365,47 @@ function renderRepo(repo) {
   article.append(mark, heading, description, meta, details);
   return article;
 }
+function signed(value) { return `${value > 0 ? '+' : ''}${number(value)}`; }
+function percentage(value) { return Number.isFinite(value) ? `+${value.toLocaleString(getLocale(), {maximumFractionDigits: 1})}%` : '—'; }
+function renderTrends() {
+  for (const button of $('trend-periods').children) button.setAttribute('aria-pressed', String(Number(button.dataset.days) === state.trendDays));
+  $('trend-sort').value = state.trendSort;
+  const result = rankTrends(trendCatalog, trends, {source: state.source, days: state.trendDays, sort: state.trendSort, query: state.query});
+  const ranked = result.status === 'ready' ? result.ranked.slice(0, 20) : [];
+  $('results').replaceChildren(...ranked.map(({repo, delta, rate}, index) => {
+    const article = renderRepo(repo); article.classList.add('trend-repo');
+    article.dataset.trendDelta = String(delta); article.dataset.trendRate = Number.isFinite(rate) ? String(rate) : '';
+    const metrics = el('div', 'trend-metrics');
+    const rank = el('span', 'trend-rank', `#${index + 1}`); rank.setAttribute('aria-label', t('第 {rank} 名', {rank: index + 1}));
+    const growth = el('div', 'trend-growth');
+    growth.append(el('strong', 'trend-primary', state.trendSort === 'rate' ? percentage(rate) : signed(delta)),
+      el('span', 'trend-secondary', state.trendSort === 'rate' ? `${signed(delta)} Stars` : percentage(rate)));
+    growth.title = t('新增 {delta} Stars，增长率 {rate}', {delta: signed(delta), rate: percentage(rate)});
+    metrics.append(rank, growth); article.prepend(metrics); return article;
+  }));
+  $('results').setAttribute('aria-busy', 'false'); $('pagination').hidden = true;
+  $('result-count').textContent = result.status === 'ready' ? t('趋势前 {count} 名', {count: number(ranked.length)}) : t('暂无可用趋势');
+  $('trend-range').textContent = result.baselineAt && result.updatedAt ? `${result.baselineAt.slice(0, 10)} → ${result.updatedAt.slice(0, 10)} UTC` : '';
+  $('trend-summary').textContent = result.status === 'ready' ? t('本榜单 {count} 个可比仓库，{rising} 个上升，净增 {net} Stars',
+    {count: number(result.comparableCount), rising: number(result.risingCount), net: signed(result.net)}) : '';
+  $('trend-method').textContent = t('按每日快照比较 Stars，仅展示正增长；增长率不包含起点为 0 的仓库。快照可能沿用较早记录，并非 GitHub 实时事件。');
+  $('empty').hidden = ranked.length > 0;
+  const missing = result.status !== 'ready';
+  $('empty-title').textContent = t(result.status === 'missing_history' ? '还没有足够的历史快照' : result.status === 'mismatch' ? '趋势数据正在更新' : state.query.trim() ? '没有匹配的上升仓库' : '这段时间暂无上升仓库');
+  $('empty-hint').textContent = t(result.status === 'missing_history' ? '当前周期缺少历史记录，请换一个周期或稍后更新。' : result.status === 'mismatch' ? '目录和趋势快照时间不同，请更新数据后重试。' : '试试其他关键词、榜单或周期。');
+  $('clear-search').hidden = missing || !state.query.trim(); $('clear-search').textContent = t('清除搜索');
+  const website = new URL(websiteURL(state.source)); website.searchParams.set('trending', '1'); $('website').href = website.href;
+  $('website').textContent = t('官网趋势 ↗'); $('website').title = t('打开官网趋势榜');
+}
+function pairMatches(candidate, history) {
+  return Boolean(candidate && history && Object.keys(BOARDS).every(source => {
+    const current = candidate.sources?.[source]?.updated_at, baseline = history.sources?.[source]?.updated_at;
+    return typeof current === 'string' && Number.isFinite(Date.parse(current)) && current === baseline;
+  }));
+}
+function pairNotOlder(candidate, current) {
+  return !current || Object.keys(BOARDS).every(source => Date.parse(candidate.sources?.[source]?.updated_at) >= Date.parse(current.sources?.[source]?.updated_at));
+}
 function setCatalog(value, label) {
   catalog = value; repos = prepareCatalog(value);
   for (const [id, field, empty] of [['platform', 'platforms', '全部平台'], ['language', 'language', '全部语言']]) {
@@ -363,20 +420,23 @@ async function refresh() {
   if (refreshing) return;
   refreshing = true; $('refresh').disabled = true; $('refresh').classList.add('refreshing'); $('refresh').setAttribute('aria-label', t('正在更新数据'));
   try {
-    const response = await fetch(INDEX_URL, {cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(20000)});
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const next = compactCatalog(await response.json());
+    const [response, trendResponse] = await Promise.all([INDEX_URL, TRENDS_URL].map(url => fetch(url, {cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(20000)})));
+    if (!response.ok || !trendResponse.ok) throw new Error('暂时无法读取最新目录和趋势');
+    const [next, nextTrends] = await Promise.all([response.json().then(compactCatalog), trendResponse.json().then(compactTrends)]);
+    if (!pairMatches(next, nextTrends)) throw new Error('目录与趋势时间不一致，请稍后重试');
     if (catalog && Date.parse(next.meta.updated_at) < Date.parse(catalog.meta.updated_at)) throw new Error('远程目录比当前目录旧');
+    if (!pairNotOlder(next, trendCatalog)) throw new Error('远程趋势比当前快照旧');
     // Reserve local storage capacity for favorites; a large new catalog still works in this session.
     let cached = false;
-    if (new TextEncoder().encode(JSON.stringify(next)).length < 8 * 1024 * 1024) {
-      try { await chrome.storage.local.set({catalogCache: next, checkedAt: Date.now()}); cached = true; } catch { /* keep usable in memory */ }
+    if (new TextEncoder().encode(JSON.stringify({catalogCache: next, trendsCache: nextTrends})).length < 8 * 1024 * 1024) {
+      try { await chrome.storage.local.set({catalogCache: next, trendsCache: nextTrends, checkedAt: Date.now()}); cached = true; } catch { /* keep usable in memory */ }
     }
+    trendCatalog = next; trends = nextTrends; trendStatusKey = cached ? '已更新' : '已更新，未缓存';
     setCatalog(next, cached ? '已更新' : '已更新，未缓存');
     if (!cached) toast(t('目录已更新，但未能缓存；下次仍可使用原有离线数据'));
   } catch (error) {
     statusKey = catalog ? '更新失败，保留离线数据' : '目录读取失败，请重试更新';
-    statusError = error.message; renderStatus();
+    trendStatusKey = statusKey; statusError = error.message; renderStatus();
     if (!catalog) { $('result-count').textContent = t('暂无可用目录'); $('results').setAttribute('aria-busy', 'false'); }
   } finally { refreshing = false; $('refresh').disabled = false; $('refresh').classList.remove('refreshing'); $('refresh').setAttribute('aria-label', t('更新数据')); }
 }
@@ -385,7 +445,7 @@ function applyRequest(request) {
   if (!request || request.nonce === lastRequest) return;
   if (!ready) { pendingRequest = request; return; }
   lastRequest = request.nonce;
-  state.query = request.query; state.favoritesOnly = false; resetFilters(); update();
+  state.query = request.query; state.favoritesOnly = false; state.trendsOnly = false; resetFilters(); update();
   $('query').focus();
   chrome.storage.session.remove(`request:${windowId}`).catch(() => {});
 }
@@ -429,16 +489,20 @@ $('search-form').addEventListener('submit', event => { event.preventDefault(); s
 for (const [id, key] of [['platform', 'platform'], ['language', 'language'], ['min-stars', 'minStars'], ['max-days', 'maxDays'], ['sort', 'sort']]) {
   $(id).addEventListener('change', () => { state[key] = ['min-stars', 'max-days'].includes(id) ? Number($(id).value) : $(id).value; update(); });
 }
-for (const id of ['all', 'favorites']) $(id).addEventListener('click', () => {
-  state.favoritesOnly = id === 'favorites'; update();
+for (const id of ['all', 'favorites', 'trending']) $(id).addEventListener('click', () => {
+  state.favoritesOnly = id === 'favorites'; state.trendsOnly = id === 'trending';
+  if (state.trendsOnly) { showAllUses = false; if (!state.source) state.source = 'skill'; }
+  update();
   if(state.favoritesOnly && accountSnapshot?.user && !accountBusy) void accountAction('sync');
 });
+for (const button of $('trend-periods').children) button.addEventListener('click', () => { state.trendDays = Number(button.dataset.days); update(); });
+$('trend-sort').addEventListener('change', () => { state.trendSort = $('trend-sort').value; update(); });
 $('account-sign-in').addEventListener('click',()=>void accountAction('signIn'));
 $('account-sync').addEventListener('click',()=>void accountAction('sync'));
 $('account-sign-out').addEventListener('click',()=>void accountAction('signOut'));
 $('filter-toggle').addEventListener('click', () => { $('filters').hidden = !$('filters').hidden; $('filter-toggle').setAttribute('aria-expanded', String(!$('filters').hidden)); });
 $('reset').addEventListener('click', () => { resetFilters(); update(); });
-$('clear-search').addEventListener('click', () => { resetFilters(); state.query = ''; if (!Object.keys(favorites).length) state.favoritesOnly = false; update(); $('query').focus(); });
+$('clear-search').addEventListener('click', () => { if (!state.trendsOnly) resetFilters(); state.query = ''; if (!Object.keys(favorites).length) state.favoritesOnly = false; update(); $('query').focus(); });
 function goToPage(page) {
   if (!Number.isInteger(page)) { $('page-number').value = String(currentPage); return; }
   currentPage = Math.max(1, Math.min(totalPages, page));
@@ -467,9 +531,10 @@ document.addEventListener('keydown', event => {
 });
 
 async function init() {
-  const [local, session, currentWindow, snapshot] = await Promise.all([
+  const [local, session, currentWindow, snapshot, bundledTrends] = await Promise.all([
     chrome.storage.local.get(null), chrome.storage.session.get('viewState'), chrome.windows.getCurrent(),
     fetch(chrome.runtime.getURL('data/catalog.json')).then(r => r.json()).then(compactCatalog),
+    fetch(chrome.runtime.getURL('data/trends.json')).then(r => r.json()).then(compactTrends),
   ]);
   windowId = currentWindow.id;
   themeMode = ['light', 'dark'].includes(local.themeMode) ? local.themeMode : 'auto';
@@ -477,7 +542,11 @@ async function init() {
   favorites = Object.fromEntries(Object.entries(local).filter(([key]) => key.startsWith('favorite:')).map(([key, value]) => [key.slice(9), value]));
   if (session.viewState) for (const key of Object.keys(state)) if (typeof session.viewState[key] === typeof state[key]) state[key] = session.viewState[key];
   if (!Array.isArray(state.useCases)) state.useCases = [];
-  if (isStandalone) { state.query = (params.get('q') || '').slice(0, 500); state.favoritesOnly = false; resetFilters(); }
+  if (!Object.hasOwn(BOARDS, state.source) && state.source !== '') state.source = '';
+  if (![1, 7, 30].includes(state.trendDays)) state.trendDays = 1;
+  if (!['rate', 'delta'].includes(state.trendSort)) state.trendSort = 'rate';
+  if (state.trendsOnly) state.favoritesOnly = false;
+  if (isStandalone) { state.query = (params.get('q') || '').slice(0, 500); state.favoritesOnly = false; state.trendsOnly = false; resetFilters(); }
   if (isStandalone && params.has('filters')) {
     try {
       const view = JSON.parse(params.get('filters'));
@@ -490,8 +559,13 @@ async function init() {
       state.favoritesOnly = view.favoritesOnly === true;
     } catch { /* Ignore malformed optional view state. */ }
   }
-  let cached;
-  try { if (local.catalogCache?.schema === 3) cached = compactCatalog(local.catalogCache); } catch { /* use the bundled snapshot */ }
+  let cached, cachedTrends;
+  try { if ([3, 4].includes(local.catalogCache?.schema)) cached = compactCatalog(local.catalogCache); } catch { /* use the bundled snapshot */ }
+  try { if (local.trendsCache) cachedTrends = compactTrends(local.trendsCache); } catch { /* use the bundled trend pair */ }
+  trendCatalog = snapshot; trends = bundledTrends;
+  if (pairMatches(cached, cachedTrends) && pairNotOlder(cached, snapshot) && Date.parse(cached.meta.updated_at) >= Date.parse(snapshot.meta.updated_at)) {
+    trendCatalog = cached; trends = cachedTrends; trendStatusKey = '本地缓存';
+  }
   if(accountSnapshot) favorites=accountSnapshot.favorites;
   setCatalog(cached && Date.parse(cached.meta.updated_at) >= Date.parse(snapshot.meta.updated_at) ? cached : snapshot,
     cached && Date.parse(cached.meta.updated_at) >= Date.parse(snapshot.meta.updated_at) ? '本地缓存' : '内置快照');

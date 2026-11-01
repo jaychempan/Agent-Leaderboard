@@ -54,9 +54,11 @@
 
 ## Chrome 搜索插件
 
-可先下载 **[v1.7 云收藏版 ZIP](https://agentskills.media/dist/Chrome.zip)** 并加载已解压的扩展，或查看 [中英文展示与使用指南](https://agentskills.media/extension/)。**[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** 当前为 v1.6，v1.7 商店更新需审核。需要 Chrome 116 或更高版本。
+可先下载 **[v1.7 趋势与云收藏版 ZIP](https://agentskills.media/dist/Chrome.zip)** 并加载已解压的扩展，或查看 [中英文展示与使用指南](https://agentskills.media/extension/)。**[Chrome 应用商店](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** 当前为 v1.6，v1.7 商店更新需审核。需要 Chrome 116 或更高版本。
 
 在浏览器侧边栏搜索五大榜单，按分类、用途、平台、语言、Stars 和时间范围筛选，收藏项目、打开 README，并复制 AI 安装提示到编码助手。插件只生成提示，不会自动安装仓库。
+
+切换 **「趋势」**，可查看与官网一致的五大板块日榜、周榜和月榜前 20 名，按增长率或新增 Stars 排序。插件内置离线趋势快照，显示实际统计日期，并随目录一起更新。这些数字来自观测快照，并非 GitHub 实时事件；历史不足时会明确提示。
 
 支持选中文字右键搜索、地址栏 `agent` 搜索、`Ctrl+Shift+Y` / macOS `Command+Shift+Y` 快捷键，以及内置离线目录。未登录的收藏保存在当前 Chrome 配置中。v1.7 可在“收藏”页用 GitHub 登录，合并已有本地收藏，并与官网及其他设备共享已保存的收藏。登录后的操作需联网，失败会回滚。插件仅在 `chrome.storage.session` 保存八小时本站会话与账号缓存，重启浏览器或重载、升级插件后可能需要重新登录；D1 中的云收藏仍会保留。
 

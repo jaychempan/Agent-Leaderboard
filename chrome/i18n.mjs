@@ -3,6 +3,23 @@ let locale = 'zh-CN';
 export const getLocale = () => locale;
 export const setLocale = value => { locale = value === 'en' ? 'en' : 'zh-CN'; };
 export const MESSAGES_EN = {
+  '趋势':'Trending', '趋势时间和排序':'Trend period and sorting', '趋势周期':'Trend period', '趋势排序':'Trend sorting',
+  '日':'Day', '周':'Week', '月':'Month', '增长率':'Growth rate', '新增 Stars':'Stars gained',
+  '第 {rank} 名':'Rank {rank}', '趋势前 {count} 名':'Top {count} rising repositories', '暂无可用趋势':'Trends unavailable',
+  '本榜单 {count} 个可比仓库，{rising} 个上升，净增 {net} Stars':'Board: {count} comparable repositories, {rising} rising, {net} net stars',
+  '计算方法':'How trends are calculated',
+  '按每日快照比较 Stars，仅展示正增长；增长率不包含起点为 0 的仓库。快照可能沿用较早记录，并非 GitHub 实时事件。':'Daily star snapshots, positive growth only. Rate sorting excludes zero baselines. Snapshots may retain older records; these are observed changes, not live GitHub events.',
+  '新增 {delta} Stars，增长率 {rate}':'{delta} stars gained, {rate} growth',
+  '还没有足够的历史快照':'Not enough history yet', '趋势数据正在更新':'Trend snapshots are updating',
+  '没有匹配的上升仓库':'No matching rising repositories', '这段时间暂无上升仓库':'No rising repositories in this period',
+  '当前周期缺少历史记录，请换一个周期或稍后更新。':'This period has no baseline yet. Try another period or refresh later.',
+  '目录和趋势快照时间不同，请更新数据后重试。':'Catalog and trend snapshots differ. Refresh and try again.',
+  '试试其他关键词、榜单或周期。':'Try another query, board, or period.', '清除搜索':'Clear search',
+  '官网趋势 ↗':'Website trends ↗', '打开官网趋势榜':'Open website trends',
+  '暂时无法读取最新目录和趋势':'The latest catalog and trends could not be loaded',
+  '目录与趋势时间不一致，请稍后重试':'Catalog and trend timestamps differ. Try again later.',
+  '远程趋势比当前快照旧':'Remote trends are older than the current snapshot',
+
   '收藏账号':'Favorites account', '收藏随账号同步':'Sync favorites with your account',
   '本地收藏可合并到 GitHub 账号':'Merge local favorites with your GitHub account',
   'GitHub 登录':'Sign in with GitHub', '同步':'Sync', '退出':'Sign out', '其他':'Other',
