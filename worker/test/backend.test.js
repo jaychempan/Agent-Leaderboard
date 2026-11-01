@@ -6,6 +6,9 @@ import {createWorker, sanitizeRepository} from '../src/index.js';
 
 const origin = 'https://agentskills.media';
 const apiOrigin = 'https://agent-leaderboard-api.example.workers.dev';
+const extensionId = 'medjijlfgmfeldlelkidiickdcnbicaf';
+const extensionOrigin = `chrome-extension://${extensionId}`;
+const extensionCallback = `https://${extensionId}.chromiumapp.org/github`;
 const migrations = ['0001_initial.sql', '0002_cross_origin_login.sql'].map(name => readFileSync(new URL('../migrations/' + name, import.meta.url), 'utf8'));
 const random = () => Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('base64url');
 const hash = async value => Buffer.from(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))).toString('base64url');
@@ -38,7 +41,10 @@ function fixture(t, extras = {}, behavior = {}) {
   const worker = createWorker({now: () => time, fetch: async (url, options) => {
     calls.push({url, options});
     assert.equal(options.redirect, 'manual');
-    if (behavior.fetch) return behavior.fetch(url, options);
+    if (behavior.fetch) {
+      const response = await behavior.fetch(url, options);
+      if (response !== undefined) return response;
+    }
     if (url === 'https://github.com/login/oauth/access_token') {
       const body = new URLSearchParams(options.body);
       assert.equal(body.get('client_secret'), 'github-server-secret');
@@ -52,9 +58,10 @@ function fixture(t, extras = {}, behavior = {}) {
   const env = {DB, PUBLIC_ORIGIN: origin, API_ORIGIN: apiOrigin, GITHUB_CLIENT_ID: 'public-client-id',
     GITHUB_CLIENT_SECRET: 'github-server-secret', SESSION_SECRET: 'a-test-session-secret-of-at-least-32-bytes', ...extras};
   const handle = (path, options) => worker.fetch(new Request(apiOrigin + path, options), env);
-  async function begin(returnTo = '/') {
+  async function begin(returnTo = '/', client) {
     const verifier = random(), state = random(), challenge = await hash(verifier);
-    const response = await handle('/api/auth/github?' + new URLSearchParams({return_to: returnTo, client_challenge: challenge, client_state: state}));
+    const response = await handle('/api/auth/github?' + new URLSearchParams({return_to: returnTo, client_challenge: challenge, client_state: state,
+      ...(client ? {client} : {})}));
     assert.equal(response.status, 302);
     const url = new URL(response.headers.get('Location'));
     const binding = response.headers.getSetCookie().find(value => value.startsWith('__Host-agent_oauth='));
@@ -366,7 +373,7 @@ test('only the exact website Origin may make cross-site API calls; preflight is 
   const allowed = await check({}); assert.equal(allowed.status, 204);
   assert.equal(allowed.headers.get('Access-Control-Allow-Origin'), origin);
   assert.equal(allowed.headers.get('Access-Control-Allow-Credentials'), null);
-  assert.equal(allowed.headers.get('Access-Control-Allow-Headers'), 'Authorization, Content-Type, X-Favorites-User');
+  assert.equal(allowed.headers.get('Access-Control-Allow-Headers'), 'Authorization, Content-Type, X-Favorites-User, X-Favorites-Extension');
   for (const headers of [{Origin: 'https://evil.example'}, {'Access-Control-Request-Method': 'POST'}, {'Access-Control-Request-Headers': 'cookie'}, {'Access-Control-Request-Private-Network': 'true'}]) {
     assert.equal((await check(headers)).status, 403);
   }
@@ -393,6 +400,175 @@ test('same-origin local browser bootstrap may omit Origin; cross-origin and prod
   assert.equal((await read({'Sec-Fetch-Site': 'same-origin'}, {...f.env, API_ORIGIN: origin})).status, 403, 'HTTPS production gets no local exception');
   assert.equal((await f.worker.fetch(new Request(local + '/api/auth/logout', {method: 'POST', headers: {
     Authorization: `Bearer ${alice.token}`, 'X-Favorites-User': alice.id, 'Sec-Fetch-Site': 'same-origin'}}), env)).status, 403, 'write checks remain unchanged');
+});
+
+test('extension OAuth keeps the GitHub callback and PKCE while sharing account favorites with the website', async t => {
+  const f = fixture(t), attempt = await f.begin(extensionCallback, 'extension');
+  assert.equal(attempt.url.searchParams.get('redirect_uri'), apiOrigin + '/api/auth/github/callback');
+  assert.equal(f.env.DB.sqlite.prepare('SELECT return_to FROM oauth_states').get().return_to, extensionCallback);
+  const stolen = await f.handle('/api/auth/github/callback?' + new URLSearchParams({state: attempt.url.searchParams.get('state'), code: 'valid-code'}));
+  assert.equal(new URL(stolen.headers.get('Location')).origin, origin, 'unverified state never selects an extension redirect');
+  const callback = await f.complete(attempt), target = new URL(callback.headers.get('Location'));
+  assert.equal(target.origin + target.pathname, extensionCallback);
+  assert.equal(target.searchParams.get('login_state'), attempt.state);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM sessions').get().n, 0);
+  const exchange = verifier => f.handle('/api/auth/exchange', {method: 'POST', headers: {
+    'X-Favorites-Extension': extensionId, 'Content-Type': 'application/json'},
+    body: JSON.stringify({code: target.searchParams.get('login_code'), verifier, state: attempt.state})});
+  assert.equal((await exchange(random())).status, 400, 'native-client hint never bypasses the PKCE proof');
+  const response = await exchange(attempt.verifier), session = await response.json();
+  assert.equal(response.status, 200); assert.equal(response.headers.get('Access-Control-Allow-Origin'), null);
+  const account = {id: session.user.id, token: session.token};
+  const headers = {Authorization: `Bearer ${account.token}`, 'X-Favorites-User': account.id, 'X-Favorites-Extension': extensionId};
+  const saved = await f.handle('/api/favorites/101', {method: 'PUT', headers: {...headers, 'Content-Type': 'application/json'}, body: JSON.stringify({repository: repo()})});
+  assert.equal(saved.status, 200);
+  assert.deepEqual((await f.bootstrap(account)).data.favorites.map(item => item.repo_id), [101]);
+  await f.write('/api/favorites/202', account, 'PUT', {repository: repo(202)});
+  const extensionView = await f.handle('/api/bootstrap', {headers: {Origin: extensionOrigin, Authorization: `Bearer ${account.token}`}});
+  assert.equal(extensionView.headers.get('Access-Control-Allow-Origin'), extensionOrigin);
+  assert.deepEqual((await extensionView.json()).favorites.map(item => item.repo_id), [101, 202]);
+  assert.equal((await exchange(attempt.verifier)).status, 400, 'extension handoff is single use');
+  assert.ok(!callback.headers.get('Location').includes(account.token));
+  assert.equal((await f.handle('/api/auth/logout', {method: 'POST', headers})).status, 200);
+  assert.equal((await f.bootstrap(account)).data.user, null);
+});
+
+test('extension return destinations must match the exact production callback and are revalidated from D1', async t => {
+  const f = fixture(t), invalid = [
+    'https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.chromiumapp.org/github',
+    extensionCallback + '/extra', extensionCallback + '?x=1', extensionCallback + '#state',
+    extensionCallback.replace('https:', 'http:'), extensionCallback.replace('.org/', '.org:443/'),
+    extensionCallback.replace('.org/', '.org:8443/'), extensionCallback.replace('https://', 'https://user@'),
+    extensionCallback.replace('chromiumapp.org', 'chromiumapp.org.evil.example'),
+    extensionCallback.replace('/github', '/%67ithub'), '/#skills', '//evil.example/'
+  ];
+  for (const returnTo of invalid) {
+    const response = await f.handle('/api/auth/github?' + new URLSearchParams({client: 'extension', return_to: returnTo,
+      client_challenge: random(), client_state: random()}));
+    assert.equal(response.status, 400); assert.equal(response.headers.get('Location'), null);
+  }
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM oauth_states').get().n, 0);
+  const attempt = await f.begin(extensionCallback, 'extension');
+  f.env.DB.sqlite.prepare('UPDATE oauth_states SET return_to=?').run(invalid[0]);
+  const response = await f.complete(attempt);
+  assert.equal(response.headers.get('Location'), origin + '/?auth_error=invalid_state');
+  assert.equal(f.calls.length, 0, 'an invalid stored return destination never reaches GitHub');
+  const ordinary = await f.begin(extensionCallback), ordinaryResponse = await f.complete(ordinary);
+  assert.equal(new URL(ordinaryResponse.headers.get('Location')).origin, origin, 'website flow cannot select an absolute redirect');
+});
+
+test('extension request hints never authorize writes or override an untrusted explicit Origin', async t => {
+  const f = fixture(t), alice = await f.login(), bob = await f.login(2, 'bob');
+  const base = {Authorization: `Bearer ${alice.token}`, 'X-Favorites-User': alice.id, 'X-Favorites-Extension': extensionId};
+  const remove = headers => f.handle('/api/favorites/101', {method: 'DELETE', headers: {...base, ...headers}});
+  assert.equal((await remove({})).status, 200);
+  assert.equal((await remove({Authorization: ''})).status, 401);
+  assert.equal((await remove({'X-Favorites-User': ''})).status, 400);
+  assert.equal((await remove({'X-Favorites-User': bob.id})).status, 409);
+  for (const headers of [{Origin: 'null'}, {Origin: 'https://evil.example'},
+    {Origin: 'chrome-extension://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}, {'X-Favorites-Extension': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
+    {Origin: origin, 'X-Favorites-Extension': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}]) {
+    assert.equal((await remove(headers)).status, 403);
+  }
+  const missing = new Headers(base); missing.delete('X-Favorites-Extension');
+  assert.equal((await f.handle('/api/favorites/101', {method: 'DELETE', headers: missing})).status, 403);
+  const preflight = await f.handle('/api/favorites/resolve', {method: 'OPTIONS', headers: {Origin: extensionOrigin,
+    'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'authorization, content-type, x-favorites-user, x-favorites-extension'}});
+  assert.equal(preflight.status, 204); assert.equal(preflight.headers.get('Access-Control-Allow-Origin'), extensionOrigin);
+  assert.equal(preflight.headers.get('Access-Control-Allow-Credentials'), null);
+  assert.equal((await f.handle('/api/favorites/resolve', {method: 'OPTIONS', headers: {'X-Favorites-Extension': extensionId,
+    'Access-Control-Request-Method': 'POST'}})).status, 403, 'preflight still requires a trusted explicit Origin');
+});
+
+test('repository resolver requires the current account and returns only public numeric identity without credentials upstream', async t => {
+  const f = fixture(t, {}, {fetch: async url => url.startsWith('https://api.github.com/repos/')
+    ? Response.json({id: 555, full_name: 'new-owner/canonical', private: false, token: 'private-upstream-metadata'}) : undefined});
+  const alice = await f.login(), bob = await f.login(2, 'bob'), before = f.calls.length;
+  const forbidden = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'}, {'X-Favorites-User': bob.id});
+  assert.equal(forbidden.status, 409); assert.equal(f.calls.length, before);
+  assert.equal((await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'}, {Authorization: ''})).status, 401);
+  assert.equal(f.calls.length, before);
+  const response = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'});
+  assert.equal(response.status, 200); assert.equal(response.headers.get('Cache-Control'), 'no-store');
+  assert.deepEqual(await response.json(), {repo_id: 555, full_name: 'new-owner/canonical'});
+  const upstream = f.calls.at(-1);
+  assert.equal(upstream.url, 'https://api.github.com/repos/owner/tool');
+  assert.equal(upstream.options.method, 'GET'); assert.equal(upstream.options.redirect, 'manual');
+  assert.equal(upstream.options.headers['User-Agent'], 'Agent-Leaderboard');
+  assert.equal(upstream.options.headers.Authorization, undefined); assert.equal(upstream.options.headers.Cookie, undefined);
+  assert.doesNotMatch(JSON.stringify(upstream), /github-server-secret|github-access-token-never-persist/);
+  assert.equal(f.env.DB.sqlite.prepare('SELECT count(*) AS n FROM favorites').get().n, 0, 'resolution does not save or import a favorite');
+  f.advance(8 * 3600 + 1);
+  assert.equal((await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'})).status, 401);
+  assert.equal(f.calls.length, before + 1);
+});
+
+test('repository resolver rejects URL injection, invalid names, and bodies larger than 4 KiB before fetching', async t => {
+  const f = fixture(t), alice = await f.login(), before = f.calls.length;
+  for (const full_name of ['https://evil.example/x', '//evil.example/x', 'owner/../secret', 'owner/%2e%2e',
+    'owner/repo?token=secret', 'owner/repo#secret', 'owner/repo\\extra', 'owner/.', 'owner/..', 'owner/repo\n',
+    'user@evil/repo', 'owner:443/repo', null, {}, ['owner/repo']]) {
+    assert.equal((await f.write('/api/favorites/resolve', alice, 'POST', {full_name})).status, 400);
+  }
+  assert.equal((await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool', extra: 'x'.repeat(4096)})).status, 413);
+  assert.equal(f.calls.length, before);
+});
+
+test('repository resolver follows at most one allowlisted public GitHub repository redirect', async t => {
+  for (const location of ['https://api.github.com/repositories/555', '/repos/new-owner/canonical']) {
+    let cancelled = 0;
+    const f = fixture(t, {}, {fetch: async url => url === 'https://api.github.com/repos/owner/tool'
+      ? {status: 301, headers: new Headers({Location: location}), body: {async cancel() { cancelled++; }}}
+      : url === new URL(location, 'https://api.github.com').href ? Response.json({id: 555, full_name: 'new-owner/canonical', private: false}) : undefined});
+    const alice = await f.login(), before = f.calls.length;
+    const response = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'});
+    assert.equal(response.status, 200); assert.deepEqual(await response.json(), {repo_id: 555, full_name: 'new-owner/canonical'});
+    assert.equal(cancelled, 1); assert.equal(f.calls.length, before + 2);
+    for (const upstream of f.calls.slice(before)) {
+      assert.equal(upstream.options.redirect, 'manual'); assert.equal(upstream.options.headers.Authorization, undefined);
+    }
+  }
+});
+
+test('repository resolver blocks arbitrary hosts, credentials, paths, and redirect chains without exposing upstream details', async t => {
+  for (const location of ['https://evil.example/repositories/555', 'https://api.github.com.evil.example/repositories/555',
+    'http://api.github.com/repositories/555', 'https://secret@api.github.com/repositories/555',
+    'https://api.github.com:8443/repositories/555', '/user', '/repositories/0', '/repositories/9007199254740992',
+    '/repositories/555?access_token=secret', '/repositories/555#secret', '/repos/owner/%2e%2e', '/repos/owner/repo/extra']) {
+    const f = fixture(t, {}, {fetch: async url => url.startsWith('https://api.github.com/repos/')
+      ? new Response('sensitive-upstream-detail', {status: 302, headers: {Location: location}}) : undefined});
+    const alice = await f.login(), before = f.calls.length;
+    const response = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'});
+    assert.equal(response.status, 503); assert.deepEqual(await response.json(), {error: 'repository_unavailable'});
+    assert.equal(f.calls.length, before + 1, 'unsafe redirects are never requested');
+  }
+  const f = fixture(t, {}, {fetch: async url => /^https:\/\/api\.github\.com\/(repos|repositories)\//.test(url)
+    ? new Response('sensitive-upstream-detail', {status: 301, headers: {Location: '/repositories/555'}}) : undefined});
+  const alice = await f.login(), before = f.calls.length;
+  const response = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'});
+  assert.equal(response.status, 503); assert.deepEqual(await response.json(), {error: 'repository_unavailable'});
+  assert.equal(f.calls.length, before + 2, 'a second redirect is rejected');
+});
+
+test('repository resolver uses fixed not-found/unavailable errors and does not retry rate limits or aborts', async t => {
+  const responses = [
+    [() => new Response('sensitive-upstream-detail', {status: 404}), 404, 'repository_not_found'],
+    [() => new Response('sensitive-upstream-detail', {status: 403}), 503, 'repository_unavailable'],
+    [() => new Response('sensitive-upstream-detail', {status: 429, headers: {'Retry-After': '60'}}), 503, 'repository_unavailable'],
+    [() => new Response('sensitive-upstream-detail', {status: 500}), 503, 'repository_unavailable'],
+    [() => new Response('sensitive-upstream-detail'), 503, 'repository_unavailable'],
+    [() => Response.json({id: 0, full_name: 'owner/tool'}), 503, 'repository_unavailable'],
+    [() => Response.json({id: 555, full_name: 'https://evil.example'}), 503, 'repository_unavailable'],
+    [() => Response.json({id: 555, full_name: 'owner/tool', private: true}), 404, 'repository_not_found'],
+    [() => { throw new DOMException('sensitive-upstream-detail', 'AbortError'); }, 503, 'repository_unavailable']
+  ];
+  for (const [result, status, code] of responses) {
+    const f = fixture(t, {}, {fetch: async url => url.startsWith('https://api.github.com/repos/') ? result() : undefined});
+    const alice = await f.login(), before = f.calls.length;
+    const response = await f.write('/api/favorites/resolve', alice, 'POST', {full_name: 'owner/tool'});
+    assert.equal(response.status, status); assert.deepEqual(await response.json(), {error: code});
+    assert.equal(f.calls.length, before + 1);
+  }
 });
 
 test('logout revokes the current session immediately, without deleting favorites', async t => {

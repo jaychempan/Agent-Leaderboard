@@ -21,6 +21,11 @@
         <div class="header-actions"><button id="theme" class="icon" title="切换明暗主题" aria-label="切换明暗主题"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.5 8.5 0 0 1 9.8 4a8.5 8.5 0 1 0 10.2 10.2Z"/></svg></button><button id="locale-toggle" class="icon" title="Switch to English" aria-label="Switch to English">EN</button></div>
         </div>
         <div class="view-switch" role="group" aria-label="查看范围"><div class="view-tabs"><button id="all" class="active" aria-pressed="true">发现</button><button id="favorites" aria-pressed="false">收藏 <span id="favorite-count">0</span></button></div><button id="filter-toggle" aria-expanded="false" aria-controls="filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>筛选 <span id="filter-count"></span></button></div>
+        <section id="favorites-account" class="favorites-account" aria-label="收藏账号" hidden>
+          <div class="account-copy"><strong id="account-user">收藏随账号同步</strong><p id="account-status" role="status" aria-live="polite">本地收藏可合并到 GitHub 账号</p></div>
+          <div class="account-actions"><button id="account-sign-in">GitHub 登录</button><button id="account-sync" hidden>同步</button><button id="account-sign-out" hidden>退出</button></div>
+          <p id="account-message" role="alert" hidden></p>
+        </section>
         <div id="sources" class="sources" role="group" aria-label="榜单"></div>
         <div class="facet-row">
           <label class="quick-category" for="category"><span class="sr-only">分类</span><select id="category"><option value="">全部分类</option></select></label>

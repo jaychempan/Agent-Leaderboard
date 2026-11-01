@@ -1,10 +1,10 @@
-# GitHub 登录与网站云收藏部署
+# GitHub 登录与官网、插件云收藏部署
 
 更新日期：2026-11-01。
 
 网站继续由 GitHub Pages 托管，DNS 保留在腾讯云。登录与收藏使用独立 `workers.dev` 地址的 Cloudflare Worker 和 D1 数据库，不需要迁移域名或更改现有 DNS。这个结构参考了 [CCFDDL 的公开实现](https://github.com/ccfddl/ccf-deadlines/tree/main/worker)，并适配独立 API 地址。
 
-GitHub 只确认登录身份，站内收藏不会自动给 GitHub 仓库点 Star。Chrome 插件仍使用自己的本地收藏，不接入网站账号。
+GitHub 只确认登录身份，站内收藏不会自动给 GitHub 仓库点 Star。v1.7 Chrome 插件复用同一 GitHub 账号、Worker 和 D1；在插件“收藏”页主动登录后，与官网共享云收藏。官网与插件各自持有独立会话，未登录时仍使用各自的本地收藏。
 
 **代码和模拟测试通过不代表真实登录已开通。** 正式启用需要自有 GitHub 应用（GitHub App 或 OAuth App）、Worker secrets、D1 迁移和部署，最后验证真实登录及跨设备恢复。API 未部署或认证未配置时，网站仍可使用本地收藏。
 
@@ -74,7 +74,7 @@ window.FAVORITES_CONFIG = {
 };
 ```
 
-Worker 只允许 `PUBLIC_ORIGIN` 精确匹配的网页来源。CORS 允许必要的方法和请求头，不发送跨站 Cookie。`github.io` 备用站点不在生产允许来源中；云收藏请使用 `https://agentskills.media/`。不要改成允许任意来源。
+Worker 只允许 `PUBLIC_ORIGIN` 精确匹配的网页来源，以及正式扩展 `chrome-extension://medjijlfgmfeldlelkidiickdcnbicaf`。CORS 允许必要的方法和请求头，不发送跨站 Cookie。`github.io` 备用站点不在生产允许来源中；云收藏请使用 `https://agentskills.media/`。不要改成允许任意来源。
 
 登录会先整页跳转到 API，再进入 GitHub。Worker 使用自己的 OAuth state、PKCE 和 API 域名下的短期 HttpOnly 校验 Cookie。登录完成后，浏览器收到绑定自身 PKCE 校验的一次性短期交换码；前端立即清理地址，再用校验值换取本站会话。**GitHub 令牌和本站会话令牌不会放进网址。**
 
@@ -82,7 +82,17 @@ Worker 只允许 `PUBLIC_ORIGIN` 精确匹配的网页来源。CORS 允许必要
 
 本地测试可用未提交的 `.dev.vars`，并将 `PUBLIC_ORIGIN`、`API_ORIGIN` 和 GitHub 应用回调改为实际测试地址；本地允许 localhost HTTP，生产使用 HTTPS。建议测试与生产使用不同 GitHub 应用。
 
-## 4. 测试并部署
+## 4. Chrome 插件接入
+
+v1.7 在“收藏”页提供 GitHub 登录。扩展通过 `chrome.identity.launchWebAuthFlow` 打开同一个 Worker 登录入口，以 PKCE 和一次性交换码换取本站会话。GitHub 应用 callback 保持上面的 Worker 地址；Chrome 最终回跳严格固定为 `https://medjijlfgmfeldlelkidiickdcnbicaf.chromiumapp.org/github`，无需用户另建 GitHub 应用或增加 callback。
+
+扩展仅在 `chrome.storage.session` 保存短期校验数据、最长八小时的本站会话和当前账号缓存；GitHub token 不进入扩展，也不在持久本地存储保存账号令牌或账号收藏镜像。浏览器重启或扩展重载、禁用、更新后可能需要重新登录。后台与插件页面通过同一会话协调收藏，不依赖页面读取官网 Cookie。
+
+首次登录合并原插件本地收藏，按稳定仓库 ID 和导入回执去重。缺少 ID 的旧收藏由 Worker 查询 GitHub 公开仓库元数据解析名称和 ID，不增加仓库 scope；无法解析时继续留在本地并显示待导入数量，不能静默丢弃。本地导入去重记录可能包含原本地收藏快照、归属账号和分批导入/清理回执，并可能在退出后保留；这与仅在会话内缓存的账号云收藏列表不同。登录后的写操作在线保存，失败回滚，不排队离线写入。退出撤销当前插件会话，保留 D1 云收藏。实现与权限细节见 [插件说明](chrome-extension.md)。
+
+发布时先验证真实 GitHub 登录、官网与插件双向添加/取消和另一账号隔离，再打包 v1.7。商店 v1.6 不具备此功能；v1.7 ZIP 可独立发布，商店升级仍需提交审核。
+
+## 5. 测试并部署
 
 在 `worker/` 中运行：
 
@@ -105,12 +115,12 @@ node tests/favorites-browser.cjs
 
 真实上线验收应包含 GitHub 登录和取消授权、刷新后会话恢复、首次合并已有本地收藏、另一设备登录恢复、添加与取消收藏、请求失败回滚、退出后云端仍保留，以及两个账号之间不能读写对方收藏。也需在实际使用地区确认 `workers.dev` API 可以访问。没有通过真实登录检查前，不应将云收藏标为已上线。
 
-## 5. 收藏行为与删除
+## 6. 收藏行为与删除
 
 - 未登录时，收藏保存在当前来源的浏览器存储。旧 `st_favorites` 会迁移并保留备份；仓库资料暂缺时仍保留其 ID。
 - 首次登录将此浏览器已有的本地收藏合并到账号。导入只插入缺失记录，避免覆盖账号已有资料；失败时保留本地记录供重试，不把其他账号缓存当作导入来源。
 - 登录后添加和取消收藏通过在线 API 保存。失败会恢复界面并提示重试，不承诺后台排队上传离线修改。
-- 换设备登录同一 GitHub 账号可恢复已成功保存的收藏；保存的公开仓库快照可展示已离开榜单的仓库。
+- 官网、v1.7 插件或另一设备登录同一 GitHub 账号可恢复已成功保存的收藏；保存的公开仓库快照可展示已离开榜单的仓库。账号列表在同步时读取，不承诺实时推送。
 - 取消收藏会删除 D1 中该账号对应的记录。退出仅撤销当前会话并清除当前标签页的会话，不删除云收藏。账号收藏仅保留在页面内存与 D1，重新打开需要联网读取；`localStorage` 只保留匿名收藏、旧数据备份和首次导入记录。
 - 需要永久删除站内账号和全部云数据时，联系维护者。撤销 GitHub 应用授权不等于删除站点数据；不要把密码、令牌或收藏明细发到公开 Issue。
 

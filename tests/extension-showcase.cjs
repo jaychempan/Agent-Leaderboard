@@ -176,15 +176,16 @@ async function checkMenuResize(page,header,buttonSelector,navSelector,breakpoint
   assert.equal(await page.locator('.nav-extension').getAttribute('href'),storeURL);
   assert.equal(await page.locator('.nav-extension').getAttribute('target'),'_blank');
   await page.locator('#siteAnnouncement a').click();
-  await page.waitForURL('**/extension/');
+  await page.waitForURL('**/extension/#updates');
   assert.equal(await page.locator('html').getAttribute('lang'),'zh-CN');
   for(const locale of ['zh','en']){
    if(locale==='en')await page.locator('#language').click();
-   for(const selector of ['.hero-actions .primary','.store-install']){
-    assert.equal(await page.locator(selector).getAttribute('href'),storeURL);
-    assert.equal(await page.locator(selector).getAttribute('target'),'_blank');
-    assert.equal(await page.locator(selector).innerText(),locale==='zh'?'添加至 Chrome':'Add to Chrome');
-   }
+   const download=page.locator('.hero-actions .primary');
+   assert.equal(await download.getAttribute('href'),'../dist/Chrome.zip');
+   assert.equal(await download.innerText(),locale==='zh'?'下载 v1.7 ZIP':'Download v1.7 ZIP');
+   assert.equal(await page.locator('.store-install').getAttribute('href'),storeURL);
+   assert.equal(await page.locator('.store-install').getAttribute('target'),'_blank');
+   assert.match(await page.locator('.store-install').innerText(),/v1\.6/);
    assert.equal(await page.locator('.store-steps li').count(),3);
    assert.equal(await page.locator('body').innerText().then(text=>/not yet listed|尚未上架/.test(text)),false);
   }

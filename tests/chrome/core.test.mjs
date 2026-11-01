@@ -18,6 +18,14 @@ test('merges duplicate repositories but preserves all categories and platforms',
   assert.deepEqual(repos[0].platforms, ['codex', 'claude']);
   assert.equal(repos[0].stars, 300);
 });
+test('keeps numeric GitHub IDs across source merging for account favorites', () => {
+  const data = compactCatalog(payload([item('team/shared'), item('team/shared', {source_type:'mcp',source_id:123}), item('other/tool',{source_id:'bad'})]));
+  assert.equal(data.schema,3);
+  const merged = prepareCatalog(data);
+  assert.equal(merged[0].source_id,123);
+  assert.equal(favoriteRecord(merged[0]).source_id,123);
+  assert.equal(merged[1].source_id,null);
+});
 test('keyword relevance precedes popularity; all words must match; Chinese supported', () => {
   assert.equal(searchCatalog(repos, {query: 'browser'})[0].full_name, 'team/browser');
   assert.equal(searchCatalog(repos, {query: 'browser', sort: 'stars'})[0].full_name, 'other/tool');

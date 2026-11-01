@@ -14,6 +14,7 @@ const systemTheme = matchMedia('(prefers-color-scheme: dark)');
 const PAGE_SIZE = 30;
 let currentPage = 1, totalPages = 1;
 let catalog, repos = [], favorites = {}, ready = false, refreshing = false, toastTimer, saveTimer;
+let accountSnapshot = null, accountBusy = false, accountPending = 0, accountInitialized = false, accountLastSync = 0;
 let windowId, pendingRequest, lastRequest;
 const params = new URLSearchParams(location.search);
 const isStandalone = params.has('q');
@@ -90,6 +91,64 @@ function toast(text) {
   clearTimeout(toastTimer); $('toast').textContent = text; $('toast').hidden = false;
   toastTimer = setTimeout(() => { $('toast').hidden = true; }, 4000);
 }
+const accountErrors = {
+  auth_failed:'GitHub 登录未完成，请重试', invalid_state:'登录校验已失效，请重新登录',
+  access_denied:'GitHub 授权已取消', oauth_client_configuration:'GitHub 登录配置暂不可用，请联系维护者',
+  oauth_redirect_configuration:'GitHub 登录配置暂不可用，请联系维护者',
+  oauth_code_rejected:'本次授权已失效，请重新登录', oauth_email_unverified:'请先验证 GitHub 主邮箱，再登录',
+  oauth_token_unavailable:'暂时无法连接 GitHub，请稍后重试', oauth_identity_unavailable:'暂时无法读取 GitHub 账号，请稍后重试',
+  oauth_identity_invalid:'无法确认 GitHub 账号，请联系维护者', oauth_storage_unavailable:'登录暂时无法保存，请稍后重试',
+  storage_unavailable:'浏览器暂时无法保存数据，请重试', account_changed:'账号已变化，请重新同步收藏',
+  authentication_required:'登录已过期，请重新登录', network_failed:'暂时无法连接，收藏修改未保存',
+  save_failed:'收藏修改未保存，请联网后重试', local_import_failed:'部分本地收藏尚未导入，请重试同步',
+};
+function accountMessage(error) { return t(accountErrors[error] || '暂时无法同步收藏，请稍后重试'); }
+function renderAccount() {
+  const container=$('favorites-account'); container.hidden=!state.favoritesOnly;
+  const snapshot=accountSnapshot, user=snapshot?.user;
+  const busy=accountBusy || ['initializing','syncing'].includes(snapshot?.status);
+  container.dataset.state=snapshot?.status || 'local';
+  $('account-user').textContent=user ? user.login : t('收藏随账号同步');
+  let status='本地收藏可合并到 GitHub 账号';
+  if(busy) status=accountBusy ? '正在处理账号操作…' : '正在同步收藏…';
+  else if(user) status=(snapshot.localOnlyCount || snapshot.pendingImportCount) ? '部分收藏仅保存在本机' : snapshot.status==='synced' ? '已与官网同步' : snapshot.status==='offline' ? '离线显示上次同步的收藏' : '请同步以获取最新收藏';
+  $('account-status').textContent=t(status);
+  $('account-sign-in').hidden=Boolean(user);
+  for(const id of ['account-sync','account-sign-out']) $(id).hidden=!user;
+  for(const id of ['account-sign-in','account-sync','account-sign-out']) $(id).disabled=busy;
+  let message='';
+  if(snapshot?.error) message=accountMessage(snapshot.error);
+  const pendingCount=(snapshot?.localOnlyCount || 0)+(snapshot?.pendingImportCount || 0);
+  if(user && pendingCount) message += (message ? ' ' : '') + t('{count} 条旧收藏待同步，仍保留在本机',{count:number(pendingCount)});
+  $('account-message').textContent=message; $('account-message').hidden=!message;
+}
+function applyAccountSnapshot(snapshot) {
+  if(!snapshot || typeof snapshot.favorites!=='object' || !snapshot.favorites) return;
+  accountSnapshot=snapshot; accountInitialized=true; favorites=snapshot.favorites;
+  if(snapshot.status==='synced') accountLastSync=Date.now();
+  if(ready) update(false); else renderAccount();
+}
+async function accountAction(method,repository) {
+  if(accountBusy && !['snapshot','toggle'].includes(method)) return;
+  if(method!=='snapshot') { accountPending+=1; accountBusy=true; }
+  renderAccount();
+  try {
+    const response=await chrome.runtime.sendMessage({type:'favorites:'+method,...(repository?{repository}:{})});
+    if(response?.snapshot) applyAccountSnapshot(response.snapshot);
+    if(!response?.ok && method!=='snapshot') toast(accountMessage(response?.snapshot?.error));
+  } catch {
+    if(method!=='snapshot') toast(t('收藏服务暂不可用，请重新加载插件'));
+  } finally {
+    if(method!=='snapshot') accountPending=Math.max(0,accountPending-1);
+    accountBusy=accountPending>0; renderAccount();
+  }
+}
+chrome.runtime.onMessage.addListener((message,sender)=>{
+  if(sender.id===chrome.runtime.id && message?.type==='favorites:changed') applyAccountSnapshot(message.snapshot);
+});
+window.addEventListener('focus',()=>{
+  if(accountSnapshot?.user && !accountBusy && Date.now()-accountLastSync>30000) void accountAction('sync');
+});
 function persistState() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => chrome.storage.session.set({viewState: {...state}}).catch(() => toast(t('本次搜索条件未能保存'))), 150);
@@ -106,6 +165,7 @@ function update(resetPage = true) {
   $('all').setAttribute('aria-pressed', String(!state.favoritesOnly));
   $('favorites').setAttribute('aria-pressed', String(state.favoritesOnly));
   $('favorite-count').textContent = number(Object.keys(favorites).length);
+  renderAccount();
   const filterCount = [state.category, state.platform, state.language, state.minStars, state.maxDays].filter(Boolean).length + state.useCases.length;
   $('filter-count').textContent = filterCount ? `(${filterCount})` : '';
   for (const button of $('sources').children) button.setAttribute('aria-pressed', String(button.dataset.source === state.source));
@@ -199,31 +259,43 @@ function renderActiveFilters() {
   if (chips.length) add(t('清除全部'), resetFilters);
   $('active-filters').replaceChildren(...chips); $('active-filters').hidden = !chips.length;
 }
+function favoriteButton(repo) {
+  const name=repo.full_name || t('仓库 #{id}',{id:repo.source_id});
+  const saved=Boolean(favorites[repo.key]);
+  const button=el('button','save'); button.append(icon('M6 3h12v18l-6-4-6 4V3Z'));
+  button.title=t(saved?'取消收藏':'收藏仓库');
+  button.setAttribute('aria-label',`${t(saved?'取消收藏':'收藏')} ${name}`);
+  button.setAttribute('aria-pressed',String(saved));
+  button.addEventListener('click',async()=>{
+    button.disabled=true;
+    try { await accountAction('toggle',favoriteRecord(repo)); }
+    finally { button.disabled=false; }
+  });
+  return button;
+}
+function renderUnavailableFavorite(repo) {
+  const article=el('article','repo unavailable-favorite'); article.dataset.repo=repo.key;
+  const mark=el('span','repo-mark mark-other'); mark.title=t('其他');
+  mark.append(icon('M6 3h12v18l-6-4-6 4V3Z'),el('span','mark-label',t('其他')));
+  const heading=el('div','repo-heading');
+  heading.append(el('h2','',t('仓库 #{id}',{id:repo.source_id})),favoriteButton(repo));
+  article.append(mark,heading,el('p','description',t('仓库资料暂不可用，收藏记录仍已保留。')));
+  return article;
+}
 function renderRepo(repo) {
+  if(repo.placeholder || !repo.full_name) return renderUnavailableFavorite(repo);
   const article = el('article', 'repo'); article.dataset.repo = repo.key;
   const board = state.source || state.category.split(':')[0] || repo.sources[0];
-  const mark = el('span', `repo-mark mark-${board}`); mark.title = boardLabel(board);
-  mark.setAttribute('aria-label', boardLabel(board));
-  mark.append(icon(BOARD_ICONS[board]), el('span', 'mark-label', board === 'auto_research' && getLocale() === 'en' ? 'R&D' : boardShortLabel(board)));
+  const mark = el('span', `repo-mark mark-${board || 'other'}`); mark.title = board ? boardLabel(board) : t('其他');
+  mark.setAttribute('aria-label', mark.title);
+  mark.append(icon(BOARD_ICONS[board] || 'M6 3h12v18l-6-4-6 4V3Z'), el('span', 'mark-label', board ? (board === 'auto_research' && getLocale() === 'en' ? 'R&D' : boardShortLabel(board)) : t('其他')));
   const heading = el('div', 'repo-heading');
   const title = el('h2');
   const [owner, name] = repo.full_name.split('/');
   const repoLink = link('', repoURL(repo)); repoLink.className = 'repo-link'; repoLink.title = repo.full_name;
   repoLink.append(el('span', 'repo-name', name));
   title.append(repoLink);
-  const save = el('button', 'save'); save.append(icon('M6 3h12v18l-6-4-6 4V3Z'));
-  save.title = favorites[repo.key] ? t('取消收藏') : t('收藏仓库');
-  save.setAttribute('aria-label', `${favorites[repo.key] ? t('取消收藏') : t('收藏')} ${repo.full_name}`);
-  save.setAttribute('aria-pressed', String(Boolean(favorites[repo.key])));
-  save.addEventListener('click', async () => {
-    save.disabled = true;
-    try {
-      const key = `favorite:${repo.key}`;
-      if (favorites[repo.key]) await chrome.storage.local.remove(key);
-      else await chrome.storage.local.set({[key]: favoriteRecord(repo)});
-      // storage.onChanged updates every open panel without overwriting other favorites.
-    } catch { toast(t('收藏未能保存，请检查浏览器存储空间')); save.disabled = false; }
-  });
+  const save = favoriteButton(repo);
   const stars = el('span', 'stars', `★ ${number(repo.stars)}`);
   const copyInstall = async () => {
     try {
@@ -322,10 +394,13 @@ chrome.storage.onChanged.addListener((changes, area) => {
     let changed = false;
     for (const [key, value] of Object.entries(changes)) {
       if (!key.startsWith('favorite:')) continue;
-      if (value.newValue) favorites[key.slice(9)] = value.newValue;
-      else delete favorites[key.slice(9)];
+      if (!accountInitialized) {
+        if (value.newValue) favorites[key.slice(9)] = value.newValue;
+        else delete favorites[key.slice(9)];
+      }
       changed = true;
     }
+    if(changed && accountInitialized) void accountAction('snapshot');
     if (changes.themeMode) { themeMode = ['light', 'dark'].includes(changes.themeMode.newValue) ? changes.themeMode.newValue : 'auto'; applyTheme(); }
     if (changes.uiLocale) { applyLocale(changes.uiLocale.newValue); }
     else if (changed) update(false);
@@ -354,7 +429,13 @@ $('search-form').addEventListener('submit', event => { event.preventDefault(); s
 for (const [id, key] of [['platform', 'platform'], ['language', 'language'], ['min-stars', 'minStars'], ['max-days', 'maxDays'], ['sort', 'sort']]) {
   $(id).addEventListener('change', () => { state[key] = ['min-stars', 'max-days'].includes(id) ? Number($(id).value) : $(id).value; update(); });
 }
-for (const id of ['all', 'favorites']) $(id).addEventListener('click', () => { state.favoritesOnly = id === 'favorites'; update(); });
+for (const id of ['all', 'favorites']) $(id).addEventListener('click', () => {
+  state.favoritesOnly = id === 'favorites'; update();
+  if(state.favoritesOnly && accountSnapshot?.user && !accountBusy) void accountAction('sync');
+});
+$('account-sign-in').addEventListener('click',()=>void accountAction('signIn'));
+$('account-sync').addEventListener('click',()=>void accountAction('sync'));
+$('account-sign-out').addEventListener('click',()=>void accountAction('signOut'));
 $('filter-toggle').addEventListener('click', () => { $('filters').hidden = !$('filters').hidden; $('filter-toggle').setAttribute('aria-expanded', String(!$('filters').hidden)); });
 $('reset').addEventListener('click', () => { resetFilters(); update(); });
 $('clear-search').addEventListener('click', () => { resetFilters(); state.query = ''; if (!Object.keys(favorites).length) state.favoritesOnly = false; update(); $('query').focus(); });
@@ -387,7 +468,7 @@ document.addEventListener('keydown', event => {
 
 async function init() {
   const [local, session, currentWindow, snapshot] = await Promise.all([
-    chrome.storage.local.get(null), chrome.storage.session.get(null), chrome.windows.getCurrent(),
+    chrome.storage.local.get(null), chrome.storage.session.get('viewState'), chrome.windows.getCurrent(),
     fetch(chrome.runtime.getURL('data/catalog.json')).then(r => r.json()).then(compactCatalog),
   ]);
   windowId = currentWindow.id;
@@ -410,7 +491,8 @@ async function init() {
     } catch { /* Ignore malformed optional view state. */ }
   }
   let cached;
-  try { if (local.catalogCache?.schema === 2) cached = compactCatalog(local.catalogCache); } catch { /* use the bundled snapshot */ }
+  try { if (local.catalogCache?.schema === 3) cached = compactCatalog(local.catalogCache); } catch { /* use the bundled snapshot */ }
+  if(accountSnapshot) favorites=accountSnapshot.favorites;
   setCatalog(cached && Date.parse(cached.meta.updated_at) >= Date.parse(snapshot.meta.updated_at) ? cached : snapshot,
     cached && Date.parse(cached.meta.updated_at) >= Date.parse(snapshot.meta.updated_at) ? '本地缓存' : '内置快照');
   if (!isStandalone) {
@@ -419,6 +501,7 @@ async function init() {
     applyRequest(pendingRequest || requests[`request:${windowId}`]);
   }
   if (!local.checkedAt || Date.now() - local.checkedAt > DAY) refresh();
+  void accountAction('snapshot');
 }
 applyTheme();
 init().catch(error => {

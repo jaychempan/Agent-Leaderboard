@@ -18,6 +18,15 @@ svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.7;
 header { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px 8px; background:var(--surface); flex-shrink:0; }
 h1 { font-size:14px; line-height:1.4; margin:0; font-weight:650; letter-spacing:.1px; }
 .header-actions { display:flex; gap:2px; flex-shrink:0; }
+.favorites-account { display:flex; flex-wrap:wrap; align-items:center; gap:7px 10px; margin:7px 0 3px; padding:9px 10px; border:1px solid var(--line); border-radius:7px; background:var(--bg); }
+.account-copy { flex:1; min-width:120px; }
+.account-copy strong { display:block; font-size:12px; overflow-wrap:anywhere; }
+.account-copy p { margin:3px 0 0; color:var(--muted); font-size:11px; }
+.account-actions { display:flex; flex-wrap:wrap; gap:4px; }
+.account-actions button { font-size:11px; min-height:28px; padding:3px 7px; }
+#account-sign-in { background:var(--blue); color:var(--surface); }
+#account-message { flex:1 0 100%; color:var(--gold); margin:0; font-size:11px; line-height:1.5; overflow-wrap:anywhere; }
+.favorites-account[data-state="synced"] #account-status { color:var(--blue); }
 .search-row { display:flex; align-items:center; gap:6px; }
 #search-form { flex:1; min-width:0; }
 .icon { display:grid; place-items:center; background:transparent; padding:4px; min-width:28px; min-height:28px; color:var(--muted); }

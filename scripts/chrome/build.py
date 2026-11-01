@@ -11,10 +11,11 @@ CHROME = ROOT / 'chrome'
 RUNTIME_FILES = (
     'manifest.json', 'background.js', 'core.mjs', 'taxonomy.mjs',
     'panel.html', 'panel.js', 'panel.css', 'i18n.mjs', 'install-prompt.mjs',
+    'service-worker.mjs', 'favorites-background.mjs', 'favorites-sync.mjs',
     'help.html', 'help-en.html', 'data/catalog.json', 'LICENSE',
     'icons/icon-16.png', 'icons/icon-32.png', 'icons/icon-48.png', 'icons/icon-128.png',
 )
-FIELDS = 'full_name description source_type category categories stars language topics platforms use_cases updated_at'.split()
+FIELDS = 'source_id full_name description source_type category categories stars language topics platforms use_cases updated_at'.split()
 BOARDS = {
     'skill': ('data', 'skills'), 'mcp': ('mcp_data', 'mcp'),
     'prompt': ('prompts_data', 'prompts'), 'framework': ('frameworks_data', 'frameworks'),

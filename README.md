@@ -48,17 +48,17 @@ These are observed changes in the catalog, not real-time GitHub star events: inc
 
 ### GitHub sign-in and cloud favorites
 
-The website uses a small Cloudflare Worker on a separate `workers.dev` address and a D1 database for GitHub sign-in and account favorites. Existing local favorites are merged on first sign-in; signed-in additions and removals save through the online API. Failed requests restore the previous state and show a retry message. Signing out or clearing browser data keeps successfully saved cloud favorites. GitHub Stars are unchanged. The Chrome extension continues to store favorites locally and does not use website sign-in.
+The website uses a small Cloudflare Worker on a separate `workers.dev` address and a D1 database for GitHub sign-in and account favorites. Existing local favorites are merged on first sign-in; signed-in additions and removals save through the online API. Failed requests restore the previous state and show a retry message. Signing out or clearing browser data keeps successfully saved cloud favorites. GitHub Stars are unchanged. The v1.7 Chrome extension uses the same GitHub account and cloud favorites. Sign in separately in the website and the extension’s Favorites view; sessions stay separate.
 
 Local favorites work without the API. Real sign-in requires a Cloudflare account, a GitHub OAuth App, D1 migration and Worker deployment. DNS can remain with Tencent Cloud and the static site with GitHub Pages. GitHub credentials stay in Worker secrets; the browser stores only a short-lived site session in `sessionStorage`, with no GitHub token or session token in the URL. The session lasts up to eight hours; reopening a closed tab may require signing in again. See [deployment, privacy and verification steps](docs/github-favorites-setup.md). Code and mocked tests alone do not activate the production service.
 
 ## Chrome search extension
 
-Install from the **[Chrome Web Store](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)**, or visit the [bilingual showcase and usage guide](https://agentskills.media/extension/). Requires Chrome 116 or later.
+Download the **[v1.7 cloud-favorites ZIP](https://agentskills.media/dist/Chrome.zip)** and load it unpacked, or visit the [bilingual showcase and usage guide](https://agentskills.media/extension/). The **[Chrome Web Store](https://chromewebstore.google.com/detail/agent-leaderboard/medjijlfgmfeldlelkidiickdcnbicaf)** currently provides v1.6; the v1.7 store update requires review. Requires Chrome 116 or later.
 
 Search all five boards in a side panel with categories, use cases, platform, language, stars and time filters. Save favorites, open READMEs, and copy an AI installation prompt to paste into your coding assistant. The extension generates the prompt; it does not install repositories automatically.
 
-It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Extension favorites stay local to the current Chrome profile, separate from website favorites and its optional cloud sync.
+It also supports selected-text context-menu search, the `agent` address-bar keyword, `Ctrl+Shift+Y` / macOS `Command+Shift+Y`, and a bundled offline catalog. Anonymous favorites stay local to this Chrome profile. In v1.7, choose GitHub sign-in in Favorites to merge local favorites and share saved favorites with the website and other devices. Signed-in saves require the network; failed changes roll back. The extension keeps its eight-hour site session and account cache only in `chrome.storage.session`, so a browser restart or extension reload/update may require signing in again. Cloud favorites remain saved in D1.
 
 For development, load **`chrome/`** through `chrome://extensions` → **Developer mode** → **Load unpacked**. Refresh the bundled catalog and build `dist/Chrome.zip` with:
 

@@ -2,21 +2,21 @@ import {installationPrompt} from '../chrome/install-prompt.mjs';
 const zh = {
   viewFull:'查看高清大图', skip:'跳转到正文', navInstall:'下载安装', navGuide:'使用指南', navUpdates:'版本更新', relatedTools:'推荐工具',
   product:'Chrome 搜索助手', headline:'找 AI 工具，<br>就在浏览器侧边。',
-  intro:'把 Skills、MCP、Prompt、AI 框架和研究工具放进紧凑的侧边栏。找到项目后，复制安装提示，交给你自己的 AI 编程工具继续完成安装。',
-  get:'添加至 Chrome', source:'查看源码', compatibility:'Chrome 116+ · 免费开源 · 无需账号',
+  intro:'把 Skills、MCP、Prompt、AI 框架和研究工具放进紧凑的侧边栏。v1.7 可在“收藏”页用 GitHub 登录，与官网和其他设备共享已保存的仓库。',
+  get:'Chrome 商店 · v1.6', downloadHero:'下载 v1.7 ZIP', source:'查看源码', compatibility:'Chrome 116+ · 免费开源 · 可选 GitHub 同步',
   flowFind:'找到项目', flowCopy:'复制安装提示', flowUse:'交给 AI 编程工具',
-  new:'1.6 新增：每个仓库都能一键复制安装提示。', whatsNew:'查看更新',
-  caption:'插件真实界面，预览随本页语言和主题切换。',
+  new:'v1.7 云收藏版可先下载 ZIP；商店仍为 v1.6，新版需审核发布。', whatsNew:'查看更新',
+  caption:'搜索界面示例，v1.7 账号同步入口位于“收藏”页。预览随本页语言和主题切换。',
   featuresTitle:'整个工具目录，随手可查。', featuresIntro:'沿用官网五大榜单和分类，把常用操作留在当前网页旁。',
   f1Title:'带着需求找项目', f1:'搜索名称和用途，组合分类与筛选条件；也可以选中网页文字，直接通过右键菜单搜索。',
   f2Title:'接着交给 AI 安装', f2:'复制包含仓库和 README 地址的安装提示，让 AI 检查环境，按项目文档配置并验证结果。',
-  f3Title:'把想用的工具留下来', f3:'本地收藏感兴趣的仓库。每页 30 条，可直接跳转页码；完整简介与标签按需展开，列表保持紧凑。',
+  f3Title:'把想用的工具留下来', f3:'无需账号也可本地收藏；v1.7 用 GitHub 登录后可与官网共享。首次登录会合并已有本地收藏。',
   f4Title:'明暗、中英文、离线都可用', f4:'内置完整目录快照，断网仍可搜索。即时切换中英文，主题默认跟随系统，也可手动选择浅色或深色。',
-  installTitle:'把它放进你的侧边栏。', installIntro:'在桌面版 Chrome 中通过应用商店安装。点击“添加至 Chrome”并确认，即可将工具目录放进侧边栏。',
-  storeNote:'Chrome 会提示你确认安装。', manualInstall:'通过 ZIP 手动安装',
-  storeStep1Title:'打开 Chrome 应用商店', storeStep1:'点击本页的“添加至 Chrome”，进入插件的商店页面。',
-  storeStep2Title:'确认添加插件', storeStep2:'在商店中点击“添加至 Chrome”，再点击“添加扩展程序”确认安装。',
-  download:'下载 ZIP 安装包', downloadNote:'已包含图标和离线目录，无需安装构建工具。', sourceAlternative:'也可以直接加载源码中的 chrome/ 文件夹',
+  installTitle:'把它放进你的侧边栏。', installIntro:'体验 v1.7 云收藏，请下载 ZIP 并在桌面版 Chrome 加载。商店当前仍为 v1.6，新版需审核发布。',
+  storeNote:'商店版使用本地收藏；v1.7 审核发布后，商店安装的插件将自动更新。', manualInstall:'通过 ZIP 手动安装',
+  storeStep1Title:'下载并解压 v1.7', storeStep1:'下载 ZIP，解压到固定位置。插件使用期间，请保留这个文件夹。',
+  storeStep2Title:'在 Chrome 中加载', storeStep2:'打开 chrome://extensions，开启“开发者模式”，点击“加载已解压的扩展程序”，选择包含 manifest.json 的文件夹。',
+  download:'下载 ZIP 安装包', downloadNote:'v1.7 包含可选 GitHub 云收藏、图标和离线目录。解压后加载文件夹，无需构建工具。', sourceAlternative:'也可以直接加载源码中的 chrome/ 文件夹',
   step1Title:'解压，保留这个文件夹', step1:'将下载的 ZIP 解压到一个固定位置。插件使用期间，请保留该文件夹。',
   step2Title:'打开 Chrome 扩展管理页', copyAddress:'复制地址', step2:'将地址粘贴到新标签页，打开右上角的“开发者模式”。',
   step3Title:'加载已解压的扩展程序', step3:'点击“加载已解压的扩展程序”，选择包含 manifest.json 的文件夹。如果使用项目源码，选择其中的 chrome/ 文件夹。',
@@ -29,12 +29,12 @@ const zh = {
   copyPrompt:'复制示例安装提示', handoffNote:'复制操作不会安装软件，也不会自动发送给 AI 服务。粘贴到你自己的工具后再继续。', previewPrompt:'展开完整安装提示',
   shortcuts:'还有两种快捷入口', omnibox:'在 Chrome 地址栏输入，按 Tab，再输入搜索词。', shortcutText:'打开侧边栏。可在 chrome://extensions/shortcuts 修改。',
   faqTitle:'你可能还想知道。', q1:'目录内容会自动更新吗？', a1:'官网目录每日更新。插件打开时，如果距上次成功检查已超过 24 小时，会检查新版目录；也可手动刷新。断网或更新失败时继续使用本地缓存或内置快照，底部会显示实际数据日期。',
-  q2:'插件本身如何升级？', a2:'通过 Chrome 应用商店安装的插件会由 Chrome 自动更新。如果使用 ZIP 手动安装：下载新版 ZIP，解压后覆盖原插件文件夹中的文件，再到 chrome://extensions 点击 Agent Leaderboard 的“重新加载”。保留原文件夹，不要先卸载，这样本地收藏和设置会保留。目录刷新只更新数据，不会升级插件代码。',
+  q2:'插件本身如何升级？', a2:'商店新版本审核发布后，Chrome 会自动更新商店安装的插件。商店当前为 v1.6，可先用 ZIP 体验 v1.7。如果使用 ZIP 手动安装：下载新版 ZIP，解压后覆盖原插件文件夹中的文件，再到 chrome://extensions 点击 Agent Leaderboard 的“重新加载”。保留原文件夹，不要先卸载，这样本地收藏和设置会保留。目录刷新只更新数据，不会升级插件代码。',
   q3:'能和 ChatGPT 或其他插件一起用吗？', a3:'可以同时使用，再把安装提示粘贴到你选择的 AI 工具。本插件不读取它们的对话，也不对接其私有接口；接收提示的助手需要具备相应的工作区与命令执行能力，才能真正执行安装。',
-  q4:'搜索和收藏会上传吗？', a4:'插件无需账号。搜索在本地完成，收藏保存在当前 Chrome 配置中。插件没有统计追踪，不读取浏览历史、Cookie 或网页正文；插件收藏不会同步到官网或其他设备。官网的可选 GitHub 登录与云收藏是独立功能，卸载插件只会删除插件本地数据。',
+  q4:'搜索和收藏会上传吗？', a4:'搜索在本地完成，不上传搜索词。未登录时收藏保存在当前 Chrome 配置中；v1.7 主动选择 GitHub 登录后，会把收藏的仓库 ID 和公开资料发送到与官网相同的 Cloudflare 服务，同一账号可共享收藏。登录后的操作需联网，失败会回滚，不排队离线修改。退出或卸载保留已保存的云收藏。插件没有统计追踪，不读取浏览历史、Cookie 或网页正文。',
   q5:'所有仓库都能直接安装吗？', a5:'不一定，有些条目是合集、文档或提示词。目录平台标签根据关键词推断，不代表兼容性已验证。安装提示会要求 AI 先读官方文档，选择适当的使用方式，保留已有配置，并如实说明不支持的情况。',
-  updatesTitle:'版本更新', current:'当前版本', updateTitle:'找到工具后，再往前走一步。',
-  u1:'每个仓库旁新增复制安装提示按钮，“详情”中也可直接复制。', u2:'中英文提示包含仓库及 README 地址、环境识别、按文档安装与结果验证。', u3:'同时包含紧凑侧栏、五大榜单、多用途筛选、分页、本地收藏、离线搜索和跟随系统主题。',
+  updatesTitle:'版本更新', current:'ZIP 新版 · 商店更新需审核发布', updateTitle:'官网与插件，共用一份账号收藏。',
+  u1:'“收藏”页可选 GitHub 登录，与官网和其他设备共享已保存的仓库。', u2:'首次登录合并本地收藏；移出目录的仓库仍保留快照，在线保存失败会恢复原状态。', u3:'无需账号也可本地搜索和收藏。重启 Chrome 或更新插件后可能需要重新登录，已保存的云收藏不受影响。',
   fullDocs:'查看完整插件文档', back:'返回排行榜', feedback:'反馈问题', privacy:'隐私政策',
 };
 const entries = [...document.querySelectorAll('[data-copy]')].map(node => ({node, key:node.dataset.copy, en:node.innerHTML}));
@@ -53,7 +53,7 @@ function render() {
   document.getElementById('full-docs').href=isZh?'../chrome/help.html':'../chrome/help-en.html';
   document.getElementById('privacy-link').href=isZh?'../privacy/':'../privacy/en.html';
   document.title = isZh ? 'Chrome 搜索插件 · Agent Leaderboard' : 'Chrome extension · Agent Leaderboard';
-  document.querySelector('meta[name=description]').content = isZh ? '在 Chrome 侧边栏发现 Skills、MCP 和 AI 工具。从 Chrome 应用商店安装 Agent Leaderboard 插件，了解使用方法，并复制安装提示交给你的 AI 编程工具。' : 'Find Skills, MCP servers and AI tools in your Chrome side panel. Install Agent Leaderboard from the Chrome Web Store, learn the workflow, and copy installation prompts for your AI coding tool.';
+  document.querySelector('meta[name=description]').content = isZh ? '在 Chrome 侧边栏搜索 AI 工具，使用 GitHub 可选同步官网收藏。可先下载 v1.7 ZIP，Chrome 商店当前为 v1.6。' : 'Search AI tools in your Chrome side panel and optionally share favorites with the website using GitHub. Download the v1.7 ZIP; the Chrome Web Store currently provides v1.6.';
   document.getElementById('language').textContent = isZh ? 'EN' : '中';
   document.getElementById('language').setAttribute('aria-label',isZh?'Switch to English':'切换为中文');
   document.getElementById('theme').setAttribute('aria-label',isZh?`切换为${theme==='light'?'深色':'浅色'}主题`:`Switch to ${theme==='light'?'dark':'light'} theme`);

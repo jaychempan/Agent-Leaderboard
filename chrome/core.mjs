@@ -17,6 +17,7 @@ export function compactCatalog(payload) {
       throw new Error('目录包含无效仓库');
     }
     return {
+      source_id: Number.isSafeInteger(item.source_id) && item.source_id > 0 ? item.source_id : null,
       full_name: item.full_name, description: string(item.description), source_type: item.source_type,
       stars: Number.isFinite(item.stars) && item.stars >= 0 ? Math.floor(item.stars) : 0,
       language: string(item.language), updated_at: string(item.updated_at),
@@ -24,7 +25,7 @@ export function compactCatalog(payload) {
       topics: list(item.topics), platforms: list(item.platforms), use_cases: list(item.use_cases),
     };
   });
-  return {schema: 2, meta: {updated_at: payload.meta.updated_at, total: items.length}, items};
+  return {schema: 3, meta: {updated_at: payload.meta.updated_at, total: items.length}, items};
 }
 
 export function categoriesOf(item) {
@@ -43,6 +44,7 @@ export function prepareCatalog(catalog) {
       continue;
     }
     for (const field of ['topics', 'platforms', 'use_cases']) existing[field] = [...new Set([...existing[field], ...item[field]])];
+    if (!existing.source_id && item.source_id) existing.source_id = item.source_id;
     existing.sources = [...new Set([...existing.sources, item.source_type])];
     const previous = existing.facets[item.source_type];
     existing.facets[item.source_type] = previous ? {

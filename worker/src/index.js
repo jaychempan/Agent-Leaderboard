@@ -11,6 +11,9 @@ const TOKEN_ERRORS = new Map([
   ['unverified_user_email', 'oauth_email_unverified']
 ]);
 const FAVORITES_PAGE_SIZE = 500;
+const EXTENSION_IDS = new Set(['medjijlfgmfeldlelkidiickdcnbicaf']);
+const EXTENSION_ORIGINS = new Set([...EXTENSION_IDS].map(id => `chrome-extension://${id}`));
+const EXTENSION_CALLBACKS = new Set([...EXTENSION_IDS].map(id => `https://${id}.chromiumapp.org/github`));
 const SOURCE_NAMES = new Set(['skills', 'mcp', 'research', 'prompts', 'frameworks']);
 const encoder = new TextEncoder();
 const text = (value, limit) => typeof value === 'string' ? value.slice(0, limit) : '';
@@ -21,6 +24,9 @@ const idOf = value => {
 const strings = value => Array.isArray(value)
   ? [...new Set(value.filter(item => typeof item === 'string').map(item => item.slice(0, 100)))].slice(0, 24) : [];
 const isoDate = value => typeof value === 'string' && Number.isFinite(Date.parse(value)) ? new Date(value).toISOString() : '';
+const repositoryName = value => typeof value === 'string' && value.length <= 160
+  && /^[A-Za-z0-9-]{1,39}\/[A-Za-z0-9_.-]{1,100}$/.test(value)
+  && !['.', '..'].includes(value.split('/')[1]) ? value : '';
 
 export function sanitizeRepository(value, forcedId) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new ApiError(400, 'invalid_repository');
@@ -95,11 +101,21 @@ function safeReturnPath(value, origin) {
     return url.pathname + url.search + url.hash;
   } catch { return '/'; }
 }
-function assertPublicOrigin(request, origin) {
-  if (request.headers.get('Origin') !== origin) throw new ApiError(403, 'origin_rejected');
+function allowedOrigin(value, origin) {
+  return value === origin || EXTENSION_ORIGINS.has(value);
+}
+function extensionHint(request) {
+  return EXTENSION_IDS.has(request.headers.get('X-Favorites-Extension'));
+}
+function assertClientOrigin(request, origin) {
+  if (allowedOrigin(request.headers.get('Origin'), origin)) return;
+  // Native extension fetches can omit Origin. This hint is never authentication:
+  // writes still require the bearer/user check, and exchange still requires PKCE.
+  if (!request.headers.has('Origin') && extensionHint(request)) return;
+  throw new ApiError(403, 'origin_rejected');
 }
 function assertBootstrapOrigin(request, origin, apiOrigin) {
-  if (request.headers.get('Origin') === origin) return;
+  if (allowedOrigin(request.headers.get('Origin'), origin) || (!request.headers.has('Origin') && extensionHint(request))) return;
   // Same-origin browser GETs omit Origin. Permit only the local preview case,
   // with browser evidence of that same origin; production stays exact-Origin.
   const local = new URL(origin);
@@ -113,20 +129,22 @@ function assertBootstrapOrigin(request, origin, apiOrigin) {
 }
 function withCors(response, request, origin) {
   if (!response.headers.has('Vary')) response.headers.set('Vary', 'Origin');
-  if (request.headers.get('Origin') === origin) response.headers.set('Access-Control-Allow-Origin', origin);
+  const requested = request.headers.get('Origin');
+  if (allowedOrigin(requested, origin)) response.headers.set('Access-Control-Allow-Origin', requested);
   return response;
 }
 function preflight(request, url, origin) {
-  assertPublicOrigin(request, origin);
+  if (!request.headers.has('Origin')) throw new ApiError(403, 'origin_rejected');
+  assertClientOrigin(request, origin);
   const method = request.headers.get('Access-Control-Request-Method');
   const methods = url.pathname === '/api/health' || url.pathname === '/api/bootstrap' ? ['GET']
-    : ['/api/auth/exchange', '/api/auth/logout', '/api/favorites/import'].includes(url.pathname) ? ['POST']
+    : ['/api/auth/exchange', '/api/auth/logout', '/api/favorites/import', '/api/favorites/resolve'].includes(url.pathname) ? ['POST']
     : /^\/api\/favorites\/[1-9]\d{0,15}$/.test(url.pathname) ? ['PUT', 'DELETE'] : [];
   const requested = (request.headers.get('Access-Control-Request-Headers') || '').split(',').map(value => value.trim().toLowerCase()).filter(Boolean);
-  if (!methods.includes(method) || requested.some(value => !['authorization', 'content-type', 'x-favorites-user'].includes(value))
+  if (!methods.includes(method) || requested.some(value => !['authorization', 'content-type', 'x-favorites-user', 'x-favorites-extension'].includes(value))
       || request.headers.has('Access-Control-Request-Private-Network')) throw new ApiError(403, 'preflight_rejected');
   return new Response(null, {status: 204, headers: headers({'Access-Control-Allow-Methods': methods.join(', '),
-    'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Favorites-User',
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Favorites-User, X-Favorites-Extension',
     'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers'})});
 }
 async function readJSON(request, limit) {
@@ -169,6 +187,16 @@ function equal(a, b) {
   let result = 0;
   for (let i = 0; i < a.length; i++) result |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return result === 0;
+}
+function repositoryRedirect(location, current) {
+  if (typeof location !== 'string' || location.length > 500 || /[\\\u0000-\u0020\u007f]/.test(location)) return null;
+  try {
+    const url = new URL(location, current);
+    if (url.protocol !== 'https:' || url.hostname !== 'api.github.com' || url.port || url.username || url.password || url.search || url.hash) return null;
+    const byId = /^\/repositories\/([1-9]\d{0,15})$/.exec(url.pathname);
+    if ((byId && idOf(byId[1])) || (url.pathname.startsWith('/repos/') && repositoryName(url.pathname.slice(7)))) return url.href;
+  } catch { /* only canonical public GitHub repository endpoints are allowed */ }
+  return null;
 }
 
 export function createWorker(options = {}) {
@@ -218,9 +246,13 @@ export function createWorker(options = {}) {
     const parameters = new URL(request.url).searchParams;
     const challenge = parameters.get('client_challenge') || '', clientState = parameters.get('client_state') || '';
     if (!isToken(challenge) || !isToken(clientState)) throw new ApiError(400, 'invalid_login_request');
+    const client = parameters.get('client');
+    if (client !== null && client !== 'extension') throw new ApiError(400, 'invalid_login_request');
+    const destination = parameters.get('return_to') || '/';
+    if (client === 'extension' && !EXTENSION_CALLBACKS.has(destination)) throw new ApiError(400, 'invalid_login_request');
     const nonce = randomToken(), binding = randomToken(), verifier = randomToken(48), expires = now() + OAUTH_TTL;
     const nonceHash = await sha256(nonce);
-    const returnTo = safeReturnPath(parameters.get('return_to') || '/', origin);
+    const returnTo = client === 'extension' ? destination : safeReturnPath(destination, origin);
     await env.DB.batch([
       env.DB.prepare('DELETE FROM oauth_states WHERE expires_at <= ?1').bind(now()),
       env.DB.prepare('INSERT INTO oauth_states (nonce_hash,browser_hash,verifier,return_to,expires_at,client_challenge,client_state) VALUES (?1,?2,?3,?4,?5,?6,?7)')
@@ -250,7 +282,10 @@ export function createWorker(options = {}) {
         AND expires_at > ?3 RETURNING verifier,return_to,client_challenge,client_state`).bind(await sha256(match[1]), await sha256(binding), now()).first();
       if (!attempt) throw new ApiError(400, 'invalid_state');
       consumed = true;
-      returnTo = safeReturnPath(attempt.return_to, origin);
+      if (typeof attempt.return_to !== 'string') throw new ApiError(400, 'invalid_state');
+      if (attempt.return_to.startsWith('/')) returnTo = safeReturnPath(attempt.return_to, origin);
+      else if (EXTENSION_CALLBACKS.has(attempt.return_to)) returnTo = attempt.return_to;
+      else throw new ApiError(400, 'invalid_state');
       if (!isToken(attempt.client_challenge) || !isToken(attempt.client_state)) throw new ApiError(400, 'invalid_state');
       if (url.searchParams.has('error')) throw new ApiError(400, 'access_denied');
       const code = url.searchParams.get('code');
@@ -357,9 +392,44 @@ export function createWorker(options = {}) {
     await env.DB.batch(statements);
     return json({ok: true});
   }
+  async function resolveRepository(request) {
+    const body = await readJSON(request, 4096), name = repositoryName(body.full_name);
+    if (!name) throw new ApiError(400, 'invalid_repository');
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
+    let target = `https://api.github.com/repos/${name}`;
+    try {
+      for (let hop = 0; hop < 2; hop++) {
+        // Public metadata only: never send a GitHub or site bearer credential.
+        const response = await upstreamFetch(target, {method: 'GET', redirect: 'manual', signal: controller.signal,
+          headers: {Accept: 'application/vnd.github+json', 'User-Agent': 'Agent-Leaderboard', 'X-GitHub-Api-Version': '2022-11-28'}});
+        if (response.status >= 300 && response.status < 400) {
+          const next = repositoryRedirect(response.headers.get('Location'), target);
+          try { await response.body?.cancel(); } catch { /* rejection does not depend on cancellation */ }
+          if (hop || !next) throw new Error('repository_redirect');
+          target = next;
+          continue;
+        }
+        if (!response.ok) {
+          try { await response.body?.cancel(); } catch { /* fixed error below */ }
+          if (response.status === 404) throw new ApiError(404, 'repository_not_found');
+          // Includes rate limits: do not retry 403/429 or consume another quota.
+          throw new Error('repository_upstream');
+        }
+        const data = await response.json(), id = idOf(data?.id), fullName = repositoryName(data?.full_name);
+        if (data?.private === true) throw new ApiError(404, 'repository_not_found');
+        if (!id || !fullName) throw new Error('repository_response');
+        return json({repo_id: id, full_name: fullName});
+      }
+      throw new Error('repository_redirect');
+    } catch (error) {
+      if (error instanceof ApiError) throw error;
+      throw new ApiError(503, 'repository_unavailable');
+    } finally { clearTimeout(timeout); }
+  }
   async function route(request, env, origin, apiOrigin) {
     const url = new URL(request.url), authConfigured = configured(env);
-    if (url.origin !== apiOrigin || (request.headers.has('Origin') && request.headers.get('Origin') !== origin)) throw new ApiError(403, 'origin_rejected');
+    if (url.origin !== apiOrigin || (request.headers.has('Origin') && !allowedOrigin(request.headers.get('Origin'), origin))
+        || (request.headers.has('X-Favorites-Extension') && !extensionHint(request))) throw new ApiError(403, 'origin_rejected');
     if (request.method === 'OPTIONS') return preflight(request, url, origin);
     if (url.pathname === '/api/health' && request.method === 'GET') {
       if (authConfigured) {
@@ -379,20 +449,22 @@ export function createWorker(options = {}) {
     if (url.pathname === '/api/auth/github' && request.method === 'GET') return await startLogin(request, env, origin, apiOrigin);
     if (url.pathname === '/api/auth/github/callback' && request.method === 'GET') return await callback(request, env, origin, apiOrigin);
     if (url.pathname === '/api/auth/exchange' && request.method === 'POST') {
-      assertPublicOrigin(request, origin);
+      assertClientOrigin(request, origin);
       return await exchange(request, env);
     }
     const favoriteMatch = /^\/api\/favorites\/([1-9]\d{0,15})$/.exec(url.pathname);
     const importRoute = url.pathname === '/api/favorites/import' && request.method === 'POST';
+    const resolveRoute = url.pathname === '/api/favorites/resolve' && request.method === 'POST';
     const logoutRoute = url.pathname === '/api/auth/logout' && request.method === 'POST';
-    if (!importRoute && !logoutRoute && !(favoriteMatch && ['PUT', 'DELETE'].includes(request.method))) throw new ApiError(404, 'not_found');
-    assertPublicOrigin(request, origin);
+    if (!importRoute && !resolveRoute && !logoutRoute && !(favoriteMatch && ['PUT', 'DELETE'].includes(request.method))) throw new ApiError(404, 'not_found');
+    assertClientOrigin(request, origin);
     const found = await requireSession(request, env);
     if (logoutRoute) {
       await env.DB.prepare('DELETE FROM sessions WHERE token_hash = ?1').bind(found.hash).run();
       return json({ok: true});
     }
     if (importRoute) return await importFavorites(request, env, found);
+    if (resolveRoute) return await resolveRepository(request);
     const id = idOf(favoriteMatch[1]);
     if (!id) throw new ApiError(400, 'invalid_repository');
     if (request.method === 'DELETE') {
