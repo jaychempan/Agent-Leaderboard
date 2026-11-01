@@ -243,10 +243,10 @@ test('expired or revoked authentication clears account data and cannot write to 
   assert.equal(f.server.rows.has('202:2'), false); assert.equal(f.server.rows.has('101:1'), true);
 });
 
-test('logout discards a late account read and cache from an earlier service worker operation', async () => {
+test('logout discards a late account read and cache from an earlier service worker operation', {timeout: 5000}, async () => {
   const f = fixture(); await f.store.init(); await f.store.signIn(); await f.store.toggle(repo(1));
-  const held = deferred(); f.server.beforeRead = async () => held.promise;
-  const syncing = f.store.sync(); await settle(); const result = await f.store.signOut();
+  const held = deferred(), entered = deferred(); f.server.beforeRead = async () => { entered.resolve(); await held.promise; };
+  const syncing = f.store.sync(); await entered.promise; const result = await f.store.signOut();
   assert.equal(result.user, null); held.resolve(); await syncing;
   assert.equal((await f.store.getSnapshot()).user, null); assert.deepEqual((await f.store.getSnapshot()).favorites, {});
   assert.equal(f.mock.values.session[K.cache], undefined); assert.equal(f.mock.values.session[K.session], undefined);
@@ -261,12 +261,13 @@ test('new authenticated favorites with missing IDs resolve online and unresolved
   assert.equal(f.mock.values.local['favorite:missing/repo'], undefined);
 });
 
-test('repeated sign-in calls share one identity window and a consumed handoff cannot be replayed', async () => {
+test('repeated sign-in calls share one identity window and a consumed handoff cannot be replayed', {timeout: 5000}, async () => {
   const f = fixture(); await f.store.init();
-  const held = deferred(); let calls = 0, returned;
-  f.mock.chrome.identity.launchWebAuthFlow = async value => { calls += 1; await held.promise; returned = await f.server.launch(value); return returned; };
-  const first = f.store.signIn(), second = f.store.signIn(); assert.equal(first, second); for(let turn=0;!calls&&turn<30;turn+=1)await settle(); assert.equal(calls, 1);
-  held.resolve(); const signedIn = await first; assert.equal(signedIn.user.id, ALICE.id);
+  const held = deferred(), entered = deferred(); let calls = 0, returned;
+  f.mock.chrome.identity.launchWebAuthFlow = async value => { calls += 1; entered.resolve(); await held.promise; returned = await f.server.launch(value); return returned; };
+  const first = f.store.signIn(), second = f.store.signIn();
+  try { assert.equal(first, second); await entered.promise; assert.equal(calls, 1); } finally { held.resolve(); }
+  const signedIn = await first; assert.equal(signedIn.user.id, ALICE.id);
   await f.store.signOut(); f.mock.chrome.identity.launchWebAuthFlow = async () => returned;
   const replayed = await f.store.signIn(); assert.equal(replayed.user, null); assert.equal(replayed.error, 'auth_failed');
   assert.equal(f.mock.values.session[K.pending], undefined); assert.equal(f.mock.values.session[K.session], undefined);
@@ -291,12 +292,15 @@ test('a local cleanup failure retries the confirmed receipt without reviving a l
   assert.equal(f.server.requests.filter(value => value.path === '/api/favorites/import').length, 1);
 });
 
-test('logout during authentication storage cannot leave a token or old account cache behind', async () => {
-  const f = fixture(); await f.store.init(); const held = deferred(); let storing = false;
-  f.mock.beforeSet = async (area, value) => { if (area === 'session' && value[K.session]) { storing = true; await held.promise; } };
-  const signingIn = f.store.signIn();
-  for (let turn = 0; !storing && turn < 30; turn += 1) await settle(); assert.equal(storing, true);
-  const signingOut = f.store.signOut(); await settle(); held.resolve(); await Promise.all([signingIn, signingOut]);
+test('logout during authentication storage cannot leave a token or old account cache behind', {timeout: 5000}, async () => {
+  const f = fixture(); await f.store.init(); const held = deferred(), entered = deferred();
+  f.mock.beforeSet = async (area, value) => { if (area === 'session' && value[K.session]) { entered.resolve(); await held.promise; } };
+  const signingIn = f.store.signIn(); let signingOut;
+  try {
+    await entered.promise;
+    signingOut = f.store.signOut(); await settle();
+  } finally { held.resolve(); }
+  await Promise.all([signingIn, signingOut]);
   assert.equal((await f.store.getSnapshot()).user, null); assert.equal(f.mock.values.session[K.session], undefined);
   assert.equal(f.mock.values.session[K.cache], undefined); assert.equal(f.mock.values.session[K.pending], undefined);
 });
@@ -335,18 +339,22 @@ test('large imports persist frozen batches before sending any batch and keep eac
   assert.equal(Object.keys(result.favorites).length, 205); assert.equal(Object.keys(f.mock.values.local).filter(key => key.startsWith('favorite:')).length, 0);
 });
 
-test('old identity cancellation and old logout failures cannot overwrite a newer account state', async () => {
-  const f = fixture(); await f.store.init(); const authHeld = deferred(); let launched = false;
-  f.mock.chrome.identity.launchWebAuthFlow = async () => { launched = true; await authHeld.promise; throw Error('cancelled'); };
-  const oldLogin = f.store.signIn(); for(let turn=0;!launched&&turn<30;turn+=1)await settle(); assert.equal(launched,true);
-  await f.store.signOut(); authHeld.resolve(); await oldLogin;
+test('old identity cancellation and old logout failures cannot overwrite a newer account state', {timeout: 5000}, async () => {
+  const f = fixture(); await f.store.init(); const authHeld = deferred(), authEntered = deferred();
+  f.mock.chrome.identity.launchWebAuthFlow = async () => { authEntered.resolve(); await authHeld.promise; throw Error('cancelled'); };
+  const oldLogin = f.store.signIn();
+  try { await authEntered.promise; await f.store.signOut(); } finally { authHeld.resolve(); }
+  await oldLogin;
   assert.equal((await f.store.getSnapshot()).error,null); assert.equal((await f.store.getSnapshot()).user,null);
   f.mock.chrome.identity.launchWebAuthFlow = f.server.launch; await f.store.signIn();
-  const logoutHeld = deferred(); let revoking = false;
-  f.server.beforeWrite = async request => { if(request.path==='/api/auth/logout'){revoking=true;await logoutHeld.promise;throw TypeError('Offline');} };
-  const oldLogout = f.store.signOut(); for(let turn=0;!revoking&&turn<30;turn+=1)await settle(); assert.equal(revoking,true);
-  f.server.user=BOB; const bob=await f.store.signIn(); assert.equal(bob.user.id,BOB.id);
-  logoutHeld.resolve(); await oldLogout; const current=await f.store.getSnapshot();
+  const logoutHeld = deferred(), logoutEntered = deferred();
+  f.server.beforeWrite = async request => { if(request.path==='/api/auth/logout'){logoutEntered.resolve();await logoutHeld.promise;throw TypeError('Offline');} };
+  const oldLogout = f.store.signOut();
+  try {
+    await logoutEntered.promise;
+    f.server.user=BOB; const bob=await f.store.signIn(); assert.equal(bob.user.id,BOB.id);
+  } finally { logoutHeld.resolve(); }
+  await oldLogout; const current=await f.store.getSnapshot();
   assert.equal(current.user.id,BOB.id); assert.equal(current.error,null); assert.equal(current.status,'synced');
 });
 
