@@ -21,6 +21,10 @@ const I18N = {
     fav_sign_in: '使用 GitHub 登录',
     fav_sign_out: '退出登录',
     fav_sync: '立即同步',
+    fav_status_synced: '已同步',
+    fav_status_syncing: '同步中',
+    fav_status_offline: '离线',
+    fav_status_error: '同步失败',
     fav_extension_sign_in: '登录后自动同步插件收藏',
     fav_extension_connecting: '正在同步插件收藏…',
     fav_extension_connected: '插件收藏已同步',
@@ -48,7 +52,6 @@ const I18N = {
     fav_auth_invalid_state: '登录校验已失效，请在当前标签页重新点击 GitHub 登录。',
     fav_auth_access_denied: 'GitHub 授权已取消，可以重新登录。',
     fav_storage_failed: '浏览器暂时无法写入数据。请保持此页打开，恢复存储权限或等待云同步成功后再关闭。',
-    fav_logout_note: '退出后云端收藏仍会保留，重新登录即可恢复。',
     fav_close: '关闭收藏',
     fav_remove: '取消收藏',
     fav_other: '其他收藏',
@@ -129,6 +132,10 @@ const I18N = {
     fav_sign_in: 'Sign in with GitHub',
     fav_sign_out: 'Sign out',
     fav_sync: 'Sync now',
+    fav_status_synced: 'Synced',
+    fav_status_syncing: 'Syncing',
+    fav_status_offline: 'Offline',
+    fav_status_error: 'Sync failed',
     fav_extension_sign_in: 'Sign in to sync extension favorites automatically',
     fav_extension_connecting: 'Syncing extension favorites…',
     fav_extension_connected: 'Extension favorites synced',
@@ -156,7 +163,6 @@ const I18N = {
     fav_auth_invalid_state: 'The sign-in check is no longer valid. Start GitHub sign-in again in this tab.',
     fav_auth_access_denied: 'GitHub authorization was cancelled. You can sign in again.',
     fav_storage_failed: 'Your browser cannot write data right now. Keep this page open until storage works again or cloud sync succeeds.',
-    fav_logout_note: 'Cloud favorites stay saved after sign-out. Sign in again to restore them.',
     fav_close: 'Close favorites',
     fav_remove: 'Remove favorite',
     fav_other: 'Other favorites',
@@ -707,21 +713,27 @@ function renderFavoritesAccount() {
       extension_unavailable: 'fav_extension_unavailable', account_changed: 'fav_account_changed'}[extension.status];
     if (key) status = t(key);
   }
+  const extensionError = extension?.active && ['invalid_request', 'connection_failed', 'extension_unavailable', 'account_changed'].includes(extension.status);
+  const needsAttention = Boolean(snapshot.error || extensionError || storageError || snapshot.status === 'offline');
+  const shortStatus = t(busy ? 'fav_status_syncing' : snapshot.status === 'offline' ? 'fav_status_offline' : needsAttention ? 'fav_status_error' : 'fav_status_synced');
+  const displayState = extensionError || (snapshot.error && snapshot.status !== 'offline') ? 'error' : busy ? 'syncing' : snapshot.status;
+  container.classList.toggle('favorite-account--signed-in', Boolean(snapshot.user));
   const activeId = document.activeElement?.id;
   const hadFocus = container.contains(document.activeElement);
   container.innerHTML = snapshot.user ? `
     <div class="favorite-account-copy">
-      <strong>${FAVORITE_GITHUB_ICON}<span>${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}</span></strong>
-      <p id="favoritesSyncStatus" role="status" aria-live="polite" aria-busy="${Boolean(extension?.busy)}" data-state="${snapshot.status}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>${escapeFavoriteHTML(status)}</p>
-      <p class="favorite-account-note">${t('fav_logout_note')}</p>
+      <strong title="${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}">${FAVORITE_GITHUB_ICON}<span>${escapeFavoriteHTML(snapshot.user.login || 'GitHub')}</span></strong>
     </div>
+    <p id="favoritesSyncStatus" class="favorite-account-status" role="status" aria-live="polite" aria-busy="${Boolean(busy)}" data-state="${displayState}" data-attention="${needsAttention}" title="${escapeFavoriteHTML(status)}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>
+      <span class="favorite-account-dot" aria-hidden="true"></span><span class="favorite-account-status-label" aria-hidden="true">${escapeFavoriteHTML(shortStatus)}</span><span class="favorite-account-status-detail">${escapeFavoriteHTML(status)}</span>
+    </p>
     <div class="favorite-account-actions">
-      <button type="button" class="nav-btn" id="favoritesSync" onclick="syncFavoritesNow()" ${busy ? 'disabled' : ''}>${t('fav_sync')}</button>
-      <button type="button" class="nav-btn" id="githubSignOut" onclick="signOutGithub()">${t('fav_sign_out')}</button>
+      <button type="button" class="nav-btn favorite-account-icon" id="favoritesSync" onclick="syncFavoritesNow()" aria-label="${t('fav_sync')}" title="${t('fav_sync')}" ${busy ? 'disabled' : ''}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+      <button type="button" class="nav-btn favorite-account-icon" id="githubSignOut" onclick="signOutGithub()" aria-label="${t('fav_sign_out')}" title="${t('fav_sign_out')}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
     </div>` : `
     <div class="favorite-account-copy">
       <strong>${FAVORITE_GITHUB_ICON}<span>${t(snapshot.configured ? 'fav_account_title' : 'fav_local')}</span></strong>
-      <p id="favoritesSyncStatus" role="status" aria-live="polite" aria-busy="${Boolean(extension?.busy)}" data-state="${snapshot.status}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>${extension?.active && snapshot.configured ? escapeFavoriteHTML(status) : t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
+      <p id="favoritesSyncStatus" role="status" aria-live="polite" aria-busy="${Boolean(busy)}" data-state="${displayState}"${extension?.active ? ` data-extension-state="${extension.status}"` : ''}>${extension?.active && snapshot.configured ? escapeFavoriteHTML(status) : t(snapshot.configured ? 'fav_account_description' : 'fav_not_configured')}</p>
     </div>
     ${snapshot.configured ? `<button type="button" class="nav-extension" id="githubSignIn" onclick="signInGithub()" ${busy ? 'disabled' : ''}>${t('fav_sign_in')}</button>` : ''}`;
   if (favoriteAccountActionError || (snapshot.error && !snapshot.user)) {
@@ -731,7 +743,11 @@ function renderFavoritesAccount() {
     message.textContent = t(favoriteAccountActionError || favoriteErrorKey(snapshot.error));
     container.appendChild(message);
   }
-  if (hadFocus) (document.getElementById(activeId) || container.querySelector('button:not(:disabled)') || document.querySelector('#favModal .fav-modal-close'))?.focus({preventScroll: true});
+  if (hadFocus) {
+    const previous = document.getElementById(activeId);
+    const next = previous && !previous.disabled ? previous : container.querySelector('button:not(:disabled)') || document.querySelector('#favModal .fav-modal-close');
+    next?.focus({preventScroll: true});
+  }
 }
 async function signInGithub() {
   favoriteAccountActionError = '';

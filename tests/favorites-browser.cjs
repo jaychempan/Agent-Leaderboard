@@ -137,7 +137,7 @@ function backendFixture() {
 
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
- const contexts=[],errors=[],backend=backendFixture();
+ const contexts=[],errors=[],accountHeights=[],backend=backendFixture();
  async function device({cloud=true,user=null,legacy=[],language='en',broken=false,authError=null}={}) {
   const context=await browser.newContext({viewport:{width:1366,height:900},colorScheme:'light',reducedMotion:'reduce'});
   context.setDefaultTimeout(10000);contexts.push(context);
@@ -241,6 +241,15 @@ function backendFixture() {
   await waitState(a.page,s=>s.error==='save_failed'&&s.ids.includes(first.id),'failed modal removal rolls back');
   assert.equal(backend.rows.get(alice.id).has(first.id),true);
   assert.match(await a.page.locator('#favoritesSyncStatus').innerText(),/not saved|previous state/i,'modal save failure is visibly explained');
+  for(const width of [320,390]) {
+   await a.page.setViewportSize({width,height:850});
+   const failureLayout=await a.page.locator('#favoritesSyncStatus').evaluate(node=>({attention:node.dataset.attention,rect:node.getBoundingClientRect().toJSON(),
+    detailClip:getComputedStyle(node.querySelector('.favorite-account-status-detail')).clipPath,scroll:document.querySelector('#favModal').scrollWidth}));
+   assert.equal(failureLayout.attention,'true');assert.equal(failureLayout.detailClip,'none','failure explanation is visually readable');
+   assert.ok(failureLayout.rect.height>=18&&failureLayout.rect.width>100&&failureLayout.scroll<=width+1,'failure text wraps within the narrow modal');
+   if(writeArtifacts){fs.mkdirSync('artifacts/favorites',{recursive:true});await a.page.screenshot({path:`artifacts/favorites/account-save-error-${width}.png`});}
+  }
+  await a.page.setViewportSize({width:1366,height:900});
   backend.setFailWrites(false);
   await clickGridFavorite(a.page,third.id);await waitState(a.page,s=>s.status==='synced'&&s.ids.includes(third.id),'retry can save an addition');
   await clickGridFavorite(a.page,first.id);await waitState(a.page,s=>s.status==='synced'&&!s.ids.includes(first.id),'retry can remove a favorite');
@@ -268,14 +277,42 @@ function backendFixture() {
     if(await b.page.locator('html').getAttribute('data-theme')!==theme)await b.page.locator('#themeBtn').click();
     for(const width of [320,390,1366]) {
      await b.page.setViewportSize({width,height:850});await openFavorites(b.page);
-     const layout=await b.page.locator('#favModal').evaluate(node=>({width:innerWidth,scroll:node.scrollWidth,dialog:node.querySelector('.fav-modal').getBoundingClientRect().toJSON(),controls:[...node.querySelectorAll('#favoritesAccount button')].map(button=>button.getBoundingClientRect().toJSON())}));
+     const layout=await b.page.locator('#favModal').evaluate(node=>({width:innerWidth,scroll:node.scrollWidth,
+      dialog:node.querySelector('.fav-modal').getBoundingClientRect().toJSON(),account:node.querySelector('#favoritesAccount').getBoundingClientRect().toJSON(),
+      controls:[...node.querySelectorAll('#favoritesAccount button')].map(button=>({rect:button.getBoundingClientRect().toJSON(),label:button.getAttribute('aria-label'),title:button.title}))}));
      assert.ok(layout.scroll<=layout.width+1,`favorites fit ${language}/${theme}/${width}`);
-     assert.ok(layout.dialog.left>=0&&layout.dialog.right<=width+1);assert.ok(layout.controls.every(rect=>rect.left>=0&&rect.right<=width+1));
-     for(let i=0;i<8;i++){await b.page.keyboard.press('Tab');assert.equal(await b.page.evaluate(()=>document.querySelector('#favModal').contains(document.activeElement)),true);}
-     if(width===390&&writeArtifacts){fs.mkdirSync('artifacts/favorites',{recursive:true});await b.page.locator('#favModal').evaluate(node=>{node.scrollTop=0;});await b.page.screenshot({path:`artifacts/favorites/account-${language}-${theme}.png`});}
+     assert.ok(layout.dialog.left>=0&&layout.dialog.right<=width+1);assert.ok(layout.controls.every(({rect})=>rect.left>=0&&rect.right<=width+1));
+     assert.ok(layout.account.height<=40,`signed-in account stays one compact row at ${language}/${theme}/${width}: ${layout.account.height}px`);
+     accountHeights.push(layout.account.height);
+     assert.equal(layout.controls.length,2,'signed-in account exposes sync and sign-out');
+     assert.ok(layout.controls.every(({rect,label,title})=>rect.width>=32&&rect.height>=32&&label?.trim()&&title?.trim()),'icon actions keep labeled, usable targets and tooltips');
+     assert.equal(await b.page.locator('#favoritesSyncStatus').getAttribute('role'),'status');
+     const focusedControls=new Set();
+     for(let i=0;i<8;i++){
+      await b.page.keyboard.press('Tab');assert.equal(await b.page.evaluate(()=>document.querySelector('#favModal').contains(document.activeElement)),true);
+      const focus=await b.page.evaluate(()=>{const node=document.activeElement,style=getComputedStyle(node);return {id:node.id,width:parseFloat(style.outlineWidth),style:style.outlineStyle};});
+      if(['favoritesSync','githubSignOut'].includes(focus.id)){focusedControls.add(focus.id);assert.ok(focus.width>=2&&focus.style!=='none','keyboard focus remains visible on compact icon actions');}
+     }
+     assert.equal(focusedControls.size,2,'both compact account actions remain in the modal keyboard sequence');
+     if(writeArtifacts){fs.mkdirSync('artifacts/favorites',{recursive:true});await b.page.locator('#favModal').evaluate(node=>{node.scrollTop=0;});await b.page.screenshot({path:`artifacts/favorites/account-${language}-${theme}-${width}.png`});}
      await closeFavorites(b.page);assert.equal(await b.page.locator('#favBtn').evaluate(node=>node===document.activeElement),true);
     }
    }
+  }
+  // Exercise GitHub's longest public login only in the rendered snapshot. The
+  // account credential and server identity stay untouched by this layout check.
+  for(const width of [320,390]) {
+   await b.page.setViewportSize({width,height:850});await openFavorites(b.page);
+   await b.page.evaluate(()=>{
+    const getSnapshot=favoritesStore.getSnapshot;
+    favoritesStore.getSnapshot=()=>{const value=getSnapshot();return {...value,user:{...value.user,login:'longgithubaccountname'.padEnd(39,'x')}};};
+    try{renderFavoritesAccount();}finally{favoritesStore.getSnapshot=getSnapshot;}
+   });
+   const longAccount=await b.page.locator('#favoritesAccount').evaluate(node=>({height:node.getBoundingClientRect().height,
+    controls:[...node.querySelectorAll('button')].map(button=>button.getBoundingClientRect().toJSON()),scroll:document.querySelector('#favModal').scrollWidth}));
+   assert.ok(longAccount.height<=40&&longAccount.scroll<=width+1&&longAccount.controls.every(rect=>rect.left>=0&&rect.right<=width+1),'the longest public login leaves both icon actions on the compact row');
+   if(writeArtifacts)await b.page.screenshot({path:`artifacts/favorites/account-long-login-${width}.png`});
+   await b.page.evaluate(()=>renderFavoritesAccount());await closeFavorites(b.page);
   }
   await openFavorites(b.page);await b.page.locator('#githubSignOut').click();await waitState(b.page,s=>!s.user,'sign-out returns to anonymous mode');
   assert.deepEqual((await state(b.page)).ids,[],'account favorites are not exposed as anonymous data');
@@ -295,6 +332,6 @@ function backendFixture() {
   assert.ok(laterPage,'large lists request the next bootstrap page');
   assert.equal(laterPage.headers['x-favorites-user'],bob.id,'subsequent page remains bound to the first-page account');
   assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({status:'passed',base,auth:'cross-origin HTTPS fixture; production GitHub OAuth, Worker security and D1 require separate verification',checks:['local migration and corrupt storage','cross-origin PKCE exchange, bearer and persistent login restoration','first import','online add/remove, visible failure and rollback','offline rollback without queue','second-browser and paginated restoration','out-of-catalog favorites plus escaped card, list and snapshot descriptions','account isolation and logout retention','bilingual light/dark 320–1366px layout and keyboard focus']}));
+  console.log(JSON.stringify({status:'passed',base,accountRowMaxHeight:Math.max(...accountHeights),auth:'cross-origin HTTPS fixture; production GitHub OAuth, Worker security and D1 require separate verification',checks:['local migration and corrupt storage','cross-origin PKCE exchange, bearer and persistent login restoration','first import','online add/remove, visible failure and rollback','offline rollback without queue','second-browser and paginated restoration','out-of-catalog favorites plus escaped card, list and snapshot descriptions','account isolation and logout retention','bilingual light/dark 320–1366px compact account layout, 39-character login, icon labels and keyboard focus']}));
  }finally{await Promise.all(contexts.map(context=>context.close()));await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

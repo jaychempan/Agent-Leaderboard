@@ -1401,16 +1401,26 @@ button, select, input { font: inherit; }
   gap: 14px;
 }
 .favorite-total { margin-left:5px; color:var(--muted); font-size:12px; font-weight:400; }
-.favorite-account { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px 24px; margin-bottom:22px; padding:16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
-.favorite-account-copy { flex:1 1 260px; min-width:0; }
-.favorite-account-copy strong { display:flex; align-items:center; gap:8px; color:var(--text); font-size:14px; overflow-wrap:anywhere; }
+.favorite-account { display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-bottom:16px; min-width:0; }
+.favorite-account-copy { flex:1 1 140px; min-width:0; }
+.favorite-account-copy strong { display:flex; align-items:center; gap:7px; min-width:0; color:var(--text); font-size:13px; font-weight:600; }
+.favorite-account-copy strong span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .favorite-account-copy strong svg { flex-shrink:0; }
-.favorite-account-copy p { margin-top:7px; color:var(--muted); font-size:12px; line-height:1.65; }
-.favorite-account-copy .favorite-account-note { font-size:11px; }
-.favorite-account-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.favorite-account-copy p { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.5; }
+.favorite-account-actions { display:flex; flex-shrink:0; gap:4px; }
 .favorite-account .nav-extension { margin:0; }
-.favorite-account button { min-height:36px; }
+.favorite-account button { min-height:32px; }
 .favorite-account button:disabled { opacity:.55; cursor:wait; }
+.favorite-account--signed-in { gap:8px 12px; }
+.favorite-account--signed-in .favorite-account-copy { flex:1 1 0; }
+.favorite-account--signed-in .favorite-account-copy strong svg { width:16px; height:16px; }
+.favorite-account-status { display:flex; align-items:center; flex-shrink:0; gap:5px; margin:0; color:var(--muted); font-size:11px; line-height:1.5; }
+.favorite-account-dot { width:5px; height:5px; flex-shrink:0; border-radius:50%; background:currentColor; }
+.favorite-account-status:not([data-attention="true"]) .favorite-account-status-detail { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.favorite-account-status[data-attention="true"] { order:3; flex:1 0 100%; overflow-wrap:anywhere; }
+.favorite-account-status[data-attention="true"] .favorite-account-status-label, .favorite-account-status[data-attention="true"] .favorite-account-dot { display:none; }
+.favorite-account .favorite-account-icon { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; padding:0; border-color:transparent; background:transparent; }
+.favorite-account .favorite-account-icon:hover { background:var(--surface3); border-color:var(--border); }
 .favorite-account-error { flex:1 0 100%; color:var(--red); font-size:12px; line-height:1.6; }
 .favorite-account [data-state="synced"] { color:var(--green); }
 .favorite-account [data-state="offline"] { color:var(--gold); }
@@ -1428,10 +1438,7 @@ a.saved-favorite-name:hover, .saved-favorite-meta a:hover { text-decoration:unde
 @media(max-width:600px){
  .fav-modal-overlay { padding:16px 10px; }
  .fav-modal { padding:16px; }
- .favorite-account { padding:13px; gap:12px; }
- .favorite-account-copy { flex-basis:100%; }
- .favorite-account .nav-extension { width:100%; }
- .favorite-account-actions { width:100%; }
+ .favorite-account { column-gap:10px; }
 }
 
 /* The extension is a primary action, separate from leaderboard categories. */
