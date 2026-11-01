@@ -420,7 +420,13 @@ export function createFavoritesSync(options = {}) {
   function connectPort() {
     if (portTask) return portTask;
     portTask = (async () => {
-      const startEpoch = epoch, tabs = await websiteTabs(), entries = website?.list() || [], candidates = entries.filter(entry => entry.ready && entry.user && tabs.some(tab => tab.id === entry.tabId));
+      const startEpoch = epoch, tabs = await websiteTabs(), stored = await storageGet('session', STORAGE_KEYS.pending);
+      if (startEpoch !== epoch || session || autoConnectDisabled || completionTask) return {handled: true};
+      const legacy = stored[STORAGE_KEYS.pending];
+      if (validPending(legacy) && legacy.mode === 'website' && tabs.some(tab => tab.id === legacy.tabId)) {
+        pendingLogin = legacy; status = 'awaiting_website'; error = null; emit(); return {handled: true};
+      }
+      const entries = website?.list() || [], candidates = entries.filter(entry => entry.ready && entry.user && tabs.some(tab => tab.id === entry.tabId));
       let candidate;
       const active = candidates.filter(entry => tabs.some(tab => tab.id === entry.tabId && tab.active));
       if (active.length && new Set(active.map(entry => entry.user.id)).size === 1) candidate = active[0];
@@ -430,11 +436,11 @@ export function createFavoritesSync(options = {}) {
         const pending = validPending(pendingLogin) && pendingLogin.mode === 'website';
         return {handled: false, reason: tabs.some(tab => !entries.some(entry => entry.tabId === tab.id)) && !pending ? 'website_refresh_required' : 'website_not_signed_in'};
       }
-      if (startEpoch !== epoch || session || autoConnectDisabled) return {handled: true};
+      if (startEpoch !== epoch || session || autoConnectDisabled || completionTask) return {handled: true};
       const pending = {api: API_BASE, verifier: random(), state: random(), createdAt: now(), tabId: candidate.tabId,
         mode: 'port', portId: candidate.portId, documentId: candidate.documentId, expectedUserId: candidate.user.id};
       const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pending.verifier))));
-      if (startEpoch !== epoch || session || autoConnectDisabled) return {handled: true};
+      if (startEpoch !== epoch || session || autoConnectDisabled || completionTask) return {handled: true};
       await storageSet('session', {[STORAGE_KEYS.pending]: pending});
       if (startEpoch !== epoch) return {handled: true};
       pendingLogin = pending; status = 'syncing'; error = null; emit();
@@ -491,38 +497,41 @@ export function createFavoritesSync(options = {}) {
   function completeWebsiteSignIn(message, sender, bridge = {}) {
     const rejected = {ok: false, connected: false};
     if (!(bridge.portId ? isWebsiteSender(sender) : isWebsiteConnectSender(sender)) || message?.type !== 'favorites:connect'
-        || !TOKEN.test(message.code || '') || !TOKEN.test(message.state || '') || completionTask) return Promise.resolve(rejected);
-    let attemptEpoch;
-    completionTask = (async () => {
-      await load(); attemptEpoch = epoch;
+        || !TOKEN.test(message.code || '') || !TOKEN.test(message.state || '')) return Promise.resolve(rejected);
+    return (async () => {
+      await load(); const attemptEpoch = epoch;
       const stored = await storageGet('session', STORAGE_KEYS.pending), pending = stored[STORAGE_KEYS.pending];
-      if (!validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state
+      if (attemptEpoch !== epoch || !validPending(pending) || pending.tabId !== sender.tab.id || pending.state !== message.state
           || (pending.mode === 'port' && (pending.portId !== bridge.portId || pending.documentId !== (sender.documentId || '')))
-          || (pending.mode === 'website' && bridge.portId)) return rejected;
-      await storageRemove('session', STORAGE_KEYS.pending); pendingLogin = null;
-      if (attemptEpoch !== epoch) return rejected;
-      status = 'syncing'; error = null; emit();
-      const payload = await request('/auth/exchange', {method: 'POST', authentication: null,
-        body: {code: message.code, verifier: pending.verifier, state: pending.state}});
-      if (attemptEpoch !== epoch) return rejected;
-      const user = publicUser(payload?.user);
-      if (pending.expectedUserId && user?.id !== pending.expectedUserId) throw failure('website_account_changed');
-      if (!user || !TOKEN.test(payload?.token || '') || !date(payload.expiresAt) || Date.parse(payload.expiresAt) <= now()) throw failure('auth_failed');
-      const value = {api: API_BASE, token: payload.token, expiresAt: payload.expiresAt, user};
-      await storageSet('session', {[STORAGE_KEYS.session]: value, [STORAGE_KEYS.cache]: {api: API_BASE, owner: user.id, records: []}});
-      if (attemptEpoch !== epoch) return rejected;
-      epoch += 1; session = value; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys.clear();
-      for (const controller of controllers) controller.abort();
-      const context = {epoch, id: user.id};
-      await enqueue(() => refresh(context));
-      return session?.user.id === user.id ? {ok: true, connected: true, user: {...session.user}} : rejected;
-    })().catch(exception => {
-      if (attemptEpoch === undefined || attemptEpoch === epoch) {
-        error = ['storage_unavailable', 'website_account_changed'].includes(exception.code) ? exception.code : 'auth_failed'; status = 'error'; emit();
-      }
-      return rejected;
-    }).finally(() => { completionTask = null; });
-    return completionTask;
+          || (pending.mode === 'website' && bridge.portId) || completionTask) return rejected;
+      // Acquire the lock only after validating the transport and exact pending attempt.
+      const operation = (async () => {
+        await storageRemove('session', STORAGE_KEYS.pending); pendingLogin = null;
+        if (attemptEpoch !== epoch) return rejected;
+        status = 'syncing'; error = null; emit();
+        const payload = await request('/auth/exchange', {method: 'POST', authentication: null,
+          body: {code: message.code, verifier: pending.verifier, state: pending.state}});
+        if (attemptEpoch !== epoch) return rejected;
+        const user = publicUser(payload?.user);
+        if (pending.expectedUserId && user?.id !== pending.expectedUserId) throw failure('website_account_changed');
+        if (!user || !TOKEN.test(payload?.token || '') || !date(payload.expiresAt) || Date.parse(payload.expiresAt) <= now()) throw failure('auth_failed');
+        const value = {api: API_BASE, token: payload.token, expiresAt: payload.expiresAt, user};
+        await storageSet('session', {[STORAGE_KEYS.session]: value, [STORAGE_KEYS.cache]: {api: API_BASE, owner: user.id, records: []}});
+        if (attemptEpoch !== epoch) return rejected;
+        epoch += 1; session = value; cloud = {}; cacheFailed = false; pendingKeys.clear(); unresolvedKeys.clear();
+        for (const controller of controllers) controller.abort();
+        const context = {epoch, id: user.id};
+        await enqueue(() => refresh(context));
+        return session?.user.id === user.id ? {ok: true, connected: true, user: {...session.user}} : rejected;
+      })().catch(exception => {
+        if (attemptEpoch === epoch) {
+          error = ['storage_unavailable', 'website_account_changed'].includes(exception.code) ? exception.code : 'auth_failed'; status = 'error'; emit();
+        }
+        return rejected;
+      }).finally(() => { if (completionTask === operation) completionTask = null; });
+      completionTask = operation;
+      return operation;
+    })().catch(() => rejected);
   }
   async function signOut() {
     await load(); const previous = session, logoutEpoch = epoch + 1;

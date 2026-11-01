@@ -15,7 +15,7 @@
     const page = options.location || (typeof location !== 'undefined' ? location : null);
     const later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
     const repeat = options.setInterval || setInterval, stop = options.clearInterval || clearInterval;
-    let port = null, heartbeat = null, retry = null, attempts = 0, destroyed = false, paused = false;
+    let port = null, heartbeat = null, retry = null, attempts = 0, destroyed = false, paused = false, lastHandoff = null;
     const listeners = [], inFlight = new Set();
     let allowed = false;
     try {
@@ -45,21 +45,31 @@
     }
     function announce() {
       const identity = user();
+      if (lastHandoff && identity?.id !== lastHandoff.userId) lastHandoff = null;
       if (port) send(port, {type: 'favorites:ready', user: identity});
       if (identity && port && heartbeat === null) heartbeat = repeat(announce, 25000);
       else if (!identity || !port) clearHeartbeat();
     }
     function disconnected(channel) {
       if (port !== channel) return;
-      port = null; clearHeartbeat(); inFlight.clear(); schedule();
+      port = null; lastHandoff = null; clearHeartbeat(); inFlight.clear(); schedule();
     }
     async function message(channel, input) {
+      if (!destroyed && !paused && port === channel && input?.type === 'favorites:connected') {
+        if (input.connected === true && typeof input.state === 'string' && input.state === lastHandoff?.state
+            && user()?.id === lastHandoff.userId) {
+          lastHandoff = null;
+          try { options.onConnected?.(); } catch { /* UI delivery does not affect authentication. */ }
+        }
+        return;
+      }
       if (destroyed || port !== channel || input?.type !== 'favorites:challenge'
           || typeof input.client_challenge !== 'string' || !OPAQUE.test(input.client_challenge)
           || typeof input.client_state !== 'string' || !OPAQUE.test(input.client_state)
           || typeof input.expected_user_id !== 'string' || !/^[1-9]\d{0,15}$/.test(input.expected_user_id)
           || inFlight.size) return;
       const identity = user(), state = input.client_state;
+      lastHandoff = null;
       attempts = 0;
       if (!identity || identity.id !== input.expected_user_id) {
         send(channel, {type: 'favorites:unavailable', state, reason: 'not_signed_in'}); announce(); return;
@@ -73,6 +83,7 @@
           send(channel, {type: 'favorites:unavailable', state, reason: 'not_signed_in'}); announce(); return;
         }
         if (typeof result?.code !== 'string' || !OPAQUE.test(result.code) || result.state !== state) throw new Error('invalid_handoff');
+        lastHandoff = {state, userId: identity.id};
         send(channel, {type: 'favorites:connect', code: result.code, state});
       } catch {
         const sameUser = user()?.id === identity.id;
@@ -101,14 +112,14 @@
     function wake() { paused = false; attempts = 0; if (!port) connect(); else announce(); }
     function pause() {
       paused = true; clearHeartbeat(); if (retry !== null) cancel(retry); retry = null;
-      const channel = port; port = null; inFlight.clear();
+      const channel = port; port = null; lastHandoff = null; inFlight.clear();
       try { channel?.disconnect(); } catch { /* Already disconnected. */ }
     }
     function destroy() {
       if (destroyed) return;
       destroyed = true; clearHeartbeat(); if (retry !== null) cancel(retry); retry = null;
       for (const [surface, type, callback] of listeners) surface.removeEventListener(type, callback);
-      const channel = port; port = null; inFlight.clear();
+      const channel = port; port = null; lastHandoff = null; inFlight.clear();
       try { channel?.disconnect(); } catch { /* Already disconnected. */ }
     }
     listen('focus', wake); listen('pageshow', wake); listen('pagehide', pause);

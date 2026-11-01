@@ -32,7 +32,7 @@ function clock() {
     }};
 }
 function fixture(settings = {}) {
-  const timers = clock(), events = new Map(), ports = [], connections = [], requests = [];
+  const timers = clock(), events = new Map(), ports = [], connections = [], requests = [], acknowledgements = [];
   let active = settings.active !== false, current = {user: settings.user || ALICE, configured: true, status: 'synced',
     token: 'private-site-token', verifier: 'private-verifier', records: {secret: 'private-favorite'}};
   const target = {document: {visibilityState: 'visible'}, addEventListener(name, listener) {
@@ -57,8 +57,9 @@ function fixture(settings = {}) {
         token: 'private-site-token', verifier: 'private-verifier', arbitrary: 'private-upstream-details'};
     }};
   const bridge = start({store, chrome, eventTarget: target, document: target.document, location: {href: settings.href || 'https://agentskills.media/#skills'},
-    setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout, setInterval: timers.setInterval, clearInterval: timers.clearInterval});
-  return {bridge, store, chrome, timers, events, target, ports, connections, requests,
+    setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout, setInterval: timers.setInterval, clearInterval: timers.clearInterval,
+    onConnected: (...values) => acknowledgements.push(structuredClone(values))});
+  return {bridge, store, chrome, timers, events, target, ports, connections, requests, acknowledgements,
     setActive(value) { active = value; }, setUser(value) { current = {...current, user: value}; },
     update() { bridge.update(current); }, current: () => current};
 }
@@ -82,6 +83,78 @@ test('website bridge exchanges only a matching PKCE request and never forwards a
   assert.deepEqual(f.requests, [{extension_id: EXTENSION_ID, client_challenge: challenge.client_challenge, client_state: challenge.client_state}]);
   assert.deepEqual(f.ports[0].messages.at(-1), {type: 'favorites:connect', code: 'h'.repeat(43), state: challenge.client_state});
   assert.doesNotMatch(JSON.stringify(f.ports[0].messages), /private-|attacker-token|expiresAt|verifier/);
+});
+
+test('connection acknowledgement requires a delivered handoff and a strict successful matching state', async t => {
+  const f = fixture(); t.after(() => f.bridge.destroy());
+  const port = f.ports[0], acknowledged = {type: 'favorites:connected', state: challenge.client_state, connected: true};
+  port.onMessage.emit(acknowledged); await settle();
+  assert.equal(f.acknowledgements.length, 0, 'an unsolicited acknowledgement cannot report success');
+  port.onMessage.emit(challenge); await settle();
+  assert.equal(port.messages.at(-1).type, 'favorites:connect');
+  for (const input of [null, {...acknowledged, type: 'favorites:other'}, {...acknowledged, state: 'x'.repeat(43)},
+    {...acknowledged, state: [challenge.client_state]}, {...acknowledged, connected: false},
+    {...acknowledged, connected: 'true'}, {...acknowledged, connected: 1}, {type: 'favorites:connected', state: challenge.client_state}]) {
+    port.onMessage.emit(input); await settle();
+    assert.equal(f.acknowledgements.length, 0, 'unknown, malformed, and failed acknowledgements cannot report success');
+  }
+  port.onMessage.emit(acknowledged); await settle();
+  assert.equal(f.acknowledgements.length, 1);
+  port.onMessage.emit(acknowledged); await settle();
+  assert.equal(f.acknowledgements.length, 1, 'the same handoff is acknowledged only once');
+  assert.doesNotMatch(JSON.stringify(f.acknowledgements), /private-|token|verifier|records/);
+});
+
+test('only the most recently delivered handoff state can acknowledge a connection', async t => {
+  const f = fixture(); t.after(() => f.bridge.destroy());
+  const port = f.ports[0], newer = {...challenge, client_state: 't'.repeat(43)};
+  port.onMessage.emit(challenge); await settle();
+  port.onMessage.emit(newer); await settle();
+  assert.deepEqual(f.requests.map(value => value.client_state), [challenge.client_state, newer.client_state]);
+  port.onMessage.emit({type: 'favorites:connected', state: challenge.client_state, connected: true}); await settle();
+  assert.equal(f.acknowledgements.length, 0, 'a superseded handoff cannot set the page success state');
+  port.onMessage.emit({type: 'favorites:connected', state: newer.client_state, connected: true}); await settle();
+  assert.equal(f.acknowledgements.length, 1);
+});
+
+test('a failed handoff cannot later be reported as a successful connection', async t => {
+  const f = fixture({connectExtension: async () => { throw new Error('private-provider-details'); }});
+  t.after(() => f.bridge.destroy());
+  f.ports[0].onMessage.emit(challenge); await settle();
+  assert.equal(f.ports[0].messages.at(-1).type, 'favorites:unavailable');
+  f.ports[0].onMessage.emit({type: 'favorites:connected', state: challenge.client_state, connected: true}); await settle();
+  assert.equal(f.acknowledgements.length, 0);
+});
+
+test('a handoff acknowledgement cannot succeed after its website account changes or session expires', async t => {
+  for (const change of [f => f.setUser(BOB), f => f.setActive(false)]) {
+    const f = fixture(); t.after(() => f.bridge.destroy());
+    f.ports[0].onMessage.emit(challenge); await settle();
+    assert.equal(f.ports[0].messages.at(-1).type, 'favorites:connect');
+    change(f);
+    f.ports[0].onMessage.emit({type: 'favorites:connected', state: challenge.client_state, connected: true}); await settle();
+    assert.equal(f.acknowledgements.length, 0, 'the current active identity must still own the delivered handoff');
+  }
+});
+
+test('acknowledgements are bound to the current port and are discarded on disconnect or destroy', async t => {
+  const f = fixture(); t.after(() => f.bridge.destroy());
+  const old = f.ports[0]; old.onMessage.emit(challenge); await settle();
+  old.disconnect(); await f.timers.advance(250);
+  const current = f.ports[1], oldAck = {type: 'favorites:connected', state: challenge.client_state, connected: true};
+  old.onMessage.emit(oldAck); current.onMessage.emit(oldAck); await settle();
+  assert.equal(f.acknowledgements.length, 0, 'a disconnected handoff is not transferable to a replacement port');
+  const newer = {...challenge, client_state: 't'.repeat(43)};
+  current.onMessage.emit(newer); await settle();
+  const newAck = {type: 'favorites:connected', state: newer.client_state, connected: true};
+  old.onMessage.emit(newAck); await settle();
+  assert.equal(f.acknowledgements.length, 0, 'a stale port cannot acknowledge a current handoff');
+  current.onMessage.emit(newAck); await settle();
+  assert.equal(f.acknowledgements.length, 1);
+  const final = {...challenge, client_state: 'u'.repeat(43)};
+  current.onMessage.emit(final); await settle(); f.bridge.destroy();
+  current.onMessage.emit({type: 'favorites:connected', state: final.client_state, connected: true}); await settle();
+  assert.equal(f.acknowledgements.length, 1, 'destroy drops a late acknowledgement');
 });
 
 test('wrong account, malformed proofs, and inactive authentication cannot request a handoff', async t => {

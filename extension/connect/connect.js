@@ -50,7 +50,7 @@
     $('note').textContent = text('连接后，两端使用同一份云收藏；原有插件本地收藏会合并。退出插件不会退出官网或删除收藏。', 'Both use the same cloud favorites. Existing local extension favorites merge on connection. Signing out of the extension keeps website sign-in and saved favorites.');
     $('open-site').textContent = text('返回官网', 'Return to website');
     $('download').textContent = text('下载 v1.7.2 插件', 'Download extension v1.7.2');
-    const key = problem || (!valid ? 'invalid_request' : initialized && !available() && !connected ? 'extension_unavailable' : snapshot?.error ? 'auth_failed' : '');
+    const key = connected ? '' : problem || (!valid ? 'invalid_request' : initialized && !available() ? 'extension_unavailable' : snapshot?.error ? 'auth_failed' : '');
     $('error').hidden = !key; $('error').textContent = key ? (errors[key] || errors.unavailable)[language === 'en' ? 1 : 0] : '';
   }
   function deliver(code, state) {
@@ -69,18 +69,24 @@
     if (busy || !store || !valid) return;
     busy = true; problem = ''; render();
     try { await work(); }
-    catch (error) { problem = Object.hasOwn(errors, error?.code) ? error.code : 'unavailable'; }
+    catch (error) { if (!connected) problem = Object.hasOwn(errors, error?.code) ? error.code : 'unavailable'; }
     finally { busy = false; snapshot = store.getSnapshot(); render(); }
   }
   $('language').addEventListener('click', () => { language = language === 'en' ? 'zh' : 'en'; try { localStorage.setItem('st_lang', language); } catch { /* Optional preference. */ } render(); });
   $('sign-in').addEventListener('click', () => void action(() => store.signIn()));
   $('switch').addEventListener('click', () => void action(() => store.signOut()));
   async function syncExtension() {
+    if (connected) return;
     if (!available()) throw Object.assign(new Error(), {code: 'extension_unavailable'});
     const handoff = await store.connectExtension(request);
     if (typeof handoff?.code !== 'string' || !OPAQUE.test(handoff.code) || handoff.state !== request.client_state) throw Object.assign(new Error(), {code: 'connection_failed'});
     await deliver(handoff.code, handoff.state); connected = true;
-    websiteBridge = WebsiteFavoritesBridge.start({store, eventTarget: window, location, chrome: globalThis.chrome});
+    startWebsiteBridge();
+  }
+  function startWebsiteBridge() {
+    if (websiteBridge) return;
+    websiteBridge = WebsiteFavoritesBridge.start({store, eventTarget: window, location, chrome: globalThis.chrome,
+      onConnected() { connected = true; problem = ''; render(); }});
   }
   function autoSync() {
     if (!initialized || !snapshot?.user || !store?.hasActiveSession() || connected || busy || attempted || !valid) return;
@@ -89,12 +95,11 @@
   $('retry').addEventListener('click', () => void action(syncExtension));
   render();
   (async () => {
-    if (!valid) return;
     try {
       store = FavoritesSync.createFavoritesStore({storage: localStorage, sessionStorage,
         config: window.FAVORITES_CONFIG, fetch: fetch.bind(window), location, history, eventTarget: window,
         onChange(value) { snapshot = value; websiteBridge?.update(value); render(); autoSync(); }});
-      snapshot = await store.init(); initialized = true;
+      startWebsiteBridge(); snapshot = await store.init(); initialized = true;
     } catch { initialized = true; problem = 'storage_unavailable'; }
     render(); autoSync();
   })();

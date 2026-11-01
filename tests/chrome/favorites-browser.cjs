@@ -15,6 +15,7 @@ const expectedId = 'medjijlfgmfeldlelkidiickdcnbicaf';
 const api = 'https://agent-leaderboard-api.jaychempan.workers.dev/api';
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-favorites-browser-'));
 const artifacts = path.join(root, 'artifacts/extension');
+const profiles=[profile];
 let stage = 'launch', context, page, website;
 
 async function eventually(check,message,timeout=10000){
@@ -23,36 +24,7 @@ async function eventually(check,message,timeout=10000){
   assert.fail(message);
 }
 
-(async () => {
-  context = await chromium.launchPersistentContext(profile, {
-    executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    headless: true, colorScheme: 'dark', viewport: {width: 390, height: 850},
-    ignoreDefaultArgs: ['--disable-extensions'], args: ['--enable-unsafe-extension-debugging','--host-resolver-rules=MAP * ~NOTFOUND'],
-  });
-  context.setDefaultTimeout(10000);
-  try {
-    fs.mkdirSync(artifacts, {recursive: true});
-    // Page requests are blocked independently of the worker fixture, so a
-    // missing interception cannot accidentally reach production or GitHub.
-    await context.route('https://**/*', route => route.abort('blockedbyclient'));
-    const cdp = await context.browser().newBrowserCDPSession();
-    const {id} = await cdp.send('Extensions.loadUnpacked', {path: process.env.EXTENSION_PATH || path.join(root, 'chrome')});
-    assert.equal(id, expectedId, 'the checked-in public key must preserve the Web Store extension ID');
-    const worker = context.serviceWorkers().find(value => value.url().startsWith(`chrome-extension://${id}/`))
-      || await context.waitForEvent('serviceworker', {predicate: value => value.url().startsWith(`chrome-extension://${id}/`)});
-    const transport=await worker.evaluate(()=>{const manifest=chrome.runtime.getManifest();return {identity:manifest.permissions.includes('identity'),matches:manifest.externally_connectable?.matches};});
-    assert.deepEqual(transport,{identity:false,matches:[websiteOrigin+'/',websiteOrigin+'/index.html',websiteOrigin+'/extension/connect/*']},'website bridge needs no identity permission and allows only the official homepage and connection page');
-    stage = 'worker fixtures';
-    const core = await import(pathToFileURL(path.join(root, 'chrome/core.mjs')).href);
-    const catalog = JSON.parse(fs.readFileSync(path.join(root, 'chrome/data/catalog.json'), 'utf8'));
-    const chosen = [], ids = new Set();
-    for (const value of core.prepareCatalog(core.compactCatalog(catalog))) {
-      if (!Number.isSafeInteger(value.source_id) || value.source_id <= 0 || ids.has(value.source_id)) continue;
-      ids.add(value.source_id); chosen.push(core.favoriteRecord(value));
-      if (chosen.length === 3) break;
-    }
-    assert.equal(chosen.length, 3, 'the packaged catalog needs three numeric repository IDs');
-    const fixture = await worker.evaluate(async ({api,id,chosen}) => {
+async function installBackendFixture({api,id,chosen,seed=true}){
       if(chrome.runtime.id!==id)throw new Error('native_extension_id_mismatch');
       const originalFetch=globalThis.fetch.bind(globalThis);
       const bundled=await(await originalFetch(chrome.runtime.getURL('data/catalog.json'))).json();
@@ -116,7 +88,9 @@ async function eventually(check,message,timeout=10000){
           if(body.extension_id!==id||!/^[A-Za-z0-9_-]{43}$/.test(body.client_challenge||'')||!/^[A-Za-z0-9_-]{43}$/.test(body.client_state||''))return response(400,{error:'invalid_login_request'});
           const code=random();backend.exchanges.set(code,{client:'extension',challenge:body.client_challenge,state:body.client_state,user:owner});backend.handoffs++;
           backend.handoffCodesExcludeTokens&&=!backend.sessions.has(code);
-          return response(200,{code,state:body.client_state,expiresAt:new Date(Date.now()+90000).toISOString()});
+          const handoff=response(200,{code,state:body.client_state,expiresAt:new Date(Date.now()+90000).toISOString()});
+          if(backend.delayHandoffState===body.client_state)return new Promise(resolve=>{backend.releaseDelayedHandoff=()=>resolve(handoff);});
+          return handoff;
         }
         if(url.pathname==='/api/auth/logout'){backend.sessions.delete(token);return response(200,{ok:true});}
         if(url.pathname==='/api/favorites/resolve')return response(404,{error:'repository_not_found'});
@@ -159,9 +133,12 @@ async function eventually(check,message,timeout=10000){
           userId:message.user?.id||null,websiteTokenAbsent:[...backend.sessions].filter(([,value])=>value.client==='website').every(([token])=>!JSON.stringify(message).includes(token))}));
         port.onDisconnect.addListener(()=>{entry.disconnected=true;backend.portDisconnects++;});
       });
-      await chrome.storage.local.set({[`favorite:${chosen[0].key}`]:chosen[0],checkedAt:Date.now(),uiLocale:'zh-CN',themeMode:'light'});
+      if(seed)await chrome.storage.local.set({[`favorite:${chosen[0].key}`]:chosen[0],checkedAt:Date.now(),uiLocale:'zh-CN',themeMode:'light'});
       return {id:chrome.runtime.id,user:user.login,records:chosen.map(({key,full_name,source_id})=>({key,full_name,id:source_id}))};
-    },{api,id,chosen});
+
+}
+
+async function configurePageRoutes(context,getWorker){
     await context.route(websiteOrigin+'/**',async route=>{
       const url=new URL(route.request().url());
       const pathname=url.pathname.endsWith('/')?url.pathname+'index.html':url.pathname;
@@ -172,7 +149,7 @@ async function eventually(check,message,timeout=10000){
     });
     await context.route(api+'/**',async route=>{
       const request=route.request(),headers=await request.allHeaders();
-      const value=await worker.evaluate(request=>globalThis.__favoritesBrowserBackend.request(request),{
+      const value=await getWorker().evaluate(request=>globalThis.__favoritesBrowserBackend.request(request),{
         url:request.url(),method:request.method(),headers,body:request.postData()?JSON.parse(request.postData()):null});
       const cors={'access-control-allow-origin':websiteOrigin,'access-control-allow-methods':'GET, POST, PUT, DELETE, OPTIONS',
         'access-control-allow-headers':'Authorization, Content-Type, X-Favorites-User'};
@@ -187,6 +164,39 @@ async function eventually(check,message,timeout=10000){
       const target=api+'/auth/github/callback?'+new URLSearchParams({state:source.searchParams.get('state'),code:'browser-fixture-only'});
       return route.fulfill({status:200,contentType:'text/html',body:`<script>location.replace(${JSON.stringify(target)})</script>`});
     });
+}
+
+(async () => {
+  context = await chromium.launchPersistentContext(profile, {
+    executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    headless: true, colorScheme: 'dark', viewport: {width: 390, height: 850},
+    ignoreDefaultArgs: ['--disable-extensions'], args: ['--enable-unsafe-extension-debugging','--host-resolver-rules=MAP * ~NOTFOUND'],
+  });
+  context.setDefaultTimeout(10000);
+  try {
+    fs.mkdirSync(artifacts, {recursive: true});
+    // Page requests are blocked independently of the worker fixture, so a
+    // missing interception cannot accidentally reach production or GitHub.
+    await context.route('https://**/*', route => route.abort('blockedbyclient'));
+    const cdp = await context.browser().newBrowserCDPSession();
+    const {id} = await cdp.send('Extensions.loadUnpacked', {path: process.env.EXTENSION_PATH || path.join(root, 'chrome')});
+    assert.equal(id, expectedId, 'the checked-in public key must preserve the Web Store extension ID');
+    let worker = context.serviceWorkers().find(value => value.url().startsWith(`chrome-extension://${id}/`))
+      || await context.waitForEvent('serviceworker', {predicate: value => value.url().startsWith(`chrome-extension://${id}/`)});
+    const transport=await worker.evaluate(()=>{const manifest=chrome.runtime.getManifest();return {identity:manifest.permissions.includes('identity'),matches:manifest.externally_connectable?.matches};});
+    assert.deepEqual(transport,{identity:false,matches:[websiteOrigin+'/',websiteOrigin+'/index.html',websiteOrigin+'/extension/connect/*']},'website bridge needs no identity permission and allows only the official homepage and connection page');
+    stage = 'worker fixtures';
+    const core = await import(pathToFileURL(path.join(root, 'chrome/core.mjs')).href);
+    const catalog = JSON.parse(fs.readFileSync(path.join(root, 'chrome/data/catalog.json'), 'utf8'));
+    const chosen = [], ids = new Set();
+    for (const value of core.prepareCatalog(core.compactCatalog(catalog))) {
+      if (!Number.isSafeInteger(value.source_id) || value.source_id <= 0 || ids.has(value.source_id)) continue;
+      ids.add(value.source_id); chosen.push(core.favoriteRecord(value));
+      if (chosen.length === 3) break;
+    }
+    assert.equal(chosen.length, 3, 'the packaged catalog needs three numeric repository IDs');
+    const fixture = await worker.evaluate(installBackendFixture,{api,id,chosen});
+    await configurePageRoutes(context,()=>worker);
     async function finishWebsiteConnection(website,{signIn=false}={}){
       if(signIn){await website.locator('#connect-sign-in').waitFor({state:'visible'});await website.locator('#connect-sign-in').click();}
       assert.equal(await website.locator('#connect-approve').count(),0,'website sign-in connects without a confirmation action');
@@ -375,9 +385,76 @@ async function eventually(check,message,timeout=10000){
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.websiteExchanges),1,'new website tab completes ordinary website OAuth');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),3,'new-tab fallback completes its own extension PKCE exchange');
     assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.importRows),1,'reconnecting does not reimport or resurrect removed local favorites');
+    stage='upgrade-equivalent empty session with a stale signed-in connect page';
+    const staleState='S'.repeat(43),staleChallenge='C'.repeat(43);
+    const staleUrl=websiteOrigin+'/extension/connect/#'+new URLSearchParams({extension_id:expectedId,client_challenge:staleChallenge,client_state:staleState});
+    const savedWebsiteSession=await freshWebsite.evaluate(key=>JSON.parse(sessionStorage.getItem(key)),siteSessionKey);
+    const persistedFixture=await worker.evaluate(()=>{
+      const b=globalThis.__favoritesBrowserBackend;
+      return {rows:[...b.rows],sessions:[...b.sessions],receipts:[...b.receipts]};
+    });
+    await context.close();
+    // A fresh profile naturally has no extension session or pending proof,
+    // exactly the authentication precondition after an upgrade. Only the
+    // ordinary website's valid session and external API fixture are seeded.
+    const upgradeProfile=fs.mkdtempSync(path.join(os.tmpdir(),'agent-favorites-upgrade-'));profiles.push(upgradeProfile);
+    context=await chromium.launchPersistentContext(upgradeProfile,{
+      executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      headless:true,colorScheme:'dark',viewport:{width:390,height:850},ignoreDefaultArgs:['--disable-extensions'],
+      args:['--enable-unsafe-extension-debugging','--host-resolver-rules=MAP * ~NOTFOUND'],
+    });context.setDefaultTimeout(10000);
+    await context.route('https://**/*',route=>route.abort('blockedbyclient'));
+    const upgradeCDP=await context.browser().newBrowserCDPSession();
+    const upgradeExtension=await upgradeCDP.send('Extensions.loadUnpacked',{path:process.env.EXTENSION_PATH||path.join(root,'chrome')});
+    assert.equal(upgradeExtension.id,id,'the same official extension is loaded for upgrade recovery');
+    worker=context.serviceWorkers().find(value=>value.url().startsWith(`chrome-extension://${id}/`))
+      ||await context.waitForEvent('serviceworker',{predicate:value=>value.url().startsWith(`chrome-extension://${id}/`)});
+    await worker.evaluate(installBackendFixture,{api,id,chosen,seed:false});
+    await worker.evaluate(({saved,staleState})=>{
+      const b=globalThis.__favoritesBrowserBackend;
+      b.rows=new Map(saved.rows);b.sessions=new Map(saved.sessions);b.receipts=new Set(saved.receipts);b.delayHandoffState=staleState;
+    },{saved:persistedFixture,staleState});
+    await configurePageRoutes(context,()=>worker);
+    const cleared=await worker.evaluate(async()=>{
+      const value=await chrome.storage.session.get(['agentFavoritesSessionV1','agentFavoritesLoginV1']);
+      return {session:!value.agentFavoritesSessionV1,pending:!value.agentFavoritesLoginV1};
+    });
+    assert.deepEqual(cleared,{session:true,pending:true},'the recovery scenario starts with naturally empty extension authentication');
+    const upgradeWebsite=await context.newPage();upgradeWebsite.on('pageerror',error=>errors.push(error.name));
+    await upgradeWebsite.addInitScript(({key,value,origin})=>{if(location.origin===origin&&!sessionStorage.getItem(key))sessionStorage.setItem(key,JSON.stringify(value));},
+      {key:siteSessionKey,value:savedWebsiteSession,origin:websiteOrigin});
+    await upgradeWebsite.goto(staleUrl);website=upgradeWebsite;
+    await eventually(()=>worker.evaluate(()=>typeof globalThis.__favoritesBrowserBackend.releaseDelayedHandoff==='function'),'stale legacy handoff is held while the passive website port stays available');
+    const staleBefore={url:upgradeWebsite.url(),history:await upgradeWebsite.evaluate(()=>history.length)};
+    page=await context.newPage();page.on('pageerror',error=>errors.push(error.name));await page.bringToFront();
+    const tabsBeforeUpgradeSync=await worker.evaluate(async()=>({count:(await chrome.tabs.query({})).length,active:(await chrome.tabs.query({active:true,currentWindow:true}))[0]?.id}));
+    await page.goto(panelURL);await page.locator('#favorites').waitFor();await page.locator('#favorites').click();await waitSynced(page);await waitCount(page,cloudBefore);
+    await upgradeWebsite.waitForFunction(()=>document.getElementById('connect-status').textContent.includes('已连接'));
+    assert.equal(upgradeWebsite.url(),staleBefore.url,'stale connect page synchronizes without a new navigation');
+    assert.equal(await upgradeWebsite.evaluate(()=>history.length),staleBefore.history,'stale connect page history remains unchanged');
+    assert.deepEqual(await worker.evaluate(async()=>({count:(await chrome.tabs.query({})).length,active:(await chrome.tabs.query({active:true,currentWindow:true}))[0]?.id})),tabsBeforeUpgradeSync,'upgrade recovery neither creates nor activates another tab');
+    await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.releaseDelayedHandoff());
+    await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalMessages.some(message=>message.type==='favorites:connect')),'the delayed stale legacy attempt actually returns after successful port sync');
+    await upgradeWebsite.waitForFunction(()=>document.getElementById('connect-switch').disabled===false);
+    assert.equal(await page.locator('#account-user').textContent(),fixture.user);
+    assert.equal(await upgradeWebsite.locator('#connect-error').isVisible(),false,'a late stale legacy failure cannot overwrite the successful native-port connection');
+    assert.match(await upgradeWebsite.locator('#connect-title').textContent(),/已同步|synced/i);
+    await upgradeWebsite.screenshot({path:path.join(artifacts,'upgrade-stale-connect-390.png')});
+    const upgradePort=await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.find(entry=>entry.messages.some(message=>message.type==='favorites:connect')));
+    assert.equal(new URL(upgradePort.url).pathname,'/extension/connect/');
+    assert.equal(await worker.evaluate(()=>globalThis.__favoritesBrowserBackend.extensionExchanges),1,'upgrade recovery uses a new PKCE exchange rather than the stale proof');
+    stage='connect page with an invalid old fragment still exposes the signed-in passive port';
+    const invalidUrl=websiteOrigin+'/extension/connect/#staleproof';
+    await upgradeWebsite.goto(invalidUrl);await upgradeWebsite.reload();
+    await upgradeWebsite.locator('#connect-account').filter({hasText:fixture.user}).waitFor();
+    await eventually(()=>worker.evaluate(()=>globalThis.__favoritesBrowserBackend.externalPorts.some(entry=>entry.url.endsWith('#staleproof')&&entry.messages.some(message=>message.type==='favorites:ready'&&message.userId==='701'))),'an invalid old fragment still initializes website identity and the passive native port');
+    const invalidHistory=await upgradeWebsite.evaluate(()=>history.length);
+    await page.bringToFront();await page.locator('#account-sync').click();await waitSynced(page);await waitCount(page,cloudBefore);
+    assert.equal(upgradeWebsite.url(),invalidUrl);assert.equal(await upgradeWebsite.evaluate(()=>history.length),invalidHistory);
+
     assert.deepEqual(errors, []);
     console.log(JSON.stringify({status: 'passed', runtime: 'real unpacked Chrome MV3', extensionId: id, accountIntegration: 'real signed-in website + native external port; API/OAuth navigation fixtures',
-      pkce: 'S256 verified for website and extension', nativeTabs:'automatic sync without navigation, activation, history change or new tab; explicit fallback creates normal website tab', panels: 2, screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
+      pkce: 'S256 verified for website and extension', nativeTabs:'automatic sync without navigation, activation, history change or new tab; explicit fallback creates normal website tab', panels: 2, upgradeRecovery:'fresh empty extension session, stale page port sync, late legacy failure ignored', screenshots, productionNetwork: 'blocked', userProfile: 'not accessed', credentialsPrinted: false}));
   } catch(error) {
     if(website&&!website.isClosed())error.message+='\nWebsite: '+JSON.stringify(await website.evaluate(()=>({url:location.href,path:location.pathname,
       status:document.getElementById('connect-status')?.textContent,error:document.getElementById('connect-error')?.textContent,
@@ -385,11 +462,11 @@ async function eventually(check,message,timeout=10000){
     const diagnosticWorker=context.serviceWorkers().find(value=>value.url().startsWith(`chrome-extension://${expectedId}/`));
     if(diagnosticWorker)error.message+='\nBridge: '+JSON.stringify(await diagnosticWorker.evaluate(async()=>{
       const b=globalThis.__favoritesBrowserBackend,p=(await chrome.storage.session.get('agentFavoritesLoginV1')).agentFavoritesLoginV1;
-      return {handoffs:b?.handoffs,extensionExchanges:b?.extensionExchanges,externalPorts:b?.externalPorts,requests:b?.requests?.slice(-8),
+      return {handoffs:b?.handoffs,extensionExchanges:b?.extensionExchanges,externalPorts:b?.externalPorts?.slice(-2).map(entry=>({...entry,messages:entry.messages.slice(-5)})),requests:b?.requests?.slice(-8),
         pending:p?{mode:p.mode,tabId:p.tabId}:null};
     }).catch(()=>({unavailable:true})));
     throw error;
   } finally { await context.close(); }
 })().catch(error => {
   console.error(JSON.stringify({status: 'failed', stage, error: error.name, message: error.message, location:error.stack?.split('\n').find(line=>line.includes(__filename))})); process.exitCode = 1;
-}).finally(() => { try { fs.rmSync(profile, {recursive: true, force: true}); } catch { /* Chrome may briefly retain a profile file. */ } });
+}).finally(() => { for(const folder of profiles)try { fs.rmSync(folder, {recursive: true, force: true}); } catch { /* Chrome may briefly retain a profile file. */ } });

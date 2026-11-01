@@ -516,7 +516,7 @@ function attachWebsite(f, registry, user, tabId=50, active=true) {
     onMessage:{addListener:fn=>incoming.push(fn)},onDisconnect:{addListener:fn=>disconnected.push(fn)},messages:[],
     postMessage(message){this.messages.push(message);if(message.type==='favorites:challenge')this.handle?.(message);},
     receive(message){for(const listener of incoming)listener(message);},disconnect(){for(const listener of disconnected)listener();}};
-  f.mock.tabs.push({id:tabId,url:'https://agentskills.media/#mcp',active});registry.register(port);port.receive({type:'favorites:ready',user});
+  if(!f.mock.tabs.some(tab=>tab.id===tabId))f.mock.tabs.push({id:tabId,url:'https://agentskills.media/#mcp',active});registry.register(port);port.receive({type:'favorites:ready',user});
   port.handle=async message=>{
     const pending=f.mock.values.session[K.pending];assert.equal(pending.state,message.client_state);assert.equal(pending.expectedUserId,message.expected_user_id);
     const response=await f.server.web(user,'/auth/extension','POST',{extension_id:EXTENSION_ID,client_challenge:message.client_challenge,client_state:message.client_state});
@@ -582,4 +582,29 @@ test('an old local settings read cannot undo logout suppression in memory',{time
   const syncing=f.store.sync();await entered.promise;await f.store.signOut();held.resolve();await syncing;
   assert.equal((await f.store.getSnapshot()).autoConnectDisabled,true);const count=f.server.requests.filter(request=>request.path==='/api/auth/exchange').length;
   await f.store.sync();assert.equal((await f.store.getSnapshot()).user,null);assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,count);
+});
+
+test('a passive port cannot replace a valid normal-website pending attempt',async()=>{
+  const registry=createWebsiteRegistry(),f=fixture({website:registry});await f.store.init();await f.store.signIn();
+  const pending=copy(f.mock.values.session[K.pending]),port=attachWebsite(f,registry,ALICE,pending.tabId);
+  const navigationCount=f.mock.calls.filter(call=>call[0]==='tabs:update').length;
+  assert.equal((await f.store.sync()).status,'awaiting_website');await f.store.signIn();
+  assert.deepEqual(f.mock.values.session[K.pending],pending);assert.equal(port.messages.some(message=>message.type==='favorites:challenge'),false);
+  assert.equal(f.mock.calls.filter(call=>call[0]==='tabs:update').length,navigationCount);
+  const result=await f.store.completeWebsiteSignIn(await handoff(f),websiteSender(pending.tabId));assert.equal(result.connected,true);
+  assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,1);
+});
+
+test('a mismatched legacy transport never holds the lock needed by a valid port completion',{timeout:5000},async()=>{
+  const f=fixture();await f.store.init();const verifier='v'.repeat(43),state='s'.repeat(43),code='c'.repeat(43);
+  const pending={api:API_BASE,verifier,state,createdAt:Date.now(),tabId:7,mode:'port',portId:'live-port',documentId:'doc-7',expectedUserId:ALICE.id};
+  f.mock.values.session[K.pending]=pending;f.server.exchanges.set(code,{challenge:createHash('sha256').update(verifier).digest('base64url'),state,user:ALICE});
+  const entered=deferred(),held=deferred();let first=true;
+  f.mock.afterGet=async(area,key)=>{if(area==='session'&&key===K.pending&&first){first=false;entered.resolve();await held.promise;}};
+  const sender={...websiteSender(7),documentId:'doc-7'},message={type:'favorites:connect',code,state};
+  const wrong=f.store.completeWebsiteSignIn(message,sender);
+  try{await entered.promise;const valid=await f.store.completeWebsiteSignIn(message,sender,{portId:'live-port'});assert.equal(valid.connected,true);}
+  finally{held.resolve();}
+  assert.deepEqual(await wrong,{ok:false,connected:false});assert.equal((await f.store.getSnapshot()).user.id,ALICE.id);
+  assert.equal(f.server.requests.filter(request=>request.path==='/api/auth/exchange').length,1);
 });
